@@ -22,18 +22,18 @@ namespace Tools
         public Tool(IDicing dice)
         {
             this.dice = dice;
+            id = Guid.NewGuid();
         }
 
         public void LockDice()
         {
             dice = new DicedDice(dice);
         }
+        
     }
     
     public class PinedTool : ITool
     {
-
-        public Guid id => tool.id;
         
         [ShowInInspector]
         public Tool tool;
@@ -41,49 +41,49 @@ namespace Tools
         public PinedTool(Vector2Int position, Tool tool)
         {
             this.tool = tool;
-            buffs = new[] {new ToolBuff(position, id)};
+
+            buffs = new IToolBuff[] { new LeftSlotBuffTool(position, DicedDice.One(), tool.id), new LeftSlotBuffTool(position, DicedDice.One(), tool.id) };
         }
 
-        public ToolBuff[] buffs;
+        public readonly IToolBuff[] buffs;
     }
 
-    public struct SimpleBuffTool : ITool
+
+    public interface IToolBuff
     {
-        public Guid toolId;
         
+        public Guid id { get; }
+        
+        public int ValueBy(int value);
+        
+        
+        public Vector2Int effectOnLocation { get; }
+        
+    }
+
+    // 左边++buff
+    public struct LeftSlotBuffTool : IToolBuff
+    {
+        [ShowInInspector]
+        public Guid id { get; private set; }
+
+        public int ValueBy(int value)
+        {
+            return value + 1;
+        }
+
         [ShowInInspector]
         public DicedDice dice;
 
-        public Vector2Int position;
-
-        public SimpleBuffTool(Vector2Int position, DicedDice dice, Guid id)
+        public Vector2Int effectOnLocation { get; private set; }
+        
+        public LeftSlotBuffTool(Vector2Int position, DicedDice dice, Guid id)
         {
-            this.position = position;
+            effectOnLocation = position - new Vector2Int(0, 1);
             this.dice = dice;
-            this.toolId = id;
+            this.id = id;
         }
     }
-
-    public struct ToolBuff
-    {
-        
-        public Guid toolId;
-        
-        public Vector2Int position;
-
-        public ToolBuff(Vector2Int position, Guid toolId)
-        {
-            this.position = position;
-            this.toolId = toolId;
-        }
-        public SimpleBuffTool simpleBuffTool
-        {
-            get
-            {
-                Debug.Log(position);
-                Debug.Log(position - new Vector2Int(0, 1));
-                return new SimpleBuffTool(position - new Vector2Int(0, 1), DicedDice.One(), toolId);
-            }
-        }
-    }
+    
+    
 }

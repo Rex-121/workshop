@@ -7,23 +7,20 @@ namespace Tyrant.UI
 {
     public class CellOnWorkBenchPined: MonoBehaviour
     {
-        private Vector2Int _cellPosition;
+        public Vector2Int cellPosition;
 
         private IDicing _dicing;
 
         public TextMeshProUGUI powerDisplay;
 
+        public IWorkBenchUIHandler handler;
         
         public void RegisterSlot(WorkBenchSlot slot)
         {
             slot.pined
                 .Subscribe(tool =>
                 {
-                    if (tool == null)
-                    {
-                        UnPinTool();
-                    }
-                    else
+                    if (tool != null)
                     {
                         PinTool(tool);
                     }
@@ -31,7 +28,7 @@ namespace Tyrant.UI
                 .AddTo(this);
         }
         
-        public void PinTool(GameObject obj)
+        private void PinTool(GameObject obj)
         {
             var has = obj.TryGetComponent(out ToolOnTable toolOnTable);
             
@@ -56,14 +53,15 @@ namespace Tyrant.UI
             powerDisplay.text = _dicing.Roll().ToString();
             
             gameObject.SetActive(true);
-
-
+            
             toolOnTable.startDrag = UnPinTool;
         }
 
-        public void UnPinTool()
+        private void UnPinTool()
         {
             gameObject.SetActive(false);
+            handler?.DidUnPinTool(cellPosition);
+            WorkBenchManager.main.UnPin(cellPosition);
         }
     }
 }

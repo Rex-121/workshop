@@ -64,8 +64,7 @@ namespace Tyrant.UI
         {
             startDrag?.Invoke();
             transform.SetParent(ToolsBox.main.dragLayer);
-
-
+            
             WorkBenchManager.main.Drag(this);
         }
 

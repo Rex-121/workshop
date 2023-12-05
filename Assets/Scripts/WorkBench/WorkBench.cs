@@ -23,8 +23,7 @@ namespace Tyrant
         [ShowInInspector, NonSerialized]
         public Dictionary<ToolWrapper, WorkBenchSlot> dic = new();
 
-        public BehaviorSubject<int> make = new(0);
-        public BehaviorSubject<int> quality = new(0);
+
         
         public struct ToolWrapper
         {
@@ -37,12 +36,17 @@ namespace Tyrant
                 this.type = type;
             }
         }
+        
+        public IEnumerable<WorkBenchSlot> allMakes => dic.Values
+            .Where(v => v.toolWrapper.type == WorkBench.SlotType.Make);
+        public IEnumerable<WorkBenchSlot> allQuality => dic.Values
+            .Where(v => v.toolWrapper.type == WorkBench.SlotType.Quality);
 
         public bool HasSlot(Vector2Int vector2Int)
         {
             return !dic.Keys.Where(v => v.position == vector2Int).ToArray().IsNullOrEmpty();
         }
-        
+
         public WorkBenchSlot SlotBy(Vector2Int vector2Int)
         {
             return dic.First(v => v.Key.position == vector2Int).Value;
@@ -78,43 +82,6 @@ namespace Tyrant
             }
 
             return list;
-        }
-        
-        
-        
-        public void DidPinTool(Vector2Int index, Tool tool)
-        {
-            var key = dic.Keys.First(v => v.position == index);
-            // dic[key] = tool.dice;
-
-           Calculate();
-        }
-
-        public void DidUnPinTool(Vector2Int index, Tool tool)
-        {
-            var key = dic.Keys.First(v => v.position == index);
-            dic[key] = null;
-            
-            Calculate();
-        }
-
-        private void Calculate()
-        {
-            // var makeDice = dic.Keys.Where(v => v.type == SlotType.Make);
-            //
-            // var value1 = makeDice
-            //     .Select(v => dic[v])
-            //     .Where(v => v != null)
-            //     .Sum(v => v.Roll());
-            //
-            // make.OnNext(value1);
-            //
-            // var value2 = dic.Keys.Where(v => v.type == SlotType.Quality)
-            //     .Select(v => dic[v])
-            //     .Where(v => v != null)
-            //     .Sum(v => v.Roll());
-            //
-            // quality.OnNext(value2);
         }
 
         public bool CanBePlaced(ToolOnTable toolOnTable)

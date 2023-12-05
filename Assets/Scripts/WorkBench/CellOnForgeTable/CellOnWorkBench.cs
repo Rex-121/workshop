@@ -40,6 +40,8 @@ namespace Tyrant.UI
             buffDisplay.RegisterSlot(slot);
             
             pined.RegisterSlot(slot);
+            pined.cellPosition = _cellPosition;
+            pined.handler = handler;
 #if UNITY_EDITOR
 
             name = _cellPosition.ToString();
@@ -77,8 +79,8 @@ namespace Tyrant.UI
             
             if (!can) return;
             
-            WorkBenchManager.main.Pin(_cellPosition, toolOnTable);
-            // ResetTool(obj, toolOnTable);
+            
+            handler?.DidPinTool(_cellPosition, toolOnTable);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -93,19 +95,15 @@ namespace Tyrant.UI
             
             if (!has) return;
             
-            // 预览buff
-            WorkBenchManager.main.PreviewTool(toolOnTable, _cellPosition);
             // 预览
-            // preview.PreviewTool(toolOnTable, Instantiate(obj));
+            handler?.DidPreviewTool(_cellPosition, toolOnTable);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
             if (!canBePin) return;
             
-            WorkBenchManager.main.UnPreviewTool(_cellPosition);
-            // preview.UnPreviewTool();
-            // buffDisplay.UnSlot();
+            handler?.DidUnPreviewTool(_cellPosition);
         }
     }
 }

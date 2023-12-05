@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using Tools;
 using Tyrant.UI;
+using UniRx;
 using UnityEngine;
 
 namespace Tyrant
@@ -34,34 +36,80 @@ namespace Tyrant
         [ShowInInspector, NonSerialized] public WorkBench workBench = new WorkBench();
 
         // public WorkBenchUI workBenchUI;
-
+        public BehaviorSubject<int> make = new(0);
+        public BehaviorSubject<int> quality = new(0);
 
         public void PreviewTool(ToolOnTable toolOnTable, Vector2Int location)
         {
 
             var slot = workBench.SlotBy(location);
+            
+            if (slot.isOccupied) return;
 
             slot.PreviewTool(toolOnTable.tool);
 
             var pin = new PinedTool(location, toolOnTable.tool);
             
-            var buffTools = pin.buffs.Select(v => v.simpleBuffTool).ToArray();
-            
-            buffTools
-                .Where(v => workBench.HasSlot(v.position))
+            pin.buffs
+                .Where(v => workBench.HasSlot(v.effectOnLocation))
                 .ForEach(v =>
                 {
-                    workBench.SlotBy(v.position).NewPreviewBuff(v);
+                    workBench.SlotBy(v.effectOnLocation).NewPreviewBuff(v);
                 });
+            
         }
 
         public void Pin(Vector2Int location, ToolOnTable toolOnTable)
         {
+            
             var slot = workBench.SlotBy(location);
 
+            if (slot.isOccupied) return;
+            
+                        
+            // 先取消预览
+            UnPreviewTool(location);
+            
             slot.Pin(toolOnTable);
+
+            var pin = new PinedTool(location, toolOnTable.tool);
+            
+            pin.buffs
+                .Where(v => workBench.HasSlot(v.effectOnLocation))
+                .ForEach(v =>
+                {
+                    workBench.SlotBy(v.effectOnLocation).NewBuff(v);
+                });
+            
+            CalculateScore();
+            
+        }
+
+        private IEnumerable<WorkBenchSlot> allMakes => workBench.allMakes;
+
+        private IEnumerable<WorkBenchSlot> allQuality => workBench.allQuality;
+        
+        private void CalculateScore()
+        {
+            var makeScore = allMakes
+                .Select(v => v.CalculateScore())
+                .Sum();
+            make.OnNext(makeScore);
+            
+            var qualityScore = allQuality
+                .Select(v => v.CalculateScore())
+                .Sum();
+            quality.OnNext(qualityScore);
         }
         
+
+        public void UnPin(Vector2Int location)
+        {
+            workBench.SlotBy(location).UnPin();
+            
+            CalculateScore();
+        }
+
         public void UnPreviewTool(Vector2Int location)
         {
             workBench.SlotBy(location).UnPreviewTool();
@@ -76,6 +124,11 @@ namespace Tyrant
             {
                 // 清空所有的preview
                 workBench.dic.Values.ForEach(v => v.ReleasePreviewBuff());
+            }
+            else
+            {
+                // 清空所有的buff
+                workBench.dic.Values.ForEach(v => v.ReleaseBuffBy(toolOnTable.tool.id));
             }
         }
 

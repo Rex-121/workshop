@@ -44,29 +44,42 @@ namespace Tyrant.UI
         // 显示信息
         private void DisplayInformation()
         {
-            workBench.make.Select(v => $"+ {v}").Subscribe(v =>
+            WorkBenchManager.main.make
+                .Select(v => $"+ {v}")
+                .Subscribe(v =>
             {
                 makeText.text = v;
-            });
-            workBench.quality.Select(v => $"+ {v}").Subscribe(v =>
+            }).AddTo(this);
+            WorkBenchManager.main.quality.Select(v => $"+ {v}")
+                .Subscribe(v =>
             {
                 qualityText.text = v;
-            });
+            }).AddTo(this);
         }
 
-        public void DidPinTool(Vector2Int index, Tool tool)
+        public void DidPinTool(Vector2Int index, ToolOnTable toolOnTable)
         {
-            workBench.DidPinTool(index, tool);
+            WorkBenchManager.main.Pin(index, toolOnTable);
         }
-
-        public void DidUnPinTool(Vector2Int index, Tool tool)
+        
+        public void DidUnPinTool(Vector2Int index)
         {
-            workBench.DidUnPinTool(index, tool);
+            WorkBenchManager.main.UnPin(index);
         }
-
+        
+        public void DidPreviewTool(Vector2Int index, ToolOnTable toolOnTable)
+        {
+            WorkBenchManager.main.PreviewTool(toolOnTable, index);
+        }
+        
+        public void DidUnPreviewTool(Vector2Int index)
+        {
+            WorkBenchManager.main.UnPreviewTool(index);
+        }
+        
         public bool CanBePlaced(ToolOnTable toolOnTable)
         {
-            return workBench.CanBePlaced(toolOnTable);
+            return WorkBenchManager.main.workBench.CanBePlaced(toolOnTable);
         }
     }
 }

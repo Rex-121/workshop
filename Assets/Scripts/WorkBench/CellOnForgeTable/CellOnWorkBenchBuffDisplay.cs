@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Sirenix.Utilities;
 using TMPro;
 using Tools;
 using UnityEngine;
 using UniRx;
+using Unity.VisualScripting;
 
 namespace Tyrant.UI
 {
@@ -14,26 +16,22 @@ namespace Tyrant.UI
         public TextMeshProUGUI buffLabel;
         public void RegisterSlot(WorkBenchSlot slot)
         {
-            slot.buffs
-                .Subscribe(tool =>
-                {
-                    if (tool.IsNullOrEmpty())
-                    {
-                        UnSlot();
-                    }
-                    else
-                    {
-                        PreviewBuff(tool.First());
-                    }
+            slot.previewBuffs
+                .CombineLatest(slot.buffs, (list, tools) => {
+                    var a = new List<IToolBuff>();
+                    a.AddRange(list);
+                    a.AddRange(tools);
+                return a;
                 })
+                .Subscribe(PreviewBuff)
                 .AddTo(this);
         }
-        public void PreviewBuff(SimpleBuffTool simpleBuffTool)
+        private void PreviewBuff(IEnumerable<IToolBuff> simpleBuffTool)
         {
-            buffLabel.text = simpleBuffTool.dice.Roll().ToString();
+            buffLabel.text = simpleBuffTool.Sum(v => v.ValueBy(0)).ToString();
         }
 
-        public void UnSlot()
+        private void UnSlot()
         {
             buffLabel.text = "";
         }
