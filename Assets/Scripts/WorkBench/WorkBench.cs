@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Dicing;
 using Sirenix.OdinInspector;
+using Sirenix.Utilities;
 using Tools;
 using Tyrant.UI;
 using UniRx;
@@ -20,7 +21,7 @@ namespace Tyrant
         
         
         [ShowInInspector, NonSerialized]
-        public Dictionary<ToolWrapper, IDicing> dic = new();
+        public Dictionary<ToolWrapper, WorkBenchSlot> dic = new();
 
         public BehaviorSubject<int> make = new(0);
         public BehaviorSubject<int> quality = new(0);
@@ -36,8 +37,18 @@ namespace Tyrant
                 this.type = type;
             }
         }
+
+        public bool HasSlot(Vector2Int vector2Int)
+        {
+            return !dic.Keys.Where(v => v.position == vector2Int).ToArray().IsNullOrEmpty();
+        }
         
-        public List<ToolWrapper> Start()
+        public WorkBenchSlot SlotBy(Vector2Int vector2Int)
+        {
+            return dic.First(v => v.Key.position == vector2Int).Value;
+        }
+        
+        public List<WorkBenchSlot> Start()
         {
             
             int[][] a = new int[3][]
@@ -47,7 +58,7 @@ namespace Tyrant
                 new int[5] {0, 0, 0, 1, 0},
             };
 
-            var list = new List<ToolWrapper>();
+            var list = new List<WorkBenchSlot>();
             
             for (var i = a.Length - 1; i >= 0; i--)
             {
@@ -57,11 +68,12 @@ namespace Tyrant
                     var position = new Vector2Int(i, j);
                     var slotType = b[j].toSlotType();
                     var item = new ToolWrapper(position, slotType);
+                    var slot = new WorkBenchSlot(item);
                     if (slotType != SlotType.Empty)
                     {
-                        dic.Add(item, null);
+                        dic.Add(item, slot);
                     }
-                    list.Add(item);
+                    list.Add(slot);
                 }
             }
 
@@ -73,7 +85,7 @@ namespace Tyrant
         public void DidPinTool(Vector2Int index, Tool tool)
         {
             var key = dic.Keys.First(v => v.position == index);
-            dic[key] = tool.dice;
+            // dic[key] = tool.dice;
 
            Calculate();
         }
@@ -88,21 +100,21 @@ namespace Tyrant
 
         private void Calculate()
         {
-            var makeDice = dic.Keys.Where(v => v.type == SlotType.Make);
-
-            var value1 = makeDice
-                .Select(v => dic[v])
-                .Where(v => v != null)
-                .Sum(v => v.Roll());
-            
-            make.OnNext(value1);
-            
-            var value2 = dic.Keys.Where(v => v.type == SlotType.Quality)
-                .Select(v => dic[v])
-                .Where(v => v != null)
-                .Sum(v => v.Roll());
-            
-            quality.OnNext(value2);
+            // var makeDice = dic.Keys.Where(v => v.type == SlotType.Make);
+            //
+            // var value1 = makeDice
+            //     .Select(v => dic[v])
+            //     .Where(v => v != null)
+            //     .Sum(v => v.Roll());
+            //
+            // make.OnNext(value1);
+            //
+            // var value2 = dic.Keys.Where(v => v.type == SlotType.Quality)
+            //     .Select(v => dic[v])
+            //     .Where(v => v != null)
+            //     .Sum(v => v.Roll());
+            //
+            // quality.OnNext(value2);
         }
 
         public bool CanBePlaced(ToolOnTable toolOnTable)

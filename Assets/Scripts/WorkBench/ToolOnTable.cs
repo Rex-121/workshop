@@ -50,6 +50,7 @@ namespace Tyrant.UI
         {
             endDrag?.Invoke();
             
+            WorkBenchManager.main.Drag(null);
             
             if (transform.parent.TryGetComponent(out CellDragLayer cellDragLayer))
             {
@@ -63,6 +64,9 @@ namespace Tyrant.UI
         {
             startDrag?.Invoke();
             transform.SetParent(ToolsBox.main.dragLayer);
+
+
+            WorkBenchManager.main.Drag(this);
         }
 
         public void Lock()

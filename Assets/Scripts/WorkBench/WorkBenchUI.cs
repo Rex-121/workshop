@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections.Generic;
 using UniRx;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -16,13 +17,33 @@ namespace Tyrant.UI
 
         public Transform tablePanel;
 
-        [ShowInInspector, NonSerialized] public WorkBench workBench = new WorkBench();
+        private static WorkBench workBench => WorkBenchManager.main.workBench;
         
         public TextMeshProUGUI makeText;
         public TextMeshProUGUI qualityText;
+
         private void Start()
         {
+            DisplayInformation();
+          
+            
+            var list = workBench.Start();
 
+            GetComponent<GridLayoutGroup>().constraintCount = 3;
+            
+            for (var i = 0; i < list.Count; i++)
+            {
+                var slot = list[i];
+                    var gb = Instantiate(cellOnWorkBenchPrefab, tablePanel);
+                    var cell = gb.GetComponent<CellOnWorkBench>();
+                    cell.handler = this;
+                    cell.SetCellPosition(slot);
+            }
+        }
+
+        // 显示信息
+        private void DisplayInformation()
+        {
             workBench.make.Select(v => $"+ {v}").Subscribe(v =>
             {
                 makeText.text = v;
@@ -31,26 +52,6 @@ namespace Tyrant.UI
             {
                 qualityText.text = v;
             });
-            
-            var list = workBench.Start();
-
-            GetComponent<GridLayoutGroup>().constraintCount = 3;
-            
-            for (var i = 0; i < list.Count; i++)
-            {
-                // var b = a[i];
-                // for (var j = 0; j < b.Length; j++)
-                // {
-                var position = list[i];
-                    var gb = Instantiate(cellOnWorkBenchPrefab, tablePanel);
-                    var cell = gb.GetComponent<CellOnWorkBench>();
-                    cell.handler = this;
-                    cell.SetCellPosition(position.position, position.type);
-                // }
-            }
-            
-            Debug.Log(transform.childCount);
-            
         }
 
         public void DidPinTool(Vector2Int index, Tool tool)

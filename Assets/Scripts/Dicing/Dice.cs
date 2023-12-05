@@ -33,7 +33,7 @@ namespace Dicing
 
         public IDicing diced => new DicedDice(this);
         
-        public static IDicing Diced(int faces = 6) => new DicedDice(new Dice(faces));
+        public static DicedDice Diced(int faces = 6) => new (new Dice(faces));
     }
     
     [Serializable]
@@ -51,6 +51,8 @@ namespace Dicing
             this.dice = dice;
             value = this.dice.Roll();
         }
+
+        public static DicedDice One() => Dice.Diced(1);
 
         public int Roll() => value;
     }

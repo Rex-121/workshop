@@ -2,44 +2,42 @@ using Dicing;
 using TMPro;
 using Tools;
 using UnityEngine;
+using UniRx;
 
 namespace Tyrant.UI
 {
     public class CellOnWorkBenchPreview: MonoBehaviour
     {
         
-        private Vector2Int _cellPosition;
-
-
         public TextMeshProUGUI powerDisplay;
 
         private GameObject _copyDice;
-        
-        public void PreviewTool(Tool tool, GameObject copy)
+
+        public void RegisterSlot(WorkBenchSlot slot)
         {
-            var dicing = tool.dice;
-
-            powerDisplay.text = dicing.Roll().ToString();
-
-            _copyDice = copy;
-            
-            _copyDice.transform.SetParent(transform);
-            _copyDice.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-            _copyDice.GetComponent<RectTransform>().anchorMin = new Vector2(0.5f, 0.5f);
-            _copyDice.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f, 0.5f);
-            _copyDice.GetComponent<RectTransform>().localScale = new Vector3(0.6f, 0.6f, 0.6f);
-            
-            gameObject.SetActive(true);
+            slot.preview
+                .Subscribe(tool =>
+                {
+                    if (tool == null)
+                    {
+                        UnPreview();
+                    }
+                    else
+                    {
+                        Preview(tool);
+                    }
+                })
+                .AddTo(this);
         }
 
-        public void UnPreviewTool()
+        private void UnPreview()
         {
-            if (!ReferenceEquals(_copyDice, null))
-            {
-                Destroy(_copyDice);
-            }
-            
-            gameObject.SetActive(false);
+            powerDisplay.text = "";
+        }
+
+        private void Preview(Tool tool)
+        {
+            powerDisplay.text = tool.dice.Roll().ToString();
         }
     }
 }

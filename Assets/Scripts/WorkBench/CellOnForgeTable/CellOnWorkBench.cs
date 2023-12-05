@@ -17,9 +17,7 @@ namespace Tyrant.UI
         public TextMeshProUGUI positionLabel;
 
         public IWorkBenchUIHandler handler;
-
-        // public TextMeshProUGUI powerDisplay;
-
+        
         public Image backgroundImage;
 
         public Sprite a;
@@ -28,13 +26,20 @@ namespace Tyrant.UI
 
         public CellOnWorkBenchPined pined;
         public CellOnWorkBenchPreview preview;
-
+        public CellOnWorkBenchBuffDisplay buffDisplay;
+        
         public WorkBench.SlotType cellType;
-
+        
         public bool canBePin => cellType != 0;
-        public void SetCellPosition(Vector2Int value, WorkBench.SlotType type)
+        public void SetCellPosition(WorkBenchSlot slot)
         {
-            _cellPosition = value;
+            _cellPosition = slot.toolWrapper.position;
+            
+            preview.RegisterSlot(slot);
+            
+            buffDisplay.RegisterSlot(slot);
+            
+            pined.RegisterSlot(slot);
 #if UNITY_EDITOR
 
             name = _cellPosition.ToString();
@@ -42,9 +47,9 @@ namespace Tyrant.UI
             positionLabel.text = name;
 #endif
 
-            cellType = type;
+            cellType = slot.toolWrapper.type;
             
-            backgroundImage.sprite = type switch
+            backgroundImage.sprite = cellType switch
             {
                 WorkBench.SlotType.Make => a,
                 WorkBench.SlotType.Quality => b,
@@ -56,23 +61,6 @@ namespace Tyrant.UI
                 backgroundImage.enabled = false;
             }
         }
-
-        private void ResetTool(GameObject obj, ToolOnTable toolOnTable)
-        {
-            
-            preview.UnPreviewTool();
-            
-            handler?.DidPinTool(_cellPosition, toolOnTable.tool);
-            
-            pined.PinTool(obj);
-
-            toolOnTable.startDrag += () =>
-            {
-                handler?.DidUnPinTool(_cellPosition, toolOnTable.tool);
-                pined.UnPinTool();
-            };
-        }
-        
         
         public void OnDrop(PointerEventData eventData)
         {
@@ -89,7 +77,8 @@ namespace Tyrant.UI
             
             if (!can) return;
             
-            ResetTool(obj, toolOnTable);
+            WorkBenchManager.main.Pin(_cellPosition, toolOnTable);
+            // ResetTool(obj, toolOnTable);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -104,13 +93,19 @@ namespace Tyrant.UI
             
             if (!has) return;
             
-            preview.PreviewTool(toolOnTable.tool, Instantiate(obj));
+            // 预览buff
+            WorkBenchManager.main.PreviewTool(toolOnTable, _cellPosition);
+            // 预览
+            // preview.PreviewTool(toolOnTable, Instantiate(obj));
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
             if (!canBePin) return;
-            preview.UnPreviewTool();
+            
+            WorkBenchManager.main.UnPreviewTool(_cellPosition);
+            // preview.UnPreviewTool();
+            // buffDisplay.UnSlot();
         }
     }
 }

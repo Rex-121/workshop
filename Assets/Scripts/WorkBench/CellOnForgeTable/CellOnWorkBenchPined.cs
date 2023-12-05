@@ -1,6 +1,6 @@
 using Dicing;
 using TMPro;
-using Tools;
+using UniRx;
 using UnityEngine;
 
 namespace Tyrant.UI
@@ -13,6 +13,24 @@ namespace Tyrant.UI
 
         public TextMeshProUGUI powerDisplay;
 
+        
+        public void RegisterSlot(WorkBenchSlot slot)
+        {
+            slot.pined
+                .Subscribe(tool =>
+                {
+                    if (tool == null)
+                    {
+                        UnPinTool();
+                    }
+                    else
+                    {
+                        PinTool(tool);
+                    }
+                })
+                .AddTo(this);
+        }
+        
         public void PinTool(GameObject obj)
         {
             var has = obj.TryGetComponent(out ToolOnTable toolOnTable);
@@ -38,6 +56,9 @@ namespace Tyrant.UI
             powerDisplay.text = _dicing.Roll().ToString();
             
             gameObject.SetActive(true);
+
+
+            toolOnTable.startDrag = UnPinTool;
         }
 
         public void UnPinTool()
