@@ -24,6 +24,10 @@ namespace Tyrant.UI
                     {
                         PinTool(tool);
                     }
+                    else
+                    {
+                        DidEndThisTurn();
+                    }
                 })
                 .AddTo(this);
         }
@@ -57,11 +61,15 @@ namespace Tyrant.UI
             toolOnTable.startDrag = UnPinTool;
         }
 
+        private void DidEndThisTurn()
+        {
+            gameObject.SetActive(false);
+        }
+
         private void UnPinTool()
         {
             gameObject.SetActive(false);
             handler?.DidUnPinTool(cellPosition);
-            WorkBenchManager.main.UnPin(cellPosition);
         }
     }
 }

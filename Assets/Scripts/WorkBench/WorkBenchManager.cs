@@ -35,9 +35,14 @@ namespace Tyrant
         
         [ShowInInspector, NonSerialized] public WorkBench workBench = new WorkBench();
 
+        #region 制作过程
+
+        
+
+        
         // public WorkBenchUI workBenchUI;
-        public BehaviorSubject<int> make = new(0);
-        public BehaviorSubject<int> quality = new(0);
+        public readonly BehaviorSubject<int> make = new(0);
+        public readonly BehaviorSubject<int> quality = new(0);
 
         public void PreviewTool(ToolOnTable toolOnTable, Vector2Int location)
         {
@@ -85,21 +90,18 @@ namespace Tyrant
             
         }
 
-        private IEnumerable<WorkBenchSlot> allMakes => workBench.allMakes;
+        private int allMakesScore => workBench.allMakes
+            .Select(v => v.CalculateScore())
+            .Sum();
 
-        private IEnumerable<WorkBenchSlot> allQuality => workBench.allQuality;
+        private int allQualityScore => workBench.allQuality
+            .Select(v => v.CalculateScore())
+            .Sum();
         
         private void CalculateScore()
         {
-            var makeScore = allMakes
-                .Select(v => v.CalculateScore())
-                .Sum();
-            make.OnNext(makeScore);
-            
-            var qualityScore = allQuality
-                .Select(v => v.CalculateScore())
-                .Sum();
-            quality.OnNext(qualityScore);
+            make.OnNext(allMakesScore);
+            quality.OnNext(allQualityScore);
         }
         
 
@@ -131,6 +133,14 @@ namespace Tyrant
                 workBench.dic.Values.ForEach(v => v.ReleaseBuffBy(toolOnTable.tool.id));
             }
         }
+        #endregion
 
+
+        public void DidForgeThisTurn()
+        {
+            workBench.DidForgeThisTurn();
+            CalculateScore();
+        }
+        
     }
 }

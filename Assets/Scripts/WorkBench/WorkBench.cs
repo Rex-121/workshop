@@ -51,6 +51,11 @@ namespace Tyrant
         {
             return dic.First(v => v.Key.position == vector2Int).Value;
         }
+
+        public void DidForgeThisTurn()
+        {
+            dic.Values.ForEach(v => v.DidForgeThisTurn());
+        }
         
         public List<WorkBenchSlot> Start()
         {

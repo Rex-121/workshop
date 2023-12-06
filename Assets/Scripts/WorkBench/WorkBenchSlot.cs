@@ -45,6 +45,11 @@ namespace Tyrant
         [HideInInspector]
         public readonly BehaviorSubject<GameObject> pined = new(null);
 
+        public void DidForgeThisTurn()
+        {
+            GameObject.Destroy(pined.Value);
+            UnPin();
+        }
         
         public void Pin(ToolOnTable toolOnTable)
         {

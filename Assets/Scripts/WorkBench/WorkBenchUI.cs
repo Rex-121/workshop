@@ -57,6 +57,12 @@ namespace Tyrant.UI
             }).AddTo(this);
         }
 
+        [Button]
+        public void DidForgeThisTurn()
+        {
+            WorkBenchManager.main.DidForgeThisTurn();
+        }
+
         public void DidPinTool(Vector2Int index, ToolOnTable toolOnTable)
         {
             WorkBenchManager.main.Pin(index, toolOnTable);
