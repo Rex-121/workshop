@@ -12,13 +12,15 @@ namespace Tyrant.UI
         public GameObject toolPrefab;
 
         public HorizontalLayoutGroup horizontalLayoutGroup;
+
+        public Transform dragLayer;
         public void NewTool(int index, Tool tool)
         {
             
             var gb = Instantiate(toolPrefab, panel);
 
             var table = gb.GetComponent<ToolOnTable>();
-            table.NewTool(index, tool);
+            table.NewTool(index, tool, dragLayer);
         }
         
         

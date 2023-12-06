@@ -35,6 +35,10 @@ namespace Tyrant
         
         [ShowInInspector, NonSerialized] public WorkBench workBench = new WorkBench();
 
+        [LabelText("工作台Prefab")]
+        public GameObject workBenchPrefab;
+        
+
         #region 制作过程
 
         
@@ -136,6 +140,11 @@ namespace Tyrant
         #endregion
 
 
+        [Button]
+        public void StartAWorkBench()
+        {
+            Instantiate(workBenchPrefab);
+        }
         public void DidForgeThisTurn()
         {
             workBench.DidForgeThisTurn();

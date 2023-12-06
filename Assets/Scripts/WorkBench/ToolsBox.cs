@@ -10,21 +10,21 @@ namespace Tyrant.UI
 {
     public class ToolsBox: MonoBehaviour
     {
-        public static ToolsBox main;
+        // public static ToolsBox main;
 
-        public Transform dragLayer;
-        private void Awake()
-        {
-            if (main == null)
-            {
-                main = this;
-                DontDestroyOnLoad(this);
-            }
-            else
-            {
-                Destroy(this);
-            }
-        }
+        // public Transform dragLayer;
+        // private void Awake()
+        // {
+        //     if (main == null)
+        //     {
+        //         main = this;
+        //         DontDestroyOnLoad(this);
+        //     }
+        //     else
+        //     {
+        //         Destroy(this);
+        //     }
+        // }
 
         [ShowInInspector, NonSerialized] public Stack<Tool> toolsStack;
 

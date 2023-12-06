@@ -47,8 +47,21 @@ namespace Tyrant
 
         public void DidForgeThisTurn()
         {
-            GameObject.Destroy(pined.Value);
+            
+            Clear();
+        }
+
+        private void Clear()
+        {
+            if (pined.Value != null && pined.Value.TryGetComponent(out ToolOnTable toolOnTable))
+            {
+                toolOnTable.DidUsedThisTurn();
+            }
             UnPin();
+            _buffTools.Clear();
+            _previewBuffTools.Clear();
+            previewBuffs.OnNext(_previewBuffTools);
+            buffs.OnNext(_buffTools);
         }
         
         public void Pin(ToolOnTable toolOnTable)

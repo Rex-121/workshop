@@ -13,6 +13,7 @@ namespace Tyrant.UI
     {
         
         private DragInCanvas _dragInCanvas;
+        private Transform _dragLayer;
 
         public Tool tool;
 
@@ -33,9 +34,11 @@ namespace Tyrant.UI
             _dragInCanvas.startDrag += DidStartDrag;
         }
 
-        public void NewTool(int index, Tool tool)
+        public void NewTool(int index, Tool tool, Transform dragLayer)
         {
             this.tool = tool;
+
+            _dragLayer = dragLayer;
 
             this.index = index;
             
@@ -59,11 +62,17 @@ namespace Tyrant.UI
                 transform.localScale = Vector3.one;
             }
         }
+
+
+        public void DidUsedThisTurn()
+        {
+            Destroy(gameObject);
+        }
         
         private void DidStartDrag()
         {
             startDrag?.Invoke();
-            transform.SetParent(ToolsBox.main.dragLayer);
+            transform.SetParent(_dragLayer);
             
             WorkBenchManager.main.Drag(this);
         }

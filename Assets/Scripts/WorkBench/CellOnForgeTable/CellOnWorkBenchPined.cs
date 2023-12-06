@@ -57,8 +57,11 @@ namespace Tyrant.UI
             powerDisplay.text = _dicing.Roll().ToString();
             
             gameObject.SetActive(true);
-            
-            toolOnTable.startDrag = UnPinTool;
+
+            toolOnTable.startDrag = () =>
+            {
+                UnPinTool(toolOnTable);
+            };
         }
 
         private void DidEndThisTurn()
@@ -66,8 +69,9 @@ namespace Tyrant.UI
             gameObject.SetActive(false);
         }
 
-        private void UnPinTool()
+        private void UnPinTool(ToolOnTable toolOnTable)
         {
+            toolOnTable.startDrag = null;
             gameObject.SetActive(false);
             handler?.DidUnPinTool(cellPosition);
         }
