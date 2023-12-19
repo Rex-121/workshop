@@ -14,8 +14,12 @@ namespace Tyrant.UI
     {
 
         public TextMeshProUGUI buffLabel;
+        
+        public TextMeshProUGUI debuffLabel;
+        
         public void RegisterSlot(WorkBenchSlot slot)
         {
+            // 预览buff
             slot.previewBuffs
                 .CombineLatest(slot.buffs, (list, tools) => {
                     var a = new List<IToolBuff>();
@@ -25,7 +29,17 @@ namespace Tyrant.UI
                 })
                 .Subscribe(PreviewBuff)
                 .AddTo(this);
+            
+            // 显示debuff
+            DisplayDebuff(slot.debuff);
         }
+
+        private void DisplayDebuff(IEnumerable<WorkBenchDebuff> debuffs)
+        {
+            if (debuffs.Count() == 0) return;
+            debuffLabel.text = debuffs.First().debuffDes;
+        }
+        
         private void PreviewBuff(IEnumerable<IToolBuff> simpleBuffTool)
         {
             buffLabel.text = simpleBuffTool.Sum(v => v.ValueBy(0)).ToString();

@@ -15,7 +15,7 @@ namespace Tyrant
         
         public WorkBench.ToolWrapper toolWrapper;
 
-        public WorkBenchSlot(WorkBench.ToolWrapper toolWrapper)
+        public WorkBenchSlot(WorkBench.ToolWrapper toolWrapper, IEnumerable<WorkBenchDebuff> debuff)
         {
 
             this.toolWrapper = toolWrapper;
@@ -23,6 +23,8 @@ namespace Tyrant
             previewBuffs = new BehaviorSubject<List<IToolBuff>>(_previewBuffTools);
 
             buffs = new(_buffTools);
+            
+            this.debuff.AddRange(debuff);
         }
         
         
@@ -44,6 +46,8 @@ namespace Tyrant
         public readonly BehaviorSubject<List<IToolBuff>> previewBuffs;
         [HideInInspector]
         public readonly BehaviorSubject<GameObject> pined = new(null);
+
+        public List<WorkBenchDebuff> debuff = new();
 
         public void DidForgeThisTurn()
         {
@@ -119,8 +123,12 @@ namespace Tyrant
             var tool = pined.Value.GetComponent<ToolOnTable>().tool;
 
             var originValue = tool.dice.Roll();
-            if (_buffTools.IsNullOrEmpty()) return originValue;
+
+            // 计算buff
             _buffTools.ForEach(v => originValue = v.ValueBy(originValue));
+            // 计算debuff
+            debuff.ForEach(v => originValue = v.ValueBy(originValue));
+            
             return originValue;
 
         }

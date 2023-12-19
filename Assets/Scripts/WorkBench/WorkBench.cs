@@ -77,7 +77,7 @@ namespace Tyrant
                     var position = new Vector2Int(i, j);
                     var slotType = b[j].toSlotType();
                     var item = new ToolWrapper(position, slotType);
-                    var slot = new WorkBenchSlot(item);
+                    var slot = new WorkBenchSlot(item, new []{ new WorkBenchDebuff() });
                     if (slotType != SlotType.Empty)
                     {
                         dic.Add(item, slot);

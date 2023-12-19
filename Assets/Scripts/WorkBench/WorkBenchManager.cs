@@ -14,9 +14,6 @@ namespace Tyrant
     {
         #region 单例
 
-        
-
-       
         public static WorkBenchManager main;
         private void Awake()
         {
@@ -147,7 +144,22 @@ namespace Tyrant
         }
         public void DidForgeThisTurn()
         {
+            Debug.Log("End Forge!");
+
+            var makes = allMakesScore;
+            var qualities = allQualityScore;
+            
+            Debug.Log($"make={makes}, quality={qualities}");
+            
+            // 合成
+            var equipment = ForgeCraft.DoCraft(makes, qualities);
+            
+            InventoryManager.main.AddItem(equipment);
+            
+            // 清空棋盘
             workBench.DidForgeThisTurn();
+            
+            // 重新计算分数
             CalculateScore();
         }
         

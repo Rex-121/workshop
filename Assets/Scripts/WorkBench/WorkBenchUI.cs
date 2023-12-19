@@ -34,10 +34,10 @@ namespace Tyrant.UI
             for (var i = 0; i < list.Count; i++)
             {
                 var slot = list[i];
-                    var gb = Instantiate(cellOnWorkBenchPrefab, tablePanel);
-                    var cell = gb.GetComponent<CellOnWorkBench>();
-                    cell.handler = this;
-                    cell.SetCellPosition(slot);
+                var gb = Instantiate(cellOnWorkBenchPrefab, tablePanel);
+                var cell = gb.GetComponent<CellOnWorkBench>();
+                cell.handler = this;
+                cell.SetCellPosition(slot);
             }
         }
 
