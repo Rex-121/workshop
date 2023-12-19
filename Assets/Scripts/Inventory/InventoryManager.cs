@@ -32,7 +32,7 @@ namespace Tyrant
         private void Start()
         {
 
-            var materials = birthPackSO.materials.Select(v => v.toMaterial);
+            var materials = birthPackSO.materials.Select(v => v.toRawMaterial.toMaterial);
 
             materials.ForEach(AddItem);
         }

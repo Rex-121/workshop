@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c829262ebb00d417eb9e31580f6a157b, type: 3}
-  m_Name: "\u94C1\u952D"
+  m_Script: {fileID: 11500000, guid: 9925fb1d62ccc465085a31a129ded3d2, type: 3}
+  m_Name: "\u84DD\u56FE"
   m_EditorClassIdentifier: 
-  name: "\u94C1\u952D"
-  icon: {fileID: 543605793, guid: e7ebd995b9831495395894a3ab465f37, type: 3}
+  materialSos:
+  - {fileID: 11400000, guid: c8e53f76dbdd64650b02ec5646b34652, type: 2}
+  - {fileID: 11400000, guid: c8e53f76dbdd64650b02ec5646b34652, type: 2}
+  icon: {fileID: 0}

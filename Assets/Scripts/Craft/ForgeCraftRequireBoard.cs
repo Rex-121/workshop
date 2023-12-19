@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -19,20 +20,48 @@ namespace Tyrant
 
         [LabelText("拖拽点")]
         public Transform anchor;
+
+        public BluePrintSO bluePrintSO;
+
+        public BluePrint bluePrint;
+
+        public List<InventorySlot> slots = new();
         private void Start()
         {
-            for (int i = 0; i < requires; i++)
+
+            bluePrint = BluePrint.FromSO(bluePrintSO);
+
+            var requires = bluePrint.rawMaterialsRequires;
+            
+            for (int i = 0; i < requires.Count(); i++)
             {
                 var gb = Instantiate(slotPrefab, panel).GetComponent<InventorySlot>();
+                
+                gb.AddRequire(requires.ElementAt(i));
 
                 gb.handler = new MyStruct(item =>
                 {
-                    gb.AddItem(item.item);
-                    item.Clear();
+                    var success = gb.AddItemIfPossible(item.item);
+                    if (success)
+                    {
+                        item.Clear();
+                        Check();
+                    }
                 });
+                
+                slots.Add(gb);
 
-                gb.ItemDraggingHandle = new ItemPreviewForInventorySlot.DefaultDragging(anchor);
+                gb.itemDraggingHandle = new ItemPreviewForInventorySlot.DefaultDragging(anchor);
             }
+        }
+
+        private void Check()
+        {
+            var materials = slots.Where(v => v.previewItem != null)
+                .Select(v => v.previewItem.item as IMaterial);
+            
+            var isEnough = bluePrint.IsMaterialEnough(materials);
+            Debug.Log($"材料是否齐备 {isEnough}");
         }
         
 
@@ -46,7 +75,6 @@ namespace Tyrant
             }
             public void OnDrop(ItemPreviewForInventorySlot item)
             {
-                Debug.Log("OnDropOnDropOnDropOnDrop");
                 v.Invoke(item);
             }
         }

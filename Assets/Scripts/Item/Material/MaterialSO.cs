@@ -12,8 +12,9 @@ namespace Tyrant
 
         public Sprite icon;
 
+        public string code;
     
-        public IMaterial toMaterial => new Tyrant.Material(name, icon);
+        public RawMaterial toRawMaterial => new (name, icon, code);
 
     }
 }

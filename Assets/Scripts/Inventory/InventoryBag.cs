@@ -28,7 +28,7 @@ namespace Tyrant
         public void AddItem(IItem item)
         {
             var emptySlot = _slots.First(v => !v.isOccupied);
-            emptySlot.AddItem(item);
+            emptySlot.AddItemIfPossible(item);
         }
 
 
@@ -38,7 +38,7 @@ namespace Tyrant
             {
                 var gb = Instantiate(slotPrefab, panel);
                 var sc = gb.GetComponent<InventorySlot>();
-                sc.ItemDraggingHandle = new ItemPreviewForInventorySlot.DefaultDragging(anchorx);
+                sc.itemDraggingHandle = new ItemPreviewForInventorySlot.DefaultDragging(anchorx);
                 _slots.Add(sc);
             }
         }
