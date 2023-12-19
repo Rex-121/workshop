@@ -24,6 +24,7 @@ namespace Tyrant
 
         private Transform _storeParent;
 
+        
         private void Start()
         {
             _storeParent = transform.parent;
@@ -44,6 +45,7 @@ namespace Tyrant
 
         public void Clear()
         {
+            handler?.OnWillDestroy(this);
             Destroy(gameObject);
         }
         
@@ -54,8 +56,12 @@ namespace Tyrant
                 eventData.pointerDrag = null;
                 return;
             }
+            
+            handler?.OnItemIsDragging(this);
 
-            if (handler.anchor != null)
+            itemNameLabel.enabled = false;
+
+            if (handler?.anchor != null)
             {
                 transform.SetParent(handler.anchor);
             }
@@ -63,11 +69,11 @@ namespace Tyrant
             canvasGroup.blocksRaycasts = false;
             
             rect.anchoredPosition += eventData.delta / 3.0f;
-            // handler?.OnDrag(eventData);
         }
         
         public void OnEndDrag(PointerEventData eventData)
         {
+            itemNameLabel.enabled = true;
             transform.SetParent(_storeParent);
             canvasGroup.blocksRaycasts = true;
             rect.anchoredPosition = Vector2.zero;
@@ -77,20 +83,24 @@ namespace Tyrant
         public struct DefaultDragging: IInventoryItemDragging
         {
             public Transform anchor { get; }
-
+            
             public DefaultDragging(Transform an)
             {
                 anchor = an;
             }
+
+            public void OnWillDestroy(ItemPreviewForInventorySlot eventData) { }
+
+            public void OnItemIsDragging(ItemPreviewForInventorySlot item) { }
         }
         
         public interface IInventoryItemDragging
         {
             public Transform anchor { get; }
 
-            // public void OnDrag(PointerEventData eventData);
-            //
-            // public void OnEndDrag(PointerEventData eventData);
+            public void OnWillDestroy(ItemPreviewForInventorySlot item);
+            
+            public void OnItemIsDragging(ItemPreviewForInventorySlot item);
         }
     }
 }

@@ -1085,6 +1085,8 @@ MonoBehaviour:
   requires: 2
   panel: {fileID: 1565609507}
   anchor: {fileID: 2125759327}
+  bluePrintSO: {fileID: 11400000, guid: 40c2ecf75a79b476cbcea160120b293a, type: 2}
+  slots: []
 --- !u!1 &2125759326
 GameObject:
   m_ObjectHideFlags: 0

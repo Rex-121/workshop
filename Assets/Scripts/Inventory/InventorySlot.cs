@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Tyrant
 {
-    public class InventorySlot: MonoBehaviour, IDropHandler
+    public class InventorySlot: MonoBehaviour, IDropHandler, ItemPreviewForInventorySlot.IInventoryItemDragging
     {
 
         [LabelText("展示道具"), BoxGroup("Prefabs")]
@@ -55,7 +55,7 @@ namespace Tyrant
 
         private void DisplayRequireIfNeeded()
         {
-            if (_rawMaterial == null) return;
+            if (_rawMaterial == null || _requireItem != null) return;
             _requireItem = Instantiate(requirePrefab, transform).GetComponent<ItemRequireForInventorySlot>();
             _requireItem.AddItem(_rawMaterial);
         }
@@ -75,7 +75,7 @@ namespace Tyrant
         private void Refresh(IItem item)
         {
             previewItem = Instantiate(previewPrefab, transform).GetComponent<ItemPreviewForInventorySlot>();
-            previewItem.handler = itemDraggingHandle;
+            previewItem.handler = this;
             previewItem.AddItem(item);
             RemoveRequireIfNeeded();
         }
@@ -101,6 +101,18 @@ namespace Tyrant
         public interface IInventorySlotDrag
         {
             public void OnDrop(ItemPreviewForInventorySlot item);
+        }
+
+        public Transform anchor => itemDraggingHandle.anchor;
+
+        public void OnWillDestroy(ItemPreviewForInventorySlot item)
+        {
+            AddItem(null);
+        }
+
+        public void OnItemIsDragging(ItemPreviewForInventorySlot item)
+        {
+            DisplayRequireIfNeeded();
         }
     }
 }
