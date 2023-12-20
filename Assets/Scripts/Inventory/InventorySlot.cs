@@ -14,11 +14,15 @@ namespace Tyrant
         public ItemPreviewForInventorySlot previewPrefab;
         [LabelText("需求道具"),BoxGroup("Prefabs")]
         public ItemRequireForInventorySlot requirePrefab;
+        [LabelText("特性展示"),BoxGroup("Prefabs")]
+        public MaterialFeatureDisplayPanel featurePrefab;
+        
         private RawMaterial? _rawMaterial;
             
         [ShowInInspector, LabelText("物品")]
         public ItemPreviewForInventorySlot previewItem { get; private set; }
         private ItemRequireForInventorySlot _requireItem;
+        private MaterialFeatureDisplayPanel _featureItem;
             
         [ShowInInspector, BoxGroup("Delegate")]
         public IInventorySlotDrag handler;
@@ -68,8 +72,16 @@ namespace Tyrant
         
         private void Remove()
         {
-            Destroy(previewItem);
+            Destroy(previewItem.gameObject);
             previewItem = null;
+            RemoveMaterialFeature();
+        }
+
+        private void RemoveMaterialFeature()
+        {
+            if (ReferenceEquals(_featureItem, null)) return;
+            Destroy(_featureItem.gameObject);
+            _featureItem = null;
         }
         
         private void Refresh(IItem item)
@@ -77,6 +89,13 @@ namespace Tyrant
             previewItem = Instantiate(previewPrefab, transform).GetComponent<ItemPreviewForInventorySlot>();
             previewItem.handler = this;
             previewItem.AddItem(item);
+
+            if (item is Material material)
+            {
+                _featureItem = Instantiate(featurePrefab, transform).GetComponent<MaterialFeatureDisplayPanel>();
+                _featureItem.materialFeature = material.features;
+            }
+            
             RemoveRequireIfNeeded();
         }
 
@@ -108,10 +127,22 @@ namespace Tyrant
         public void OnWillDestroy(ItemPreviewForInventorySlot item)
         {
             AddItem(null);
+            RemoveMaterialFeature();
         }
 
         public void OnItemIsDragging(ItemPreviewForInventorySlot item)
         {
+            
+        }
+
+        public void OnItemEndDragging(ItemPreviewForInventorySlot item)
+        {
+            _featureItem.gameObject.SetActive(true);
+        }
+
+        public void OnItemBeginDrag(ItemPreviewForInventorySlot item)
+        {
+            _featureItem.gameObject.SetActive(false);
             DisplayRequireIfNeeded();
         }
     }

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Tyrant
 {
-    public class ItemPreviewForInventorySlot: MonoBehaviour, IDragHandler, IEndDragHandler
+    public class ItemPreviewForInventorySlot: MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler
     {
 
         public RectTransform rect;
@@ -77,6 +77,8 @@ namespace Tyrant
             transform.SetParent(_storeParent);
             canvasGroup.blocksRaycasts = true;
             rect.anchoredPosition = Vector2.zero;
+            
+            handler?.OnItemEndDragging(this);
         }
         
         
@@ -92,6 +94,10 @@ namespace Tyrant
             public void OnWillDestroy(ItemPreviewForInventorySlot eventData) { }
 
             public void OnItemIsDragging(ItemPreviewForInventorySlot item) { }
+            
+            public void OnItemEndDragging(ItemPreviewForInventorySlot item) { }
+            
+            public void OnItemBeginDrag(ItemPreviewForInventorySlot item) { }
         }
         
         public interface IInventoryItemDragging
@@ -101,6 +107,15 @@ namespace Tyrant
             public void OnWillDestroy(ItemPreviewForInventorySlot item);
             
             public void OnItemIsDragging(ItemPreviewForInventorySlot item);
+            
+            public void OnItemEndDragging(ItemPreviewForInventorySlot item);
+            
+            public void OnItemBeginDrag(ItemPreviewForInventorySlot item);
+        }
+
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            handler?.OnItemBeginDrag(this);
         }
     }
 }
