@@ -135,6 +135,11 @@ namespace Tyrant
         }
 
         public Quality quality => this;
+
+        public static Quality Random()
+        {
+            return new Quality(UnityEngine.Random.Range(0, 5).TierFromInt());
+        }
     }
 
     

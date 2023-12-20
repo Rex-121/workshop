@@ -28,7 +28,7 @@ namespace Tyrant
     
     public struct Material: IMaterial
     {
-        [ShowInInspector] public string itemName => rawMaterial.itemName;
+        [ShowInInspector] public string itemName => rawMaterial.itemName + $"<sprite={quality.tier.ToInt()}>";
 
 
         [ShowInInspector] public Sprite sprite => rawMaterial.sprite;
@@ -39,16 +39,18 @@ namespace Tyrant
         [ShowInInspector]
         public RawMaterial rawMaterial;
 
-        public Quality quality => Quality.On(Quality.Tier.Fine);
+        public Quality quality { get; set; }
 
         public Material(string name, Sprite sprite, string code)
         {
             rawMaterial = new RawMaterial(name, sprite, code);
+            quality = Quality.Random();
         }
         
         public Material(RawMaterial rawMaterial)
         {
             this.rawMaterial = rawMaterial;
+            quality = Quality.Random();
         }
     }
 }
