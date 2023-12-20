@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Sirenix.Utilities;
 using UnityEngine;
@@ -28,14 +29,10 @@ namespace Tyrant
         public BirthPackSO birthPackSO;
 
         public InventoryBag inventoryBag;
-
-        private void Start()
-        {
-
-            var materials = birthPackSO.materials.Select(v => v.toRawMaterial.toMaterial);
-
-            materials.ForEach(AddItem);
-        }
+        
+        
+        // 所有的材料
+        public IEnumerable<IItem> allMaterials => birthPackSO.materials.Select(v => v.toRawMaterial.toMaterial);
 
         public void AddItem(IItem item)
         {

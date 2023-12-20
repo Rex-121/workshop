@@ -567,7 +567,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   birthPackSO: {fileID: 11400000, guid: 9d83d37718698482da8a6d1a0184189d, type: 2}
-  inventoryBag: {fileID: 1129593951}
+  inventoryBag: {fileID: 1107071666}
 --- !u!4 &923988979
 Transform:
   m_ObjectHideFlags: 0
@@ -596,6 +596,7 @@ GameObject:
   - component: {fileID: 1107071662}
   - component: {fileID: 1107071664}
   - component: {fileID: 1107071665}
+  - component: {fileID: 1107071666}
   m_Layer: 5
   m_Name: "\u80CC\u5305"
   m_TagString: Untagged
@@ -699,6 +700,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 2
+--- !u!114 &1107071666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1107071660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56aba010ba2de4357a32bfd9cd2870b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotPrefab: {fileID: 160293481406136190, guid: 357dc39e0a42e40568f3f18ac83ed026, type: 3}
+  panel: {fileID: 1107071661}
+  maxSlot: 36
+  dragPointForItem: {fileID: 2125759327}
 --- !u!1 &1123052758
 GameObject:
   m_ObjectHideFlags: 0
@@ -844,7 +861,6 @@ GameObject:
   - component: {fileID: 1129593949}
   - component: {fileID: 1129593948}
   - component: {fileID: 1129593947}
-  - component: {fileID: 1129593951}
   m_Layer: 5
   m_Name: "\u80CC\u5305"
   m_TagString: Untagged
@@ -936,22 +952,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1129593951
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1129593946}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56aba010ba2de4357a32bfd9cd2870b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slotPrefab: {fileID: 160293481406136190, guid: 357dc39e0a42e40568f3f18ac83ed026, type: 3}
-  panel: {fileID: 1107071661}
-  maxSlot: 36
-  anchorx: {fileID: 2125759327}
 --- !u!1 &1565609506
 GameObject:
   m_ObjectHideFlags: 0
