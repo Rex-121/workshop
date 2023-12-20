@@ -1029,7 +1029,7 @@ MonoBehaviour:
   m_StartAxis: 0
   m_CellSize: {x: 36, y: 36}
   m_Spacing: {x: 3, y: 3}
-  m_Constraint: 0
+  m_Constraint: 1
   m_ConstraintCount: 2
 --- !u!114 &1565609510
 MonoBehaviour:
@@ -1082,8 +1082,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotPrefab: {fileID: 160293481406136190, guid: 357dc39e0a42e40568f3f18ac83ed026, type: 3}
-  requires: 2
-  panel: {fileID: 1565609507}
+  emptySlotPrefab: {fileID: 160293481406136190, guid: 3b2263a10e0c546699fd4cb0782ec11a, type: 3}
+  panel: {fileID: 1565609509}
   anchor: {fileID: 2125759327}
   bluePrintSO: {fileID: 11400000, guid: 40c2ecf75a79b476cbcea160120b293a, type: 2}
   slots: []

@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c829262ebb00d417eb9e31580f6a157b, type: 3}
-  m_Name: "\u94C1\u952D"
+  m_Name: "\u94DC\u952D"
   m_EditorClassIdentifier: 
-  name: "\u94C1\u952D"
-  icon: {fileID: 543605793, guid: e7ebd995b9831495395894a3ab465f37, type: 3}
+  name: "\u94DC\u952D"
+  icon: {fileID: 21300000, guid: e5273008dcb9b43eb9aa8ea366fb91e6, type: 3}
   code: II
+  featureSOs:
+  - {fileID: 11400000, guid: 667f9979c17f14efdaaf7a5a673980ea, type: 2}

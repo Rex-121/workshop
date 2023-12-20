@@ -22,7 +22,7 @@ namespace Tyrant
 
         private void Refresh()
         {
-            
+            if (!_materialFeature.Any()) return;
             icon.sprite = materialFeature.First().icon;
         }
         

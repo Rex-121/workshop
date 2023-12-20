@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
+using Sirenix.Utilities;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Tyrant
 {
@@ -13,10 +15,9 @@ namespace Tyrant
 
 
         public GameObject slotPrefab;
+        public GameObject emptySlotPrefab;
         
-        public int requires = 2;
-
-        public Transform panel;
+        public GridLayoutGroup panel;
 
         [LabelText("拖拽点")]
         public Transform anchor;
@@ -31,27 +32,46 @@ namespace Tyrant
 
             bluePrint = BluePrint.FromSO(bluePrintSO);
 
-            var requires = bluePrint.rawMaterialsRequires;
+            var requires = bluePrint.boardLines;
+
+            panel.constraintCount = requires.First().Count();
             
             for (int i = 0; i < requires.Count(); i++)
             {
-                var gb = Instantiate(slotPrefab, panel).GetComponent<InventorySlot>();
-                
-                gb.AddRequire(requires.ElementAt(i));
 
-                gb.handler = new MyStruct(item =>
+                var line = requires.ElementAt(i);
+
+                line.ForEach(v =>
                 {
-                    var success = gb.AddItemIfPossible(item.item);
-                    if (success)
+                    if (v == 0)
                     {
-                        item.Clear();
-                        Check();
+                        Instantiate(emptySlotPrefab, panel.transform);
                     }
-                });
-                
-                slots.Add(gb);
+                    else
+                    {
+                        var gb = Instantiate(slotPrefab, panel.transform).GetComponent<InventorySlot>();
+                    
+                        // gb.AddRequire(requires.ElementAt(i));
+                    
+                        gb.handler = new MyStruct(item =>
+                        {
+                            var success = gb.AddItemIfPossible(item.item);
+                            if (success)
+                            {
+                                item.Clear();
+                                Check();
+                            }
+                        });
+                    
+                        slots.Add(gb);
+                    
+                        gb.itemDraggingHandle = new ItemPreviewForInventorySlot.DefaultDragging(anchor);
+                    }
+                   
 
-                gb.itemDraggingHandle = new ItemPreviewForInventorySlot.DefaultDragging(anchor);
+                });
+
+                
             }
         }
 

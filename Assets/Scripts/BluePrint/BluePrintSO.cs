@@ -11,6 +11,14 @@ namespace Tyrant
         public MaterialSO[] materialSos;
 
         public Sprite icon;
+
+        public string board;
+
+        /*
+         * 00010-
+         * 12121-
+         * 00010-
+         */
         
     }
 }

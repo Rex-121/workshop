@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d04b126bc8245d2a21c68196de2f5e6, type: 3}
-  m_Name: "\u6742\u8D28"
+  m_Name: "\u6B8B\u7F3A"
   m_EditorClassIdentifier: 
-  featureName: "\u6742\u8D28"
-  icon: {fileID: 1168828404, guid: a34ddb617bb8f43cca3a995706d4ce89, type: 3}
-  featureUsage: "\u9AB0\u5B50 >3 \u751F\u6548"
+  featureName: "\u6B8B\u7F3A"
+  icon: {fileID: 1592936917, guid: a34ddb617bb8f43cca3a995706d4ce89, type: 3}
+  featureUsage: 

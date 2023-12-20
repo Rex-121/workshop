@@ -16,3 +16,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c8e53f76dbdd64650b02ec5646b34652, type: 2}
   - {fileID: 11400000, guid: c8e53f76dbdd64650b02ec5646b34652, type: 2}
   icon: {fileID: 0}
+  board: 00010:12121:00010

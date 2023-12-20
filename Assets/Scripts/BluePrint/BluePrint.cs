@@ -13,15 +13,40 @@ namespace Tyrant
 
         public Sprite icon;
 
-        public BluePrint(IEnumerable<RawMaterial> requires, Sprite icon)
+        public string board;
+
+        public BluePrint(IEnumerable<RawMaterial> requires, Sprite icon, string board)
         {
             rawMaterialsRequires = requires.ToArray();
             this.icon = icon;
+            this.board = board;
+        }
+
+        public IEnumerable<IEnumerable<int>> boardLines
+        {
+            get
+            {
+                var lines = board.Split(":");
+                var all = new IEnumerable<int>[lines.Length];
+                for (var i = 0; i < lines.Length; i++)
+                {
+                    var line = lines[i];
+                    var array = new int[line.Length];
+                    for (var j = 0; j < line.Length; j++)
+                    {
+                        Debug.Log(line.ElementAt(j));
+                        array[j] = int.Parse(line.ElementAt(j).ToString());
+                    }
+                    all[i] = array;
+                }
+
+                return all;
+            }
         }
 
         public static BluePrint FromSO(BluePrintSO so)
         {
-            return new BluePrint(so.materialSos.Select(v => v.toRawMaterial), so.icon);
+            return new BluePrint(so.materialSos.Select(v => v.toRawMaterial), so.icon, so.board);
         }
 
         public bool IsMaterialEnough(IEnumerable<IMaterial> materials)
