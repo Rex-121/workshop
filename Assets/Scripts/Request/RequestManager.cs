@@ -31,16 +31,21 @@ namespace Tyrant
 
         public Transform requestPanel;
         public RequestItem requestItemPrefab;
-        private void Start()
-        {
-            RequestGenesis.main.bluePrintSO
-                .Select(BluePrint.FromSO)
-                .ForEach(v =>
-            {
-                var requestItem = Instantiate(requestItemPrefab, requestPanel).GetComponent<RequestItem>();
-                requestItem.bluePrint = v;
-            });
+        // private void Start()
+        // {
+        //     RequestGenesis.main.bluePrintSO
+        //         .Select(BluePrint.FromSO)
+        //         .ForEach(v =>
+        //     {
+        //         var requestItem = Instantiate(requestItemPrefab, requestPanel).GetComponent<RequestItem>();
+        //         requestItem.bluePrint = v;
+        //     });
+        // }
 
+        public void PreviewBluePrint(BluePrint bp)
+        {
+            var requestItem = Instantiate(requestItemPrefab, requestPanel).GetComponent<RequestItem>();
+            requestItem.bluePrint = bp;
         }
 
         public void TryForgeThisBluePrint(BluePrint bp)
