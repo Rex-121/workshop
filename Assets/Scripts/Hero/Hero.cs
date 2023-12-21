@@ -1,19 +1,36 @@
+using System;
+using UniRx;
 using UnityEngine;
 
 namespace Tyrant
 {
+    [RequireComponent(typeof(HeroRequest))]
     public class Hero : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
-        {
         
+        private HeroRequest _heroRequest;
+        public GameObject healthBar;
+        public Attribute attribute;
+
+        public string heroName;
+
+        private BehaviorSubject<bool> _isOnAnaAdventure = new(false);
+
+        public HeroActionQueue actionQueue;
+        private void Awake()
+        {
+            _heroRequest = GetComponent<HeroRequest>();
+            actionQueue = GetComponent<HeroActionQueue>();
         }
 
-        // Update is called once per frame
-        void Update()
+        private void Start()
         {
-        
+            _isOnAnaAdventure
+                .Subscribe(v =>
+            {
+                healthBar.SetActive(v);
+                _heroRequest.gameObject.SetActive(!v);
+            }).AddTo(this);
         }
     }
 }
