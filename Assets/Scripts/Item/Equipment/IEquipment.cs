@@ -19,10 +19,17 @@ namespace Tyrant
 
         public Quality quality => Quality.On(Quality.Tier.Fine);
 
-        public Equipment(string name)
+        // public Equipment(string name)
+        // {
+        //     itemName = name;
+        //     sprite = null;
+        // }
+
+
+        public Equipment(EquipmentSO so)
         {
-            itemName = name;
-            sprite = null;
+            itemName = so.equipmentName;
+            sprite = so.icon;
         }
     }
     

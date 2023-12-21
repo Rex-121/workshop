@@ -152,7 +152,7 @@ namespace Tyrant
             Debug.Log($"make={makes}, quality={qualities}");
             
             // 合成
-            var equipment = ForgeCraft.DoCraft(makes, qualities);
+            var equipment = EquipmentGenesis.main.DoCraft(makes, qualities);
             
             InventoryManager.main.AddItem(equipment);
             

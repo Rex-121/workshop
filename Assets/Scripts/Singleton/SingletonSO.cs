@@ -10,7 +10,7 @@ namespace Tyrant
 
         private static T _instance;
 
-        public static T shared
+        public static T main
         {
             get
             {

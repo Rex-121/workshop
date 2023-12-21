@@ -8,7 +8,7 @@ namespace Tyrant
     public class MaterialSO : ScriptableObject
     {
         
-        public string name;
+        public string materialName;
         
         public Sprite icon;
 
@@ -17,7 +17,7 @@ namespace Tyrant
         [LabelText("特性")]
         public MaterialFeatureSO[] featureSOs;
         
-        public RawMaterial toRawMaterial => new (name, icon, code, featureSOs.Select(MaterialFeatureMakes.From));
+        public RawMaterial toRawMaterial => new (materialName, icon, code, featureSOs.Select(MaterialFeatureMakes.From));
 
     }
 }
