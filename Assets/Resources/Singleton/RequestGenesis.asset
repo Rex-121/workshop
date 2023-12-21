@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 103f204b5bcc4d9596543f78106b9508, type: 3}
-  m_Name: EquipmentGenesis
+  m_Script: {fileID: 11500000, guid: ac40a447d7c24131a03be77b58cbb255, type: 3}
+  m_Name: RequestGenesis
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -21,4 +21,6 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  equipmentSO: {fileID: 11400000, guid: dca6efd4335b7499bb71b82c5dd95636, type: 2}
+  bluePrintSO:
+  - {fileID: 11400000, guid: 9baeb6b3018df4440a6714b87ca05554, type: 2}
+  - {fileID: 11400000, guid: 40c2ecf75a79b476cbcea160120b293a, type: 2}

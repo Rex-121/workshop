@@ -34,7 +34,6 @@ namespace Tyrant
                     var array = new int[line.Length];
                     for (var j = 0; j < line.Length; j++)
                     {
-                        Debug.Log(line.ElementAt(j));
                         array[j] = int.Parse(line.ElementAt(j).ToString());
                     }
                     all[i] = array;

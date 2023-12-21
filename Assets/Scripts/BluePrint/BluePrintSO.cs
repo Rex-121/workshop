@@ -10,6 +10,7 @@ namespace Tyrant
         [LabelText("所需材料")]
         public MaterialSO[] materialSos;
 
+        [PreviewField]
         public Sprite icon;
 
         public string board;

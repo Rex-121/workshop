@@ -21,17 +21,13 @@ namespace Tyrant
 
         [LabelText("拖拽点")]
         public Transform anchor;
-
-        public BluePrintSO bluePrintSO;
-
-        public BluePrint bluePrint;
-
+        
         public List<InventorySlot> slots = new();
+        
+        private static BluePrint bluePrint => RequestManager.main.bluePrint;
         private void Start()
         {
-
-            bluePrint = BluePrint.FromSO(bluePrintSO);
-
+            
             var requires = bluePrint.boardLines;
 
             panel.constraintCount = requires.First().Count();

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9925fb1d62ccc465085a31a129ded3d2, type: 3}
-  m_Name: "\u84DD\u56FE"
+  m_Name: "\u77ED\u5251"
   m_EditorClassIdentifier: 
   materialSos:
+  - {fileID: 11400000, guid: ac1314e9315df4e5e8801de8b50b1dc5, type: 2}
   - {fileID: 11400000, guid: c8e53f76dbdd64650b02ec5646b34652, type: 2}
-  - {fileID: 11400000, guid: c8e53f76dbdd64650b02ec5646b34652, type: 2}
-  icon: {fileID: 0}
-  board: 00010:12121:00010
+  icon: {fileID: 1489847695, guid: 7499f13c7512c487cb01c2c358ef10d8, type: 3}
+  board: 0010:2121:0010
