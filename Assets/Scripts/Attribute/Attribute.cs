@@ -34,6 +34,15 @@ namespace Tyrant
             return new Attribute(a.strength + b.strength, a.dexterity + b.dexterity, a.intelligence + b.intelligence);
         }
     }
-    
+
+    public enum AttributeTypes
+    {
+        [LabelText("力量")]
+        Strength,
+        [LabelText("敏捷")]
+        Dexterity,
+        [LabelText("智力")]
+        Intelligence
+    }
     
 }

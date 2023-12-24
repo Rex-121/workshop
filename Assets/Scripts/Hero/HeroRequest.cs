@@ -13,7 +13,7 @@ namespace Tyrant
             var random = Random.Range(0, 2);
             var so = RequestGenesis.main.bluePrintSO[random];
             
-            RequestManager.main.PreviewBluePrint(BluePrint.FromSO(so));
+            RequestManager.main.PreviewBluePrint(BluePrint.FromSO(so), GetComponent<HeroMono>());
             
         }
         

@@ -42,10 +42,11 @@ namespace Tyrant
         //     });
         // }
 
-        public void PreviewBluePrint(BluePrint bp)
+        public void PreviewBluePrint(BluePrint bp, HeroMono heroMono)
         {
-            var requestItem = Instantiate(requestItemPrefab, requestPanel).GetComponent<RequestItem>();
-            requestItem.bluePrint = bp;
+            var gb = Instantiate(requestItemPrefab, requestPanel);
+            gb.GetComponent<RequestItem>().bluePrint = bp;
+            gb.GetComponent<HeroInfoDisplay>().hero = heroMono.heroic;
         }
 
         public void TryForgeThisBluePrint(BluePrint bp)

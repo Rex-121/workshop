@@ -1,0 +1,45 @@
+using Sirenix.OdinInspector;
+using UnityEngine;
+
+namespace Tyrant
+{
+    public readonly struct AttackPower
+    {
+
+        [ShowInInspector, ReadOnly]
+        private readonly RangeInt _range;
+
+        [LabelText("伤害"), ShowInInspector]
+        public string predictPower => $"{_range.start} - {_range.end}";
+
+        public AttackPower(RangeInt r)
+        {
+            _range = r;
+        }
+
+        public AttackPower(int from, int to)
+        {
+            _range = new RangeInt(from, to - from);
+        }
+
+
+        public Attack power => new (Random.Range(_range.start, _range.end + 1));
+        
+        
+        public static AttackPower operator +(AttackPower first, int value)
+        {
+            return new AttackPower(first._range.start + value, first._range.end + value);
+        }
+    }
+
+
+    public readonly struct Attack
+    {
+        public readonly int power;
+
+        public Attack(int power)
+        {
+            this.power = power;
+        }
+    }
+}

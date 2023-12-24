@@ -1,32 +1,34 @@
 using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Tyrant
 {
-    [RequireComponent(typeof(Hero))]
-    public class HeroActionQueue: MonoBehaviour
+    public class HeroActionQueue
     {
 
-        private Hero _hero;
+        private readonly IAmHero _hero;
 
         private Attribute attribute => _hero.attribute;
 
 
-        private void Awake()
+        public HeroActionQueue(IAmHero hero)
         {
-            _hero = GetComponent<Hero>();
+            _hero = hero;
         }
 
-        public int actionStore = 0;
+        [ShowInInspector, LabelText("行动积累值")]
+        private int _actionStore = 0;
 
-        public Hero CanAction(int value)
+        public bool CanAction(int value)
         {
+            if (!_hero.stillAlive) return false;
             
-            actionStore += attribute.dexterity;
+            _actionStore += attribute.dexterity;
 
-            if (actionStore < value) return null;
-            actionStore -= value;
-            return _hero;
+            if (_actionStore < value) return false;
+            _actionStore -= value;
+            return true;
 
         }
     }
