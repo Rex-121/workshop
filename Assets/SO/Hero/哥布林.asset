@@ -12,6 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b169bdef87d5435cbd2278926e09d254, type: 3}
   m_Name: "\u54E5\u5E03\u6797"
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: skill
+      Entry: 7
+      Data: 0|Tyrant.Xx, Assembly-CSharp
+    - Name: skillCode
+      Entry: 1
+      Data: baf
+    - Name: ll
+      Entry: 1
+      Data: abac
+    - Name: 
+      Entry: 8
+      Data: 
   enemyName: "\u54E5\u5E03\u6797"
   enemyMonoPrefab: {fileID: 8081380150682540390, guid: 20addfd5dc39a4f68b547986932f4f58, type: 3}
   attribute:

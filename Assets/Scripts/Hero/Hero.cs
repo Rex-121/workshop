@@ -47,7 +47,7 @@ namespace Tyrant
 
         public static Hero FromSO(JobSO jobSO)
         {
-            return new Hero(jobSO.attribute, jobSO.healthStrategy, jobSO.mainAttribute, jobSO.jobName, SkillFounder.Found(jobSO.skills));
+            return new Hero(jobSO.attribute, jobSO.healthStrategy, jobSO.mainAttribute, jobSO.jobName, jobSO.skills ?? new ISkill[] {});
         }
         private int attributePower => mainAttribute switch
         {

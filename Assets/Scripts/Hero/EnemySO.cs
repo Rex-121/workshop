@@ -5,7 +5,7 @@ namespace Tyrant
 {
     
     [CreateAssetMenu(menuName = "Hero/Enemy", fileName = "Enemy")]
-    public class EnemySO: ScriptableObject
+    public class EnemySO: SerializedScriptableObject
     {
         public string enemyName;
         
@@ -23,5 +23,7 @@ namespace Tyrant
 
 
         public LootSO lootSO;
+
+        public ISkill skill;
     }
 }

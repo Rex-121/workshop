@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c51c6e3f1e99470483d694c75f1db60c, type: 3}
   m_Name: "\u6E38\u4FA0"
   m_EditorClassIdentifier: 
+  jobName: "\u6E38\u4FA0"
   heroMonoPrefab: {fileID: 114118514635062416, guid: 608ee5aa5078040bbb63498e1d0cb3c7, type: 3}
   attribute:
     strength: 3
@@ -23,3 +24,4 @@ MonoBehaviour:
     dexterity: 4
     intelligence: 0
     baseHealth: 9
+  skills: []

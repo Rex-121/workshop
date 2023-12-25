@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 namespace Tyrant
 {
     [CreateAssetMenu(menuName = "Hero/Hero", fileName = "Hero")]
-    public class JobSO: ScriptableObject
+    public class JobSO: SerializedScriptableObject
     {
         public string jobName;
         
@@ -23,7 +23,6 @@ namespace Tyrant
         [ShowInInspector]
         public int health => healthStrategy.Health(attribute);
 
-
-        public string[] skills;
+        public ISkill[] skills;
     }
 }
