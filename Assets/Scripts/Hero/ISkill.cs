@@ -36,19 +36,19 @@ namespace Tyrant
     //     
     // }
     
-    public interface ISkill
-    {
-
-        // public string skillCode { get; }
-        
-        public Attack SkillBy(Attack attack);
-        
-        
-        public string skillName { get; }
-        
-        public string skillDescription { get; }
-
-    }
+    // public interface ISkill
+    // {
+    //
+    //     // public string skillCode { get; }
+    //     
+    //     public Attack SkillBy(Attack attack);
+    //     
+    //     
+    //     public string skillName { get; }
+    //     
+    //     public string skillDescription { get; }
+    //
+    // }
 
     // public struct Skill: ISkill
     // {
@@ -71,45 +71,5 @@ namespace Tyrant
     //     }
     // }
 
-    // 伤害减免
-    [Serializable, HideReferenceObjectPicker]
-    public struct DamageReduceSkill : ISkill, IBuffModule
-    {
-        // public string skillCode => "dr";
-        [SerializeField, PropertyOrder(-1), HideLabel, SuffixLabel("技能名称", true), HorizontalGroup("Skill")]
-        public string skillName { get; set; }
-        
-        [LabelText("减伤"), HorizontalGroup("Skill")]
-        public int reduce;
-
-        [ShowInInspector, HideLabel]
-        public string skillDescription => $"所有伤害减少{reduce}点";
-        
-        
-        
-        // public DamageReduceSkill(int r)
-        // {
-        //     reduce = r;
-        // }
-        //
-        // public DamageReduceSkill(string r)
-        // {
-        //     reduce = int.Parse(r);
-        // }
-
-
-        public Attack SkillBy(Attack attack)
-        {
-            return new Attack( Math.Max(attack.power - reduce, 0));
-        }
-
-        public void Apply(BuffInfo buffInfo, Attack attack = new Attack(), Action<Attack> attackHandler = null)
-        {
-            var a = new Attack( Math.Max(attack.power - reduce, 0));
-            attackHandler?.Invoke(a);
-        }
-    }
-    
-    
     
 }

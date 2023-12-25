@@ -6,17 +6,14 @@ namespace Tyrant
     public class BuffInfo
     {
 
-        public BuffDataSO buffDataSO;
+        public BuffInfo(BuffDataSO s)
+        {
+            buffDataSO = s;
+        }
 
-
-        // public GameObject creator;
-        //
-        // public GameObject target;
-
+        public readonly BuffDataSO buffDataSO;
 
         public int currentStack = 1;
-
-        
 
         /// <summary>
         /// 增加buff层数（如果可以/需要增加）

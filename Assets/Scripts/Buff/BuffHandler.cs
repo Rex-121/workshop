@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.Utilities;
+using UnityEngine;
 
 namespace Tyrant
 {
@@ -8,6 +10,11 @@ namespace Tyrant
     {
         private readonly LinkedList<BuffInfo> _buffList = new();
 
+
+        public void UseBuffIfNeeded(Action<BuffInfo> fore)
+        {
+            _buffList.ForEach(fore.Invoke);
+        }
 
         public void AddBuff(BuffInfo buff)
         {
@@ -31,11 +38,10 @@ namespace Tyrant
                 
                 foundBuff = buff;
                 
-                
             }
             
             // buff 回调 `onCreate`
-            foundBuff.buffDataSO.onCreate.Apply(foundBuff);
+            foundBuff.buffDataSO.onCreate?.Apply(foundBuff);
 
         }
 
@@ -44,13 +50,13 @@ namespace Tyrant
             switch (buff.buffDataSO.stackRemoveType)
             {
                 case BuffRemoveStackUpdate.Clear:
-                    buff.buffDataSO.onRemove.Apply(buff);
+                    buff.buffDataSO.onRemove?.Apply(buff);
                     _buffList.Remove(buff);
                     break;
                 case BuffRemoveStackUpdate.Reduce:
                     buff.currentStack--;
 
-                    buff.buffDataSO.onRemove.Apply(buff);
+                    buff.buffDataSO.onRemove?.Apply(buff);
 
                     if (buff.currentStack == 0)
                     {

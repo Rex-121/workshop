@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
+using Sirenix.Utilities;
 
 namespace Tyrant
 {
@@ -27,6 +29,9 @@ namespace Tyrant
         
         [ShowInInspector]
         public AttackPower attackPower;
+        
+        
+        public BuffHandler buffHandler = new BuffHandler();
 
         public Enemy(EnemySO so)
         {
@@ -40,6 +45,13 @@ namespace Tyrant
             actionQueue = new HeroActionQueue(this);
 
             attackPower = new AttackPower(5, 6);
+            
+            (so.skills ?? new BuffDataSO[] { })
+                .Select(v => v.ToBuff())
+                .ForEach(v =>
+            {
+                buffHandler.AddBuff(v);
+            });
         }
         
         public Enemy()
@@ -51,6 +63,15 @@ namespace Tyrant
         public Attack Attack(IBattleVersus battleVersus)
         {
             var attack = attackPower.power;
+            
+            buffHandler.UseBuffIfNeeded(v =>
+            {
+                v.buffDataSO.onHit?.Apply(v, attack, (newPower) =>
+                {
+                    attack = newPower;
+                });
+            });
+            
             battleVersus.TakeDamage(attack);
             return attack;
         }

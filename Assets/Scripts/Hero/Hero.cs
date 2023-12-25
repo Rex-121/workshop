@@ -26,11 +26,13 @@ namespace Tyrant
         
         public bool stillAlive => !health.isEmpty;
 
-        public ISkill[] skills;
+        // public BuffInfo[] skills;
+
+        public BuffHandler buffHandler = new BuffHandler();
 
         public IWeapon weapon = new Sword(new Attribute(5, 5, 5), null);
         
-        Hero(Attribute a, HeroHealthStrategy healthStrategy, AttributeTypes mainAttribute, string jobName, IEnumerable<ISkill> skills)
+        Hero(Attribute a, HeroHealthStrategy healthStrategy, AttributeTypes mainAttribute, string jobName, IEnumerable<BuffInfo> skills)
         {
             attribute = a;
             health = new Health(attribute, healthStrategy);
@@ -42,12 +44,17 @@ namespace Tyrant
             
             attackPower = weapon.power + attributePower;
 
-            this.skills = skills.ToArray();
+            skills.ForEach(v =>
+            {
+                buffHandler.AddBuff(v);
+            });
+            // buffHandler.AddBuff();
+            // this.skills = skills.ToArray();
         }
 
         public static Hero FromSO(JobSO jobSO)
         {
-            return new Hero(jobSO.attribute, jobSO.healthStrategy, jobSO.mainAttribute, jobSO.jobName, jobSO.skills ?? new ISkill[] {});
+            return new Hero(jobSO.attribute, jobSO.healthStrategy, jobSO.mainAttribute, jobSO.jobName, (jobSO.skills ?? new BuffDataSO[] {}).Select(v => v.ToBuff()));
         }
         private int attributePower => mainAttribute switch
         {
@@ -66,9 +73,12 @@ namespace Tyrant
 
         public void TakeDamage(Attack attack)
         {
-            skills.ForEach(v =>
+            buffHandler.UseBuffIfNeeded(v =>
             {
-                attack = v.SkillBy(attack);
+                v.buffDataSO.onBeHit?.Apply(v, attack, (newPower) =>
+                {
+                    attack = newPower;
+                });
             });
             
             var damage = attack.power;

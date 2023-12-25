@@ -23,7 +23,8 @@ namespace Tyrant
 
 
         public LootSO lootSO;
-
-        public ISkill skill;
+        
+        
+        public BuffDataSO[] skills;
     }
 }

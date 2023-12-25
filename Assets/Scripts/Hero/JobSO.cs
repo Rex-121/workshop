@@ -23,6 +23,6 @@ namespace Tyrant
         [ShowInInspector]
         public int health => healthStrategy.Health(attribute);
 
-        public ISkill[] skills;
+        public BuffDataSO[] skills;
     }
 }

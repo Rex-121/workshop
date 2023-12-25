@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b169bdef87d5435cbd2278926e09d254, type: 3}
-  m_Name: "\u54E5\u5E03\u6797"
+  m_Script: {fileID: 11500000, guid: 9bbb291ec27c74a8281595aa4ae54273, type: 3}
+  m_Name: "\u575A\u97E7(\u6218\u58EB\u88AB\u52A8)"
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -21,27 +21,38 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: skill
+    - Name: onCreate
+      Entry: 6
+      Data: 
+    - Name: onRemove
+      Entry: 6
+      Data: 
+    - Name: onHit
+      Entry: 6
+      Data: 
+    - Name: onBeHit
       Entry: 7
       Data: 0|Tyrant.DamageReduceSkill, Assembly-CSharp
     - Name: skillName
-      Entry: 6
-      Data: 
+      Entry: 1
+      Data: "\u575A\u97E7"
     - Name: reduce
       Entry: 3
-      Data: 0
+      Data: 3
     - Name: 
       Entry: 8
       Data: 
-  enemyName: "\u54E5\u5E03\u6797"
-  enemyMonoPrefab: {fileID: 8081380150682540390, guid: 20addfd5dc39a4f68b547986932f4f58, type: 3}
-  attribute:
-    strength: 5
-    dexterity: 5
-    intelligence: 5
-  healthStrategy:
-    strength: 5
-    dexterity: 5
-    intelligence: 5
-    baseHealth: 22
-  lootSO: {fileID: 11400000, guid: 76fb0cd831a6b448da4348cd8ca386d5, type: 2}
+    - Name: onKill
+      Entry: 6
+      Data: 
+    - Name: onBeKill
+      Entry: 6
+      Data: 
+  id: 0
+  buffName: "\u575A\u97E7"
+  description: "\u51CF\u5C11\u53D7\u5230\u7684\u4F24\u5BB3"
+  icon: {fileID: 0}
+  priority: 0
+  maxStack: 1
+  updateTimeType: 2
+  stackRemoveType: 0

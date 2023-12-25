@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bbb291ec27c74a8281595aa4ae54273, type: 3}
-  m_Name: "\u575A\u97E7"
+  m_Name: "\u91CD\u51FB"
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -27,11 +27,14 @@ MonoBehaviour:
     - Name: onRemove
       Entry: 6
       Data: 
-    - Name: onTick
-      Entry: 6
-      Data: 
     - Name: onHit
-      Entry: 6
+      Entry: 7
+      Data: 0|Tyrant.CriThroughTurnsBuffModule, Assembly-CSharp
+    - Name: criticalPerTurn
+      Entry: 3
+      Data: 3
+    - Name: 
+      Entry: 8
       Data: 
     - Name: onBeHit
       Entry: 6
@@ -42,12 +45,11 @@ MonoBehaviour:
     - Name: onBeKill
       Entry: 6
       Data: 
-  id: 0
-  buffName: 
+  id: 1
+  buffName: "\u91CD\u51FB"
   description: 
   icon: {fileID: 0}
-  priority: 0
-  maxStack: 0
-  isForever: 0
+  priority: 2
+  maxStack: 1
   updateTimeType: 0
-  stackUpdateType: 0
+  stackRemoveType: 0
