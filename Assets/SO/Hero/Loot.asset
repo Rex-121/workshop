@@ -27,4 +27,4 @@ MonoBehaviour:
       Weight: 1
       ChancePercentage: 25
     WeightsTotal: 4
-  lootCount: 3
+  lootCount: {x: 0, y: 1}

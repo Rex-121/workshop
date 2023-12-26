@@ -22,6 +22,9 @@ namespace Tyrant
         // private List<IAmHero> allBattles = new();
 
         [NonSerialized, ShowInInspector] private BattleStands battles;
+
+
+        public HeroSquadBackpack backpack;
         
         private void Start()
         {
@@ -55,6 +58,14 @@ namespace Tyrant
             StartCoroutine(StartBattle(0, 1));
 
         }
+        
+        private void EnemyDidDefeated(EnemyMono eMono)
+        {
+            enemyDefeated.Invoke(_enemyMono);
+            var rawMaterials = _enemyMono.enemy.loot.Select(v => v.toRawMaterial.toMaterial);
+            rawMaterials.ForEach(backpack.AddItem);
+        }
+
         
         private IEnumerator StartBattle(int index, int turn)
         {
@@ -99,7 +110,7 @@ namespace Tyrant
                 else
                 {
                     yield return null;
-                    enemyDefeated.Invoke(_enemyMono);
+                    EnemyDidDefeated(_enemyMono);
                 }
                 
             }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Tyrant
@@ -12,12 +13,16 @@ namespace Tyrant
         public LootTable<Loot<MaterialSO>, MaterialSO> lootTable;
 
 
-        public int lootCount;
+        [MinMaxSlider(0, 10, true)]
+        public Vector2Int lootCount;
         
         public virtual IEnumerable<MaterialSO> GetLoot()
         {
-            var array = new MaterialSO[lootCount];
-            for (var i = 0; i < lootCount; i++)
+
+            var count = new RangeInt(lootCount.x, lootCount.y - lootCount.x).RandomInRange();
+            
+            var array = new MaterialSO[count];
+            for (var i = 0; i < count; i++)
             {
                 array[i] = lootTable.GetLoot().loot;
             }

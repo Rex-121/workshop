@@ -30,7 +30,7 @@ public class AdventureMono : MonoBehaviour
         {
             var heroSquad = heroSquads[i];
             // 怪物被击杀
-            heroSquad.enemyDefeated = EnemyDidDefeated;
+            heroSquad.enemyDefeated += EnemyDidDefeated;
             
             var _enemyMono = Instantiate(enemySO.enemyMonoPrefab, new Vector3(5.2f, 0, 0), Quaternion.identity, heroSquad.transform);
 
