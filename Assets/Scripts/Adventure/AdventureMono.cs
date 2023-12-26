@@ -12,15 +12,9 @@ public class AdventureMono : MonoBehaviour
     
     public HeroSquad[] heroSquads;
 
-    public EnemySO enemySO;
+    public DungeonSO dungeonSO;
     
-    // [NonSerialized]
-    // private EnemyMono _enemyMono;
-
-    // [NonSerialized]
-    // private List<IAmHero> allBattles = new();
-    
-    [Button]
+    [Button, DisableInEditorMode]
     public void XStart()
     {
 
@@ -28,21 +22,17 @@ public class AdventureMono : MonoBehaviour
 
         for (var i = 0; i < heroSquads.Count(); i++)
         {
+            
+            var dungeon = dungeonSO.toDungeon;
+            
             var heroSquad = heroSquads[i];
             // 怪物被击杀
             heroSquad.enemyDefeated += EnemyDidDefeated;
             
-            var _enemyMono = Instantiate(enemySO.enemyMonoPrefab, new Vector3(5.2f, 0, 0), Quaternion.identity, heroSquad.transform);
-
-            _enemyMono.NewEnemy(enemySO);
-            
-            heroSquad.NewEnemy(_enemyMono);
+            // 开始`dungeon`
+            heroSquad.DidEnterDungeon(dungeon);
         }
         
-        
-        // allBattles.AddRange(heroSquad.heroes);
-        // allBattles.Add(_enemyMono);
-
     }
 
 
@@ -50,7 +40,5 @@ public class AdventureMono : MonoBehaviour
     {
         Destroy(eMono.gameObject);
     }
-    
-    
-   
+
 }

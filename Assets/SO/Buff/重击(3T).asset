@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bbb291ec27c74a8281595aa4ae54273, type: 3}
-  m_Name: "\u91CD\u51FB"
+  m_Name: "\u91CD\u51FB(3T)"
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -32,7 +32,7 @@ MonoBehaviour:
       Data: 0|Tyrant.CriThroughTurnsBuffModule, Assembly-CSharp
     - Name: criticalPerTurn
       Entry: 3
-      Data: 5
+      Data: 3
     - Name: 
       Entry: 8
       Data: 

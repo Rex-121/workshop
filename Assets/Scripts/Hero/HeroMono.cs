@@ -43,7 +43,7 @@ namespace Tyrant
         {
             _hero = Hero.FromSO(jobSO);
             
-            healthBar.text = _hero.health.healthBarDisplay;
+            // healthBar.text = _hero.health.healthBarDisplay;
 
             nameLabel.text = _hero.heroName;
         }
@@ -58,6 +58,11 @@ namespace Tyrant
             //     healthBar.gameObject.SetActive(v);
             //     // _heroRequest.gameObject.SetActive(!v);
             // }).AddTo(this);
+
+            heroic.health.healthDisplayRx.Subscribe(v =>
+            {
+                healthBar.text = v;
+            }).AddTo(this);
         }
 
         public Attack Attack(IBattleVersus battleVersus)
@@ -77,7 +82,7 @@ namespace Tyrant
         public void TakeDamage(Attack attack)
         {
             _hero.TakeDamage(attack);
-            healthBar.text = _hero.health.healthBarDisplay;
+            // healthBar.text = _hero.health.healthBarDisplay;
         }
 
         private void OnMouseEnter()

@@ -1,0 +1,110 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75e69ea2f89f8455abdf034485aa6cf4, type: 3}
+  m_Name: "\u54E5\u5E03\u6797\u8425\u5730"
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: b5a3dbe622cb74ec4a1ee3fb32792244, type: 2}
+    - {fileID: 11400000, guid: ccc939c132f6346bb88c2ed0c8e7bad3, type: 2}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: trips
+      Entry: 7
+      Data: 0|Tyrant.IDungeonNode[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 5
+    - Name: 
+      Entry: 7
+      Data: 1|Tyrant.DungeonTripNode, Assembly-CSharp
+    - Name: delay
+      Entry: 3
+      Data: 1
+    - Name: enemySO
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 2|Tyrant.DungeonTripNode, Assembly-CSharp
+    - Name: delay
+      Entry: 3
+      Data: 1
+    - Name: enemySO
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 3|Tyrant.DungeonHealthSupplyTripNode, Assembly-CSharp
+    - Name: delay
+      Entry: 3
+      Data: 2
+    - Name: healthSupply
+      Entry: 3
+      Data: 10
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 4|Tyrant.DungeonTripNode, Assembly-CSharp
+    - Name: delay
+      Entry: 3
+      Data: 0
+    - Name: enemySO
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 5|Tyrant.DungeonTripNode, Assembly-CSharp
+    - Name: delay
+      Entry: 3
+      Data: 0
+    - Name: enemySO
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: onNodeAction
+      Entry: 6
+      Data: 
+    - Name: onDungeonBegin
+      Entry: 7
+      Data: 6|Tyrant.DefaultDungeonBeginAction, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: onDungeonEnd
+      Entry: 6
+      Data: 
+  dungeonName: "\u54E5\u5E03\u6797\u8425\u5730"
