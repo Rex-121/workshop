@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace Tyrant
 {
@@ -14,6 +15,7 @@ namespace Tyrant
 
         public BattlePosition enemies;
 
+        [ShowInInspector]
         private List<IAmHero> f;
 
         public BattleStands(BattlePosition heroes, BattlePosition enemies)
@@ -73,7 +75,7 @@ namespace Tyrant
             get
             {
                 var first = f.First();
-
+                
                 return first is not {stillAlive: true} ? middle : first;
             }
         }
@@ -87,6 +89,8 @@ namespace Tyrant
                 return second is not {stillAlive: true} ? tail : second;
             }
         }
+
+        public bool isAllDown => f.All(v => !v.stillAlive);
 
         [ShowInInspector, LabelText("后置")]
         public IAmHero tail => f[2];

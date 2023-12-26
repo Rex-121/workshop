@@ -14,9 +14,20 @@ namespace Tyrant
     {
 
         public JobSO[] jobSO;
-        
-        [NonSerialized, ShowInInspector] public readonly HeroMono[] heroes = new HeroMono[3];
 
+        [ShowInInspector] public HeroMono[] heroes;// = new HeroMono[3];
+        // {
+        //     get
+        //     {
+        //         if (!_heroes.IsNullOrEmpty()) return _heroes;
+        //         _heroes = new HeroMono[3];
+        //         M();
+        //         return _heroes;
+        //     }
+        // }
+        //
+        // private HeroMono[] _heroes;// = new HeroMono[3];
+        
         public Action<EnemyMono> enemyDefeated;
 
         [NonSerialized, ShowInInspector] private BattleStands battles;
@@ -27,9 +38,37 @@ namespace Tyrant
         public HeroSquadBackpack backpack;
 
         public Canvas parentCanvas;
-        
+
         private void Start()
         {
+            parentCanvas.worldCamera = Camera.main;
+
+            PositionCanvas();
+        }
+
+        private void PositionCanvas()
+        {
+            var position = Camera.main.GetCanvasPosition(transform, parentCanvas);
+
+            backpack.GetComponent<RectTransform>().anchoredPosition = 
+                position + new Vector2(-24, -35);
+            
+            dungeonLabel.transform.localPosition = position +  new Vector2(-24, -25);
+            
+            dungeonRoadMapLabel.transform.localPosition = position +  new Vector2(95, -25);
+        }
+
+        private void OnEnable()
+        {
+            M();
+        }
+
+        private void M()
+        {
+            if (!heroes.IsNullOrEmpty())return;
+
+            heroes = new HeroMono[3];
+            
             for (var i = 0; i < jobSO.Length; i++)
             {
                  var hero = Instantiate(jobSO[i].heroMonoPrefab, new Vector3(1.2f * i, 0, 0), Quaternion.identity, transform);
@@ -37,16 +76,6 @@ namespace Tyrant
                  hero.RestoreFromSO(jobSO[i]);
                  heroes[i] = hero;
             }
-
-            var postion = Camera.main.GetCanvasPosition(transform, parentCanvas);
-
-            backpack.GetComponent<RectTransform>().anchoredPosition = 
-                postion + new Vector2(-24, -35);
-            
-            dungeonLabel.transform.localPosition = postion +  new Vector2(-24, -25);
-            
-            dungeonRoadMapLabel.transform.localPosition = postion +  new Vector2(95, -25);
-            //95 20
         }
 
         private void OnDrawGizmos()
@@ -66,6 +95,7 @@ namespace Tyrant
         // 开始`Dungeon`
         public void DidEnterDungeon(Dungeon dungeon)
         {
+            if (_dungeon != null) return;
             _dungeon = dungeon;
             dungeon.DidStartDungeon(this);
             GoToNextDungeonNode();
@@ -77,6 +107,14 @@ namespace Tyrant
             var e = _dungeon.StartANewNode(this);
 
             dungeonRoadMapLabel.text = _dungeon.roadMap;//"o-o-oo-o-o";
+            
+            if (e == null)
+            {
+                Debug.Log("Dungeon 完成");
+                _dungeon = null;
+                return;
+            }
+
             // 如果还有node
             if (e is DungeonTripNode node)
             {
@@ -102,8 +140,8 @@ namespace Tyrant
             _enemyMono.transform.localPosition = new Vector3(5.2f, 0, 0);
             
             battles = new BattleStands(new BattlePosition(heroes.Reverse()), new BattlePosition(new []{ _enemyMono }));
-            
-            StartCoroutine(StartBattle(0, 1, dungeonNode));
+
+            StartBattle(0, 1, dungeonNode);
 
         }
         
@@ -120,14 +158,20 @@ namespace Tyrant
 
         private void DelayNextNode(IDungeonNode dungeonNode)
         {
+            if (AdventureManager.main.adventurePlayFast)
+            {
+                GoToNextDungeonNode();
+                return;
+            }
+            
             Observable.Timer(TimeSpan.FromSeconds(dungeonNode.delay))
                 .Take(1)
-                .Subscribe(v => GoToNextDungeonNode())
+                .Subscribe(_ => GoToNextDungeonNode())
                 .AddTo(this);
         }
 
         
-        private IEnumerator StartBattle(int index, int turn, IDungeonNode dungeonNode)
+        private void StartBattle(int index, int turn, IDungeonNode dungeonNode)
         {
             if (index >= battles.Count)
             {
@@ -135,41 +179,46 @@ namespace Tyrant
                 turn += 1;
             }
 
-            var hero = battles.ElementAt(index);//[index];
-            
+            var hero = battles.ElementAt(index);
+
             var canAction = hero.actionQueue.CanAction(20);
     
             ++index;
             
             if (!canAction)
             {
-                yield return new WaitForFixedUpdate();
-            
-                StartCoroutine(StartBattle(index, turn, dungeonNode));
+                StartBattle(index, turn, dungeonNode);
             }
             else
             {
-
-
-                if (hero.heroic is Hero)
-                {
-                    hero.Attack(_enemyMono);
-                }
-                else
-                {
-                    hero.Attack(battles.heroes.front);
-                }
                 
+                hero.Attack(hero.heroic is Hero ? _enemyMono : battles.heroes.front);
+
                 Debug.Log($"{hero} 行动 攻击{hero} at {turn}");
+
+                if (battles.heroes.isAllDown)
+                {
+                    return;
+                }
                 
                 if (_enemyMono.stillAlive)
                 {
-                    yield return new WaitForSeconds(0.5f);
-                    StartCoroutine(StartBattle(index, turn, dungeonNode));
+
+                    if (AdventureManager.main.adventurePlayFast)
+                    {
+                        StartBattle(index, turn, dungeonNode);
+                    }
+                    else
+                    {
+                        Observable.Timer(TimeSpan.FromSeconds(0.5f))
+                            .Take(1)
+                            .Subscribe(_ => StartBattle(index, turn, dungeonNode))
+                            .AddTo(this);
+                    }
+                    
                 }
                 else
                 {
-                    yield return null;
                     EnemyDidDefeated(_enemyMono, dungeonNode);
                 }
                 

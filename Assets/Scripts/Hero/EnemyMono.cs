@@ -1,6 +1,7 @@
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using TMPro;
+using UniRx;
 using UnityEngine;
 
 namespace Tyrant
@@ -38,7 +39,7 @@ namespace Tyrant
         {
             _enemy = new Enemy(enemySO);
             
-            healthBar.text = _enemy.health.healthBarDisplay;
+            // healthBar.text = _enemy.health.healthBarDisplay;
 
             nameLabel.text = _enemy.heroName;
         }
@@ -48,13 +49,9 @@ namespace Tyrant
             attackLabel.color = Color.clear;
 
             
-
-            // _isOnAnaAdventure
-            //     .Subscribe(v =>
-            // {
-            //     healthBar.gameObject.SetActive(v);
-            //     // _heroRequest.gameObject.SetActive(!v);
-            // }).AddTo(this);
+            heroic.health.healthBarDisplay
+                .Subscribe(v => healthBar.text = v)
+                .AddTo(this);
         }
 
         public Attack Attack(IBattleVersus battleVersus)
@@ -74,7 +71,7 @@ namespace Tyrant
         public void TakeDamage(Attack attack)
         {
             _enemy.TakeDamage(attack);
-            healthBar.text = _enemy.health.healthBarDisplay;
+            // healthBar.text = _enemy.health.healthBarDisplay;
         }
     }
 }

@@ -6,37 +6,29 @@ namespace Tyrant
     public class Health
     {
 
-        public int totalHealth;
+        public readonly int totalHealth;
 
-        public int currentHealth
+        private int _currentHealth
         {
-            set
-            {
-                _currentHealth = Math.Min(totalHealth, value);
-            }
-            get => _currentHealth;
+            set => currentHealth.Value = Math.Min(totalHealth, value);
+            get => currentHealth.Value;
         }
-
-        private int _currentHealth;
         
-        public BehaviorSubject<string> healthDisplayRx = new BehaviorSubject<string>("");
+        public string healthDisplay => $"{_currentHealth}/{totalHealth}";
+        
+        public readonly ReactiveProperty<int> currentHealth = new ReactiveProperty<int>(0);
 
-        public string healthBarDisplay => $"{currentHealth}/{totalHealth}";
+        public readonly ReadOnlyReactiveProperty<string> healthBarDisplay;
         public Health(Attribute attribute, HeroHealthStrategy heroHealthStrategy)
         {
             totalHealth = heroHealthStrategy.Health(attribute);
-            currentHealth = totalHealth;
+            _currentHealth = totalHealth;
 
-
-            Refresh();
+            healthBarDisplay = currentHealth.Select(_ => healthDisplay).ToReadOnlyReactiveProperty();
         }
 
-        public bool isEmpty => currentHealth <= 0;
+        public bool isEmpty => _currentHealth <= 0;
 
-        private void Refresh()
-        {
-            healthDisplayRx.OnNext(healthBarDisplay);
-        }
 
         /// <summary>
         /// 扣血
@@ -45,9 +37,8 @@ namespace Tyrant
         /// <returns></returns>
         public int TakeDamage(int damage)
         {
-            currentHealth = Math.Max(0, currentHealth - damage);
-            Refresh();
-            return currentHealth;
+            _currentHealth = Math.Max(0, _currentHealth - damage);
+            return _currentHealth;
         }
         
         public int TakeDamage(Attack attack)

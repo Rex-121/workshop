@@ -47,19 +47,17 @@ namespace Tyrant
 
             nameLabel.text = _hero.heroName;
         }
-        
+
+        private void OnEnable()
+        {
+            attackLabel.color = Color.clear;
+        }
+
 
         private void Start()
         {
-            attackLabel.color = Color.clear;
-            // _isOnAnaAdventure
-            //     .Subscribe(v =>
-            // {
-            //     healthBar.gameObject.SetActive(v);
-            //     // _heroRequest.gameObject.SetActive(!v);
-            // }).AddTo(this);
 
-            heroic.health.healthDisplayRx.Subscribe(v =>
+            heroic.health.healthBarDisplay.Subscribe(v =>
             {
                 healthBar.text = v;
             }).AddTo(this);
@@ -74,6 +72,7 @@ namespace Tyrant
 
         public void PlayAttackAnimation(Attack attack)
         {
+            if (AdventureManager.main.adventurePlayFast) return;
             attackLabel.color = attack.damageColor;
             var q = attack.isCritical ? "!" : "";
             attackLabel.text = $"{attack.damage}{q}";
