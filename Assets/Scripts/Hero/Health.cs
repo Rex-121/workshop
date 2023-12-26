@@ -52,7 +52,7 @@ namespace Tyrant
         
         public int TakeDamage(Attack attack)
         {
-            return TakeDamage(attack.power);
+            return TakeDamage(attack.damage);
         }
         
     }

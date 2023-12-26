@@ -28,13 +28,13 @@ namespace Tyrant
         
         public Attack SkillBy(Attack attack)
         {
-            return new Attack( Math.Max(attack.power - reduce, 0));
+            return new Attack( Math.Max(attack.damage - reduce, 0));
         }
 
         public void Apply(BuffInfo buffInfo, Attack attack = new Attack(), Action<Attack> attackHandler = null)
         {
-            Debug.Log($"`{skillName}`减免{reduce} -- {attack.power}");
-            var a = new Attack( Math.Max(attack.power - reduce, 0));
+            Debug.Log($"`{skillName}`减免{reduce} -- {attack.damage}");
+            var a = new Attack( Math.Max(attack.damage - reduce, 0));
             attackHandler?.Invoke(a);
         }
     }
@@ -52,8 +52,8 @@ namespace Tyrant
             _store += 1;
             if (_store < criticalPerTurn) return;
             _store = 0;
-            Debug.Log("ccccccccc");
-            attackHandler?.Invoke(new Attack(attack.power * 2));
+
+            attackHandler?.Invoke(attack.Critical());
 
         }
     }

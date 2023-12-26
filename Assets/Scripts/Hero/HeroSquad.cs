@@ -159,9 +159,9 @@ namespace Tyrant
                 {
                     hero.Attack(battles.heroes.front);
                 }
-            
+                
                 Debug.Log($"{hero} 行动 攻击{hero} at {turn}");
-            
+                
                 if (_enemyMono.stillAlive)
                 {
                     yield return new WaitForSeconds(0.5f);

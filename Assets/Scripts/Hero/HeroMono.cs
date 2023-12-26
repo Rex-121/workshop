@@ -74,8 +74,9 @@ namespace Tyrant
 
         public void PlayAttackAnimation(Attack attack)
         {
-            attackLabel.color = Color.white;
-            attackLabel.text = $"{attack.power}";
+            attackLabel.color = attack.damageColor;
+            var q = attack.isCritical ? "!" : "";
+            attackLabel.text = $"{attack.damage}{q}";
             doTweenAnimation.DORestart();
         }
 

@@ -10,6 +10,26 @@ namespace Tyrant
     {
         private readonly LinkedList<BuffInfo> _buffList = new();
 
+        public Attack WillHit(Attack attack)
+        {
+            foreach (var v in _buffList)
+            {
+                v.buffDataSO.onHit?.Apply(v, attack, newPower => attack = newPower);
+            }
+            
+            return attack;
+        }
+        
+        public Attack WillTakeDamage(Attack attack)
+        {
+            foreach (var v in _buffList)
+            {
+                v.buffDataSO.onBeHit?.Apply(v, attack, newPower => attack = newPower);
+            }
+            
+            return attack;
+        }
+        
 
         public void UseBuffIfNeeded(Action<BuffInfo> fore)
         {

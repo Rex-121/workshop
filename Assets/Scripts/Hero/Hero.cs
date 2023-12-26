@@ -66,22 +66,16 @@ namespace Tyrant
 
         public Attack Attack(IBattleVersus battleVersus)
         {
-            var attack = attackPower.power;
+            var attack = buffHandler.WillHit(attackPower.power);
+            
             battleVersus.TakeDamage(attack);
             return attack;
         }
 
         public void TakeDamage(Attack attack)
         {
-            buffHandler.UseBuffIfNeeded(v =>
-            {
-                v.buffDataSO.onBeHit?.Apply(v, attack, (newPower) =>
-                {
-                    attack = newPower;
-                });
-            });
-            
-            var damage = attack.power;
+            attack = buffHandler.WillTakeDamage(attack);
+            var damage = attack.damage;
             Debug.Log($"受到了 {damage} 点攻击");
             health.TakeDamage(attack);
         }
