@@ -23,6 +23,7 @@ namespace Tyrant
 
 
         public TextMeshProUGUI dungeonLabel;
+        public TextMeshProUGUI dungeonRoadMapLabel;
         public HeroSquadBackpack backpack;
 
         public Canvas parentCanvas;
@@ -44,6 +45,7 @@ namespace Tyrant
             
             dungeonLabel.transform.localPosition = postion +  new Vector2(-24, -25);
             
+            dungeonRoadMapLabel.transform.localPosition = postion +  new Vector2(95, -25);
             //95 20
         }
 
@@ -73,6 +75,8 @@ namespace Tyrant
         private void GoToNextDungeonNode()
         {
             var e = _dungeon.StartANewNode(this);
+
+            dungeonRoadMapLabel.text = _dungeon.roadMap;//"o-o-oo-o-o";
             // 如果还有node
             if (e is DungeonTripNode node)
             {

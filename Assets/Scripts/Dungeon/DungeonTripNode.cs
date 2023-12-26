@@ -10,6 +10,9 @@ namespace Tyrant
     public interface IDungeonNode: IDungeonNodeAction
     {
         public int delay { get; }
+
+
+        public string icon { get; }
     }
     
     [System.Serializable]
@@ -20,6 +23,8 @@ namespace Tyrant
         
         [SerializeField]
         public int delay { get; set; }
+
+        public string icon => "b";
 
         public void OnStart(Dungeon dungeon, IDungeonNode node, HeroSquad heroSquad)
         {
@@ -40,6 +45,8 @@ namespace Tyrant
 
         [SerializeField]
         public int delay { get; set; }
+        
+        public string icon => "s";
         
         public void OnStart(Dungeon dungeon, IDungeonNode node, HeroSquad heroSquad)
         {
