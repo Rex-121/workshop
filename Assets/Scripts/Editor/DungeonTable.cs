@@ -1,4 +1,6 @@
 
+using UnityEngine;
+
 #if UNITY_EDITOR
 
 namespace Tyrant.Editor
@@ -31,6 +33,7 @@ namespace Tyrant.Editor
             this._allBuffs = characters.ToList();//.Select(x => new CharacterWrapper(x)).ToList();
         }
     }
+    
 }
 
 #endif

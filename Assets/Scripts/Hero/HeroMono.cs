@@ -37,6 +37,11 @@ namespace Tyrant
         private void Awake()
         {
             _heroRequest = GetComponent<HeroRequest>();
+            
+            if (characterPrefab != null)
+            {
+                _character = Instantiate(characterPrefab, transform);
+            }
         }
 
         public void RestoreFromSO(JobSO jobSO)
@@ -48,6 +53,8 @@ namespace Tyrant
             nameLabel.text = _hero.heroName;
         }
 
+        public CharacterMono characterPrefab;
+        public CharacterMono _character;
         private void OnEnable()
         {
             attackLabel.color = Color.clear;
@@ -61,6 +68,8 @@ namespace Tyrant
             {
                 healthBar.text = v;
             }).AddTo(this);
+
+            
         }
 
         public Attack Attack(IBattleVersus battleVersus)
@@ -73,6 +82,9 @@ namespace Tyrant
         public void PlayAttackAnimation(Attack attack)
         {
             if (AdventureManager.main.adventurePlayFast) return;
+            
+            _character.Attack();
+            
             attackLabel.color = attack.damageColor;
             var q = attack.isCritical ? "!" : "";
             attackLabel.text = $"{attack.damage}{q}";
@@ -81,8 +93,16 @@ namespace Tyrant
 
         public void TakeDamage(Attack attack)
         {
+            
+            _character.Hurt();
+            
             _hero.TakeDamage(attack);
-            // healthBar.text = _hero.health.healthBarDisplay;
+
+
+            if (!_hero.stillAlive)
+            {
+                _character.Death();
+            }
         }
 
         private void OnMouseEnter()

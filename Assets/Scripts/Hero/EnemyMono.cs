@@ -30,25 +30,29 @@ namespace Tyrant
 
         public HeroActionQueue actionQueue => _enemy.actionQueue;
         
+        
+        public CharacterMono characterPrefab;
+        private CharacterMono _character;
         private void Awake()
         {
             _enemy = new Enemy();
+            
+            if (characterPrefab != null)
+            {
+                _character = Instantiate(characterPrefab, transform);
+                // _character.transform.localScale = new Vector3(-1, 1, 1);
+            }
         }
 
         public void NewEnemy(EnemySO enemySO)
         {
             _enemy = new Enemy(enemySO);
-            
-            // healthBar.text = _enemy.health.healthBarDisplay;
-
             nameLabel.text = _enemy.heroName;
         }
         
         private void Start()
         {
             attackLabel.color = Color.clear;
-
-            
             heroic.health.healthBarDisplay
                 .Subscribe(v => healthBar.text = v)
                 .AddTo(this);
@@ -63,6 +67,7 @@ namespace Tyrant
 
         public void PlayAttackAnimation(Attack attack)
         {
+            _character.Attack();
             attackLabel.color = Color.white;
             attackLabel.text = $"{attack.damage}";
             doTweenAnimation.DORestart();
@@ -70,8 +75,13 @@ namespace Tyrant
 
         public void TakeDamage(Attack attack)
         {
+            _character.Hurt();
             _enemy.TakeDamage(attack);
-            // healthBar.text = _enemy.health.healthBarDisplay;
+            
+            if (!_enemy.stillAlive)
+            {
+                _character.Death();
+            }
         }
     }
 }

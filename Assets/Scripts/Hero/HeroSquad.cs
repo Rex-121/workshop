@@ -51,7 +51,7 @@ namespace Tyrant
             var position = Camera.main.GetCanvasPosition(transform, parentCanvas);
 
             backpack.GetComponent<RectTransform>().anchoredPosition = 
-                position + new Vector2(-24, -35);
+                position + new Vector2(0, -35);
             
             dungeonLabel.transform.localPosition = position +  new Vector2(-24, -25);
             
@@ -72,7 +72,7 @@ namespace Tyrant
             for (var i = 0; i < jobSO.Length; i++)
             {
                  var hero = Instantiate(jobSO[i].heroMonoPrefab, new Vector3(1.2f * i, 0, 0), Quaternion.identity, transform);
-                 hero.transform.localPosition = new Vector3(1.6f * i, 0, 0);
+                 hero.transform.localPosition = new Vector3(1f * i + 0.5f, 0, 0);
                  hero.RestoreFromSO(jobSO[i]);
                  heroes[i] = hero;
             }
@@ -137,7 +137,7 @@ namespace Tyrant
 
             _enemyMono = enemyMono;
             
-            _enemyMono.transform.localPosition = new Vector3(5.2f, 0, 0);
+            _enemyMono.transform.localPosition = new Vector3(4.3f, 0, 0);
             
             battles = new BattleStands(new BattlePosition(heroes.Reverse()), new BattlePosition(new []{ _enemyMono }));
 
@@ -219,7 +219,11 @@ namespace Tyrant
                 }
                 else
                 {
-                    EnemyDidDefeated(_enemyMono, dungeonNode);
+                    Observable.Timer(TimeSpan.FromSeconds(1f))
+                        .Take(1)
+                        .Subscribe(_ => EnemyDidDefeated(_enemyMono, dungeonNode))
+                        .AddTo(this);
+                    
                 }
                 
             }
