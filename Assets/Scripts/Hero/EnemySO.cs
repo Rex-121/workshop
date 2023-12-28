@@ -9,21 +9,9 @@ namespace Tyrant
     {
         public string enemyName;
         
-        [HorizontalGroup("Basic"), HideLabel]
-        public EnemyMono enemyMonoPrefab;
+        public CharacterSO characterSO;
         
-        [HideLabel, VerticalGroup("Basic/Att")]
-        public Attribute attribute;
-        
-        [HideLabel, VerticalGroup("Basic/Att")]
-        public HeroHealthStrategy healthStrategy;
-
-        [ShowInInspector]
-        public int health => healthStrategy.Health(attribute);
-
-
         public LootSO lootSO;
-        
         
         public BuffDataSO[] skills;
     }

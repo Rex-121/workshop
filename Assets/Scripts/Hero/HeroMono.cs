@@ -37,24 +37,18 @@ namespace Tyrant
         private void Awake()
         {
             _heroRequest = GetComponent<HeroRequest>();
-            
-            if (characterPrefab != null)
-            {
-                _character = Instantiate(characterPrefab, transform);
-            }
         }
 
-        public void RestoreFromSO(JobSO jobSO)
+        public void RestoreFromSO(CharacterSO characterSO, JobSO jobSO)
         {
-            _hero = Hero.FromSO(jobSO);
+            _hero = Hero.FromSO(characterSO, jobSO);
             
-            // healthBar.text = _hero.health.healthBarDisplay;
-
+            _character = Instantiate(characterSO.characterMonoPrefab, transform);
+            
             nameLabel.text = _hero.heroName;
         }
 
-        public CharacterMono characterPrefab;
-        public CharacterMono _character;
+        private CharacterMono _character;
         private void OnEnable()
         {
             attackLabel.color = Color.clear;

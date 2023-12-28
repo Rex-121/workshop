@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96e2381b73c64b638ad11693b02e8cf2, type: 3}
+  m_Name: "\u732B\u5934\u9E70\u4E4B\u5B50"
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  characterName: 
+  characterMonoPrefab: {fileID: 0}
+  attribute:
+    strength: 0
+    dexterity: 0
+    intelligence: 0
+  healthStrategy:
+    strength: 0
+    dexterity: 0
+    intelligence: 0
+    baseHealth: 0

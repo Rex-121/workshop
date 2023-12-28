@@ -14,8 +14,14 @@ namespace Tyrant
     {
 
         public JobSO[] jobSO;
+        public CharacterSO[] characterSos;
+        
+        [ShowInInspector] public HeroMono[] heroes;
 
-        [ShowInInspector] public HeroMono[] heroes;// = new HeroMono[3];
+
+        public HeroMono heroMonoPrefab;
+        
+        public EnemyMono enemyMonoPrefab;
         // {
         //     get
         //     {
@@ -53,9 +59,9 @@ namespace Tyrant
             backpack.GetComponent<RectTransform>().anchoredPosition = 
                 position + new Vector2(0, -35);
             
-            dungeonLabel.transform.localPosition = position +  new Vector2(-24, -25);
+            dungeonLabel.transform.localPosition = position +  new Vector2(0, -25);
             
-            dungeonRoadMapLabel.transform.localPosition = position +  new Vector2(95, -25);
+            dungeonRoadMapLabel.transform.localPosition = position +  new Vector2(115, -25);
         }
 
         private void OnEnable()
@@ -71,9 +77,9 @@ namespace Tyrant
             
             for (var i = 0; i < jobSO.Length; i++)
             {
-                 var hero = Instantiate(jobSO[i].heroMonoPrefab, new Vector3(1.2f * i, 0, 0), Quaternion.identity, transform);
+                 var hero = Instantiate(heroMonoPrefab, new Vector3(1.2f * i, 0, 0), Quaternion.identity, transform);
                  hero.transform.localPosition = new Vector3(1f * i + 0.5f, 0, 0);
-                 hero.RestoreFromSO(jobSO[i]);
+                 hero.RestoreFromSO(characterSos[i], jobSO[i]);
                  heroes[i] = hero;
             }
         }
@@ -119,7 +125,7 @@ namespace Tyrant
             if (e is DungeonTripNode node)
             {
                 var enemySO = node.enemySO; 
-                _enemyMono = Instantiate(enemySO.enemyMonoPrefab, new Vector3(5.2f, 0, 0), Quaternion.identity, transform);
+                _enemyMono = Instantiate(enemyMonoPrefab, new Vector3(5.2f, 0, 0), Quaternion.identity, transform);
                 _enemyMono.NewEnemy(enemySO);
                 NewEnemy(_enemyMono, node);
             }

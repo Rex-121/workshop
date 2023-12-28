@@ -50,7 +50,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a7af70d5e89bb423a8dae2e97f1ad982, type: 2}
   - {fileID: 11400000, guid: 6927e76d3dfe14d26b362a81eeb13e43, type: 2}
   - {fileID: 11400000, guid: 55fe8f7f3a9164d11856c227b47f9231, type: 2}
+  characterSos:
+  - {fileID: 11400000, guid: 27a634e387fce417a83491bb06468eb9, type: 2}
+  - {fileID: 11400000, guid: bcf38475978034029a88ffe4b8a8dc58, type: 2}
+  - {fileID: 11400000, guid: 27a634e387fce417a83491bb06468eb9, type: 2}
   heroes: []
+  heroMonoPrefab: {fileID: 114118514635062416, guid: 608ee5aa5078040bbb63498e1d0cb3c7, type: 3}
+  enemyMonoPrefab: {fileID: 8081380150682540390, guid: 20addfd5dc39a4f68b547986932f4f58, type: 3}
   dungeonLabel: {fileID: 1905070052674811990}
   dungeonRoadMapLabel: {fileID: 1905070053212946791}
   backpack: {fileID: 5168350780261729810}

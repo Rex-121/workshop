@@ -9,19 +9,19 @@ namespace Tyrant
     {
         public string jobName;
         
-        [HorizontalGroup("Basic"), HideLabel]
-        public HeroMono heroMonoPrefab;
+        // [HorizontalGroup("Basic"), HideLabel]
+        // public HeroMono heroMonoPrefab;
         
-        [HideLabel, VerticalGroup("Basic/Att")]
-        public Attribute attribute;
+        // [HideLabel, VerticalGroup("Basic/Att")]
+        // public Attribute attribute;
 
         public AttributeTypes mainAttribute;
         
-        [HideLabel, VerticalGroup("Basic/Att")]
-        public HeroHealthStrategy healthStrategy;
+        // [HideLabel, VerticalGroup("Basic/Att")]
+        // public HeroHealthStrategy healthStrategy;
 
-        [ShowInInspector]
-        public int health => healthStrategy.Health(attribute);
+        // [ShowInInspector]
+        // public int health => healthStrategy.Health(attribute);
 
         public BuffDataSO[] skills;
     }

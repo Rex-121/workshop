@@ -31,23 +31,17 @@ namespace Tyrant
         public HeroActionQueue actionQueue => _enemy.actionQueue;
         
         
-        public CharacterMono characterPrefab;
         private CharacterMono _character;
         private void Awake()
         {
             _enemy = new Enemy();
-            
-            if (characterPrefab != null)
-            {
-                _character = Instantiate(characterPrefab, transform);
-                // _character.transform.localScale = new Vector3(-1, 1, 1);
-            }
         }
 
         public void NewEnemy(EnemySO enemySO)
         {
             _enemy = new Enemy(enemySO);
             nameLabel.text = _enemy.heroName;
+            _character = Instantiate(enemySO.characterSO.characterMonoPrefab, transform);
         }
         
         private void Start()
@@ -82,6 +76,17 @@ namespace Tyrant
             {
                 _character.Death();
             }
+        }
+        
+        
+        private void OnMouseEnter()
+        {
+            nameLabel.enabled = true;
+        }
+
+        private void OnMouseExit()
+        {
+            nameLabel.enabled = false;
         }
     }
 }

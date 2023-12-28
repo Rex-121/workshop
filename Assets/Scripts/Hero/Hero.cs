@@ -4,6 +4,7 @@ using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Tyrant
 {
@@ -15,7 +16,7 @@ namespace Tyrant
         public Health health { get; set; }
         public string heroName { get; set; }
 
-        public AttributeTypes mainAttribute;
+        // public AttributeTypes mainAttribute;
         public IAmHero heroic => this;
 
         public HeroActionQueue actionQueue { get; private set; }
@@ -25,44 +26,45 @@ namespace Tyrant
         public AttackPower attackPower;
         
         public bool stillAlive => !health.isEmpty;
-
-        // public BuffInfo[] skills;
-
+        
         public BuffHandler buffHandler = new BuffHandler();
 
         public IWeapon weapon = new Sword(new Attribute(5, 5, 5), null);
+
+        [ShowInInspector]
+        private JobSO job;
         
-        Hero(Attribute a, HeroHealthStrategy healthStrategy, AttributeTypes mainAttribute, string jobName, IEnumerable<BuffInfo> skills)
+        Hero(Attribute a, HeroHealthStrategy healthStrategy, JobSO jobSO)//IEnumerable<BuffInfo> skills)
         {
             attribute = a;
             health = new Health(attribute, healthStrategy);
-            
-            this.mainAttribute = mainAttribute;
-            heroName = $"[{jobName}]{NVJOBNameGen.Uppercase(NVJOBNameGen.GiveAName(7))}";
+
+            job = Object.Instantiate(jobSO);
+            heroName = $"[{jobSO.jobName}]{NVJOBNameGen.Uppercase(NVJOBNameGen.GiveAName(7))}";
 
             actionQueue = new HeroActionQueue(this);
-            
-            attackPower = weapon.power + attributePower;
 
-            skills.ForEach(v =>
+            attackPower = weapon.power;// + attributePower;
+
+            (job.skills ?? new BuffDataSO[] {}).Select(v => v.ToBuff())
+                .ForEach(v =>
             {
                 buffHandler.AddBuff(v);
             });
-            // buffHandler.AddBuff();
-            // this.skills = skills.ToArray();
+            
         }
 
-        public static Hero FromSO(JobSO jobSO)
+        public static Hero FromSO(CharacterSO characterSO, JobSO jobSO)
         {
-            return new Hero(jobSO.attribute, jobSO.healthStrategy, jobSO.mainAttribute, jobSO.jobName, (jobSO.skills ?? new BuffDataSO[] {}).Select(v => v.ToBuff()));
+            return new Hero(characterSO.attribute, characterSO.healthStrategy, jobSO);
         }
-        private int attributePower => mainAttribute switch
-        {
-            AttributeTypes.Strength => Math.Max(0, (attribute.strength - 10) / 2) + 1,
-            AttributeTypes.Dexterity => Math.Max(0, (attribute.dexterity - 10) / 2) + 1,
-            AttributeTypes.Intelligence => Math.Max(0, (attribute.intelligence - 10) / 2) + 1,
-            _ => 0
-        };
+        // private int attributePower => mainAttribute switch
+        // {
+        //     AttributeTypes.Strength => Math.Max(0, (attribute.strength - 10) / 2) + 1,
+        //     AttributeTypes.Dexterity => Math.Max(0, (attribute.dexterity - 10) / 2) + 1,
+        //     AttributeTypes.Intelligence => Math.Max(0, (attribute.intelligence - 10) / 2) + 1,
+        //     _ => 0
+        // };
 
         public Attack Attack(IBattleVersus battleVersus)
         {

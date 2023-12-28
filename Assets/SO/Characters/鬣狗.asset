@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b169bdef87d5435cbd2278926e09d254, type: 3}
-  m_Name: "\u54E5\u5E03\u6797 1"
+  m_Script: {fileID: 11500000, guid: 96e2381b73c64b638ad11693b02e8cf2, type: 3}
+  m_Name: "\u9B23\u72D7"
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -21,17 +21,14 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  enemyName: "\u54E5\u5E03\u67971"
-  enemyMonoPrefab: {fileID: 8081380150682540390, guid: 20addfd5dc39a4f68b547986932f4f58, type: 3}
+  characterName: "\u9B23\u72D7"
+  characterMonoPrefab: {fileID: 3716240582565644741, guid: 0d47e7e3e6d294659b7c22707710acb2, type: 3}
   attribute:
-    strength: 5
+    strength: 6
     dexterity: 5
-    intelligence: 5
+    intelligence: 0
   healthStrategy:
-    strength: 3
-    dexterity: 1
-    intelligence: 1
-    baseHealth: 33
-  lootSO: {fileID: 11400000, guid: 76fb0cd831a6b448da4348cd8ca386d5, type: 2}
-  skills:
-  - {fileID: 11400000, guid: 759c0e68ecb574f90a29d0027f99b29a, type: 2}
+    strength: 4
+    dexterity: 5
+    intelligence: 0
+    baseHealth: 10

@@ -35,12 +35,15 @@ namespace Tyrant
 
         public Enemy(EnemySO so)
         {
-            attribute = so.attribute;
-            heroName = so.enemyName;
+
+            var character = so.characterSO;
+            
+            attribute = character.attribute;
+            heroName = character.characterName;
             
             loot.AddRange(so.lootSO.GetLoot());
             
-            health = new Health(attribute, so.healthStrategy);
+            health = new Health(attribute, character.healthStrategy);
             
             actionQueue = new HeroActionQueue(this);
 
