@@ -43,18 +43,20 @@ namespace Tyrant
     public struct CriThroughTurnsBuffModule: IBuffModule
     {
 
-        public int criticalPerTurn;// = 5;
-
-        private int _store;// = 0;
+        public int criticalPerTurn;
         
         public void Apply(BuffInfo buffInfo, Attack attack = new Attack(), Action<Attack> attackHandler = null)
         {
-            _store += 1;
-            if (_store < criticalPerTurn) return;
-            _store = 0;
 
-            attackHandler?.Invoke(attack.Critical());
-
+            if (buffInfo.currentStack >= criticalPerTurn)
+            {
+                attackHandler?.Invoke(attack.Critical());
+                buffInfo.currentStack = 0;
+            }
+            else
+            {
+                buffInfo.currentStack += 1;
+            }
         }
     }
     

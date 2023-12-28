@@ -48,8 +48,9 @@ MonoBehaviour:
   id: 1
   buffName: "\u91CD\u51FB"
   description: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 68030269de424486b9d91ec067c3a646, type: 3}
   priority: 2
-  maxStack: 1
-  updateTimeType: 0
+  maxStack: 5
+  startWithStack: 0
+  updateTimeType: 2
   stackRemoveType: 0

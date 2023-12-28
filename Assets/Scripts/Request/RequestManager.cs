@@ -46,7 +46,7 @@ namespace Tyrant
         {
             var gb = Instantiate(requestItemPrefab, requestPanel);
             gb.GetComponent<RequestItem>().bluePrint = bp;
-            gb.GetComponent<HeroInfoDisplay>().hero = heroMono.heroic;
+            gb.GetComponent<HeroInfoDisplay>().hero = heroMono.heroic as Hero;
         }
 
         public void TryForgeThisBluePrint(BluePrint bp)

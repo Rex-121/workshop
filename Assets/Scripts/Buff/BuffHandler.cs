@@ -10,6 +10,8 @@ namespace Tyrant
     {
         private readonly LinkedList<BuffInfo> _buffList = new();
 
+        public BuffInfo[] buffs => _buffList.ToArray();
+        
         public Attack WillHit(Attack attack)
         {
             foreach (var v in _buffList)

@@ -51,8 +51,9 @@ MonoBehaviour:
   id: 0
   buffName: "\u575A\u97E7"
   description: "\u51CF\u5C11\u53D7\u5230\u7684\u4F24\u5BB3"
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 19e2451a92d994444b91c79c66646ab3, type: 3}
   priority: 0
   maxStack: 1
+  startWithStack: 1
   updateTimeType: 2
   stackRemoveType: 0

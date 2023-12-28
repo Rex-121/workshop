@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c829262ebb00d417eb9e31580f6a157b, type: 3}
   m_Name: "\u6728\u677F"
   m_EditorClassIdentifier: 
-  name: "\u6728\u677F"
-  icon: {fileID: 21300000, guid: f96e78ee474514c67a36f30e8e7f2b14, type: 3}
+  materialName: 
+  icon: {fileID: -45777601, guid: 9c68229f041134606ba844e5bda5c2cc, type: 3}
   code: 
   featureSOs:
   - {fileID: 11400000, guid: 30bf1d8bf266f43a2afcfc22e4565ad1, type: 2}

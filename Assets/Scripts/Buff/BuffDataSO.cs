@@ -25,6 +25,9 @@ namespace Tyrant
         [BoxGroup("Basic"), VerticalGroup("Basic/Info/Info"), LabelText("最大堆叠层数")]
         public int maxStack;
 
+        [BoxGroup("Basic"), VerticalGroup("Basic/Info/Info"), LabelText("起始层数")]
+        public int startWithStack;
+        
         // [BoxGroup("Basic")]
         // public bool isForever;
 

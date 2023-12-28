@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Tyrant
@@ -5,28 +6,42 @@ namespace Tyrant
     public interface IWeapon: IEquipment
     {
 
-        public Attribute attribute { get; }
-
-        public AttackPower power { get; }
+        // public Attribute attribute { get; }
+        //
+        // public AttackPower power { get; }
     }
 
 
     public struct Sword : IWeapon
     {
-        public string itemName => "剑";
+        [ShowInInspector]
+        public string itemName { get; set; }
+        
+        [ShowInInspector]
         public Sprite sprite { get; }
         
+        [ShowInInspector]
         public Quality quality => Quality.On(Quality.Tier.Fine);
         
+        [ShowInInspector]
         public Attribute attribute { get; set; }
 
-        public AttackPower power => new AttackPower(5, 8);
+        [ShowInInspector]
+        public AttackPower power { get; set; }// => new AttackPower(5, 8);
 
-        public Sword(Attribute attribute, Sprite sprite)
+        public Sword(string name, Attribute attribute, Sprite sprite, AttackPower power)
         {
             this.attribute = attribute;
 
             this.sprite = sprite;
+
+            this.power = power;
+            this.itemName = name;
+        }
+        
+        public static Sword FromSwordSO(WeaponSO weaponSO)
+        {
+            return new Sword(weaponSO.name, weaponSO.attribute, weaponSO.icon, new AttackPower(weaponSO.power.x, weaponSO.power.y));
         }
         
         // public Sword(EquipmentSO so)

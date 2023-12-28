@@ -12,16 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c51c6e3f1e99470483d694c75f1db60c, type: 3}
   m_Name: "\u6CD5\u5E08"
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   jobName: "\u6CD5\u5E08"
-  heroMonoPrefab: {fileID: 114118514635062416, guid: 608ee5aa5078040bbb63498e1d0cb3c7, type: 3}
-  attribute:
-    strength: 1
-    dexterity: 2
-    intelligence: 5
+  icon: {fileID: 1536886222, guid: 5adafed67f17e41e39188696d7ba4771, type: 3}
   mainAttribute: 2
-  healthStrategy:
-    strength: 0
-    dexterity: 0
-    intelligence: 3
-    baseHealth: 8
   skills: []
+  weaponSO: {fileID: 11400000, guid: f8246e8bd67e7466ba33719b549f7cba, type: 2}

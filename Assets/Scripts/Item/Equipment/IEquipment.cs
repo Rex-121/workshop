@@ -4,7 +4,9 @@ namespace Tyrant
 {
     public interface IEquipment: IItem
     {
-        
+        public Attribute attribute { get; }
+
+        public AttackPower power { get; }
     }
     
     

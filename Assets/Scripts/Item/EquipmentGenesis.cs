@@ -11,7 +11,8 @@ namespace Tyrant
         
         public IEquipment DoCraft(int makes, int quality)
         {
-            return new Sword(new Attribute(5,5, 5), equipmentSO.icon);
+            return null;
+            // return new Sword(new Attribute(5,5, 5), equipmentSO.icon);
         }
 
     }

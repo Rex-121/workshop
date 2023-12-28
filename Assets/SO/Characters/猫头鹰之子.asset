@@ -22,13 +22,13 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   characterName: 
-  characterMonoPrefab: {fileID: 0}
+  characterMonoPrefab: {fileID: 838221070402608547, guid: 3af9bd9ff5b8748948a0aa719cca0f01, type: 3}
   attribute:
-    strength: 0
-    dexterity: 0
-    intelligence: 0
+    strength: 1
+    dexterity: 6
+    intelligence: 3
   healthStrategy:
-    strength: 0
-    dexterity: 0
-    intelligence: 0
-    baseHealth: 0
+    strength: 2
+    dexterity: 2
+    intelligence: 2
+    baseHealth: 10

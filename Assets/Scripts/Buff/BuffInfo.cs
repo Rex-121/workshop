@@ -9,11 +9,31 @@ namespace Tyrant
         public BuffInfo(BuffDataSO s)
         {
             buffDataSO = s;
+            currentStack = s.startWithStack;
         }
 
         public readonly BuffDataSO buffDataSO;
 
-        public int currentStack = 1;
+        public int currentStack;
+
+        public string currentStackDisplay => currentStack switch
+        {
+            > 1 => currentStack.ToString(),
+            1 when buffDataSO.startWithStack == 1 => "",
+            _ => currentStack.ToString()
+        };
+
+        public Sprite icon => buffDataSO.icon;
+
+        // public bool needDisplay
+        // {
+        //     get
+        //     {
+        //         if (currentStack == 0) return false;
+        //         if (currentStack == 1 && buffDataSO.startWithStack != 1) return true;
+        //         return false;
+        //     }
+        // }
 
         /// <summary>
         /// 增加buff层数（如果可以/需要增加）

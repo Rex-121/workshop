@@ -24,9 +24,9 @@ MonoBehaviour:
   characterName: "\u75AF\u5154"
   characterMonoPrefab: {fileID: 8308739125498225764, guid: fcf577c2e0d634ab0930b99d12bc6089, type: 3}
   attribute:
-    strength: 5
-    dexterity: 5
-    intelligence: 5
+    strength: 6
+    dexterity: 3
+    intelligence: 2
   healthStrategy:
     strength: 3
     dexterity: 1

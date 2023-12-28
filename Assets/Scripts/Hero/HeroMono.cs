@@ -1,6 +1,7 @@
 using System;
 using DG.Tweening;
 using Sirenix.OdinInspector;
+using Sirenix.Utilities;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -34,6 +35,10 @@ namespace Tyrant
         private BehaviorSubject<bool> _isOnAnaAdventure = new(true);
 
         public HeroActionQueue actionQueue => _hero.actionQueue;
+
+
+        public Action<Hero> heroInfoDisplay;
+        
         private void Awake()
         {
             _heroRequest = GetComponent<HeroRequest>();
@@ -63,7 +68,15 @@ namespace Tyrant
                 healthBar.text = v;
             }).AddTo(this);
 
-            
+            BuffDisplay();
+        }
+
+
+        public BuffInfoDisplay buffInfoDisplay;
+
+        private void BuffDisplay()
+        {
+            _hero.buffHandler.buffs.ForEach(v => buffInfoDisplay.NewBuff(v));
         }
 
         public Attack Attack(IBattleVersus battleVersus)
@@ -107,6 +120,11 @@ namespace Tyrant
         private void OnMouseExit()
         {
             nameLabel.enabled = false;
+        }
+
+        private void OnMouseDown()
+        {
+            heroInfoDisplay?.Invoke(_hero);
         }
     }
 }

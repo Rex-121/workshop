@@ -29,29 +29,35 @@ namespace Tyrant
         
         public BuffHandler buffHandler = new BuffHandler();
 
-        public IWeapon weapon = new Sword(new Attribute(5, 5, 5), null);
+        [ShowInInspector]
+        public IEquipment weapon;// = new Sword(new Attribute(5, 5, 5), null);
 
         [ShowInInspector]
-        private JobSO job;
+        public JobSO job;
         
         Hero(Attribute a, HeroHealthStrategy healthStrategy, JobSO jobSO)//IEnumerable<BuffInfo> skills)
         {
-            attribute = a;
+            attribute = a + jobSO.weaponSO.attribute;
+            
             health = new Health(attribute, healthStrategy);
 
             job = Object.Instantiate(jobSO);
             heroName = $"[{jobSO.jobName}]{NVJOBNameGen.Uppercase(NVJOBNameGen.GiveAName(7))}";
 
             actionQueue = new HeroActionQueue(this);
+            
+            weapon = jobSO.weaponSO.ToEquipment();
 
-            attackPower = weapon.power;// + attributePower;
+
+            attackPower = weapon.power + jobSO.AttributePower(attribute);
 
             (job.skills ?? new BuffDataSO[] {}).Select(v => v.ToBuff())
                 .ForEach(v =>
             {
                 buffHandler.AddBuff(v);
             });
-            
+
+
         }
 
         public static Hero FromSO(CharacterSO characterSO, JobSO jobSO)

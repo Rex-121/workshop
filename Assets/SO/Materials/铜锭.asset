@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c829262ebb00d417eb9e31580f6a157b, type: 3}
   m_Name: "\u94DC\u952D"
   m_EditorClassIdentifier: 
-  name: "\u94DC\u952D"
-  icon: {fileID: 21300000, guid: e5273008dcb9b43eb9aa8ea366fb91e6, type: 3}
+  materialName: 
+  icon: {fileID: 2023375052, guid: 9c68229f041134606ba844e5bda5c2cc, type: 3}
   code: II
   featureSOs:
   - {fileID: 11400000, guid: 667f9979c17f14efdaaf7a5a673980ea, type: 2}
