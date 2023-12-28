@@ -695,7 +695,6 @@ MonoBehaviour:
   characterSos:
   - {fileID: 11400000, guid: 27a634e387fce417a83491bb06468eb9, type: 2}
   - {fileID: 11400000, guid: bcf38475978034029a88ffe4b8a8dc58, type: 2}
-  - {fileID: 11400000, guid: 27a634e387fce417a83491bb06468eb9, type: 2}
   heroes: []
   heroMonoPrefab: {fileID: 114118514635062416, guid: 608ee5aa5078040bbb63498e1d0cb3c7, type: 3}
   enemyMonoPrefab: {fileID: 8081380150682540390, guid: 20addfd5dc39a4f68b547986932f4f58, type: 3}
