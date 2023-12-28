@@ -25,15 +25,11 @@ namespace Tyrant
 
         public Sprite icon => buffDataSO.icon;
 
-        // public bool needDisplay
-        // {
-        //     get
-        //     {
-        //         if (currentStack == 0) return false;
-        //         if (currentStack == 1 && buffDataSO.startWithStack != 1) return true;
-        //         return false;
-        //     }
-        // }
+
+        public void BattleDidEnd()
+        {
+            currentStack = buffDataSO.startWithStack;
+        }
 
         /// <summary>
         /// 增加buff层数（如果可以/需要增加）

@@ -72,6 +72,12 @@ namespace Tyrant
         //     _ => 0
         // };
 
+        public void BattleDidEnd()
+        {
+            actionQueue.Reset();
+            buffHandler.buffs.ForEach(v => v.BattleDidEnd());
+        }
+
         public Attack Attack(IBattleVersus battleVersus)
         {
             var attack = buffHandler.WillHit(attackPower.power);

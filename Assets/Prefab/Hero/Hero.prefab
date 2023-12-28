@@ -169,6 +169,7 @@ RectTransform:
   - {fileID: 114118513905453983}
   - {fileID: 2345652051598967523}
   - {fileID: 2426138984833787505}
+  - {fileID: 8174004217472963938}
   m_Father: {fileID: 114118514635062418}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -424,7 +425,8 @@ MonoBehaviour:
   doTweenAnimation: {fileID: 4259597919378368655}
   attackLabel: {fileID: 770714537703527670}
   nameLabel: {fileID: 3348757430844070930}
-  buffInfoDisplay: {fileID: 6493759402605179525}
+  buffInfoDisplayPrefab: {fileID: 6493759402605179525}
+  buffInfoPanel: {fileID: 8174004217472963938}
 --- !u!114 &114118514635062417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -529,7 +531,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 2
+  m_text: '-'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ef22f39e92a3242a9ba43211e4d12ff6, type: 2}
   m_sharedMaterial: {fileID: -6329413617106083117, guid: ef22f39e92a3242a9ba43211e4d12ff6, type: 2}
@@ -611,12 +613,12 @@ GameObject:
   - component: {fileID: 8956381463274445226}
   - component: {fileID: 6493759402605179525}
   m_Layer: 0
-  m_Name: Image
+  m_Name: BuffInfoDisplayPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2426138984833787505
 RectTransform:
   m_ObjectHideFlags: 0
@@ -626,7 +628,7 @@ RectTransform:
   m_GameObject: {fileID: 5930927179994016276}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7998086662574580700}
@@ -690,6 +692,82 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 8956381463274445226}
   stackLabel: {fileID: 8080514399564307987}
+--- !u!1 &6502350418284827095
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8174004217472963938}
+  - component: {fileID: 6623145603264082133}
+  - component: {fileID: 4782710240954902904}
+  m_Layer: 0
+  m_Name: Buffs
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8174004217472963938
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6502350418284827095}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 114118514634559522}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.2, y: 0.041}
+  m_SizeDelta: {x: 2, y: 0}
+  m_Pivot: {x: 0, y: 0}
+--- !u!114 &6623145603264082133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6502350418284827095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 1, y: 1}
+  m_Spacing: {x: 0, y: 0}
+  m_Constraint: 1
+  m_ConstraintCount: 2
+--- !u!114 &4782710240954902904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6502350418284827095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2
 --- !u!1 &7361347973750815284
 GameObject:
   m_ObjectHideFlags: 0

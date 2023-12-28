@@ -83,7 +83,9 @@ namespace Tyrant
         // 展示信息
         private void DisplayHeroInfo(Hero hero)
         {
-            heroInfoDisplay.hero = hero;
+            var display = hero != heroInfoDisplay.hero;
+            heroInfoDisplay.gameObject.SetActive(display);
+            heroInfoDisplay.hero = display ? hero : null;
         }
 
         private void OnDrawGizmos()
@@ -168,6 +170,8 @@ namespace Tyrant
 
         private void DelayNextNode(IDungeonNode dungeonNode)
         {
+            BattleDidEnd();
+            
             if (AdventureManager.main.adventurePlayFast)
             {
                 GoToNextDungeonNode();
@@ -180,6 +184,11 @@ namespace Tyrant
                 .AddTo(this);
         }
 
+
+        public void BattleDidEnd()
+        {
+            heroes.ForEach(v => v.BattleDidEnd());
+        }
         
         private IEnumerator StartBattle(int index, int turn, IDungeonNode dungeonNode)
         {

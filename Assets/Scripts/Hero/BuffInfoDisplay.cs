@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,6 +21,7 @@ namespace Tyrant
         private void Update()
         {
             stackLabel.enabled = buffInfo.currentStack != 0;
+            icon.enabled = buffInfo.currentStack != 0;
             stackLabel.text = buffInfo.currentStackDisplay;
         }
     }

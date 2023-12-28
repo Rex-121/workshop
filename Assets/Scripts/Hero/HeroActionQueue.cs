@@ -20,6 +20,11 @@ namespace Tyrant
         [ShowInInspector, LabelText("行动积累值")]
         private int _actionStore = 0;
 
+
+        public void Reset()
+        {
+            _actionStore = 0;
+        }
         public bool CanAction(int value)
         {
             if (!_hero.stillAlive) return false;

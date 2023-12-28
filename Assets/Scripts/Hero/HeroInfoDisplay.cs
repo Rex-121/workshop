@@ -28,10 +28,12 @@ namespace Tyrant
 
         private void Refresh()
         {
-            nameLabel.text = _hero.heroName;
-            sLabel.text = $"{_hero.attribute.strength}";
-            dLabel.text = $"{_hero.attribute.dexterity}";
-            iLabel.text = $"{_hero.attribute.intelligence}";
+            if (ReferenceEquals(hero, null)) return;
+            
+            nameLabel.text = hero.heroName;
+            sLabel.text = $"{hero.attribute.strength}";
+            dLabel.text = $"{hero.attribute.dexterity}";
+            iLabel.text = $"{hero.attribute.intelligence}";
 
             if (!ReferenceEquals(jobIcon, null))
             {

@@ -72,11 +72,16 @@ namespace Tyrant
         }
 
 
-        public BuffInfoDisplay buffInfoDisplay;
-
+        public BuffInfoDisplay buffInfoDisplayPrefab;
+        public RectTransform buffInfoPanel;
         private void BuffDisplay()
         {
-            _hero.buffHandler.buffs.ForEach(v => buffInfoDisplay.NewBuff(v));
+            _hero.buffHandler.buffs.ForEach(v =>
+            {
+                var display = Instantiate(buffInfoDisplayPrefab, buffInfoPanel);
+                display.gameObject.SetActive(true);
+                display.NewBuff(v);
+            });
         }
 
         public Attack Attack(IBattleVersus battleVersus)
@@ -84,6 +89,11 @@ namespace Tyrant
             var attack = _hero.Attack(battleVersus);
             PlayAttackAnimation(attack);
             return attack;
+        }
+        
+        public void BattleDidEnd()
+        {
+            _hero.BattleDidEnd();
         }
 
         public void PlayAttackAnimation(Attack attack)

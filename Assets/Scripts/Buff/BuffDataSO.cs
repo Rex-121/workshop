@@ -28,8 +28,8 @@ namespace Tyrant
         [BoxGroup("Basic"), VerticalGroup("Basic/Info/Info"), LabelText("起始层数")]
         public int startWithStack;
         
-        // [BoxGroup("Basic")]
-        // public bool isForever;
+        [BoxGroup("Basic")]
+        public bool isForever;
 
         [BoxGroup("更新机制"), LabelText("叠加机制")]
         public BuffUpdateTime updateTimeType;
