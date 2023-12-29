@@ -12,8 +12,6 @@ namespace Tyrant
     public interface IDiceBuffMathModel
     {
         public int Apply(int value, DiceBuffInfo buffInfo);
-
-        public void DiceFaceChange(int value);
     }
 
     public struct D : IDiceBuffModel
@@ -35,29 +33,19 @@ namespace Tyrant
         {
             return value + rate;// * buffInfo.currentStack;
         }
-
-        public void DiceFaceChange(int value)
-        {
-        }
     }
     
     [System.Serializable]
     public class DiceWithFaceValue : IDiceBuffMathModel
     {
 
-        [ShowInInspector]
-        public int v;
+        // [ShowInInspector]
+        // public int v;
         
         public int Apply(int value, DiceBuffInfo buffInfo)
         {
             // Debug.Log($"#DiceWithFaceValue#Apply {value}");
-            return v;
-        }
-
-        public void DiceFaceChange(int value)
-        {
-            Debug.Log($"#DiceWithFaceValue#DiceFaceChange {value}");
-            v = value;
+            return value + buffInfo.diceFace;
         }
     }
 

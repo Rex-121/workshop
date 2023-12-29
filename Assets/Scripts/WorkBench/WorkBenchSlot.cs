@@ -78,6 +78,14 @@ namespace Tyrant
             toolOnTable.toolWrapper = toolWrapper;
             
             pined.OnNext(toolOnTable.gameObject);
+            
+            // 骰子面值发生变化，需要更新buff
+            DiceValueDidBuffed();
+            // var dice = toolOnTable.tool.dice;
+            //
+            // var value = buffHandler.AllEffect(dice.Roll());
+            // toolOnTable.diceBuffInfo.diceFace = value;
+            // Debug.Log($"#PIN# {toolWrapper.position} -- {dice.Roll()} - {value}");
         }
         public void UnPin()
         {
@@ -87,35 +95,45 @@ namespace Tyrant
         {
             preview.OnNext(tool);
         }
+        
+        // 骰子面值发生变化，需要更新buff
+        private void DiceValueDidBuffed()
+        {
+            if (pined.Value == null) return;
+            
+            var dice = pined.Value.GetComponent<ToolOnTable>().tool.dice;
+            var value = buffHandler.AllEffect(dice.Roll());
+            pined.Value.GetComponent<ToolOnTable>().diceBuffInfo.diceFace = value;
+            Debug.Log($"#PIN# {toolWrapper.position} -- {dice.Roll()} - {value}");
+        }
 
         public void NewPreviewBuff(DiceBuffInfo buffInfo)
         {
             previewBuffHandler.AddBuff(buffInfo);
-
-            // if (pined.Value != null)
-            // {
-            //     var dice = pined.Value.GetComponent<ToolOnTable>().tool.dice;
-            //
-            //     var value = buffHandler.AllEffect(dice.Roll());
-            //
-            //     buffHandler.buffs.ForEach(v => v.buffDataSO.onDiceFaceChanged?.DiceFaceChange(value));
-            // }
+            
+            DiceValueDidBuffed();
         }
         
         public void RemovePreviewBuff(DiceBuffInfo buffInfo)
         {
             previewBuffHandler.RemoveBuff(buffInfo);
+
+            DiceValueDidBuffed();
         }
         
         public void RemoveBuff(DiceBuffInfo buffInfo)
         {
             buffHandler.RemoveBuff(buffInfo);
+            
+            DiceValueDidBuffed();
         }
 
         public void NewBuff(DiceBuffInfo buffInfo)
         {
             previewBuffHandler.RemoveBuff(buffInfo);
             buffHandler.AddBuff(buffInfo);
+            
+            DiceValueDidBuffed();
         }
         
         public void UnPreviewTool()

@@ -22,7 +22,8 @@ namespace Tyrant
 
         // public int currentStack;
         //
-        // public int diceFace;
+        [ShowInInspector]
+        public int diceFace;
 
         // public string currentStackDisplay => currentStack switch
         // {
