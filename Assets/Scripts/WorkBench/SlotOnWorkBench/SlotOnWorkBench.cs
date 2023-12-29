@@ -47,6 +47,12 @@ namespace Tyrant.UI
         public void SetCellPosition(WorkBenchSlot slot)
         {
             _slot = slot;
+
+            if (cellType == WorkBench.SlotType.Empty)
+            {
+                buffDisplay.gameObject.SetActive(false);
+                return;
+            }
             
             _cellPosition = slot.toolWrapper.position;
             

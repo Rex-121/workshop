@@ -37,7 +37,7 @@ namespace Tyrant.UI
                 .AddTo(this);
         }
 
-        private void Update()
+        private void LateUpdate()
         {
             if (!_calculateUpdate) return;
             
