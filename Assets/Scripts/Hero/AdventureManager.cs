@@ -43,7 +43,7 @@ namespace Tyrant
 
         public void NewDungeon()
         {
-            adventureMono.NewDungeon();
+            adventureMono.NewHeroSquadOnAdventure();
         }
     }
 }

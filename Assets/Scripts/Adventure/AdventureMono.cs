@@ -10,8 +10,8 @@ using Random = UnityEngine.Random;
 
 public class AdventureMono : MonoBehaviour
 {
-    
-    public HeroSquad[] heroSquads;
+
+    private Dictionary<int, HeroSquad> heroSquads = new();
 
     public DungeonSO dungeonSO;
 
@@ -19,45 +19,96 @@ public class AdventureMono : MonoBehaviour
 
     public HeroSquad heroSquadPrefab;
     
+
+    [Button]
+    public void NewHeroSquadOnAdventure()
+    {
+
+        if (heroSquads.Count >= positions.Length)
+        {
+            return;
+        }
+
+        var allIndex = heroSquads.Keys.ToArray();
+
+        var ii = 0;
+
+        for (var i = 0; i < allIndex.Length; i++)
+        {
+            var intv = allIndex[i];
+            if (ii < intv)
+            {
+                ii = i;
+                break;
+            }
+            
+            ii = i + 1;
+        }
+        
+        Debug.Log($"#Adventure# index{ii}");
+        
+        var position = positions[ii];
+            
+        var heroSquad = Instantiate(heroSquadPrefab, position, Quaternion.identity, transform);
+
+        heroSquad.indexInAdventure = ii;
+        
+        heroSquad.transform.localPosition = position;
+        
+        // 怪物被击杀
+        heroSquad.enemyDefeated += EnemyDidDefeated;
+        heroSquad.dungeonDidFinished += DungeonDidFinished;
+
+        heroSquads[ii] = heroSquad;
+        
+        var dungeon = dungeonSO.toDungeon;
+            
+        // 开始`dungeon`
+        heroSquad.DidEnterDungeon(dungeon);
+
+    }
+    
+    
+    
     [Button, DisableInEditorMode]
     public void NewDungeon()
     {
 
-        if (heroSquads.IsNullOrEmpty())
-        {
-            GenerateHeroSquad();
-        }
-        
-        
-        foreach (var heroSquad in heroSquads)
-        {
-            var dungeon = dungeonSO.toDungeon;
-
-            // 怪物被击杀
-            heroSquad.enemyDefeated += EnemyDidDefeated;
-            
-            // 开始`dungeon`
-            heroSquad.DidEnterDungeon(dungeon);
-        }
+        // if (heroSquads.IsNullOrEmpty())
+        // {
+        //     GenerateHeroSquad();
+        // }
+        //
+        //
+        // foreach (var heroSquad in heroSquads)
+        // {
+        //     var dungeon = dungeonSO.toDungeon;
+        //
+        //     // 怪物被击杀
+        //     heroSquad.enemyDefeated += EnemyDidDefeated;
+        //     
+        //     // 开始`dungeon`
+        //     heroSquad.DidEnterDungeon(dungeon);
+        // }
     }
 
     private void GenerateHeroSquad()
     {
-        heroSquads = new HeroSquad[positions.Length];
-        
-        for (var i = 0; i < positions.Length; i++)
-        {
-            var position = positions[i];
-            
-            var heroSquad = Instantiate(heroSquadPrefab, position, Quaternion.identity, transform);
-
-            heroSquad.transform.localPosition = position;
-        
-            // 怪物被击杀
-            heroSquad.enemyDefeated += EnemyDidDefeated;
-
-            heroSquads[i] = heroSquad;
-        }
+        // heroSquads = new HeroSquad[positions.Length];
+        //
+        // for (var i = 0; i < positions.Length; i++)
+        // {
+        //     var position = positions[i];
+        //     
+        //     var heroSquad = Instantiate(heroSquadPrefab, position, Quaternion.identity, transform);
+        //
+        //     heroSquad.transform.localPosition = position;
+        //
+        //     // 怪物被击杀
+        //     heroSquad.enemyDefeated += EnemyDidDefeated;
+        //
+        //     heroSquads[i] = heroSquad;
+        // }
         
     }
 
@@ -66,4 +117,13 @@ public class AdventureMono : MonoBehaviour
         Destroy(eMono.gameObject);
     }
 
+    private void DungeonDidFinished(HeroSquad heroSquad, Dungeon dungeon)
+    {
+        
+        heroSquads.Remove(heroSquad.indexInAdventure);
+        
+        Destroy(heroSquad.gameObject);
+        
+        NewHeroSquadOnAdventure();
+    }
 }

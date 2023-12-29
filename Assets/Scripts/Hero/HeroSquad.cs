@@ -13,6 +13,8 @@ namespace Tyrant
     public class HeroSquad : MonoBehaviour
     {
 
+        public int indexInAdventure;
+
         public JobSO[] jobSO;
         public CharacterSO[] characterSos;
         
@@ -24,7 +26,7 @@ namespace Tyrant
         public EnemyMono enemyMonoPrefab;
         private EnemyMono _enemyMono;
         public Action<EnemyMono> enemyDefeated;
-
+        public Action<HeroSquad, Dungeon> dungeonDidFinished;
         [NonSerialized, ShowInInspector] private BattleStands battles;
 
         public HeroInfoDisplay heroInfoDisplay;
@@ -112,18 +114,26 @@ namespace Tyrant
         }
 
         #region 战斗
+
+        private void DungeonDidFinished()
+        {
+            dungeonDidFinished?.Invoke(this, _dungeon);
+
+            _dungeon = null;
+
+            dungeonDidFinished = null;
+        }
         
         // 往下走
         private void GoToNextDungeonNode()
         {
             var e = _dungeon.StartANewNode(this);
 
-            dungeonRoadMapLabel.text = _dungeon.roadMap;//"o-o-oo-o-o";
+            dungeonRoadMapLabel.text = _dungeon.roadMap;
             
             if (e == null)
             {
-                Debug.Log("Dungeon 完成");
-                _dungeon = null;
+                DungeonDidFinished();
                 return;
             }
 
