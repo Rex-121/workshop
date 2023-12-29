@@ -66,6 +66,18 @@ namespace Tyrant
             
         }
 
+        // public void NewPreviewBuffTo(Vector2Int location,ToolOnTable toolOnTable)
+        // {
+        //     workBench.GetAllEffectPositions(location, toolOnTable)
+        //         .ForEach(v =>
+        //         {
+        //             Debug.Log($"#PIN# {v.toolWrapper.position} {v.diceFace}");
+        //             v.DiceValueDidBuffed();
+        //             // v.NewPreviewBuff(toolOnTable.diceBuffInfo);
+        //         });
+        //     // workBench.allSlots.Values.ForEach(v => v.DiceValueDidBuffed());
+        // }
+
         // // 获取所有受影响的Slot
         // private IEnumerable<WorkBenchSlot> GetAllEffectPositions(Vector2Int location, ToolOnTable toolOnTable)
         // {

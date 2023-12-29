@@ -43,7 +43,6 @@ namespace Tyrant.UI
         
         [LabelText("是否可以放置骰子")]
         private bool canBePin => cellType != WorkBench.SlotType.Empty;
-        
 
         public void SetCellPosition(WorkBenchSlot slot)
         {

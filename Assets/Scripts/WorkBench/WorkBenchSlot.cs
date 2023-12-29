@@ -42,15 +42,8 @@ namespace Tyrant
 
 
         [ShowInInspector]
-        public int diceFace
-        {
-            get
-            {
-                if (!isOccupied) return 0;
-                return buffHandler.AllEffect(pined.Value.GetComponent<ToolOnTable>().tool.dice.Roll());
-            }
-        }
-        
+        public int diceFace => !isOccupied ? 0 : buffHandler.AllEffect(pined.Value.GetComponent<ToolOnTable>().tool.dice.Roll());
+
         #region tool+buff
         
         [HideInInspector]
@@ -81,31 +74,30 @@ namespace Tyrant
             
             // 骰子面值发生变化，需要更新buff
             DiceValueDidBuffed();
-            // var dice = toolOnTable.tool.dice;
-            //
-            // var value = buffHandler.AllEffect(dice.Roll());
-            // toolOnTable.diceBuffInfo.diceFace = value;
-            // Debug.Log($"#PIN# {toolWrapper.position} -- {dice.Roll()} - {value}");
+            
         }
         public void UnPin()
         {
             pined.OnNext(null);
+            
+            DiceValueDidBuffed();
         }
         public void PreviewTool(Tool tool)
         {
             preview.OnNext(tool);
+            
+            DiceValueDidBuffed();
         }
         
         // 骰子面值发生变化，需要更新buff
         private void DiceValueDidBuffed()
         {
             if (pined.Value == null) return;
-            
             var dice = pined.Value.GetComponent<ToolOnTable>().tool.dice;
-            var value = buffHandler.AllEffect(dice.Roll());
+            var value = AllEffect(dice.Roll());
             pined.Value.GetComponent<ToolOnTable>().diceBuffInfo.diceFace = value;
-            Debug.Log($"#PIN# {toolWrapper.position} -- {dice.Roll()} - {value}");
         }
+        
 
         public void NewPreviewBuff(DiceBuffInfo buffInfo)
         {
