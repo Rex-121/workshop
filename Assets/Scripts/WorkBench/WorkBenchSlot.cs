@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+
 using Sirenix.OdinInspector;
-using Sirenix.Utilities;
-using Tools;
 using Tyrant.UI;
 using UniRx;
 using UnityEngine;
@@ -31,11 +27,6 @@ namespace Tyrant
             return previewBuffHandler.AllEffect(buffHandler.AllEffect(startValue));
         }
         
-        // public int AllEffectByFace(int startValue)
-        // {
-        //     return previewBuffHandler.AllEffectByFace(buffHandler.AllEffectByFace(startValue));
-        // }
-        
         // 是否已经有骰子
         [ShowInInspector, LabelText("是否已经有骰子")]
         public bool isOccupied => pined.Value != null;
@@ -47,10 +38,10 @@ namespace Tyrant
         #region tool+buff
         
         [HideInInspector]
-        public readonly BehaviorSubject<Tool> preview = new(null);
+        public readonly BehaviorSubject<ToolOnTable> preview = new(null);
         
         [HideInInspector]
-        public readonly BehaviorSubject<GameObject> pined = new(null);
+        public readonly BehaviorSubject<ToolOnTable> pined = new(null);
         public void DidForgeThisTurn()
         {
             
@@ -70,7 +61,7 @@ namespace Tyrant
         {
             toolOnTable.toolWrapper = toolWrapper;
             
-            pined.OnNext(toolOnTable.gameObject);
+            pined.OnNext(toolOnTable);
             
             // 骰子面值发生变化，需要更新buff
             DiceValueDidBuffed();
@@ -79,10 +70,9 @@ namespace Tyrant
         public void UnPin()
         {
             pined.OnNext(null);
-            
             DiceValueDidBuffed();
         }
-        public void PreviewTool(Tool tool)
+        public void PreviewTool(ToolOnTable tool)
         {
             preview.OnNext(tool);
             
@@ -92,24 +82,34 @@ namespace Tyrant
         // 骰子面值发生变化，需要更新buff
         private void DiceValueDidBuffed()
         {
-            if (pined.Value == null) return;
-            var dice = pined.Value.GetComponent<ToolOnTable>().tool.dice;
-            var value = AllEffect(dice.Roll());
-            pined.Value.GetComponent<ToolOnTable>().diceBuffInfo.diceFace = value;
+            if (pined.Value != null)
+            {
+                var dice = pined.Value.tool.dice;
+                var value = AllEffect(dice.Roll());
+                pined.Value.diceBuffInfo.diceFace = value;
+            }
+            else
+            {
+                if (preview.Value != null)
+                {
+                    var dice = preview.Value.tool.dice;
+                    var value = AllEffect(dice.Roll());
+                    preview.Value.diceBuffInfo.diceFace = value;
+                }
+            }
+            
         }
         
 
         public void NewPreviewBuff(DiceBuffInfo buffInfo)
         {
             previewBuffHandler.AddBuff(buffInfo);
-            
             DiceValueDidBuffed();
         }
         
         public void RemovePreviewBuff(DiceBuffInfo buffInfo)
         {
             previewBuffHandler.RemoveBuff(buffInfo);
-
             DiceValueDidBuffed();
         }
         

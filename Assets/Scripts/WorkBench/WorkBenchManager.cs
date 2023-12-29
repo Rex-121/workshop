@@ -52,37 +52,11 @@ namespace Tyrant
             
             if (slot.isOccupied) return;
 
-            slot.PreviewTool(toolOnTable.tool);
+            slot.PreviewTool(toolOnTable);
 
             workBench.NewPreviewBuffTo(location, toolOnTable);
-            // var pin = new PinedTool(location, toolOnTable.tool);
-            
-            // pin.buffs
-            //     .Where(v => workBench.HasSlot(v.effectOnLocation))
-            //     .ForEach(v =>
-            //     {
-            //         workBench.SlotBy(v.effectOnLocation).NewPreviewBuff(v);
-            //     });
             
         }
-
-        // public void NewPreviewBuffTo(Vector2Int location,ToolOnTable toolOnTable)
-        // {
-        //     workBench.GetAllEffectPositions(location, toolOnTable)
-        //         .ForEach(v =>
-        //         {
-        //             Debug.Log($"#PIN# {v.toolWrapper.position} {v.diceFace}");
-        //             v.DiceValueDidBuffed();
-        //             // v.NewPreviewBuff(toolOnTable.diceBuffInfo);
-        //         });
-        //     // workBench.allSlots.Values.ForEach(v => v.DiceValueDidBuffed());
-        // }
-
-        // // 获取所有受影响的Slot
-        // private IEnumerable<WorkBenchSlot> GetAllEffectPositions(Vector2Int location, ToolOnTable toolOnTable)
-        // {
-        //     return toolOnTable.diceBuffDataSO.effectOnLocation.AllEffect(location, workBench.allSlots);
-        // }
 
         public void Pin(Vector2Int location, ToolOnTable toolOnTable)
         {
@@ -129,12 +103,14 @@ namespace Tyrant
 
         public void UnPreviewTool(Vector2Int location,  ToolOnTable toolOnTable)
         {
+            var d = workBench.SlotBy(location);
+            if (d != null && d.preview.Value)
+            {
+                workBench.GetAllEffectPositions(location, d.preview.Value)
+                    .ForEach(v => v.RemovePreviewBuff(d.preview.Value.diceBuffInfo));
+            }
             
-            workBench.GetAllEffectPositions(location, toolOnTable)
-                .ForEach(v => v.RemovePreviewBuff(toolOnTable.diceBuffInfo));
-
             workBench.allSlots
-                .Where(v => v.Key.position == location)
                 .ForEach(v => v.Value.UnPreviewTool());
 
         }

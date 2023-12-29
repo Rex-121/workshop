@@ -137,17 +137,9 @@ namespace Tyrant.UI
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if (!canBePin) return;
-            
-            var obj = eventData.pointerDrag;
-            
-            if (ReferenceEquals(obj, null)) return;
-
-            var has = obj.TryGetComponent(out ToolOnTable toolOnTable);
-            
-            // if (!has) return;
-            
-            handler?.DidUnPreviewTool(_cellPosition, toolOnTable);
+            // 这里可能由于手速过快，此时已经丢失pointerDrag，导致无法获取toolOnTable
+            // 所以发现鼠标移开，就强行移除
+            handler?.DidUnPreviewTool(_cellPosition, null);
         }
     }
 }

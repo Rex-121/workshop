@@ -62,7 +62,7 @@ namespace Tyrant
 
         public WorkBenchSlot SlotBy(Vector2Int vector2Int)
         {
-            return _dic.First(v => v.Key.position == vector2Int).Value;
+            return _dic.FirstOrDefault(v => v.Key.position == vector2Int).Value;
         }
 
         public void NewBuffTo(Vector2Int position, ToolOnTable toolOnTable)

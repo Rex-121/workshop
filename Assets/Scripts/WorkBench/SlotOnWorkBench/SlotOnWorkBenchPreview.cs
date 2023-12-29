@@ -34,9 +34,9 @@ namespace Tyrant.UI
             powerDisplay.text = "";
         }
 
-        private void Preview(Tool tool)
+        private void Preview(ToolOnTable tool)
         {
-            powerDisplay.text = tool.dice.Roll().ToString();
+            // powerDisplay.text = tool.dice.Roll().ToString();
         }
     }
 }

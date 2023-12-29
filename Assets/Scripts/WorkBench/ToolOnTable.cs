@@ -10,7 +10,7 @@ using UnityEngine.UI;
 namespace Tyrant.UI
 {
     [RequireComponent(typeof(DragInCanvas))]
-    public class ToolOnTable : MonoBehaviour
+    public class ToolOnTable : MonoBehaviour, IPointerClickHandler
     {
         
         private DragInCanvas _dragInCanvas;
@@ -53,13 +53,18 @@ namespace Tyrant.UI
             _dragInCanvas.startDrag += DidStartDrag;
 
             diceBuffInfo = diceBuffDataSO.RandomElement().ToBuff();
+            
 
             skillNameLabel.text = diceBuffInfo.buffName;
 
             skillDescriptionLabel.text = diceBuffInfo.buffDataSO.description;
         }
-        
-        
+
+        public void OnMouseDown()
+        {
+            Debug.Log("faslfjalsdf");
+            Debug.Log(Input.GetMouseButtonDown(1));
+        }
 
         public void NewTool(int index, Tool tool, Transform dragLayer)
         {
@@ -74,6 +79,9 @@ namespace Tyrant.UI
             var value = this.tool.dice.Roll();
 
             dicedImage.sprite = diceSpriteDefineSO.sprites[value];
+            
+            // 初始面值
+            diceBuffInfo.diceFace = tool.dice.Roll();
         }
 
         public void BackToToolBox()
@@ -116,6 +124,13 @@ namespace Tyrant.UI
             isOnWorkBench = true;
             _dragInCanvas.Lock();
         }
-        
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (eventData.button == PointerEventData.InputButton.Right)
+            {
+                BackToToolBox();
+            }
+        }
     }
 }

@@ -31,20 +31,26 @@ MonoBehaviour:
       Entry: 6
       Data: 
     - Name: onUse
-      Entry: 6
+      Entry: 7
+      Data: 1|Tyrant.DiceAddSimpleValue, Assembly-CSharp
+    - Name: rate
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
       Data: 
     - Name: onRemove
       Entry: 6
       Data: 
     - Name: effectOnLocation
       Entry: 7
-      Data: 1|Tyrant.DiceBuffDataSO+DefaultEffectOnLocation, Assembly-CSharp
+      Data: 2|Tyrant.DiceBuffDataSO+DefaultEffectOnLocation, Assembly-CSharp
     - Name: effectOn
       Entry: 7
-      Data: 2|UnityEngine.Vector2Int[], UnityEngine.CoreModule
+      Data: 3|UnityEngine.Vector2Int[], UnityEngine.CoreModule
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 3
     - Name: 
       Entry: 7
       Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
@@ -58,6 +64,30 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 3
+      Data: -2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 3
+      Data: -3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
@@ -66,12 +96,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  id: 0
   buffName: "\u5DE6+1"
-  description: "\u5DE6\u8FB9Slot+1"
+  description: "\u5DE6\u8FB93\u683C+2"
   icon: {fileID: 0}
   priority: 0
-  maxStack: 10
-  startWithStack: 1
   updateTimeType: 0
   stackRemoveType: 1

@@ -27,7 +27,7 @@ namespace Tyrant.UI
                 {
                     if (tool != null)
                     {
-                        PinTool(tool);
+                        PinTool(tool.gameObject);
                     }
                     else
                     {

@@ -28,17 +28,23 @@ MonoBehaviour:
       Entry: 6
       Data: 
     - Name: onUse
-      Entry: 6
+      Entry: 7
+      Data: 0|Tyrant.DiceAddSimpleValue, Assembly-CSharp
+    - Name: rate
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
       Data: 
     - Name: onRemove
       Entry: 6
       Data: 
     - Name: effectOnLocation
       Entry: 7
-      Data: 0|Tyrant.DiceBuffDataSO+DefaultEffectOnLocation, Assembly-CSharp
+      Data: 1|Tyrant.DiceBuffDataSO+DefaultEffectOnLocation, Assembly-CSharp
     - Name: effectOn
       Entry: 7
-      Data: 1|UnityEngine.Vector2Int[], UnityEngine.CoreModule
+      Data: 2|UnityEngine.Vector2Int[], UnityEngine.CoreModule
     - Name: 
       Entry: 12
       Data: 2
@@ -75,12 +81,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  id: 1
   buffName: "\u5DE6\u53F3+1"
-  description: 
+  description: "\u5DE6\u53F3\u683C\u5B50\u5404+1"
   icon: {fileID: 0}
   priority: 0
-  maxStack: 1
-  startWithStack: 1
   updateTimeType: 0
   stackRemoveType: 0

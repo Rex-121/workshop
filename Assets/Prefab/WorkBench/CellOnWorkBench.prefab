@@ -338,7 +338,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5400590490984096575
 RectTransform:
   m_ObjectHideFlags: 0
@@ -473,7 +473,6 @@ MonoBehaviour:
   pined: {fileID: 623059827723574738}
   preview: {fileID: 7977396798006307453}
   buffDisplay: {fileID: 3709979586440446336}
-  cellType: 0
 --- !u!1 &6975704669623738068
 GameObject:
   m_ObjectHideFlags: 0
@@ -535,7 +534,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buffLabel: {fileID: 1055542548069021388}
-  debuffLabel: {fileID: 4185907405342269490}
 --- !u!1 &8443545265511652519
 GameObject:
   m_ObjectHideFlags: 0
