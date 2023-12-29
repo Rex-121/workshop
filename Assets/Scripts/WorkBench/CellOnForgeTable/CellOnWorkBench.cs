@@ -1,4 +1,5 @@
 using System;
+using Sirenix.OdinInspector;
 using TMPro;
 using Tools;
 using UnityEngine;
@@ -8,31 +9,46 @@ using UnityEngine.UI;
 
 namespace Tyrant.UI
 {
+    // 主要空格
+    // 包含 预览 放置和 buff显示
     public class CellOnWorkBench : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
     {
 
         private Vector2Int _cellPosition;
+        
+        
+        [ShowInInspector, BoxGroup("Slot"), HideLabel, HideReferenceObjectPicker]
+        private WorkBenchSlot _slot;
+        
 
-
+        #region UIProperties
+        [BoxGroup("UI")]
         public TextMeshProUGUI positionLabel;
-
-        public IWorkBenchUIHandler handler;
-        
+        [BoxGroup("UI")]
         public Image backgroundImage;
-
+        [BoxGroup("UI")]
         public Sprite a;
-        
+        [BoxGroup("UI")]
         public Sprite b;
-
+        #endregion
+        
+        [BoxGroup("SlotInfo")]
+        public IWorkBenchUIHandler handler;
+        [BoxGroup("SlotInfo")]
         public CellOnWorkBenchPined pined;
+        [BoxGroup("SlotInfo")]
         public CellOnWorkBenchPreview preview;
+        [BoxGroup("SlotInfo")]
         public CellOnWorkBenchBuffDisplay buffDisplay;
+
+        private WorkBench.SlotType cellType => _slot.toolWrapper.type;
         
-        public WorkBench.SlotType cellType;
-        
-        public bool canBePin => cellType != 0;
+        [LabelText("是否可以放置骰子")]
+        private bool canBePin => cellType != WorkBench.SlotType.Empty;
         public void SetCellPosition(WorkBenchSlot slot)
         {
+            _slot = slot;
+            
             _cellPosition = slot.toolWrapper.position;
             
             preview.RegisterSlot(slot);
@@ -48,8 +64,6 @@ namespace Tyrant.UI
 
             positionLabel.text = name;
 #endif
-
-            cellType = slot.toolWrapper.type;
             
             backgroundImage.sprite = cellType switch
             {

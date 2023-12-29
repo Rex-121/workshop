@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
-using Sirenix.Utilities;
 using Tools;
 using Tyrant.UI;
 using UniRx;
@@ -13,6 +12,7 @@ namespace Tyrant
     public class WorkBenchSlot
     {
         
+        [HideLabel, ReadOnly]
         public WorkBench.ToolWrapper toolWrapper;
 
         public WorkBenchSlot(WorkBench.ToolWrapper toolWrapper, IEnumerable<WorkBenchDebuff> debuff)
@@ -29,7 +29,7 @@ namespace Tyrant
         
         
         // 是否已经有骰子
-        [ShowInInspector]
+        [ShowInInspector, LabelText("是否已经有骰子")]
         public bool isOccupied => pined.Value != null;
 
         #region tool+buff

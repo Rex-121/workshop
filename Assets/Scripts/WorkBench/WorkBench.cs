@@ -25,9 +25,13 @@ namespace Tyrant
 
 
         
+        [HideReferenceObjectPicker]
         public struct ToolWrapper
         {
+            [ReadOnly, LabelText("位置"), HorizontalGroup("Info")]
             public Vector2Int position;
+            
+            [SuffixLabel("Slot类型", true), HideLabel, HorizontalGroup("Info")]
             public SlotType type;
 
             public ToolWrapper(Vector2Int position, SlotType type)
