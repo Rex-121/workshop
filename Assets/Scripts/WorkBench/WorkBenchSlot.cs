@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
+using Sirenix.Utilities;
 using Tools;
 using Tyrant.UI;
 using UniRx;
@@ -30,10 +31,26 @@ namespace Tyrant
             return previewBuffHandler.AllEffect(buffHandler.AllEffect(startValue));
         }
         
+        // public int AllEffectByFace(int startValue)
+        // {
+        //     return previewBuffHandler.AllEffectByFace(buffHandler.AllEffectByFace(startValue));
+        // }
+        
         // 是否已经有骰子
         [ShowInInspector, LabelText("是否已经有骰子")]
         public bool isOccupied => pined.Value != null;
 
+
+        [ShowInInspector]
+        public int diceFace
+        {
+            get
+            {
+                if (!isOccupied) return 0;
+                return buffHandler.AllEffect(pined.Value.GetComponent<ToolOnTable>().tool.dice.Roll());
+            }
+        }
+        
         #region tool+buff
         
         [HideInInspector]
@@ -54,10 +71,6 @@ namespace Tyrant
                 toolOnTable.DidUsedThisTurn();
             }
             UnPin();
-            // _buffTools.Clear();
-            // _previewBuffTools.Clear();
-            // previewBuffs.OnNext(_previewBuffTools);
-            // buffs.OnNext(_buffTools);
         }
         
         public void Pin(ToolOnTable toolOnTable)
@@ -65,8 +78,6 @@ namespace Tyrant
             toolOnTable.toolWrapper = toolWrapper;
             
             pined.OnNext(toolOnTable.gameObject);
-            
-            // NewBuff(toolOnTable.diceBuffDataSO.ToBuff());
         }
         public void UnPin()
         {
@@ -79,40 +90,34 @@ namespace Tyrant
 
         public void NewPreviewBuff(DiceBuffInfo buffInfo)
         {
-            Debug.Log($"#WorkBenchSlot#NewPreviewBuff {toolWrapper.position} --->");
             previewBuffHandler.AddBuff(buffInfo);
-            Debug.Log($"#WorkBenchSlot#NewPreviewBuff {toolWrapper.position} <---\n");
+
+            // if (pined.Value != null)
+            // {
+            //     var dice = pined.Value.GetComponent<ToolOnTable>().tool.dice;
+            //
+            //     var value = buffHandler.AllEffect(dice.Roll());
+            //
+            //     buffHandler.buffs.ForEach(v => v.buffDataSO.onDiceFaceChanged?.DiceFaceChange(value));
+            // }
         }
         
         public void RemovePreviewBuff(DiceBuffInfo buffInfo)
         {
-            Debug.Log($"#WorkBenchSlot#RemovePreviewBuff {toolWrapper.position} --->");
             previewBuffHandler.RemoveBuff(buffInfo);
-            Debug.Log($"#WorkBenchSlot#RemovePreviewBuff {toolWrapper.position} <---\n");
         }
         
         public void RemoveBuff(DiceBuffInfo buffInfo)
         {
-            Debug.Log($"#WorkBenchSlot#RemoveBuff {toolWrapper.position} --->");
             buffHandler.RemoveBuff(buffInfo);
-            Debug.Log($"#WorkBenchSlot#RemoveBuff {toolWrapper.position} <---\n");
         }
 
         public void NewBuff(DiceBuffInfo buffInfo)
         {
-            // _buffTools.Add(buffTool);
-            // buffs.OnNext(_buffTools);
-            Debug.Log($"#WorkBenchSlot#NewBuff {toolWrapper.position} --->");
             previewBuffHandler.RemoveBuff(buffInfo);
             buffHandler.AddBuff(buffInfo);
-            Debug.Log($"#WorkBenchSlot#NewBuff {toolWrapper.position} <---\n");
         }
         
-        // public void ReleasePreviewBuff()
-        // {
-        //     UnPreviewTool();
-        // }
-        //
         public void UnPreviewTool()
         {
             preview.OnNext(null);
@@ -130,12 +135,6 @@ namespace Tyrant
             var originValue = tool.dice.Roll();
 
             return AllEffect(originValue);
-            // 计算buff
-            // _buffTools.ForEach(v => originValue = v.ValueBy(originValue));
-            // 计算debuff
-            // debuff.ForEach(v => originValue = v.ValueBy(originValue));
-            
-            // return originValue;
 
         }
         

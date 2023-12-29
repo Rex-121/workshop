@@ -1,4 +1,5 @@
 using System;
+using Algorithm;
 using Dicing;
 using TMPro;
 using UnityEngine;
@@ -19,10 +20,19 @@ namespace Tyrant.UI
         
         public Tool tool;
 
+        public TextMeshProUGUI skillNameLabel;
+        public TextMeshProUGUI skillDescriptionLabel;
+        
         [SerializeField]
-        private DiceBuffDataSO diceBuffDataSO;
+        private DiceBuffDataSO[] diceBuffDataSO;
 
         public DiceBuffInfo diceBuffInfo;// => diceBuffDataSO.ToBuff();
+
+        public DiceBuffInfo GetDiceBuffInfoWithFace(int face)
+        {
+            diceBuffInfo.diceFace = face;
+            return diceBuffInfo;
+        }
         
         public Image dicedImage;
 
@@ -42,8 +52,14 @@ namespace Tyrant.UI
             _dragInCanvas.endDrag += DidEndDrag;
             _dragInCanvas.startDrag += DidStartDrag;
 
-            diceBuffInfo = diceBuffDataSO.ToBuff();
+            diceBuffInfo = diceBuffDataSO.RandomElement().ToBuff();
+
+            skillNameLabel.text = diceBuffInfo.buffName;
+
+            skillDescriptionLabel.text = diceBuffInfo.buffDataSO.description;
         }
+        
+        
 
         public void NewTool(int index, Tool tool, Transform dragLayer)
         {

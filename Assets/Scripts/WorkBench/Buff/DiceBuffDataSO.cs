@@ -42,18 +42,28 @@ namespace Tyrant
         public IDiceBuffModel onCreate;
         [BoxGroup("回调"), LabelText("放入Slot时"), Title("机制回调"), Space(20)]
         public IDiceBuffModel onPin;
-        [BoxGroup("回调"), LabelText("预览时")]
-        public IDiceBuffMathModel onPreview;
+        [BoxGroup("回调"), LabelText("使用")]
+        public IDiceBuffMathModel onUse;
         // [BoxGroup("回调"), LabelText("使用")]
         // public IDiceBuffMathModel onUse;
         [BoxGroup("回调"), LabelText("当Buff移除")]
         public IDiceBuffModel onRemove;
+        // [BoxGroup("回调"), LabelText("当Buff移除")]
+        // public IDiceBuffMathModel onDiceFaceChanged;
         // [BoxGroup("回调"), LabelText("被击杀时")]
         // public IDiceBuffModel onBeKill;
 
-        public EffectOnLocation effectOnLocation = new EffectOnLocation();
+        [SerializeField]
+        public IBuffEffectOn effectOnLocation;// = new EffectOnLocation();
+
+        public interface IBuffEffectOn
+        {
+            public IEnumerable<WorkBenchSlot> AllEffect(Vector2Int pivot,
+                Dictionary<WorkBench.ToolWrapper, WorkBenchSlot> all);
+        } 
         
-        public struct EffectOnLocation
+        [System.Serializable]
+        public struct DefaultEffectOnLocation: IBuffEffectOn
         {
             public Vector2Int[] effectOn;
 

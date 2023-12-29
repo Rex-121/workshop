@@ -68,13 +68,13 @@ namespace Tyrant
         public void NewBuffTo(Vector2Int position, ToolOnTable toolOnTable)
         {
             GetAllEffectPositions(position, toolOnTable)
-                .ForEach(v => v.NewBuff(toolOnTable.diceBuffInfo));
+                .ForEach(v => v.NewBuff(toolOnTable.GetDiceBuffInfoWithFace(v.diceFace)));
         }
         
         public void NewPreviewBuffTo(Vector2Int position, ToolOnTable toolOnTable)
         {
             GetAllEffectPositions(position, toolOnTable)
-                .ForEach(v => v.NewPreviewBuff(toolOnTable.diceBuffInfo));
+                .ForEach(v => v.NewPreviewBuff(toolOnTable.GetDiceBuffInfoWithFace(v.diceFace)));
         }
 
         public void DidForgeThisTurn()

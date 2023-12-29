@@ -53,6 +53,8 @@ namespace Tyrant.UI
             // });
 
             var c = _handler2.AllEffect(_handler.AllEffect(0));
+
+            // c = _handler2.AllEffectByFace(_handler.AllEffectByFace(c));
             //
             // Debug.Log($"{a}");
             // //

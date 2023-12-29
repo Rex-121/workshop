@@ -1,4 +1,5 @@
 using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Tyrant
@@ -18,6 +19,8 @@ namespace Tyrant
 
         public int currentStack;
 
+        public int diceFace;
+
         public string currentStackDisplay => currentStack switch
         {
             > 1 => currentStack.ToString(),
@@ -32,6 +35,9 @@ namespace Tyrant
         {
             currentStack = buffDataSO.startWithStack;
         }
+
+        // [ShowInInspector]
+        // public IDiceBuffMathModel j => buffDataSO.onDiceFaceChanged;
 
         /// <summary>
         /// 增加buff层数（如果可以/需要增加）

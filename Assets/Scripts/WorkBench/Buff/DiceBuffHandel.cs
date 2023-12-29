@@ -21,40 +21,29 @@ namespace Tyrant
         {
             this.style = style;
         }
-        // public Attack WillHit(Attack attack)
-        // {
-        //     foreach (var v in _buffList)
-        //     {
-        //         v.buffDataSO.onHit?.Apply(v, attack, newPower => attack = newPower);
-        //     }
-        //     
-        //     return attack;
-        // }
-        //
-        // public Attack WillTakeDamage(Attack attack)
-        // {
-        //     foreach (var v in _buffList)
-        //     {
-        //         v.buffDataSO.onBeHit?.Apply(v, attack, newPower => attack = newPower);
-        //     }
-        //     
-        //     return attack;
-        // }
-        //
-
-        // public void UseBuffIfNeeded(Action<BuffInfo> fore)
-        // {
-        //     _buffList.ForEach(fore.Invoke);
-        // }
 
         public int AllEffect(int startValue)
         {
             var b = startValue;
-            var a = buffs
-                .Where(v => v.buffDataSO.onPreview != null)
-                .Sum(diceBuffInfo => b = diceBuffInfo.buffDataSO.onPreview.Apply(b, diceBuffInfo));
+            buffs
+                .Where(v => v.buffDataSO.onUse != null)
+                .ForEach(diceBuffInfo => b = diceBuffInfo.buffDataSO.onUse.Apply(b, diceBuffInfo));
+            
+            
+            
+            
             return b;
         }
+
+        // public int AllEffectByFace(int face)
+        // {
+        //     var b = face;
+        //     buffs
+        //         .Where(v => v.buffDataSO.onDiceFaceChanged != null)
+        //         .ForEach(diceBuffInfo => b = diceBuffInfo.buffDataSO.onDiceFaceChanged.Apply(b, diceBuffInfo));
+        //     
+        //     return b;
+        // }
 
         public void AddBuff(DiceBuffInfo buff)
         {
@@ -69,6 +58,7 @@ namespace Tyrant
             }
             else
             {
+                
                 // 机制原因，这里要拷贝新的对象
                 var newBuff = buff.buffDataSO.ToBuff();
                 
@@ -82,10 +72,6 @@ namespace Tyrant
                 foundBuff = newBuff;
                 
             }
-            
-            
-            Debug.Log($"#WorkBenchSlot#{style} 增加 Buff `{foundBuff.buffName}`{foundBuff.currentStack} 剩余buff{_buffList.Count()}");
-
             
             // buff 回调 `onCreate`
             foundBuff.buffDataSO.onCreate?.Apply();
@@ -104,19 +90,16 @@ namespace Tyrant
                 case BuffRemoveStackUpdate.Clear:
                     buff.buffDataSO.onRemove?.Apply();
                     var success = _buffList.Remove(buff);
-                    Debug.Log($"#WorkBenchSlot#{style} 移除 Buff `{buff.buffName}{success}`");
                     break;
                 case BuffRemoveStackUpdate.Reduce:
                     buff.currentStack--;
 
                     buff.buffDataSO.onRemove?.Apply();
                     
-                    Debug.Log($"#WorkBenchSlot#{style} 移除 Buff `{buff.buffName}`{buff.currentStack}");
 
                     if (buff.currentStack == 0)
                     {
                         _buffList.Remove(buff);
-                        Debug.Log($"#WorkBenchSlot#{style} 强制移除 Buff `{buff.buffName}`");
                     }
                     
                     break;
@@ -124,8 +107,6 @@ namespace Tyrant
                     break;
             }
             
-            Debug.Log($"#WorkBenchSlot#{style} 移除 Buff `{buff.buffName}`{buff.currentStack} 剩余buff{_buffList.Count()}");
-
         }
         
 
