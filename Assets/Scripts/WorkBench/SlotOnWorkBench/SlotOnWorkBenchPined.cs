@@ -1,3 +1,4 @@
+using System;
 using Dicing;
 using TMPro;
 using UniRx;
@@ -14,9 +15,13 @@ namespace Tyrant.UI
         public TextMeshProUGUI powerDisplay;
 
         public IWorkBenchUIHandler handler;
-        
+        private WorkBenchSlot _slot;
+
+        private bool _calculateUpdate = false;
         public void RegisterSlot(WorkBenchSlot slot)
         {
+            _slot = slot;
+            
             slot.pined
                 .Subscribe(tool =>
                 {
@@ -31,7 +36,14 @@ namespace Tyrant.UI
                 })
                 .AddTo(this);
         }
-        
+
+        private void Update()
+        {
+            if (!_calculateUpdate) return;
+            
+            powerDisplay.text = _slot.AllEffect(_dicing.Roll()).ToString();
+        }
+
         private void PinTool(GameObject obj)
         {
             var has = obj.TryGetComponent(out ToolOnTable toolOnTable);
@@ -41,6 +53,8 @@ namespace Tyrant.UI
                 gameObject.SetActive(false);
                 return;
             }
+
+            _calculateUpdate = true;
             
             toolOnTable.Lock();
             obj.transform.SetParent(transform);
@@ -54,7 +68,9 @@ namespace Tyrant.UI
             
             _dicing = tool.dice;
 
-            powerDisplay.text = _dicing.Roll().ToString();
+            var value = _dicing.Roll();
+            
+            powerDisplay.text = _slot.AllEffect(value).ToString();
             
             gameObject.SetActive(true);
 
@@ -71,9 +87,10 @@ namespace Tyrant.UI
 
         private void UnPinTool(ToolOnTable toolOnTable)
         {
+            _calculateUpdate = false;
             toolOnTable.startDrag = null;
             gameObject.SetActive(false);
-            handler?.DidUnPinTool(cellPosition);
+            handler?.DidUnPinTool(cellPosition, toolOnTable);
         }
     }
 }

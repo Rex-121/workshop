@@ -21,8 +21,9 @@ namespace Tyrant
         
         
         [ShowInInspector, NonSerialized]
-        public Dictionary<ToolWrapper, WorkBenchSlot> dic = new();
+        private Dictionary<ToolWrapper, WorkBenchSlot> _dic = new();
 
+        public Dictionary<ToolWrapper, WorkBenchSlot> allSlots => _dic;
 
         
         [HideReferenceObjectPicker]
@@ -41,24 +42,44 @@ namespace Tyrant
             }
         }
         
-        public IEnumerable<WorkBenchSlot> allMakes => dic.Values
+        public IEnumerable<WorkBenchSlot> allMakes => _dic.Values
             .Where(v => v.toolWrapper.type == WorkBench.SlotType.Make);
-        public IEnumerable<WorkBenchSlot> allQuality => dic.Values
+        public IEnumerable<WorkBenchSlot> allQuality => _dic.Values
             .Where(v => v.toolWrapper.type == WorkBench.SlotType.Quality);
 
-        public bool HasSlot(Vector2Int vector2Int)
+        // public bool HasSlot(Vector2Int vector2Int)
+        // {
+        //     return !dic.Keys.Where(v => v.position == vector2Int).ToArray().IsNullOrEmpty();
+        // }
+
+        // public Vector2Int[] allS => dic.Keys.Select(v => v.position).ToArray();
+        
+        // 获取所有受影响的Slot
+        public IEnumerable<WorkBenchSlot> GetAllEffectPositions(Vector2Int location, ToolOnTable toolOnTable)
         {
-            return !dic.Keys.Where(v => v.position == vector2Int).ToArray().IsNullOrEmpty();
+            return toolOnTable.diceBuffInfo.buffDataSO.effectOnLocation.AllEffect(location, allSlots);
         }
 
         public WorkBenchSlot SlotBy(Vector2Int vector2Int)
         {
-            return dic.First(v => v.Key.position == vector2Int).Value;
+            return _dic.First(v => v.Key.position == vector2Int).Value;
+        }
+
+        public void NewBuffTo(Vector2Int position, ToolOnTable toolOnTable)
+        {
+            GetAllEffectPositions(position, toolOnTable)
+                .ForEach(v => v.NewBuff(toolOnTable.diceBuffInfo));
+        }
+        
+        public void NewPreviewBuffTo(Vector2Int position, ToolOnTable toolOnTable)
+        {
+            GetAllEffectPositions(position, toolOnTable)
+                .ForEach(v => v.NewPreviewBuff(toolOnTable.diceBuffInfo));
         }
 
         public void DidForgeThisTurn()
         {
-            dic.Values.ForEach(v => v.DidForgeThisTurn());
+            _dic.Values.ForEach(v => v.DidForgeThisTurn());
         }
         
         public List<WorkBenchSlot> Start()
@@ -81,10 +102,10 @@ namespace Tyrant
                     var position = new Vector2Int(i, j);
                     var slotType = b[j].toSlotType();
                     var item = new ToolWrapper(position, slotType);
-                    var slot = new WorkBenchSlot(item, new []{ new WorkBenchDebuff() });
+                    var slot = new WorkBenchSlot(item);
                     if (slotType != SlotType.Empty)
                     {
-                        dic.Add(item, slot);
+                        _dic.Add(item, slot);
                     }
                     list.Add(slot);
                 }

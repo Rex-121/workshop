@@ -54,16 +54,23 @@ namespace Tyrant
 
             slot.PreviewTool(toolOnTable.tool);
 
-            var pin = new PinedTool(location, toolOnTable.tool);
+            workBench.NewPreviewBuffTo(location, toolOnTable);
+            // var pin = new PinedTool(location, toolOnTable.tool);
             
-            pin.buffs
-                .Where(v => workBench.HasSlot(v.effectOnLocation))
-                .ForEach(v =>
-                {
-                    workBench.SlotBy(v.effectOnLocation).NewPreviewBuff(v);
-                });
+            // pin.buffs
+            //     .Where(v => workBench.HasSlot(v.effectOnLocation))
+            //     .ForEach(v =>
+            //     {
+            //         workBench.SlotBy(v.effectOnLocation).NewPreviewBuff(v);
+            //     });
             
         }
+
+        // // 获取所有受影响的Slot
+        // private IEnumerable<WorkBenchSlot> GetAllEffectPositions(Vector2Int location, ToolOnTable toolOnTable)
+        // {
+        //     return toolOnTable.diceBuffDataSO.effectOnLocation.AllEffect(location, workBench.allSlots);
+        // }
 
         public void Pin(Vector2Int location, ToolOnTable toolOnTable)
         {
@@ -72,20 +79,12 @@ namespace Tyrant
 
             if (slot.isOccupied) return;
             
-                        
             // 先取消预览
-            UnPreviewTool(location);
+            UnPreviewTool(location, toolOnTable);
             
             slot.Pin(toolOnTable);
-
-            var pin = new PinedTool(location, toolOnTable.tool);
             
-            pin.buffs
-                .Where(v => workBench.HasSlot(v.effectOnLocation))
-                .ForEach(v =>
-                {
-                    workBench.SlotBy(v.effectOnLocation).NewBuff(v);
-                });
+            workBench.NewBuffTo(location, toolOnTable);
             
             CalculateScore();
             
@@ -106,33 +105,41 @@ namespace Tyrant
         }
         
 
-        public void UnPin(Vector2Int location)
+        public void UnPin(Vector2Int location, ToolOnTable toolOnTable)
         {
             workBench.SlotBy(location).UnPin();
+            
+            workBench.GetAllEffectPositions(location, toolOnTable)
+                .ForEach(v => v.RemoveBuff(toolOnTable.diceBuffInfo));
             
             CalculateScore();
         }
 
-        public void UnPreviewTool(Vector2Int location)
+        public void UnPreviewTool(Vector2Int location,  ToolOnTable toolOnTable)
         {
-            workBench.SlotBy(location).UnPreviewTool();
+            
+            workBench.GetAllEffectPositions(location, toolOnTable)
+                .ForEach(v => v.RemovePreviewBuff(toolOnTable.diceBuffInfo));
 
-            workBench.dic.Values.ForEach(v => v.ReleasePreviewBuff());
+            workBench.allSlots
+                .Where(v => v.Key.position == location)
+                .ForEach(v => v.Value.UnPreviewTool());
+
         }
 
 
         public void Drag(ToolOnTable toolOnTable)
         {
-            if (toolOnTable == null)
-            {
-                // 清空所有的preview
-                workBench.dic.Values.ForEach(v => v.ReleasePreviewBuff());
-            }
-            else
-            {
-                // 清空所有的buff
-                workBench.dic.Values.ForEach(v => v.ReleaseBuffBy(toolOnTable.tool.id));
-            }
+            // if (toolOnTable == null)
+            // {
+            //     // 清空所有的preview
+            // workBench.allSlots.Values.ForEach(v => v.ReleasePreviewBuff());
+            // }
+            // else
+            // {
+            //     // 清空所有的buff
+            //     // workBench.allSlots.Values.ForEach(v => v.ReleaseBuffBy(toolOnTable.tool.id));
+            // }
         }
         #endregion
 

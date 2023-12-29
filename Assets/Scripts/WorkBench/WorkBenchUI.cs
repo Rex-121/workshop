@@ -65,9 +65,9 @@ namespace Tyrant.UI
             WorkBenchManager.main.Pin(index, toolOnTable);
         }
         
-        public void DidUnPinTool(Vector2Int index)
+        public void DidUnPinTool(Vector2Int index, ToolOnTable toolOnTable)
         {
-            WorkBenchManager.main.UnPin(index);
+            WorkBenchManager.main.UnPin(index, toolOnTable);
         }
         
         public void DidPreviewTool(Vector2Int index, ToolOnTable toolOnTable)
@@ -75,9 +75,9 @@ namespace Tyrant.UI
             WorkBenchManager.main.PreviewTool(toolOnTable, index);
         }
         
-        public void DidUnPreviewTool(Vector2Int index)
+        public void DidUnPreviewTool(Vector2Int index, ToolOnTable toolOnTable)
         {
-            WorkBenchManager.main.UnPreviewTool(index);
+            WorkBenchManager.main.UnPreviewTool(index, toolOnTable);
         }
         
         public bool CanBePlaced(ToolOnTable toolOnTable)

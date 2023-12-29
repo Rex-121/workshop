@@ -15,18 +15,20 @@ namespace Tyrant
         [HideLabel, ReadOnly]
         public WorkBench.ToolWrapper toolWrapper;
 
-        public WorkBenchSlot(WorkBench.ToolWrapper toolWrapper, IEnumerable<WorkBenchDebuff> debuff)
+        public WorkBenchSlot(WorkBench.ToolWrapper toolWrapper)
         {
-
             this.toolWrapper = toolWrapper;
-
-            previewBuffs = new BehaviorSubject<List<IToolBuff>>(_previewBuffTools);
-
-            buffs = new(_buffTools);
-            
-            this.debuff.AddRange(debuff);
         }
+
+
+        public DiceBuffHandler buffHandler = new DiceBuffHandler("实体");
+        public DiceBuffHandler previewBuffHandler = new DiceBuffHandler("预览");
+
         
+        public int AllEffect(int startValue)
+        {
+            return previewBuffHandler.AllEffect(buffHandler.AllEffect(startValue));
+        }
         
         // 是否已经有骰子
         [ShowInInspector, LabelText("是否已经有骰子")]
@@ -34,21 +36,11 @@ namespace Tyrant
 
         #region tool+buff
         
-        private readonly List<IToolBuff> _previewBuffTools = new();
-        
-        [LabelText("Buff"), ShowInInspector] private readonly List<IToolBuff> _buffTools = new();
-        
-        [HideInInspector]
-        public readonly BehaviorSubject<List<IToolBuff>> buffs;
         [HideInInspector]
         public readonly BehaviorSubject<Tool> preview = new(null);
-        [HideInInspector]
-        public readonly BehaviorSubject<List<IToolBuff>> previewBuffs;
+        
         [HideInInspector]
         public readonly BehaviorSubject<GameObject> pined = new(null);
-
-        public List<WorkBenchDebuff> debuff = new();
-
         public void DidForgeThisTurn()
         {
             
@@ -62,15 +54,19 @@ namespace Tyrant
                 toolOnTable.DidUsedThisTurn();
             }
             UnPin();
-            _buffTools.Clear();
-            _previewBuffTools.Clear();
-            previewBuffs.OnNext(_previewBuffTools);
-            buffs.OnNext(_buffTools);
+            // _buffTools.Clear();
+            // _previewBuffTools.Clear();
+            // previewBuffs.OnNext(_previewBuffTools);
+            // buffs.OnNext(_buffTools);
         }
         
         public void Pin(ToolOnTable toolOnTable)
         {
+            toolOnTable.toolWrapper = toolWrapper;
+            
             pined.OnNext(toolOnTable.gameObject);
+            
+            // NewBuff(toolOnTable.diceBuffDataSO.ToBuff());
         }
         public void UnPin()
         {
@@ -81,33 +77,42 @@ namespace Tyrant
             preview.OnNext(tool);
         }
 
-        public void NewPreviewBuff(IToolBuff buffTool)
+        public void NewPreviewBuff(DiceBuffInfo buffInfo)
         {
-            _previewBuffTools.Add(buffTool);
-            previewBuffs.OnNext(_previewBuffTools);
-        }
-
-        public void NewBuff(IToolBuff buffTool)
-        {
-            _buffTools.Add(buffTool);
-            buffs.OnNext(_buffTools);
+            Debug.Log($"#WorkBenchSlot#NewPreviewBuff {toolWrapper.position} --->");
+            previewBuffHandler.AddBuff(buffInfo);
+            Debug.Log($"#WorkBenchSlot#NewPreviewBuff {toolWrapper.position} <---\n");
         }
         
-        public void ReleaseBuffBy(Guid id)
+        public void RemovePreviewBuff(DiceBuffInfo buffInfo)
         {
-            var has = _buffTools.Select(v => v.id).Contains(id);
-            if (!has) return;
-            _buffTools.RemoveAll(v => v.id == id);
-            buffs.OnNext(_buffTools);
+            Debug.Log($"#WorkBenchSlot#RemovePreviewBuff {toolWrapper.position} --->");
+            previewBuffHandler.RemoveBuff(buffInfo);
+            Debug.Log($"#WorkBenchSlot#RemovePreviewBuff {toolWrapper.position} <---\n");
         }
         
-        public void ReleasePreviewBuff()
+        public void RemoveBuff(DiceBuffInfo buffInfo)
         {
-            _previewBuffTools.Clear();
-            previewBuffs.OnNext(_previewBuffTools);
-            UnPreviewTool();
+            Debug.Log($"#WorkBenchSlot#RemoveBuff {toolWrapper.position} --->");
+            buffHandler.RemoveBuff(buffInfo);
+            Debug.Log($"#WorkBenchSlot#RemoveBuff {toolWrapper.position} <---\n");
         }
 
+        public void NewBuff(DiceBuffInfo buffInfo)
+        {
+            // _buffTools.Add(buffTool);
+            // buffs.OnNext(_buffTools);
+            Debug.Log($"#WorkBenchSlot#NewBuff {toolWrapper.position} --->");
+            previewBuffHandler.RemoveBuff(buffInfo);
+            buffHandler.AddBuff(buffInfo);
+            Debug.Log($"#WorkBenchSlot#NewBuff {toolWrapper.position} <---\n");
+        }
+        
+        // public void ReleasePreviewBuff()
+        // {
+        //     UnPreviewTool();
+        // }
+        //
         public void UnPreviewTool()
         {
             preview.OnNext(null);
@@ -124,12 +129,13 @@ namespace Tyrant
 
             var originValue = tool.dice.Roll();
 
+            return AllEffect(originValue);
             // 计算buff
-            _buffTools.ForEach(v => originValue = v.ValueBy(originValue));
+            // _buffTools.ForEach(v => originValue = v.ValueBy(originValue));
             // 计算debuff
-            debuff.ForEach(v => originValue = v.ValueBy(originValue));
+            // debuff.ForEach(v => originValue = v.ValueBy(originValue));
             
-            return originValue;
+            // return originValue;
 
         }
         

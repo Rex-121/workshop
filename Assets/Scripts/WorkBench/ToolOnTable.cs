@@ -15,13 +15,22 @@ namespace Tyrant.UI
         private DragInCanvas _dragInCanvas;
         private Transform _dragLayer;
 
+        public WorkBench.ToolWrapper toolWrapper;
+        
         public Tool tool;
 
+        [SerializeField]
+        private DiceBuffDataSO diceBuffDataSO;
+
+        public DiceBuffInfo diceBuffInfo;// => diceBuffDataSO.ToBuff();
+        
         public Image dicedImage;
 
         public DiceSpriteDefineSO diceSpriteDefineSO;
 
         private int index;
+
+        public bool isOnWorkBench = false;
         
         public Action endDrag;
         
@@ -32,6 +41,8 @@ namespace Tyrant.UI
 
             _dragInCanvas.endDrag += DidEndDrag;
             _dragInCanvas.startDrag += DidStartDrag;
+
+            diceBuffInfo = diceBuffDataSO.ToBuff();
         }
 
         public void NewTool(int index, Tool tool, Transform dragLayer)
@@ -49,6 +60,12 @@ namespace Tyrant.UI
             dicedImage.sprite = diceSpriteDefineSO.sprites[value];
         }
 
+        public void BackToToolBox()
+        {
+            DidStartDrag();
+            DidEndDrag();
+        }
+
         private void DidEndDrag()
         {
             endDrag?.Invoke();
@@ -60,6 +77,7 @@ namespace Tyrant.UI
                 transform.SetParent(cellDragLayer.toolsBoxInCanvas.transform); 
                 transform.SetSiblingIndex(index);
                 transform.localScale = Vector3.one;
+                isOnWorkBench = false;
             }
         }
 
@@ -79,6 +97,7 @@ namespace Tyrant.UI
 
         public void Lock()
         {
+            isOnWorkBench = true;
             _dragInCanvas.Lock();
         }
         

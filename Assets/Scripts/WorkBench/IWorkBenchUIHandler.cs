@@ -12,8 +12,10 @@ namespace Tyrant.UI
         
         public void DidPinTool(Vector2Int index, ToolOnTable toolOnTable);
 
-        public void DidUnPinTool(Vector2Int index);
+        // public void Swap();
 
-        public void DidUnPreviewTool(Vector2Int index);
+        public void DidUnPinTool(Vector2Int index, ToolOnTable toolOnTable);
+
+        public void DidUnPreviewTool(Vector2Int index, ToolOnTable toolOnTable);
     }
 }

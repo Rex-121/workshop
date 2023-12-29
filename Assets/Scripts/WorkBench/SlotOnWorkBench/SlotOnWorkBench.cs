@@ -1,3 +1,4 @@
+using System;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -42,6 +43,8 @@ namespace Tyrant.UI
         
         [LabelText("是否可以放置骰子")]
         private bool canBePin => cellType != WorkBench.SlotType.Empty;
+        
+
         public void SetCellPosition(WorkBenchSlot slot)
         {
             _slot = slot;
@@ -89,9 +92,32 @@ namespace Tyrant.UI
             var can = handler?.CanBePlaced(toolOnTable) ?? false;
             
             if (!can) return;
+
+            if (_slot.isOccupied)
+            {
+
+                var g = _slot.pined.Value.GetComponent<ToolOnTable>();
+                
+                handler?.DidUnPinTool(_cellPosition, g);
+
+                if (toolOnTable.isOnWorkBench)
+                {
+                    handler?.DidPinTool(toolOnTable.toolWrapper.position, g);
+                }
+                else
+                {
+                    g.BackToToolBox();
+                }
+                
+                handler?.DidPinTool(_cellPosition, toolOnTable);
+                
+            }
+            else
+            {
+                handler?.DidPinTool(_cellPosition, toolOnTable);
+            }
             
             
-            handler?.DidPinTool(_cellPosition, toolOnTable);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -114,7 +140,15 @@ namespace Tyrant.UI
         {
             if (!canBePin) return;
             
-            handler?.DidUnPreviewTool(_cellPosition);
+            var obj = eventData.pointerDrag;
+            
+            if (ReferenceEquals(obj, null)) return;
+
+            var has = obj.TryGetComponent(out ToolOnTable toolOnTable);
+            
+            // if (!has) return;
+            
+            handler?.DidUnPreviewTool(_cellPosition, toolOnTable);
         }
     }
 }

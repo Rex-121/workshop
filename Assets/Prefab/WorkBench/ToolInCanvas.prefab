@@ -93,6 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbb92924a0346408390da2ca13598b95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  diceBuffDataSO: {fileID: 11400000, guid: 5e96e77ff8ecd4359ade4cfad31d7d30, type: 2}
   dicedImage: {fileID: 6092897185978420437}
   diceSpriteDefineSO: {fileID: 11400000, guid: f76d124f1138743ceb0f9551c24ac4c4, type: 2}
 --- !u!114 &6092897185978420432
