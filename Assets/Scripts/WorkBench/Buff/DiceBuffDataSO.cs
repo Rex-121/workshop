@@ -10,8 +10,8 @@ namespace Tyrant
     public class DiceBuffDataSO : SerializedScriptableObject
     {
 
-        [BoxGroup("Basic"), HorizontalGroup("Basic/Info/Info/Info"), SuffixLabel("技能ID", true), HideLabel]
-        public int id;
+        // [BoxGroup("Basic"), HorizontalGroup("Basic/Info/Info/Info"), SuffixLabel("技能ID", true), HideLabel]
+        // public int id;
 
         [BoxGroup("Basic"), HorizontalGroup("Basic/Info/Info/Info"), SuffixLabel("技能名称",true), HideLabel]
         public string buffName;
@@ -25,11 +25,11 @@ namespace Tyrant
         [BoxGroup("Basic"), VerticalGroup("Basic/Info/Info"), LabelText("优先级"), SuffixLabel("数值越大越先触发", true)]
         public int priority;
 
-        [BoxGroup("Basic"), VerticalGroup("Basic/Info/Info"), LabelText("最大堆叠层数")]
-        public int maxStack;
-
-        [BoxGroup("Basic"), VerticalGroup("Basic/Info/Info"), LabelText("起始层数")]
-        public int startWithStack;
+        // [BoxGroup("Basic"), VerticalGroup("Basic/Info/Info"), LabelText("最大堆叠层数")]
+        // public int maxStack;
+        //
+        // [BoxGroup("Basic"), VerticalGroup("Basic/Info/Info"), LabelText("起始层数")]
+        // public int startWithStack;
 
         [BoxGroup("更新机制"), LabelText("叠加机制")]
         public BuffUpdateTime updateTimeType;

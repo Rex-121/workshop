@@ -33,7 +33,7 @@ namespace Tyrant
         
         public int Apply(int value, DiceBuffInfo buffInfo)
         {
-            return value + rate * buffInfo.currentStack;
+            return value + rate;// * buffInfo.currentStack;
         }
 
         public void DiceFaceChange(int value)

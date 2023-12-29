@@ -110,7 +110,7 @@ namespace Tyrant
             workBench.SlotBy(location).UnPin();
             
             workBench.GetAllEffectPositions(location, toolOnTable)
-                .ForEach(v => v.RemoveBuff(toolOnTable.GetDiceBuffInfoWithFace(v.diceFace)));
+                .ForEach(v => v.RemoveBuff(toolOnTable.diceBuffInfo));
             
             CalculateScore();
         }
@@ -119,7 +119,7 @@ namespace Tyrant
         {
             
             workBench.GetAllEffectPositions(location, toolOnTable)
-                .ForEach(v => v.RemovePreviewBuff(toolOnTable.GetDiceBuffInfoWithFace(v.diceFace)));
+                .ForEach(v => v.RemovePreviewBuff(toolOnTable.diceBuffInfo));
 
             workBench.allSlots
                 .Where(v => v.Key.position == location)

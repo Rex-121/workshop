@@ -47,20 +47,20 @@ namespace Tyrant
 
         public void AddBuff(DiceBuffInfo buff)
         {
-            var foundBuff = FindBuff(buff.buffDataSO.id);
+            var foundBuff = FindBuff(buff.id);
 
             // 如果buff存在
             if (foundBuff != null)
             {
                 // buff叠层
-                foundBuff.AddBuffStackIfNeeded(buff);
+                // foundBuff.AddBuffStackIfNeeded(buff);
                 
             }
             else
             {
                 
                 // 机制原因，这里要拷贝新的对象
-                var newBuff = buff.buffDataSO.ToBuff();
+                var newBuff = buff;//buff.buffDataSO.ToBuff();
                 
                 // 如果buff不存在
                 // 加入buff表
@@ -81,38 +81,41 @@ namespace Tyrant
         public void RemoveBuff(DiceBuffInfo buff)
         {
 
-            buff = FindBuff(buff.buffDataSO.id);
+            buff = FindBuff(buff.id);
             
             if (ReferenceEquals(buff, null)) return;
             
-            switch (buff.buffDataSO.stackRemoveType)
-            {
-                case BuffRemoveStackUpdate.Clear:
-                    buff.buffDataSO.onRemove?.Apply();
-                    var success = _buffList.Remove(buff);
-                    break;
-                case BuffRemoveStackUpdate.Reduce:
-                    buff.currentStack--;
+            buff.buffDataSO.onRemove?.Apply();
+            var success = _buffList.Remove(buff);
+            Debug.Log($"#Buff# remove {success}");
+            // switch (buff.buffDataSO.stackRemoveType)
+            // {
+            //     case BuffRemoveStackUpdate.Clear:
+            //         buff.buffDataSO.onRemove?.Apply();
+            //         var success = _buffList.Remove(buff);
+            //         break;
+            //     case BuffRemoveStackUpdate.Reduce:
+            //         buff.currentStack--;
+            //
+            //         buff.buffDataSO.onRemove?.Apply();
+            //         
+            //
+            //         if (buff.currentStack == 0)
+            //         {
+            //             _buffList.Remove(buff);
+            //         }
+            //         
+            //         break;
+            //     default:
+            //         break;
+            // }
 
-                    buff.buffDataSO.onRemove?.Apply();
-                    
-
-                    if (buff.currentStack == 0)
-                    {
-                        _buffList.Remove(buff);
-                    }
-                    
-                    break;
-                default:
-                    break;
-            }
-            
         }
         
 
-        private DiceBuffInfo FindBuff(int id)
+        private DiceBuffInfo FindBuff(Guid id)
         {
-            return _buffList.FirstOrDefault(v => v.buffDataSO.id == id);
+            return _buffList.FirstOrDefault(v => v.id == id);
         }
 
 

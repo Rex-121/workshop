@@ -28,11 +28,11 @@ namespace Tyrant.UI
 
         public DiceBuffInfo diceBuffInfo;// => diceBuffDataSO.ToBuff();
 
-        public DiceBuffInfo GetDiceBuffInfoWithFace(int face)
-        {
-            diceBuffInfo.diceFace = face;
-            return diceBuffInfo;
-        }
+        // public DiceBuffInfo GetDiceBuffInfoWithFace(int face)
+        // {
+        //     // diceBuffInfo.diceFace = face;
+        //     return diceBuffInfo;
+        // }
         
         public Image dicedImage;
 
