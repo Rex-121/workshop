@@ -1,6 +1,3 @@
-
-using System;
-using System.Collections.Generic;
 using UniRx;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -35,7 +32,7 @@ namespace Tyrant.UI
             {
                 var slot = list[i];
                 var gb = Instantiate(cellOnWorkBenchPrefab, tablePanel);
-                var cell = gb.GetComponent<CellOnWorkBench>();
+                var cell = gb.GetComponent<SlotOnWorkBench>();
                 cell.handler = this;
                 cell.SetCellPosition(slot);
             }

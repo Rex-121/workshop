@@ -1,16 +1,13 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sirenix.Utilities;
 using TMPro;
 using Tools;
 using UnityEngine;
 using UniRx;
-using Unity.VisualScripting;
 
 namespace Tyrant.UI
 {
-    public class CellOnWorkBenchBuffDisplay: MonoBehaviour
+    public class SlotOnWorkBenchBuffDisplay: MonoBehaviour
     {
 
         public TextMeshProUGUI buffLabel;

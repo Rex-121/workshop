@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Tyrant.UI
 {
-    public class CellOnWorkBenchPined: MonoBehaviour
+    public class SlotOnWorkBenchPined: MonoBehaviour
     {
         public Vector2Int cellPosition;
 

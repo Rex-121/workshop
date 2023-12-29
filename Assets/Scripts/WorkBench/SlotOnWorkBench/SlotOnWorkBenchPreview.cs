@@ -5,7 +5,7 @@ using UniRx;
 
 namespace Tyrant.UI
 {
-    public class CellOnWorkBenchPreview: MonoBehaviour
+    public class SlotOnWorkBenchPreview: MonoBehaviour
     {
         
         public TextMeshProUGUI powerDisplay;

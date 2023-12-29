@@ -1,17 +1,14 @@
-using System;
 using Sirenix.OdinInspector;
 using TMPro;
-using Tools;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Tyrant.UI
 {
     // 主要空格
     // 包含 预览 放置和 buff显示
-    public class CellOnWorkBench : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
+    public class SlotOnWorkBench : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
     {
 
         private Vector2Int _cellPosition;
@@ -35,11 +32,11 @@ namespace Tyrant.UI
         [BoxGroup("SlotInfo")]
         public IWorkBenchUIHandler handler;
         [BoxGroup("SlotInfo")]
-        public CellOnWorkBenchPined pined;
+        public SlotOnWorkBenchPined pined;
         [BoxGroup("SlotInfo")]
-        public CellOnWorkBenchPreview preview;
+        public SlotOnWorkBenchPreview preview;
         [BoxGroup("SlotInfo")]
-        public CellOnWorkBenchBuffDisplay buffDisplay;
+        public SlotOnWorkBenchBuffDisplay buffDisplay;
 
         private WorkBench.SlotType cellType => _slot.toolWrapper.type;
         
