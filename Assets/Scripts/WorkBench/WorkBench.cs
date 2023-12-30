@@ -81,10 +81,10 @@ namespace Tyrant
         {
             _dic.Values.ForEach(v => v.DidForgeThisTurn());
         }
-        
+
         public List<WorkBenchSlot> Start()
         {
-            
+
             int[][] a = new int[3][]
             {
                 new int[5] {0, 0, 0, 1, 0},
@@ -93,7 +93,7 @@ namespace Tyrant
             };
 
             var list = new List<WorkBenchSlot>();
-            
+
             for (var i = a.Length - 1; i >= 0; i--)
             {
                 var b = a[i];
@@ -107,16 +107,12 @@ namespace Tyrant
                     {
                         _dic.Add(item, slot);
                     }
+
                     list.Add(slot);
                 }
             }
 
             return list;
-        }
-
-        public bool CanBePlaced(ToolOnTable toolOnTable)
-        {
-            return true;
         }
     }
 

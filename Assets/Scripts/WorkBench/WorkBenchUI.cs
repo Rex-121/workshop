@@ -60,29 +60,29 @@ namespace Tyrant.UI
             WorkBenchManager.main.DidForgeThisTurn();
         }
 
-        public void DidPinTool(Vector2Int index, ToolOnTable toolOnTable)
+        public void DidPinTool(Vector2Int location, ToolOnTable toolOnTable)
         {
-            WorkBenchManager.main.Pin(index, toolOnTable);
+            WorkBenchManager.main.DidPinTool(location, toolOnTable);
         }
         
-        public void DidUnPinTool(Vector2Int index, ToolOnTable toolOnTable)
+        public void DidUnPinTool(Vector2Int location, ToolOnTable toolOnTable)
         {
-            WorkBenchManager.main.UnPin(index, toolOnTable);
+            WorkBenchManager.main.DidUnPinTool(location, toolOnTable);
         }
         
-        public void DidPreviewTool(Vector2Int index, ToolOnTable toolOnTable)
+        public void DidPreviewTool(Vector2Int location, ToolOnTable toolOnTable)
         {
-            WorkBenchManager.main.PreviewTool(toolOnTable, index);
+            WorkBenchManager.main.DidPreviewTool(location, toolOnTable);
         }
         
-        public void DidUnPreviewTool(Vector2Int index, ToolOnTable toolOnTable)
+        public void DidUnPreviewTool(Vector2Int location, ToolOnTable toolOnTable)
         {
-            WorkBenchManager.main.UnPreviewTool(index, toolOnTable);
+            WorkBenchManager.main.DidUnPreviewTool(location, toolOnTable);
         }
         
         public bool CanBePlaced(ToolOnTable toolOnTable)
         {
-            return WorkBenchManager.main.workBench.CanBePlaced(toolOnTable);
+            return WorkBenchManager.main.CanBePlaced(toolOnTable);
         }
     }
 }

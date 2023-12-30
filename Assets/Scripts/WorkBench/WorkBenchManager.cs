@@ -1,16 +1,14 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
-using Tools;
 using Tyrant.UI;
 using UniRx;
 using UnityEngine;
 
 namespace Tyrant
 {
-    public class WorkBenchManager : MonoBehaviour
+    public class WorkBenchManager : MonoBehaviour, IWorkBenchUIHandler
     {
         #region 单例
 
@@ -34,47 +32,22 @@ namespace Tyrant
 
         [LabelText("工作台Prefab")]
         public GameObject workBenchPrefab;
+
         
+        [ShowInInspector] public int allOccupiedInThisTurn => workBench
+            .allSlots.Values
+            .Count(v => v.isOccupied);
+
+        [LabelText("每回合最大使用灵感数")]
+        public int maxWorkBenchOccupied = 3;
 
         #region 制作过程
-
         
-
         
         // public WorkBenchUI workBenchUI;
         public readonly BehaviorSubject<int> make = new(0);
         public readonly BehaviorSubject<int> quality = new(0);
 
-        public void PreviewTool(ToolOnTable toolOnTable, Vector2Int location)
-        {
-
-            var slot = workBench.SlotBy(location);
-            
-            if (slot.isOccupied) return;
-
-            slot.PreviewTool(toolOnTable);
-
-            workBench.NewPreviewBuffTo(location, toolOnTable);
-            
-        }
-
-        public void Pin(Vector2Int location, ToolOnTable toolOnTable)
-        {
-            
-            var slot = workBench.SlotBy(location);
-
-            if (slot.isOccupied) return;
-            
-            // 先取消预览
-            UnPreviewTool(location, toolOnTable);
-            
-            slot.Pin(toolOnTable);
-            
-            workBench.NewBuffTo(location, toolOnTable);
-            
-            CalculateScore();
-            
-        }
 
         private int allMakesScore => workBench.allMakes
             .Select(v => v.CalculateScore())
@@ -91,7 +64,41 @@ namespace Tyrant
         }
         
 
-        public void UnPin(Vector2Int location, ToolOnTable toolOnTable)
+
+        public bool CanBePlaced(ToolOnTable toolOnTable)
+        {
+            return allOccupiedInThisTurn < maxWorkBenchOccupied;
+        }
+
+        public void DidPreviewTool(Vector2Int location, ToolOnTable toolOnTable)
+        {
+            var slot = workBench.SlotBy(location);
+            
+            if (slot.isOccupied) return;
+
+            slot.PreviewTool(toolOnTable);
+
+            workBench.NewPreviewBuffTo(location, toolOnTable);
+
+        }
+
+        public void DidPinTool(Vector2Int location, ToolOnTable toolOnTable)
+        {
+            var slot = workBench.SlotBy(location);
+
+            if (slot.isOccupied) return;
+            
+            // 先取消预览
+            DidUnPreviewTool(location, toolOnTable);
+            
+            slot.Pin(toolOnTable);
+            
+            workBench.NewBuffTo(location, toolOnTable);
+            
+            CalculateScore();
+        }
+
+        public void DidUnPinTool(Vector2Int location, ToolOnTable toolOnTable)
         {
             workBench.SlotBy(location).UnPin();
             
@@ -101,7 +108,7 @@ namespace Tyrant
             CalculateScore();
         }
 
-        public void UnPreviewTool(Vector2Int location,  ToolOnTable toolOnTable)
+        public void DidUnPreviewTool(Vector2Int location, ToolOnTable toolOnTable)
         {
             var d = workBench.SlotBy(location);
             if (d != null && d.preview.Value)
@@ -112,7 +119,6 @@ namespace Tyrant
             
             workBench.allSlots
                 .ForEach(v => v.Value.UnPreviewTool());
-
         }
 
 
