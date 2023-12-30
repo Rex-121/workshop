@@ -34,7 +34,7 @@ namespace Tyrant.UI
         public ToolsBoxInCanvas toolsBoxInCanvas;
 
 
-        private static IEnumerable<DiceBuffDataSO> diceBuffDataSO => WorkBenchManager.main.diceBuffDataSO;
+        private static IEnumerable<ToolSO> toolSos => WorkBenchManager.main.toolSos;
         
         
         private void Start()
@@ -54,7 +54,7 @@ namespace Tyrant.UI
             var list = new List<Tool>();
             for (int i = 0; i < 10; i++)
             {
-                list.Add(new Tool(new Dice(6), diceBuffDataSO.RandomElement().ToBuff()));
+                list.Add(toolSos.RandomElement().ToTool());
             }
             toolsStack = new Stack<Tool>(list);
         }

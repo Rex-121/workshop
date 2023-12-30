@@ -13,11 +13,11 @@ namespace Tyrant
         // [BoxGroup("Basic"), HorizontalGroup("Basic/Info/Info/Info"), SuffixLabel("技能ID", true), HideLabel]
         // public int id;
 
-        [BoxGroup("Basic"), HorizontalGroup("Basic/Info/Info/Info"), SuffixLabel("技能名称",true), HideLabel]
-        public string buffName;
-
-        [BoxGroup("Basic")]
-        public string description;
+        // [BoxGroup("Basic"), HorizontalGroup("Basic/Info/Info/Info"), SuffixLabel("技能名称",true), HideLabel]
+        // public string buffName;
+        //
+        // [BoxGroup("Basic")]
+        // public string description;
 
         [BoxGroup("Basic"), PreviewField(60), HideLabel, HorizontalGroup("Basic/Info", 60), PropertyOrder(-1)]
         public Sprite icon;
@@ -31,10 +31,10 @@ namespace Tyrant
         // [BoxGroup("Basic"), VerticalGroup("Basic/Info/Info"), LabelText("起始层数")]
         // public int startWithStack;
 
-        [BoxGroup("更新机制"), LabelText("叠加机制")]
-        public BuffUpdateTime updateTimeType;
-        [BoxGroup("更新机制"), LabelText("移除机制")]
-        public BuffRemoveStackUpdate stackRemoveType;
+        // [BoxGroup("更新机制"), LabelText("叠加机制")]
+        // public BuffUpdateTime updateTimeType;
+        // [BoxGroup("更新机制"), LabelText("移除机制")]
+        // public BuffRemoveStackUpdate stackRemoveType;
 
 
 

@@ -72,9 +72,9 @@ namespace Tyrant.UI
             diceBuffInfo.diceFace = tool.dice.Roll();
             
             
-            skillNameLabel.text = diceBuffInfo.buffName;
+            skillNameLabel.text = this.tool.toolName;
 
-            skillDescriptionLabel.text = diceBuffInfo.buffDataSO.description;
+            skillDescriptionLabel.text = this.tool.description;
         }
 
         public void BackToToolBox()

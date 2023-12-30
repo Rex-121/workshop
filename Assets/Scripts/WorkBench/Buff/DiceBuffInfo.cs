@@ -16,7 +16,7 @@ namespace Tyrant
             // currentStack = s.startWithStack;
         }
 
-        public string buffName => buffDataSO.buffName;
+        // public string buffName => buffDataSO.buffName;
         
         public readonly DiceBuffDataSO buffDataSO;
 

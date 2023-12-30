@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bc6f161be7bf423f9283aebbf7dab655, type: 3}
-  m_Name: "\u5DE6+2"
+  m_Name: "[DiceBuff]\u5DE6\u53F3+1"
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -22,20 +22,17 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes:
     - Name: onCreate
-      Entry: 7
-      Data: 0|Tyrant.D, Assembly-CSharp
-    - Name: 
-      Entry: 8
+      Entry: 6
       Data: 
     - Name: onPin
       Entry: 6
       Data: 
     - Name: onUse
       Entry: 7
-      Data: 1|Tyrant.DiceAddSimpleValue, Assembly-CSharp
+      Data: 0|Tyrant.DiceAddSimpleValue, Assembly-CSharp
     - Name: rate
       Entry: 3
-      Data: 2
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -44,13 +41,13 @@ MonoBehaviour:
       Data: 
     - Name: effectOnLocation
       Entry: 7
-      Data: 2|Tyrant.DiceBuffDataSO+DefaultEffectOnLocation, Assembly-CSharp
+      Data: 1|Tyrant.DiceBuffDataSO+DefaultEffectOnLocation, Assembly-CSharp
     - Name: effectOn
       Entry: 7
-      Data: 3|UnityEngine.Vector2Int[], UnityEngine.CoreModule
+      Data: 2|UnityEngine.Vector2Int[], UnityEngine.CoreModule
     - Name: 
       Entry: 12
-      Data: 3
+      Data: 2
     - Name: 
       Entry: 7
       Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
@@ -71,19 +68,7 @@ MonoBehaviour:
       Data: 0
     - Name: 
       Entry: 3
-      Data: -2
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 3
-      Data: -3
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -96,9 +81,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  buffName: "\u5DE6+1"
-  description: "\u5DE6\u8FB93\u683C+2"
+  buffName: "\u5DE6\u53F3+1"
+  description: "\u5DE6\u53F3\u683C\u5B50\u5404+1"
   icon: {fileID: 0}
   priority: 0
   updateTimeType: 0
-  stackRemoveType: 1
+  stackRemoveType: 0
