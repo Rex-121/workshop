@@ -34,7 +34,7 @@ namespace Tyrant
         public GameObject workBenchPrefab;
 
         
-        public DiceBuffDataSO[] diceBuffDataSO;
+        public ToolSO[] toolSos;
         
         
         [ShowInInspector] public int allOccupiedInThisTurn => workBench

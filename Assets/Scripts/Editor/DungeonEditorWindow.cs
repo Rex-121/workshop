@@ -47,6 +47,8 @@ namespace Tyrant.Editor
             
             tree.AddAllAssetsAtPath("Loot", "Assets/SO/Loot", typeof(LootSO), true);
             
+            
+            
             return tree;
         }
         

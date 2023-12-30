@@ -1,0 +1,104 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc6f161be7bf423f9283aebbf7dab655, type: 3}
+  m_Name: "[DiceBuff]\u5DE6+2"
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: onCreate
+      Entry: 7
+      Data: 0|Tyrant.D, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: onPin
+      Entry: 6
+      Data: 
+    - Name: onUse
+      Entry: 7
+      Data: 1|Tyrant.DiceAddSimpleValue, Assembly-CSharp
+    - Name: rate
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: onRemove
+      Entry: 6
+      Data: 
+    - Name: effectOnLocation
+      Entry: 7
+      Data: 2|Tyrant.DiceBuffDataSO+DefaultEffectOnLocation, Assembly-CSharp
+    - Name: effectOn
+      Entry: 7
+      Data: 3|UnityEngine.Vector2Int[], UnityEngine.CoreModule
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 3
+      Data: -1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 3
+      Data: -2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 3
+      Data: -3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  buffName: "\u5DE6+1"
+  description: "\u5DE6\u8FB93\u683C+2"
+  icon: {fileID: 0}
+  priority: 0
+  updateTimeType: 0
+  stackRemoveType: 1

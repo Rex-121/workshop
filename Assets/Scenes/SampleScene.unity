@@ -782,6 +782,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   workBenchPrefab: {fileID: 3030986589255063385, guid: 519963f166396488aade50bedd7d8001, type: 3}
+  toolSos:
+  - {fileID: 11400000, guid: 65f1a332095a34afeba5d6a43a6a17c1, type: 2}
+  - {fileID: 11400000, guid: 41ed3332f1ea54ba29719193850db98e, type: 2}
+  - {fileID: 11400000, guid: b7f2a17d9a29d40d0ac87ea6736fc5b0, type: 2}
+  - {fileID: 11400000, guid: 718f38d02bd224ed6be1275b6a40a025, type: 2}
+  maxWorkBenchOccupied: 3
 --- !u!1 &862855684
 GameObject:
   m_ObjectHideFlags: 0
@@ -1501,7 +1507,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd90b850e17d149a6a919fca424b7776, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heroSquads: []
   dungeonSO: {fileID: 11400000, guid: f8bc0fdddafa140d5a7dfa7cc33ddd65, type: 2}
   positions:
   - {x: -9.5, y: 4}

@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc6f161be7bf423f9283aebbf7dab655, type: 3}
-  m_Name: y
+  m_Script: {fileID: 11500000, guid: 070df736a30f4f198374fdb61e57fb91, type: 3}
+  m_Name: "\u900F\u6620"
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -20,25 +20,8 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: onCreate
-      Entry: 6
-      Data: 
-    - Name: onPin
-      Entry: 6
-      Data: 
-    - Name: onUse
-      Entry: 6
-      Data: 
-    - Name: onRemove
-      Entry: 6
-      Data: 
-    - Name: effectOnLocation
-      Entry: 6
-      Data: 
-  buffName: 
-  description: 
-  icon: {fileID: 0}
-  priority: 0
-  updateTimeType: 0
-  stackRemoveType: 0
+    SerializationNodes: []
+  toolName: "\u900F\u6620"
+  diceFace: 6
+  toolDescription: 
+  diceBuffDataSO: {fileID: 11400000, guid: 0afb14ce200914c928f48b340d2502e4, type: 2}

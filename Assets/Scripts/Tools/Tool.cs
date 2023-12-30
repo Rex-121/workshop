@@ -18,10 +18,22 @@ namespace Tyrant
         [ShowInInspector]
         public IDicing dice;
 
+        public string toolName;
+        
+        public string description;
+        
         public Tool(IDicing dice, DiceBuffInfo diceBuffInfo)
         {
             this.dice = dice;
             this.diceBuffInfo = diceBuffInfo;
+        }
+
+        public Tool(ToolSO toolSO)
+        {
+            toolName = toolSO.toolName;
+            dice = new Dice(toolSO.diceFace);
+            description = toolSO.toolDescription;
+            diceBuffInfo = toolSO.diceBuffDataSO.ToBuff();
         }
         
         public DiceBuffInfo diceBuffInfo;
