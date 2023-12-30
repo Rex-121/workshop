@@ -1,7 +1,7 @@
 using System;
-using Tools;
 using System.Collections.Generic;
 using System.Linq;
+using Algorithm;
 using Dicing;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -32,6 +32,10 @@ namespace Tyrant.UI
         public int amountPerTurn = 5;
 
         public ToolsBoxInCanvas toolsBoxInCanvas;
+
+
+        private static IEnumerable<DiceBuffDataSO> diceBuffDataSO => WorkBenchManager.main.diceBuffDataSO;
+        
         
         private void Start()
         {
@@ -50,7 +54,7 @@ namespace Tyrant.UI
             var list = new List<Tool>();
             for (int i = 0; i < 10; i++)
             {
-                list.Add(new Tool(Dice.Diced()));
+                list.Add(new Tool(new Dice(6), diceBuffDataSO.RandomElement().ToBuff()));
             }
             toolsStack = new Stack<Tool>(list);
         }
@@ -67,12 +71,11 @@ namespace Tyrant.UI
             DuringDrawTools(array);
         }
 
-        public void DuringDrawTools(IEnumerable<Tool> tools)
+        public void DuringDrawTools(Tool[] tools)
         {
-            var enumerable = tools as Tool[] ?? tools.ToArray();
-            for (var i = 0; i < enumerable.Count(); i++)
+            for (var i = 0; i < tools.Count(); i++)
             {
-                toolsBoxInCanvas.NewTool(i, enumerable.ElementAt(i));
+                toolsBoxInCanvas.NewTool(i, tools.ElementAt(i));
             }
         }
 

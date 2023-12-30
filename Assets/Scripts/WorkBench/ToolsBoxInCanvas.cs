@@ -1,6 +1,5 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
-using Tools;
 using UnityEngine.UI;
 
 namespace Tyrant.UI

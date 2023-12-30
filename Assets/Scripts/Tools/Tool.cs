@@ -1,9 +1,8 @@
 using System;
 using Dicing;
 using Sirenix.OdinInspector;
-using UnityEngine;
 
-namespace Tools
+namespace Tyrant
 {
     public interface ITool
     {
@@ -14,16 +13,18 @@ namespace Tools
     [Serializable]
     public class Tool : ITool
     {
-        public Guid id;
+        public Guid id = Guid.NewGuid();
         
         [ShowInInspector]
         public IDicing dice;
 
-        public Tool(IDicing dice)
+        public Tool(IDicing dice, DiceBuffInfo diceBuffInfo)
         {
             this.dice = dice;
-            id = Guid.NewGuid();
+            this.diceBuffInfo = diceBuffInfo;
         }
+        
+        public DiceBuffInfo diceBuffInfo;
 
         public void LockDice()
         {

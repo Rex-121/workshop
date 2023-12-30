@@ -1,10 +1,8 @@
 using System;
-using Algorithm;
 using Dicing;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Tools;
 using UnityEngine.UI;
 
 namespace Tyrant.UI
@@ -23,10 +21,10 @@ namespace Tyrant.UI
         public TextMeshProUGUI skillNameLabel;
         public TextMeshProUGUI skillDescriptionLabel;
         
-        [SerializeField]
-        private DiceBuffDataSO[] diceBuffDataSO;
+        // [SerializeField]
+        // private DiceBuffDataSO[] diceBuffDataSO;
 
-        public DiceBuffInfo diceBuffInfo;
+        public DiceBuffInfo diceBuffInfo => tool.diceBuffInfo;
         public Image dicedImage;
 
         public DiceSpriteDefineSO diceSpriteDefineSO;
@@ -45,12 +43,9 @@ namespace Tyrant.UI
             _dragInCanvas.endDrag += DidEndDrag;
             _dragInCanvas.startDrag += DidStartDrag;
 
-            diceBuffInfo = diceBuffDataSO.RandomElement().ToBuff();
+            // diceBuffInfo = diceBuffDataSO.RandomElement().ToBuff();
             
 
-            skillNameLabel.text = diceBuffInfo.buffName;
-
-            skillDescriptionLabel.text = diceBuffInfo.buffDataSO.description;
         }
 
         public void MainCanvas(Canvas canvas)
@@ -66,6 +61,7 @@ namespace Tyrant.UI
 
             this.index = index;
             
+            // 锁定面值
             this.tool.LockDice();
 
             var value = this.tool.dice.Roll();
@@ -74,6 +70,11 @@ namespace Tyrant.UI
             
             // 初始面值
             diceBuffInfo.diceFace = tool.dice.Roll();
+            
+            
+            skillNameLabel.text = diceBuffInfo.buffName;
+
+            skillDescriptionLabel.text = diceBuffInfo.buffDataSO.description;
         }
 
         public void BackToToolBox()

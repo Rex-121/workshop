@@ -36,6 +36,8 @@ namespace Tyrant.Editor
         
         protected override void OnBeginDrawEditors()
         {
+            if (this.MenuTree == null) return;
+            
             var selected = this.MenuTree.Selection.FirstOrDefault();
             var toolbarHeight = this.MenuTree.Config.SearchToolbarHeight;
 

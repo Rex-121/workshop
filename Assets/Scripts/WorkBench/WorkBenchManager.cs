@@ -34,6 +34,9 @@ namespace Tyrant
         public GameObject workBenchPrefab;
 
         
+        public DiceBuffDataSO[] diceBuffDataSO;
+        
+        
         [ShowInInspector] public int allOccupiedInThisTurn => workBench
             .allSlots.Values
             .Count(v => v.isOccupied);

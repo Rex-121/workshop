@@ -1,4 +1,3 @@
-using Tools;
 using UnityEngine;
 
 namespace Tyrant.UI

@@ -1,12 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Dicing;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
-using Tools;
 using Tyrant.UI;
-using UniRx;
 using UnityEngine;
 
 namespace Tyrant

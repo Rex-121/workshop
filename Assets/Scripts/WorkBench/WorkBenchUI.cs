@@ -1,7 +1,6 @@
 using UniRx;
 using Sirenix.OdinInspector;
 using TMPro;
-using Tools;
 using UnityEngine;
 using UnityEngine.UI;
 

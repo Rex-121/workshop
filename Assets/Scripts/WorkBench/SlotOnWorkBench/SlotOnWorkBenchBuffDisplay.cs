@@ -1,12 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Sirenix.Utilities;
 using TMPro;
-using Tools;
 using UnityEngine;
-using UniRx;
-
 namespace Tyrant.UI
 {
     public class SlotOnWorkBenchBuffDisplay: MonoBehaviour

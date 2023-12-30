@@ -22,6 +22,7 @@ namespace Dicing
     public readonly struct Dice: IDicing
     {
         
+        [ShowInInspector, LabelText("最大面值")]
         public int faces { get; }
 
         public Dice(int faces)
@@ -43,7 +44,7 @@ namespace Dicing
         public readonly IDicing dice;
         public int faces => dice.faces;
         
-        [ShowInInspector]
+        [ShowInInspector, LabelText("已Roll，锁定面值")]
         public readonly int value;
         
         public DicedDice(IDicing dice)
@@ -52,7 +53,7 @@ namespace Dicing
             value = this.dice.Roll();
         }
 
-        public static DicedDice One() => Dice.Diced(1);
+        // public static DicedDice One() => Dice.Diced(1);
 
         public int Roll() => value;
     }
