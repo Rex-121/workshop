@@ -15,7 +15,11 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 2023375052, guid: 9c68229f041134606ba844e5bda5c2cc, type: 3}
+    - {fileID: 1168828404, guid: a34ddb617bb8f43cca3a995706d4ce89, type: 3}
+    - {fileID: -45777601, guid: 9c68229f041134606ba844e5bda5c2cc, type: 3}
+    - {fileID: 1592936917, guid: a34ddb617bb8f43cca3a995706d4ce89, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -27,10 +31,180 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 1|Tyrant.Material, Assembly-CSharp
+    - Name: rawMaterial
+      Entry: 7
+      Data: Tyrant.RawMaterial, Assembly-CSharp
+    - Name: sprite
+      Entry: 10
       Data: 0
+    - Name: code
+      Entry: 1
+      Data: II
+    - Name: features
+      Entry: 7
+      Data: 2|Tyrant.MaterialFeature[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: Tyrant.MaterialFeature, Assembly-CSharp
+    - Name: featureName
+      Entry: 1
+      Data: "\u6742\u8D28"
+    - Name: icon
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
     - Name: 
       Entry: 8
       Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 3|Tyrant.Material, Assembly-CSharp
+    - Name: rawMaterial
+      Entry: 7
+      Data: Tyrant.RawMaterial, Assembly-CSharp
+    - Name: sprite
+      Entry: 10
+      Data: 0
+    - Name: code
+      Entry: 1
+      Data: II
+    - Name: features
+      Entry: 7
+      Data: 4|Tyrant.MaterialFeature[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: Tyrant.MaterialFeature, Assembly-CSharp
+    - Name: featureName
+      Entry: 1
+      Data: "\u6742\u8D28"
+    - Name: icon
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 5|Tyrant.Material, Assembly-CSharp
+    - Name: rawMaterial
+      Entry: 7
+      Data: Tyrant.RawMaterial, Assembly-CSharp
+    - Name: sprite
+      Entry: 10
+      Data: 2
+    - Name: code
+      Entry: 1
+      Data: 
+    - Name: features
+      Entry: 7
+      Data: 6|Tyrant.MaterialFeature[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: Tyrant.MaterialFeature, Assembly-CSharp
+    - Name: featureName
+      Entry: 1
+      Data: "\u6B8B\u7F3A"
+    - Name: icon
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 7|Tyrant.Material, Assembly-CSharp
+    - Name: rawMaterial
+      Entry: 7
+      Data: Tyrant.RawMaterial, Assembly-CSharp
+    - Name: sprite
+      Entry: 10
+      Data: 2
+    - Name: code
+      Entry: 1
+      Data: 
+    - Name: features
+      Entry: 7
+      Data: 8|Tyrant.MaterialFeature[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: Tyrant.MaterialFeature, Assembly-CSharp
+    - Name: featureName
+      Entry: 1
+      Data: "\u6B8B\u7F3A"
+    - Name: icon
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  birthPackSos: {fileID: 11400000, guid: 9d83d37718698482da8a6d1a0184189d, type: 2}
+  isAlreadyAddBirth: 1

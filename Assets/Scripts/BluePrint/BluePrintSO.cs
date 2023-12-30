@@ -23,5 +23,9 @@ namespace Tyrant
 
         public EquipmentSO equipmentSO;
 
+
+        public int makePoints;
+        public int qualityPoints;
+
     }
 }

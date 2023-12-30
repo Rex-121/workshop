@@ -11,6 +11,7 @@ namespace Tyrant
         
         public IEquipment DoCraft(int makes, int quality, BluePrintSO bluePrintSO)
         {
+            Debug.Log($"#Forge# {makes} - {quality}");
             return bluePrintSO.equipmentSO.ToEquipment();
             // return new Sword(new Attribute(5,5, 5), equipmentSO.icon);
         }

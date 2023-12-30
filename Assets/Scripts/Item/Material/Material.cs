@@ -7,15 +7,17 @@ namespace Tyrant
 {
     
     
+    [System.Serializable]
     public struct RawMaterial
     {
-        [ShowInInspector]
+        [SerializeField]
         public string itemName { get; }
         
         
-        [ShowInInspector]
+        [SerializeField]
         public Sprite sprite { get; set; }
         
+        [SerializeField]
         public string code { get; set; }
 
         
@@ -32,6 +34,7 @@ namespace Tyrant
         public IMaterial toMaterial => new Material(this);
     }
     
+    [System.Serializable]
     public struct Material: IMaterial
     {
         [ShowInInspector] public string itemName => rawMaterial.itemName + $"<sprite={quality.tier.ToInt()}>";
