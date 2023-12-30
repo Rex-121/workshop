@@ -26,14 +26,7 @@ namespace Tyrant.UI
         [SerializeField]
         private DiceBuffDataSO[] diceBuffDataSO;
 
-        public DiceBuffInfo diceBuffInfo;// => diceBuffDataSO.ToBuff();
-
-        // public DiceBuffInfo GetDiceBuffInfoWithFace(int face)
-        // {
-        //     // diceBuffInfo.diceFace = face;
-        //     return diceBuffInfo;
-        // }
-        
+        public DiceBuffInfo diceBuffInfo;
         public Image dicedImage;
 
         public DiceSpriteDefineSO diceSpriteDefineSO;
@@ -60,12 +53,11 @@ namespace Tyrant.UI
             skillDescriptionLabel.text = diceBuffInfo.buffDataSO.description;
         }
 
-        public void OnMouseDown()
+        public void MainCanvas(Canvas canvas)
         {
-            Debug.Log("faslfjalsdf");
-            Debug.Log(Input.GetMouseButtonDown(1));
+            _dragInCanvas.canvas = canvas;
         }
-
+        
         public void NewTool(int index, Tool tool, Transform dragLayer)
         {
             this.tool = tool;

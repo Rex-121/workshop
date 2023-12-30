@@ -255,6 +255,7 @@ MonoBehaviour:
   toolPrefab: {fileID: 6092897185978420439, guid: 28787e828f8764bc0b7cd8aead82f645, type: 3}
   horizontalLayoutGroup: {fileID: 0}
   dragLayer: {fileID: 3030986587891150553}
+  mainCanvas: {fileID: 3030986589255063386}
 --- !u!114 &3030986587741441660
 MonoBehaviour:
   m_ObjectHideFlags: 0

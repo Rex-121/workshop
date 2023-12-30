@@ -72,13 +72,14 @@ namespace Tyrant
             pined.OnNext(null);
             DiceValueDidBuffed();
         }
+
         public void PreviewTool(ToolOnTable tool)
         {
             preview.OnNext(tool);
-            
+
             DiceValueDidBuffed();
         }
-        
+
         // 骰子面值发生变化，需要更新buff
         private void DiceValueDidBuffed()
         {

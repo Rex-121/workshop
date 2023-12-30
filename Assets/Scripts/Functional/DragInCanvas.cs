@@ -38,7 +38,7 @@ namespace Tyrant.UI
         public void OnDrag(PointerEventData eventData)
         {
             startDrag?.Invoke();
-            _transform.anchoredPosition += eventData.delta / 4.5f;// / canvas.scaleFactor;
+            _transform.anchoredPosition += eventData.delta / canvas.scaleFactor;
         }
 
         public void OnEndDrag(PointerEventData eventData)
