@@ -28,18 +28,19 @@ namespace Tyrant
         
         #endregion
         
-        [ShowInInspector, NonSerialized] public WorkBench workBench = new WorkBench();
+        [ShowInInspector, NonSerialized] public WorkBench workBench;// = new WorkBench();
 
         [LabelText("工作台Prefab")]
         public GameObject workBenchPrefab;
 
+        public BluePrintSO bluePrintSO;
         
         public ToolSO[] toolSos;
         
         
-        [ShowInInspector] public int allOccupiedInThisTurn => workBench
-            .allSlots.Values
-            .Count(v => v.isOccupied);
+        [ShowInInspector, HideIf("@this.workBench != null")] public int allOccupiedInThisTurn => workBench?
+                    .allSlots.Values
+                    .Count(v => v.isOccupied) ?? 0;
 
         [LabelText("每回合最大使用灵感数")]
         public int maxWorkBenchOccupied = 3;
@@ -144,7 +145,11 @@ namespace Tyrant
         [Button]
         public void StartAWorkBench()
         {
+            
+            workBench = new WorkBench(BluePrint.FromSO(bluePrintSO));
+            
             Instantiate(workBenchPrefab);
+            
         }
         public void DidForgeThisTurn()
         {
@@ -156,7 +161,7 @@ namespace Tyrant
             Debug.Log($"make={makes}, quality={qualities}");
             
             // 合成
-            var equipment = EquipmentGenesis.main.DoCraft(makes, qualities);
+            var equipment = EquipmentGenesis.main.DoCraft(makes, qualities, bluePrintSO);
             
             InventoryManager.main.AddItem(equipment);
             

@@ -20,6 +20,8 @@ namespace Tyrant
          * 12121-
          * 00010-
          */
-        
+
+        public EquipmentSO equipmentSO;
+
     }
 }

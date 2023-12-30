@@ -9,9 +9,9 @@ namespace Tyrant
         public EquipmentSO equipmentSO;
 
         
-        public IEquipment DoCraft(int makes, int quality)
+        public IEquipment DoCraft(int makes, int quality, BluePrintSO bluePrintSO)
         {
-            return null;
+            return bluePrintSO.equipmentSO.ToEquipment();
             // return new Sword(new Attribute(5,5, 5), equipmentSO.icon);
         }
 

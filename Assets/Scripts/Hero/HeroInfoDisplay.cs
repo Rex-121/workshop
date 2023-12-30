@@ -40,7 +40,11 @@ namespace Tyrant
                 jobIcon.sprite = hero.job.icon;
             }
 
-            attackPowerLabel.text = hero.attackPower.predictPower;
+            if (!ReferenceEquals(attackPowerLabel, null))
+            {
+                attackPowerLabel.text = hero.attackPower.predictPower;
+            }
+            
 
             if (!ReferenceEquals(equipmentBriefDisplays, null))
             {

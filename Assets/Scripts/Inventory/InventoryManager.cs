@@ -29,10 +29,17 @@ namespace Tyrant
         public BirthPackSO birthPackSO;
 
         public InventoryBag inventoryBag;
-        
+
+        public InventoryStorageSO storageSO;
         
         // 所有的材料
-        public IEnumerable<IItem> allMaterials => birthPackSO.materials.Select(v => v.toRawMaterial.toMaterial);
+        public IEnumerable<IItem> allMaterials => storageSO.items;//birthPackSO.materials.Select(v => v.toRawMaterial.toMaterial);
+
+
+        private void Start()
+        {
+            storageSO.AddBirth();
+        }
 
         public void AddItem(IItem item)
         {
@@ -42,6 +49,8 @@ namespace Tyrant
             }
             
             inventoryBag.AddItem(item);
+            
+            storageSO.items.Add(item);
         }
 
         private void AddEquipment(IEquipment equipment)

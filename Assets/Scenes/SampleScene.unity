@@ -782,6 +782,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   workBenchPrefab: {fileID: 3030986589255063385, guid: 519963f166396488aade50bedd7d8001, type: 3}
+  bluePrintSO: {fileID: 11400000, guid: 9baeb6b3018df4440a6714b87ca05554, type: 2}
   toolSos:
   - {fileID: 11400000, guid: 65f1a332095a34afeba5d6a43a6a17c1, type: 2}
   - {fileID: 11400000, guid: 41ed3332f1ea54ba29719193850db98e, type: 2}
