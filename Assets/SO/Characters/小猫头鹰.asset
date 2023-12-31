@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 96e2381b73c64b638ad11693b02e8cf2, type: 3}
-  m_Name: "\u732B\u5934\u9E70\u4E4B\u5B50"
+  m_Name: "\u5C0F\u732B\u5934\u9E70"
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -21,7 +21,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  characterName: 
+  characterName: "\u5C0F\u732B\u5934\u9E70"
   characterMonoPrefab: {fileID: 838221070402608547, guid: 3af9bd9ff5b8748948a0aa719cca0f01, type: 3}
   attribute:
     strength: 1

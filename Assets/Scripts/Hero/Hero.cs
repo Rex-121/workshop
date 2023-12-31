@@ -38,10 +38,12 @@ namespace Tyrant
         [ShowInInspector, BoxGroup("Equipment"), InlineProperty, HideLabel, Title("武器")]
         public IEquipment weapon;// = new Sword(new Attribute(5, 5, 5), null);
 
+        public CharacterSO characterSO;
         
-        
-        Hero(Attribute a, HeroHealthStrategy healthStrategy, JobSO jobSO)//IEnumerable<BuffInfo> skills)
+        Hero(Attribute a, HeroHealthStrategy healthStrategy, JobSO jobSO, CharacterSO characterSO)
         {
+            this.characterSO = characterSO;
+            
             attribute = a + jobSO.weaponSO.attribute;
             
             health = new Health(attribute, healthStrategy);
@@ -67,7 +69,7 @@ namespace Tyrant
 
         public static Hero FromSO(CharacterSO characterSO, JobSO jobSO)
         {
-            return new Hero(characterSO.attribute, characterSO.healthStrategy, jobSO);
+            return new Hero(characterSO.attribute, characterSO.healthStrategy, jobSO, characterSO);
         }
         // private int attributePower => mainAttribute switch
         // {
