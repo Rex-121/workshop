@@ -13,6 +13,16 @@ namespace Tyrant
 
         public bool isAlreadyAddBirth = false;
         
+        
+        [Button(ButtonSizes.Large), PropertyOrder(9)]
+        public void Clear()
+        {
+            isAlreadyAddBirth = false;
+            items.Clear();
+        }
+        
+        [Space]
+        [PropertyOrder(10)]
         public List<IItem> items = new();
 
 

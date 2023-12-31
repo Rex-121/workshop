@@ -55,7 +55,7 @@ namespace Tyrant
 
         private void AddEquipment(IEquipment equipment)
         {
-            Debug.Log($"背包+{equipment.itemName}");
+            Debug.Log($"#背包# 背包+{equipment.itemName}-{equipment.quality.tier}");
         }
         
     }

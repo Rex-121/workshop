@@ -112,6 +112,11 @@ namespace Tyrant
             
         }
 
+        public void DidEndRound()
+        {
+            
+        }
+
         public void NewTurn()
         {
             _dic.Values.ForEach(v => v.DidForgeThisTurn());

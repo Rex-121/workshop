@@ -19,7 +19,6 @@ namespace Tyrant
         public IEquipment DoCraft(IQuality make, IQuality quality, EquipmentSO equipmentSO)
         {
 
-            // Debug.Log($"#Forge# {makes} - {quality}");
             before = equipmentSO.ToEquipment();
             
             
@@ -29,7 +28,6 @@ namespace Tyrant
             remake = before.RemakeByQuality(q);
 
             return remake;
-            // return new Sword(new Attribute(5,5, 5), equipmentSO.icon);
         }
 
     }

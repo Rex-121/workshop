@@ -30,6 +30,7 @@ namespace Tyrant
         #endregion
         
         [ShowInInspector, NonSerialized] public WorkBench workBench;
+        [ShowInInspector, NonSerialized] public GameObject workBenchUI;
         [ShowInInspector, NonSerialized] public int staminaCost = 0;
         public ForgeItem forgeItem;
         
@@ -154,8 +155,10 @@ namespace Tyrant
             
             workBench = new WorkBench(bluePrint);
 
-            var toolsBox = Instantiate(workBenchPrefab).GetComponent<ToolsBox>();
+            workBenchUI = Instantiate(workBenchPrefab);
 
+            var toolsBox = workBenchUI.GetComponent<ToolsBox>();
+            
             forgeItem = new ForgeItem(bluePrint);
             
             _allQueues.Clear();
@@ -169,22 +172,15 @@ namespace Tyrant
         
         public void DidForgeThisTurn()
         {
-            Debug.Log("End Forge!");
-
             staminaCost += 1;
 
             var makes = allMakesScore;
             var qualities = allQualityScore;
             
-            Debug.Log($"make={makes}, quality={qualities}");
-
             ForgeItemTakePower(makes, qualities);
   
             // 决策是否需要结束或者下一回合
             DetermineIfEndForge();
-            
-            // 重新计算分数
-            CalculateScore();
         }
 
         private void ForgeItemTakePower(int makes, int qualities)
@@ -198,21 +194,16 @@ namespace Tyrant
             if (staminaCost < Protagonist.main.stamina)
             {
                 NewTurn();
+                // 重新计算分数
+                CalculateScore();
             }
             else
             {
-                ForgeDidNeedEnd();
+                DidEndRound();
             }
         }
 
-        // 打造结束
-        private void ForgeDidNeedEnd()
-        {
-            // 合成
-            var equipment = forgeItem.DoForge();
-
-            InventoryManager.main.AddItem(equipment);
-        }
+        
 
         public void PrepareNewRound()
         {
@@ -220,7 +211,23 @@ namespace Tyrant
             _allQueues.ForEach(v => v.PrepareNewRound());
         }
         
-        
+
+        // 打造结束
+        public void DidEndRound()
+        {
+            // 合成
+            var equipment = forgeItem.DoForge();
+
+            InventoryManager.main.AddItem(equipment);
+            
+            _allQueues.ForEach(v => v.DidEndRound());
+            Destroy(workBenchUI);
+            workBench = null;
+            forgeItem = null;
+            _allQueues.Clear();
+        }
+
+
         public void NewTurn()
         {
             _allQueues.ForEach(v => v.NewTurn());

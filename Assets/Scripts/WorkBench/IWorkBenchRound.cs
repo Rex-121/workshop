@@ -5,6 +5,7 @@ namespace Tyrant
 
         public void PrepareNewRound();
 
+        public void DidEndRound();
 
         public void NewTurn();
 

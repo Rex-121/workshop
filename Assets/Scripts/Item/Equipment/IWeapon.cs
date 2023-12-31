@@ -45,7 +45,7 @@ namespace Tyrant
         
         public static Sword FromSwordSO(WeaponSO weaponSO)
         {
-            return new Sword(weaponSO.name, weaponSO.attribute, weaponSO.icon, new AttackPower(weaponSO.power.x, weaponSO.power.y), new Quality());
+            return new Sword(weaponSO.equipmentName, weaponSO.attribute, weaponSO.icon, new AttackPower(weaponSO.power.x, weaponSO.power.y), new Quality());
         }
 
         public IEquipment RemakeByQuality(IQuality qualities)

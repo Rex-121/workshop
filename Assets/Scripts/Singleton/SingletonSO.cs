@@ -24,18 +24,18 @@ namespace Tyrant
 
                 if (assets == null || assets.Length < 1)
                 {
-                    throw new System.Exception("没有此单例！");
+                    throw new System.Exception("#SingletonSO# 没有此单例！");
                 }
             
                 if (assets.Length > 1)
                 {
-                    Debug.Log("多个单例");
+                    Debug.Log("#SingletonSO# 多个单例");
                 }
             
                 _instance = assets[0];
                 sw.Stop();
                 _instance.SingletonInit();
-                Debug.Log("单例耗时" + _instance + " " + sw.ElapsedMilliseconds);
+                Debug.Log("#SingletonSO# 单例耗时" + _instance + " " + sw.ElapsedMilliseconds);
 
                 return _instance;
             }

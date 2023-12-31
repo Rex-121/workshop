@@ -137,13 +137,22 @@ namespace Tyrant
 
         public void OnItemEndDragging(ItemPreviewForInventorySlot item)
         {
-            _featureItem.gameObject.SetActive(true);
+            SetOtherLayerActive(true);
         }
 
         public void OnItemBeginDrag(ItemPreviewForInventorySlot item)
         {
-            _featureItem.gameObject.SetActive(false);
+            SetOtherLayerActive(false);
             DisplayRequireIfNeeded();
         }
+
+        private void SetOtherLayerActive(bool active)
+        {
+            if (_featureItem is { } panel)
+            {
+                panel.gameObject.SetActive(false);
+            }
+        }
+        
     }
 }

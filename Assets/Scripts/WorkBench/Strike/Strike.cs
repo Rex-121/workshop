@@ -37,7 +37,7 @@ namespace Tyrant
             power = p;
         }
 
-        public string debugDescription => $"{strike} --> {power}";
+        public string debugDescription => $"{strike}->{power}<-";
         public static StrikePower operator +(StrikePower a, StrikePower b)
         {
             if (a.strike != b.strike) return a;

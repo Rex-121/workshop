@@ -75,6 +75,11 @@ namespace Tyrant.UI
             DuringDrawTools(array);
         }
 
+        public void DidEndRound()
+        {
+            
+        }
+
         public void DuringDrawTools(Tool[] tools)
         {
             for (var i = 0; i < tools.Count(); i++)

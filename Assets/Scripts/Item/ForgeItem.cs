@@ -24,6 +24,7 @@ namespace Tyrant
 
         public void NewStrike(StrikePower strikePower)
         {
+            Debug.Log($"#打造# 增加{strikePower.debugDescription}");
             make += strikePower;
             quality += strikePower;
         }
@@ -33,7 +34,7 @@ namespace Tyrant
         {
             var makes = normalMakeQualityStrategy.QualityBy(this);
             var qualities = qualityStrategy.QualityBy(this);
-            Debug.Log($"#Forge# {makes.quality.tier} - {qualities.quality.tier}");
+            Debug.Log($"#打造# 物品打造等级{makes.quality.tier} - 品质等级{qualities.quality.tier}");
             return EquipmentGenesis.main.DoCraft(makes, qualities, bluePrint.equipmentSO);
         }
         
@@ -64,7 +65,7 @@ namespace Tyrant
     {
         private static Quality.Tier Cal(float t)
         {
-            Debug.Log("#Forge# 原始Quality为" + t);
+            Debug.Log("#打造# 原始Quality为" + t);
             if (t < 1)
             {
                 var win = DoNeedLiftTier(t);
@@ -73,10 +74,10 @@ namespace Tyrant
             var left = Mathf.FloorToInt(t);
             Debug.Log(left);
             var value = Mathf.CeilToInt(t);
-            Debug.Log($"#Forge# 计算Quality为 {value}-{value.TierFromInt()}");
+            Debug.Log($"#打造# 计算Quality为 {value}-{value.TierFromInt()}");
             var plus = DoNeedLiftTier(t - left);
             value += (plus ? 1 : 0);
-            Debug.Log($"#Forge# 追加Quality为 {value}-{value.TierFromInt()}");
+            Debug.Log($"#打造# 追加Quality为 {value}-{value.TierFromInt()}");
             return value.TierFromInt();
         }
 
@@ -85,7 +86,7 @@ namespace Tyrant
         {
             var r = Random.Range(0, 1.0f);
             var v = r <= value;
-            Debug.Log($"#Forge# 计算是否要追加一等品级 几率{value}--投骰{r}--是否追加:{v}");
+            Debug.Log($"#打造# 计算是否要追加一等品级 几率{value}--投骰{r}--是否追加:{v}");
             return v;
         }
         
