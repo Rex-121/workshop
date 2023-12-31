@@ -33,23 +33,23 @@ namespace Tyrant
             return trips.Count == 0 ? null : trips.Peek();
         }
 
-        public IDungeonNode StartANewNode(HeroSquad heroSquad)
+        public IDungeonNode StartANewNode(HeroSquadMono heroSquadMono)
         {
             var node = Next();
             if (node == null) return null;
-            so.onNodeAction?.OnStart(this, node, heroSquad);
-            node.OnStart(this, node, heroSquad);
+            so.onNodeAction?.OnStart(this, node, heroSquadMono);
+            node.OnStart(this, node, heroSquadMono);
             return node;
         }
         
         // 开始`dungeon`
-        public void DidStartDungeon(HeroSquad heroSquad)
+        public void DidStartDungeon(HeroSquadMono heroSquadMono)
         {
-            so.onDungeonBegin?.Apply(this, heroSquad);
+            so.onDungeonBegin?.Apply(this, heroSquadMono);
         }
 
         // 此节点已完成
-        public void DidFinishThisNode(HeroSquad heroSquad)
+        public void DidFinishThisNode(HeroSquadMono heroSquadMono)
         {
             if (trips.Count == 0) return;
             
@@ -68,8 +68,8 @@ namespace Tyrant
 
             roadMap = string.Join("-", array);
             
-            so.onNodeAction?.OnFinish(this, node, heroSquad);
-            node.OnFinish(this, node, heroSquad);
+            so.onNodeAction?.OnFinish(this, node, heroSquadMono);
+            node.OnFinish(this, node, heroSquadMono);
         }
         
     }

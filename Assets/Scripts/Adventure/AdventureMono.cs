@@ -6,18 +6,19 @@ using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using Tyrant;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class AdventureMono : MonoBehaviour
 {
 
-    private Dictionary<int, HeroSquad> heroSquads = new();
+    private Dictionary<int, HeroSquadMono> heroSquads = new();
 
     public DungeonSO dungeonSO;
 
     public Vector2[] positions;
 
-    public HeroSquad heroSquadPrefab;
+    [FormerlySerializedAs("heroSquadPrefab")] public HeroSquadMono heroSquadMonoPrefab;
     
 
     [Button]
@@ -49,7 +50,7 @@ public class AdventureMono : MonoBehaviour
         
         var position = positions[ii];
             
-        var heroSquad = Instantiate(heroSquadPrefab, position, Quaternion.identity, transform);
+        var heroSquad = Instantiate(heroSquadMonoPrefab, position, Quaternion.identity, transform);
 
         heroSquad.indexInAdventure = ii;
         
@@ -117,12 +118,12 @@ public class AdventureMono : MonoBehaviour
         Destroy(eMono.gameObject);
     }
 
-    private void DungeonDidFinished(HeroSquad heroSquad, Dungeon dungeon)
+    private void DungeonDidFinished(HeroSquadMono heroSquadMono, Dungeon dungeon)
     {
         
-        heroSquads.Remove(heroSquad.indexInAdventure);
+        heroSquads.Remove(heroSquadMono.indexInAdventure);
         
-        Destroy(heroSquad.gameObject);
+        Destroy(heroSquadMono.gameObject);
         
         NewHeroSquadOnAdventure();
     }

@@ -26,11 +26,11 @@ namespace Tyrant
 
         public string icon => "b";
 
-        public void OnStart(Dungeon dungeon, IDungeonNode node, HeroSquad heroSquad)
+        public void OnStart(Dungeon dungeon, IDungeonNode node, HeroSquadMono heroSquadMono)
         {
         }
 
-        public void OnFinish(Dungeon dungeon, IDungeonNode node, HeroSquad heroSquad)
+        public void OnFinish(Dungeon dungeon, IDungeonNode node, HeroSquadMono heroSquadMono)
         {
         }
     }
@@ -48,13 +48,13 @@ namespace Tyrant
         
         public string icon => "s";
         
-        public void OnStart(Dungeon dungeon, IDungeonNode node, HeroSquad heroSquad)
+        public void OnStart(Dungeon dungeon, IDungeonNode node, HeroSquadMono heroSquadMono)
         {
             var value = healthSupply;
-            heroSquad.heroes.Select(v => v.heroic).ForEach(v => v.health.TakeDamage(- value));
+            heroSquadMono.heroes.Select(v => v.heroic).ForEach(v => v.health.TakeDamage(- value));
         }
 
-        public void OnFinish(Dungeon dungeon, IDungeonNode node, HeroSquad heroSquad)
+        public void OnFinish(Dungeon dungeon, IDungeonNode node, HeroSquadMono heroSquadMono)
         {
             
         }
