@@ -12,6 +12,9 @@ namespace Tyrant
 {
     public class HeroSquadMono : MonoBehaviour
     {
+        
+        [ShowInInspector, PropertyOrder(-100)] private Hero[] h => heroes.Select(v => v.heroic as Hero).ToArray();
+
 
         public int indexInAdventure;
 

@@ -15,19 +15,22 @@ namespace Tyrant
     [System.Serializable]
     public struct Sword : IWeapon
     {
-        [SerializeField]
-        public string itemName { get; set; }
         
-        [SerializeField]
+        [SerializeField, PreviewField(60, ObjectFieldAlignment.Left), HorizontalGroup("Basic", 60), HideLabel]
         public Sprite sprite { get; set; }
 
-        [SerializeField] 
+        
+        [SerializeField, VerticalGroup("Basic/Basic"), HideLabel]
+        public string itemName { get; set; }
+        
+       
+        [SerializeField, VerticalGroup("Basic/Basic"), HideLabel]
         public Quality quality { get; set; }
         
         [SerializeField]
         public Attribute attribute { get; set; }
 
-        [SerializeField]
+        [SerializeField, VerticalGroup("Basic/Basic"), HideLabel]
         public AttackPower power { get; set; }// => new AttackPower(5, 8);
 
         public Sword(string name, Attribute attribute, Sprite sprite, AttackPower power, Quality qualities)

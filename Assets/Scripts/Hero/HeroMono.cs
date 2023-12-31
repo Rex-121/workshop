@@ -4,6 +4,7 @@ using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using TMPro;
 using UniRx;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Tyrant
@@ -15,7 +16,7 @@ namespace Tyrant
         private HeroRequest _heroRequest;
         public TextMeshProUGUI healthBar;
 
-        [ShowInInspector]
+        [ShowInInspector, BoxGroup("HERO", centerLabel: true, AnimateVisibility = true), InlineProperty, HideLabel]
         private Hero _hero;
 
         public Attribute attribute => _hero.attribute;

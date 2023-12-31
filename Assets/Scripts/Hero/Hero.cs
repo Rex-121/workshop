@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
@@ -8,32 +6,39 @@ using Object = UnityEngine.Object;
 
 namespace Tyrant
 {
+    [HideReferenceObjectPicker]
     public class Hero: IAmHero
     {
-        public Attribute attribute { get; set; }
         
-        [LabelText("生命值")]
-        public Health health { get; set; }
+        [ShowInInspector, ReadOnly, HideLabel, PropertyOrder(-2), HorizontalGroup("Basic")]
         public string heroName { get; set; }
+        
+        [ShowInInspector, PropertyOrder(-1)]
+        public Health health { get; set; }
+        
+        [ShowInInspector, ReadOnly, HideLabel, HorizontalGroup("Basic")]
+        public JobSO job;
+        
+        public Attribute attribute { get; set; }
 
-        // public AttributeTypes mainAttribute;
         public IAmHero heroic => this;
 
         public HeroActionQueue actionQueue { get; private set; }
+        
+        [InlineProperty, HideLabel]
+        public BuffHandler buffHandler = new BuffHandler();
 
-
-        [ShowInInspector, LabelText("伤害")]
+        [ShowInInspector, InlineProperty, HideLabel, PropertyOrder(100), Title("伤害")]
         public AttackPower attackPower;
         
         public bool stillAlive => !health.isEmpty;
         
-        public BuffHandler buffHandler = new BuffHandler();
+        
 
-        [ShowInInspector]
+        [ShowInInspector, BoxGroup("Equipment"), InlineProperty, HideLabel, Title("武器")]
         public IEquipment weapon;// = new Sword(new Attribute(5, 5, 5), null);
 
-        [ShowInInspector]
-        public JobSO job;
+        
         
         Hero(Attribute a, HeroHealthStrategy healthStrategy, JobSO jobSO)//IEnumerable<BuffInfo> skills)
         {

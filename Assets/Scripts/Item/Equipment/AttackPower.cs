@@ -9,7 +9,6 @@ namespace Tyrant
     public readonly struct AttackPower: IRemakeByQuality<AttackPower>
     {
 
-        [ShowInInspector, ReadOnly]
         private readonly RangeInt _range;
 
         [LabelText("伤害"), ShowInInspector]

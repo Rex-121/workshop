@@ -1,28 +1,37 @@
 using System;
+using Sirenix.OdinInspector;
 using UniRx;
+using UnityEngine;
 
 namespace Tyrant
 {
+    [HideReferenceObjectPicker, HideLabel, InlineProperty,]
     public class Health
     {
+        private readonly int _totalHealth;
 
-        public readonly int totalHealth;
-
+        [ProgressBar(0, "_totalHealth", ColorGetter = "GetHealthBarColor", Height = 30), ShowInInspector, HideLabel]
         private int _currentHealth
         {
-            set => currentHealth.Value = Math.Min(totalHealth, value);
+            set => currentHealth.Value = Math.Min(_totalHealth, value);
             get => currentHealth.Value;
         }
-        
-        public string healthDisplay => $"{_currentHealth}/{totalHealth}";
-        
-        public readonly ReactiveProperty<int> currentHealth = new ReactiveProperty<int>(0);
 
+        private Color GetHealthBarColor(float value)
+        {
+            return Color.Lerp(Color.red, Color.green, Mathf.Pow(value / _totalHealth, 2));
+        }
+        
+        private string healthDisplay => $"{_currentHealth}/{_totalHealth}";
+        
+        private readonly ReactiveProperty<int> currentHealth = new ReactiveProperty<int>(0);
+
+        [HideInInspector]
         public readonly ReadOnlyReactiveProperty<string> healthBarDisplay;
         public Health(Attribute attribute, HeroHealthStrategy heroHealthStrategy)
         {
-            totalHealth = heroHealthStrategy.Health(attribute);
-            _currentHealth = totalHealth;
+            _totalHealth = heroHealthStrategy.Health(attribute);
+            _currentHealth = _totalHealth;
 
             healthBarDisplay = currentHealth.Select(_ => healthDisplay).ToReadOnlyReactiveProperty();
         }
