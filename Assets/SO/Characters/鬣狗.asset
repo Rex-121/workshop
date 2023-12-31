@@ -21,6 +21,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
+  id: 2
   characterName: "\u9B23\u72D7"
   characterMonoPrefab: {fileID: 3716240582565644741, guid: 0d47e7e3e6d294659b7c22707710acb2, type: 3}
   attribute:
@@ -32,3 +33,8 @@ MonoBehaviour:
     dexterity: 5
     intelligence: 0
     baseHealth: 10
+  sprites:
+  - {fileID: -443310765, guid: fea693621442a4741ac088111e719cba, type: 3}
+  - {fileID: 236416321, guid: fea693621442a4741ac088111e719cba, type: 3}
+  - {fileID: -1680039738, guid: fea693621442a4741ac088111e719cba, type: 3}
+  - {fileID: 1265696746, guid: fea693621442a4741ac088111e719cba, type: 3}

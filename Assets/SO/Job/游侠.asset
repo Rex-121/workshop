@@ -21,6 +21,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
+  id: 2
   jobName: "\u6E38\u4FA0"
   icon: {fileID: 1276036978, guid: 5adafed67f17e41e39188696d7ba4771, type: 3}
   mainAttribute: 1
