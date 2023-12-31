@@ -21,8 +21,7 @@ public class AdventureMono : MonoBehaviour
     [FormerlySerializedAs("heroSquadPrefab")] public HeroSquadMono heroSquadMonoPrefab;
     
 
-    [Button]
-    public void NewHeroSquadOnAdventure()
+    public void NewHeroSquadOnAdventure(Hero[] squad)
     {
 
         if (heroSquads.Count >= positions.Length)
@@ -52,6 +51,8 @@ public class AdventureMono : MonoBehaviour
             
         var heroSquad = Instantiate(heroSquadMonoPrefab, position, Quaternion.identity, transform);
 
+        heroSquad.NewSquad(squad);
+        
         heroSquad.indexInAdventure = ii;
         
         heroSquad.transform.localPosition = position;
@@ -118,13 +119,13 @@ public class AdventureMono : MonoBehaviour
         Destroy(eMono.gameObject);
     }
 
+    // 冒险完成
     private void DungeonDidFinished(HeroSquadMono heroSquadMono, Dungeon dungeon)
     {
         
-        heroSquads.Remove(heroSquadMono.indexInAdventure);
+        // heroSquads.Remove(heroSquadMono.indexInAdventure);
+        //
+        // Destroy(heroSquadMono.gameObject);
         
-        Destroy(heroSquadMono.gameObject);
-        
-        NewHeroSquadOnAdventure();
     }
 }

@@ -41,9 +41,9 @@ namespace Tyrant
         }
 
 
-        public void NewDungeon()
+        public void NewSquadOnAdventure(Hero[] squad)
         {
-            adventureMono.NewHeroSquadOnAdventure();
+            adventureMono.NewHeroSquadOnAdventure(squad);
         }
     }
 }

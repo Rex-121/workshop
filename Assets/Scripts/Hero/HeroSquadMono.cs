@@ -18,8 +18,8 @@ namespace Tyrant
 
         public int indexInAdventure;
 
-        public JobSO[] jobSO;
-        public CharacterSO[] characterSos;
+        // public JobSO[] jobSO;
+        // public CharacterSO[] characterSos;
         
         [ShowInInspector] public HeroMono[] heroes;
 
@@ -61,25 +61,17 @@ namespace Tyrant
         {
             PositionCanvas();
         }
+        
 
-
-
-        private void OnEnable()
+        public void NewSquad(Hero[] newHeroes)
         {
-            M();
-        }
-
-        private void M()
-        {
-            if (!heroes.IsNullOrEmpty())return;
-
             heroes = new HeroMono[3];
             
-            for (var i = 0; i < jobSO.Length; i++)
+            for (var i = 0; i < newHeroes.Length; i++)
             {
                  var hero = Instantiate(heroMonoPrefab, new Vector3(1.2f * i, 0, 0), Quaternion.identity, transform);
                  hero.transform.localPosition = new Vector3(1f * i + 0.5f, 0, 0);
-                 hero.RestoreFromSO(characterSos.RandomElement(), jobSO.RandomElement());
+                 hero.hero = newHeroes[i];
                  hero.heroInfoDisplay += DisplayHeroInfo;
                  heroes[i] = hero;
             }
@@ -91,17 +83,6 @@ namespace Tyrant
             var display = hero != heroInfoDisplay.hero;
             heroInfoDisplay.gameObject.SetActive(display);
             heroInfoDisplay.hero = display ? hero : null;
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.black;
-            
-            Gizmos.DrawLine(Vector3.zero, new Vector3(4, 0, 0));
-
-            var c = Camera.main.WorldToScreenPoint(transform.position);
-            
-            Gizmos.DrawCube(c, Vector3.one);
         }
 
         [ShowInInspector]

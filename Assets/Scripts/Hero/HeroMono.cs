@@ -19,6 +19,19 @@ namespace Tyrant
         [ShowInInspector, BoxGroup("HERO", centerLabel: true, AnimateVisibility = true), InlineProperty, HideLabel]
         private Hero _hero;
 
+        public Hero hero
+        {
+            set
+            {
+                _hero = value;
+                
+                _character = Instantiate(_hero.characterSO.characterMonoPrefab, transform);
+            
+                nameLabel.text = _hero.heroName;
+            }
+            get => _hero;
+        }
+
         public Attribute attribute => _hero.attribute;
 
         public string heroName => _hero.heroName;
@@ -43,15 +56,6 @@ namespace Tyrant
         private void Awake()
         {
             _heroRequest = GetComponent<HeroRequest>();
-        }
-
-        public void RestoreFromSO(CharacterSO characterSO, JobSO jobSO)
-        {
-            _hero = Hero.FromSO(characterSO, jobSO);
-            
-            _character = Instantiate(characterSO.characterMonoPrefab, transform);
-            
-            nameLabel.text = _hero.heroName;
         }
 
         private CharacterMono _character;

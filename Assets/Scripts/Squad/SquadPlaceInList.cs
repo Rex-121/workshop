@@ -27,6 +27,12 @@ namespace Tyrant
                 heroStands[i].hero = _heroes[i];
             }
         }
+
+        public void SquadOnAdventure()
+        {
+            AdventureManager.main.NewSquadOnAdventure(_heroes);
+            Destroy(gameObject);
+        }
         
 
     }
