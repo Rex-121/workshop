@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c829262ebb00d417eb9e31580f6a157b, type: 3}
   m_Name: "\u94DC\u952D"
   m_EditorClassIdentifier: 
-  materialName: 
+  materialName: "\u94DC\u952D"
   icon: {fileID: 2023375052, guid: 9c68229f041134606ba844e5bda5c2cc, type: 3}
   code: II
   featureSOs:

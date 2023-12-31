@@ -12,6 +12,31 @@ namespace Tyrant
 
         public int makePercent => make.power / bluePrint.make;
         public float qualityPercent => quality.power * 1.0f / bluePrint.quality;
+
+
+        public NormalQualityStrategy qualityStrategy = new NormalQualityStrategy();
+        public NormalMakeStrategy normalMakeQualityStrategy = new NormalMakeStrategy();
+        
+        public ForgeItem(BluePrint bluePrint)
+        {
+            this.bluePrint = bluePrint;
+        }
+
+        public void NewStrike(StrikePower strikePower)
+        {
+            make += strikePower;
+            quality += strikePower;
+        }
+        
+        
+        public IEquipment DoForge()
+        {
+            var makes = normalMakeQualityStrategy.QualityBy(this);
+            var qualities = qualityStrategy.QualityBy(this);
+            Debug.Log($"#Forge# {makes.quality.tier} - {qualities.quality.tier}");
+            return EquipmentGenesis.main.DoCraft(makes, qualities, bluePrint.equipmentSO);
+        }
+        
     }
     
     public interface IQualityMakeStrategy<in T> //: IQuality
@@ -25,13 +50,10 @@ namespace Tyrant
     /// 完成`make`点数即为`Tier.Fine`
     /// 反之为`Tier.Defectives`
     /// </summary>
-    public readonly struct NormalMakeQualityStrategy : IQualityMakeStrategy<ForgeItem>
+    public readonly struct NormalMakeStrategy : IQualityMakeStrategy<ForgeItem>
     {
-        public IQuality QualityBy(ForgeItem item)
-        {
-            var f = item.makePercent;
-            return Quality.On(f >= 1 ? Quality.Tier.Fine : Quality.Tier.Defectives);
-        }
+        public IQuality QualityBy(ForgeItem item) => 
+            Quality.On(item.makePercent >= 1 ? Quality.Tier.Fine : Quality.Tier.Defectives);
     }
 
     /// <summary>
@@ -42,7 +64,7 @@ namespace Tyrant
     {
         private static Quality.Tier Cal(float t)
         {
-            Debug.Log("原始Quality为" + t);
+            Debug.Log("#Forge# 原始Quality为" + t);
             if (t < 1)
             {
                 var win = DoNeedLiftTier(t);
@@ -51,10 +73,10 @@ namespace Tyrant
             var left = Mathf.FloorToInt(t);
             Debug.Log(left);
             var value = Mathf.CeilToInt(t);
-            Debug.Log($"计算Quality为 {value}-{value.TierFromInt()}");
+            Debug.Log($"#Forge# 计算Quality为 {value}-{value.TierFromInt()}");
             var plus = DoNeedLiftTier(t - left);
             value += (plus ? 1 : 0);
-            Debug.Log($"追加Quality为 {value}-{value.TierFromInt()}");
+            Debug.Log($"#Forge# 追加Quality为 {value}-{value.TierFromInt()}");
             return value.TierFromInt();
         }
 
@@ -63,7 +85,7 @@ namespace Tyrant
         {
             var r = Random.Range(0, 1.0f);
             var v = r <= value;
-            Debug.Log($"计算是否要追加一等品级 几率{value}--投骰{r}--是否追加:{v}");
+            Debug.Log($"#Forge# 计算是否要追加一等品级 几率{value}--投骰{r}--是否追加:{v}");
             return v;
         }
         

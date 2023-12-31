@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Tyrant
 {
-    public class WorkBench
+    public class WorkBench: IWorkBenchRound
     {
         [Serializable]
         public enum SlotType
@@ -73,12 +73,6 @@ namespace Tyrant
                 .ForEach(v => v.NewPreviewBuff(toolOnTable.diceBuffInfo));
         }
 
-        public void DidForgeThisTurn()
-        {
-            _dic.Values.ForEach(v => v.DidForgeThisTurn());
-        }
-
-
         private List<WorkBenchSlot> LockBluePrint(BluePrint bluePrint)
         {
             var requires = bluePrint.boardLines;
@@ -111,6 +105,16 @@ namespace Tyrant
         public List<WorkBenchSlot> Start()
         {
             return LockBluePrint(this.bluePrint);
+        }
+
+        public void PrepareNewRound()
+        {
+            
+        }
+
+        public void NewTurn()
+        {
+            _dic.Values.ForEach(v => v.DidForgeThisTurn());
         }
     }
 

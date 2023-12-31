@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Tyrant
@@ -6,13 +7,28 @@ namespace Tyrant
     public class EquipmentGenesis: SingletonSO<EquipmentGenesis>
     {
 
-        public EquipmentSO equipmentSO;
+        // public EquipmentSO equipmentSO;
 
+        [ShowInInspector]
+        public IEquipment before;
         
-        public IEquipment DoCraft(int makes, int quality, BluePrintSO bluePrintSO)
+        
+        [ShowInInspector]
+        public IEquipment remake;
+        
+        public IEquipment DoCraft(IQuality make, IQuality quality, EquipmentSO equipmentSO)
         {
-            Debug.Log($"#Forge# {makes} - {quality}");
-            return bluePrintSO.equipmentSO.ToEquipment();
+
+            // Debug.Log($"#Forge# {makes} - {quality}");
+            before = equipmentSO.ToEquipment();
+            
+            
+            var q = new QualityGroup(make, new IQuality[] {quality}, new NormalMakeWithQualityStrategy());
+
+
+            remake = before.RemakeByQuality(q);
+
+            return remake;
             // return new Sword(new Attribute(5,5, 5), equipmentSO.icon);
         }
 

@@ -2,11 +2,21 @@ using UnityEngine;
 
 namespace Tyrant
 {
-    public interface IEquipment: IItem
-    {
-        public Attribute attribute { get; }
 
+    public interface IRemakeByQuality<T>
+    {
+        public T RemakeByQuality(IQuality qualities);
+
+    }
+    
+    public interface IEquipment: IItem, IRemakeByQuality<IEquipment>
+    { 
+        public Attribute attribute { get; }
         public AttackPower power { get; }
+
+
+        // public IEquipment RemakeByQuality(IQuality make, IQuality quality);
+
     }
     
     

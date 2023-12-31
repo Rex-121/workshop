@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 namespace Tyrant
 {
-    public class WorkBenchManager : MonoBehaviour, IWorkBenchUIHandler
+    public class WorkBenchManager : MonoBehaviour, IWorkBenchUIHandler, IWorkBenchRound
     {
         #region 单例
 
@@ -28,15 +29,18 @@ namespace Tyrant
         
         #endregion
         
-        [ShowInInspector, NonSerialized] public WorkBench workBench;// = new WorkBench();
-
+        [ShowInInspector, NonSerialized] public WorkBench workBench;
+        [ShowInInspector, NonSerialized] public int staminaCost = 0;
+        public ForgeItem forgeItem;
+        
         [LabelText("工作台Prefab")]
         public GameObject workBenchPrefab;
 
         public BluePrintSO bluePrintSO;
         
         public ToolSO[] toolSos;
-        
+
+        private readonly List<IWorkBenchRound> _allQueues = new();
         
         [ShowInInspector, HideIf("@this.workBench != null")] public int allOccupiedInThisTurn => workBench?
                     .allSlots.Values
@@ -145,32 +149,81 @@ namespace Tyrant
         [Button]
         public void StartAWorkBench()
         {
+
+            var bluePrint = BluePrint.FromSO(bluePrintSO);
             
-            workBench = new WorkBench(BluePrint.FromSO(bluePrintSO));
+            workBench = new WorkBench(bluePrint);
+
+            var toolsBox = Instantiate(workBenchPrefab).GetComponent<ToolsBox>();
+
+            forgeItem = new ForgeItem(bluePrint);
             
-            Instantiate(workBenchPrefab);
+            _allQueues.Clear();
+            _allQueues.Add(workBench);
+            _allQueues.Add(toolsBox);
             
+            PrepareNewRound();
+
+            NewTurn();
         }
+        
         public void DidForgeThisTurn()
         {
             Debug.Log("End Forge!");
+
+            staminaCost += 1;
 
             var makes = allMakesScore;
             var qualities = allQualityScore;
             
             Debug.Log($"make={makes}, quality={qualities}");
-            
-            // 合成
-            var equipment = EquipmentGenesis.main.DoCraft(makes, qualities, bluePrintSO);
-            
-            InventoryManager.main.AddItem(equipment);
-            
-            // 清空棋盘
-            workBench.DidForgeThisTurn();
+
+            ForgeItemTakePower(makes, qualities);
+  
+            // 决策是否需要结束或者下一回合
+            DetermineIfEndForge();
             
             // 重新计算分数
             CalculateScore();
         }
+
+        private void ForgeItemTakePower(int makes, int qualities)
+        {
+            forgeItem.NewStrike(new StrikePower(Strike.Shape, makes));
+            forgeItem.NewStrike(new StrikePower(Strike.Quality, qualities));
+        }
+
+        private void DetermineIfEndForge()
+        {
+            if (staminaCost < Protagonist.main.stamina)
+            {
+                NewTurn();
+            }
+            else
+            {
+                ForgeDidNeedEnd();
+            }
+        }
+
+        // 打造结束
+        private void ForgeDidNeedEnd()
+        {
+            // 合成
+            var equipment = forgeItem.DoForge();
+
+            InventoryManager.main.AddItem(equipment);
+        }
+
+        public void PrepareNewRound()
+        {
+            staminaCost = 0;
+            _allQueues.ForEach(v => v.PrepareNewRound());
+        }
         
+        
+        public void NewTurn()
+        {
+            _allQueues.ForEach(v => v.NewTurn());
+        }
     }
 }

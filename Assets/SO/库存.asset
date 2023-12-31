@@ -20,6 +20,7 @@ MonoBehaviour:
     - {fileID: 1168828404, guid: a34ddb617bb8f43cca3a995706d4ce89, type: 3}
     - {fileID: -45777601, guid: 9c68229f041134606ba844e5bda5c2cc, type: 3}
     - {fileID: 1592936917, guid: a34ddb617bb8f43cca3a995706d4ce89, type: 3}
+    - {fileID: -1497093070, guid: 5adafed67f17e41e39188696d7ba4771, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -31,7 +32,7 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 4
+      Data: 9
     - Name: 
       Entry: 7
       Data: 1|Tyrant.Material, Assembly-CSharp
@@ -194,6 +195,216 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 9|Tyrant.Sword, Assembly-CSharp
+    - Name: itemName
+      Entry: 1
+      Data: "\u5251"
+    - Name: sprite
+      Entry: 6
+      Data: 
+    - Name: quality
+      Entry: 7
+      Data: Tyrant.Quality, Assembly-CSharp
+    - Name: tier
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: attribute
+      Entry: 7
+      Data: Tyrant.Attribute, Assembly-CSharp
+    - Name: strength
+      Entry: 3
+      Data: 3
+    - Name: dexterity
+      Entry: 3
+      Data: 0
+    - Name: intelligence
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: power
+      Entry: 7
+      Data: Tyrant.AttackPower, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 10|Tyrant.Sword, Assembly-CSharp
+    - Name: itemName
+      Entry: 1
+      Data: "\u5251"
+    - Name: sprite
+      Entry: 10
+      Data: 4
+    - Name: quality
+      Entry: 7
+      Data: Tyrant.Quality, Assembly-CSharp
+    - Name: tier
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: attribute
+      Entry: 7
+      Data: Tyrant.Attribute, Assembly-CSharp
+    - Name: strength
+      Entry: 3
+      Data: 5
+    - Name: dexterity
+      Entry: 3
+      Data: 2
+    - Name: intelligence
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: power
+      Entry: 7
+      Data: Tyrant.AttackPower, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 11|Tyrant.Sword, Assembly-CSharp
+    - Name: itemName
+      Entry: 1
+      Data: "\u5251"
+    - Name: sprite
+      Entry: 10
+      Data: 4
+    - Name: quality
+      Entry: 7
+      Data: Tyrant.Quality, Assembly-CSharp
+    - Name: tier
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: attribute
+      Entry: 7
+      Data: Tyrant.Attribute, Assembly-CSharp
+    - Name: strength
+      Entry: 3
+      Data: 3
+    - Name: dexterity
+      Entry: 3
+      Data: 0
+    - Name: intelligence
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: power
+      Entry: 7
+      Data: Tyrant.AttackPower, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 12|Tyrant.Sword, Assembly-CSharp
+    - Name: itemName
+      Entry: 1
+      Data: "\u5251"
+    - Name: sprite
+      Entry: 10
+      Data: 4
+    - Name: quality
+      Entry: 7
+      Data: Tyrant.Quality, Assembly-CSharp
+    - Name: tier
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: attribute
+      Entry: 7
+      Data: Tyrant.Attribute, Assembly-CSharp
+    - Name: strength
+      Entry: 3
+      Data: 3
+    - Name: dexterity
+      Entry: 3
+      Data: 0
+    - Name: intelligence
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: power
+      Entry: 7
+      Data: Tyrant.AttackPower, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 13|Tyrant.Sword, Assembly-CSharp
+    - Name: itemName
+      Entry: 1
+      Data: "\u5251"
+    - Name: sprite
+      Entry: 10
+      Data: 4
+    - Name: quality
+      Entry: 7
+      Data: Tyrant.Quality, Assembly-CSharp
+    - Name: tier
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: attribute
+      Entry: 7
+      Data: Tyrant.Attribute, Assembly-CSharp
+    - Name: strength
+      Entry: 3
+      Data: 5
+    - Name: dexterity
+      Entry: 3
+      Data: 2
+    - Name: intelligence
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: power
+      Entry: 7
+      Data: Tyrant.AttackPower, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 

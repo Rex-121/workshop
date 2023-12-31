@@ -12,43 +12,46 @@ namespace Tyrant
     }
 
 
+    [System.Serializable]
     public struct Sword : IWeapon
     {
-        [ShowInInspector]
+        [SerializeField]
         public string itemName { get; set; }
         
-        [ShowInInspector]
-        public Sprite sprite { get; }
+        [SerializeField]
+        public Sprite sprite { get; set; }
+
+        [SerializeField] 
+        public Quality quality { get; set; }
         
-        [ShowInInspector]
-        public Quality quality => Quality.On(Quality.Tier.Fine);
-        
-        [ShowInInspector]
+        [SerializeField]
         public Attribute attribute { get; set; }
 
-        [ShowInInspector]
+        [SerializeField]
         public AttackPower power { get; set; }// => new AttackPower(5, 8);
 
-        public Sword(string name, Attribute attribute, Sprite sprite, AttackPower power)
+        public Sword(string name, Attribute attribute, Sprite sprite, AttackPower power, Quality qualities)
         {
             this.attribute = attribute;
 
             this.sprite = sprite;
 
             this.power = power;
-            this.itemName = name;
+            
+            itemName = name;
+
+            quality = qualities;
         }
         
         public static Sword FromSwordSO(WeaponSO weaponSO)
         {
-            return new Sword(weaponSO.name, weaponSO.attribute, weaponSO.icon, new AttackPower(weaponSO.power.x, weaponSO.power.y));
+            return new Sword(weaponSO.name, weaponSO.attribute, weaponSO.icon, new AttackPower(weaponSO.power.x, weaponSO.power.y), new Quality());
         }
-        
-        // public Sword(EquipmentSO so)
-        // {
-        //     itemName = so.equipmentName;
-        //     sprite = so.icon;
-        // }
+
+        public IEquipment RemakeByQuality(IQuality qualities)
+        {
+            return new Sword(itemName, attribute.RemakeByQuality(qualities), sprite, power.RemakeByQuality(qualities), qualities.quality);
+        }
     }
     
 }

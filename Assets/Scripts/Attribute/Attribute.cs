@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 namespace Tyrant
 {
     [Serializable, HideLabel]
-    public struct Attribute
+    public struct Attribute: IRemakeByQuality<Attribute>
     {
         [HorizontalGroup("Att"), BoxGroup("Att/力量"), HideLabel]
         public int strength;
@@ -32,6 +32,13 @@ namespace Tyrant
         public static Attribute operator +(Attribute a, Attribute b)
         {
             return new Attribute(a.strength + b.strength, a.dexterity + b.dexterity, a.intelligence + b.intelligence);
+        }
+
+        public Attribute RemakeByQuality(IQuality qualities)
+        {
+            if (qualities.quality.tier == Quality.Tier.Fine) return this;
+            var i = qualities.quality.tier.ToInt();
+            return this + new Attribute(i, i, i);
         }
     }
 

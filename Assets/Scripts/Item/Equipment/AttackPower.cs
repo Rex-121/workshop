@@ -5,7 +5,8 @@ using Random = UnityEngine.Random;
 
 namespace Tyrant
 {
-    public readonly struct AttackPower
+    [Serializable]
+    public readonly struct AttackPower: IRemakeByQuality<AttackPower>
     {
 
         [ShowInInspector, ReadOnly]
@@ -31,6 +32,12 @@ namespace Tyrant
         public static AttackPower operator +(AttackPower first, int value)
         {
             return new AttackPower(first._range.start + value, first._range.end + value);
+        }
+
+        public AttackPower RemakeByQuality(IQuality qualities)
+        {
+            var i = qualities.quality.tier.ToInt();
+            return this + i;
         }
     }
 
