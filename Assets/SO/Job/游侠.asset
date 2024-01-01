@@ -27,4 +27,4 @@ MonoBehaviour:
   mainAttribute: 1
   skills:
   - {fileID: 11400000, guid: e84d6d4d2cfaf4301b511e79dc0f29ec, type: 2}
-  weaponSO: {fileID: 11400000, guid: a870c2cd4e198474c99c413d7aef4b8b, type: 2}
+  weaponSO: {fileID: 11400000, guid: 3cc9bedf8007240cd9477348ebfd9bb3, type: 2}

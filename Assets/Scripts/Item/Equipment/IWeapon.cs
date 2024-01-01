@@ -12,8 +12,8 @@ namespace Tyrant
     }
 
 
-    [System.Serializable]
-    public struct Sword : IWeapon
+    [System.Serializable, HideReferenceObjectPicker]
+    public struct Weapon : IWeapon
     {
         
         [SerializeField, PreviewField(60, ObjectFieldAlignment.Left), HorizontalGroup("Basic", 60), HideLabel]
@@ -26,34 +26,36 @@ namespace Tyrant
        
         [SerializeField, VerticalGroup("Basic/Basic"), HideLabel]
         public Quality quality { get; set; }
+
+        [SerializeField, PropertyOrder(100)] public Attribute attribute => _attribute.LiftByQuality(quality);
+
+        [ShowInInspector, VerticalGroup("Basic/Basic"), HideLabel]
+        public AttackPower power => _powerFromBluePrint.LiftByQuality(quality);
+        private AttackPower _powerFromBluePrint;
+        public Attribute _attribute;
         
-        [SerializeField]
-        public Attribute attribute { get; set; }
-
-        [SerializeField, VerticalGroup("Basic/Basic"), HideLabel]
-        public AttackPower power { get; set; }// => new AttackPower(5, 8);
-
-        public Sword(string name, Attribute attribute, Sprite sprite, AttackPower power, Quality qualities)
+        
+        public Weapon(string name, Attribute attribute, Sprite sprite, AttackPower powerFromBluePrint, Quality qualities)
         {
-            this.attribute = attribute;
+            _attribute = attribute;
 
             this.sprite = sprite;
 
-            this.power = power;
+            _powerFromBluePrint = powerFromBluePrint;
             
             itemName = name;
 
             quality = qualities;
         }
         
-        public static Sword FromSwordSO(WeaponSO weaponSO)
+        public static Weapon FromSwordSO(WeaponSO weaponSO)
         {
-            return new Sword(weaponSO.equipmentName, weaponSO.attribute, weaponSO.icon, new AttackPower(weaponSO.power.x, weaponSO.power.y), new Quality());
+            return new Weapon(weaponSO.equipmentName, weaponSO.attribute, weaponSO.icon, new AttackPower(weaponSO.power.x, weaponSO.power.y), new Quality());
         }
 
-        public IEquipment RemakeByQuality(IQuality qualities)
+        public IEquipment LiftByQuality(IQuality qualities)
         {
-            return new Sword(itemName, attribute.RemakeByQuality(qualities), sprite, power.RemakeByQuality(qualities), qualities.quality);
+            return new Weapon(itemName, attribute, sprite, power, qualities.quality);
         }
     }
     

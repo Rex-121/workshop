@@ -3,13 +3,13 @@ using UnityEngine;
 namespace Tyrant
 {
 
-    public interface IRemakeByQuality<T>
+    public interface ILiftByQuality<T>
     {
-        public T RemakeByQuality(IQuality qualities);
+        public T LiftByQuality(IQuality qualities);
 
     }
     
-    public interface IEquipment: IItem, IRemakeByQuality<IEquipment>
+    public interface IEquipment: IItem, ILiftByQuality<IEquipment>
     { 
         public Attribute attribute { get; }
         public AttackPower power { get; }

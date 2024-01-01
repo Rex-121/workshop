@@ -33,9 +33,10 @@ namespace Tyrant
         public InventoryStorageSO storageSO;
         
         // 所有的材料
-        public IEnumerable<IItem> allMaterials => storageSO.items;//birthPackSO.materials.Select(v => v.toRawMaterial.toMaterial);
-
-
+        public IEnumerable<IItem> allMaterials => storageSO.items.OfType<IEquipment>();
+        
+        public IEnumerable<IEquipment> allEquipments => storageSO.items.OfType<IEquipment>();
+        
         private void Start()
         {
             storageSO.AddBirth();

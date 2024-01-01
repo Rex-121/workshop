@@ -15,6 +15,8 @@ namespace Tyrant
         private GameObject _latestDisplay;
 
         private KeyCode _latestKey;
+
+        public Transform dragPointForItem;
         
         private void Start()
         {
@@ -44,6 +46,14 @@ namespace Tyrant
             {
                 _latestKey = keyName;
                 _latestDisplay = Instantiate(uiManagerSO.allItems[keyName], transform);
+
+
+
+                if (_latestDisplay.TryGetComponent(out InventoryBag bag))
+                {
+                    bag.dragPointForItem = dragPointForItem;
+                    dragPointForItem.SetAsLastSibling();
+                }
             }
         }
 

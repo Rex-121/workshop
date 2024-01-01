@@ -6,11 +6,12 @@ using TMPro;
 using UniRx;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Tyrant
 {
     [RequireComponent(typeof(HeroRequest))]
-    public class HeroMono : MonoBehaviour, IAmHero
+    public class HeroMono : MonoBehaviour, IAmHero, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         
         private HeroRequest _heroRequest;
@@ -126,18 +127,18 @@ namespace Tyrant
                 _character.Death();
             }
         }
-
-        private void OnMouseEnter()
+        
+        public void OnPointerEnter(PointerEventData eventData)
         {
             nameLabel.enabled = true;
         }
 
-        private void OnMouseExit()
+        public void OnPointerExit(PointerEventData eventData)
         {
             nameLabel.enabled = false;
         }
 
-        private void OnMouseDown()
+        public void OnPointerClick(PointerEventData eventData)
         {
             heroInfoDisplay?.Invoke(_hero);
         }

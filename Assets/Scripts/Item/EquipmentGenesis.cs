@@ -25,7 +25,7 @@ namespace Tyrant
             var q = new QualityGroup(make, new IQuality[] {quality}, new NormalMakeWithQualityStrategy());
 
 
-            remake = before.RemakeByQuality(q);
+            remake = before.LiftByQuality(q);
 
             return remake;
         }

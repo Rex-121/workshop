@@ -6,7 +6,7 @@ using Object = UnityEngine.Object;
 
 namespace Tyrant
 {
-    [HideReferenceObjectPicker]
+    [HideReferenceObjectPicker, InlineProperty, HideLabel, BoxGroup("HERO", centerLabel: true)]
     public class Hero: IAmHero
     {
         
@@ -16,29 +16,32 @@ namespace Tyrant
         [ShowInInspector, PropertyOrder(-1)]
         public Health health { get; set; }
         
+        [ShowInInspector, PropertyOrder(-1)]
+        public Attribute attribute { get; set; }
+        
+        [ShowInInspector, BoxGroup("装备后的属性")]
+        public Attribute equipAttribute => attribute + equipments.attribute;
+        
         [ShowInInspector, ReadOnly, HideLabel, HorizontalGroup("Basic")]
         public JobSO job;
+        [ReadOnly, HideLabel, HorizontalGroup("Basic")]
+        public readonly CharacterSO characterSO;
         
-        public Attribute attribute { get; set; }
 
         public IAmHero heroic => this;
 
         public HeroActionQueue actionQueue { get; private set; }
         
         [InlineProperty, HideLabel]
-        public BuffHandler buffHandler = new BuffHandler();
+        public readonly BuffHandler buffHandler = new ();
 
-        [ShowInInspector, InlineProperty, HideLabel, PropertyOrder(100), Title("伤害")]
-        public AttackPower attackPower;
+        [ShowInInspector, InlineProperty, HideLabel, PropertyOrder(100), BoxGroup("装备后的属性")]
+        public AttackPower attackPower =>  equipments.PowerCombine(job.AttributePower(equipAttribute));
         
         public bool stillAlive => !health.isEmpty;
         
-        
-
-        [ShowInInspector, BoxGroup("Equipment"), InlineProperty, HideLabel, Title("武器")]
-        public IEquipment weapon;// = new Sword(new Attribute(5, 5, 5), null);
-
-        public CharacterSO characterSO;
+        [BoxGroup("装备"), InlineProperty, HideLabel, HideReferenceObjectPicker]
+        public readonly HeroEquipments equipments;
         
         Hero(Attribute a, HeroHealthStrategy healthStrategy, JobSO jobSO, CharacterSO characterSO)
         {
@@ -53,10 +56,10 @@ namespace Tyrant
 
             actionQueue = new HeroActionQueue(this);
             
-            weapon = jobSO.weaponSO.ToEquipment();
+            var weapon = jobSO.weaponSO.ToEquipment();
 
-
-            attackPower = weapon.power + jobSO.AttributePower(attribute);
+            equipments = new HeroEquipments(weapon);
+            // attackPower = weapon.power + jobSO.AttributePower(attribute);
 
             (job.skills ?? new BuffDataSO[] {}).Select(v => v.ToBuff())
                 .ForEach(v =>
@@ -71,13 +74,6 @@ namespace Tyrant
         {
             return new Hero(characterSO.attribute, characterSO.healthStrategy, jobSO, characterSO);
         }
-        // private int attributePower => mainAttribute switch
-        // {
-        //     AttributeTypes.Strength => Math.Max(0, (attribute.strength - 10) / 2) + 1,
-        //     AttributeTypes.Dexterity => Math.Max(0, (attribute.dexterity - 10) / 2) + 1,
-        //     AttributeTypes.Intelligence => Math.Max(0, (attribute.intelligence - 10) / 2) + 1,
-        //     _ => 0
-        // };
 
         public void BattleDidEnd()
         {

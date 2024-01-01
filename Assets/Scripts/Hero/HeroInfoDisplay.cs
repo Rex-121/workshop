@@ -20,6 +20,8 @@ namespace Tyrant
         }
 
 
+        public EquipmentDoEquipment weaponEquip;
+
         public Image jobIcon;
 
         public TextMeshProUGUI nameLabel, sLabel, dLabel, iLabel, attackPowerLabel;
@@ -29,11 +31,13 @@ namespace Tyrant
         private void Refresh()
         {
             if (ReferenceEquals(hero, null)) return;
+
+            weaponEquip.equipments = hero.equipments;
             
             nameLabel.text = hero.heroName;
-            sLabel.text = $"{hero.attribute.strength}";
-            dLabel.text = $"{hero.attribute.dexterity}";
-            iLabel.text = $"{hero.attribute.intelligence}";
+            sLabel.text = $"{hero.equipAttribute.strength}";
+            dLabel.text = $"{hero.equipAttribute.dexterity}";
+            iLabel.text = $"{hero.equipAttribute.intelligence}";
 
             if (!ReferenceEquals(jobIcon, null))
             {
@@ -48,7 +52,7 @@ namespace Tyrant
 
             if (!ReferenceEquals(equipmentBriefDisplays, null))
             {
-                equipmentBriefDisplays.Equipment(hero.weapon);
+                equipmentBriefDisplays.Equipment(hero.equipments.weapon);
             }
            
         }

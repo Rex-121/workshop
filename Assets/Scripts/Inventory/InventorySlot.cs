@@ -72,7 +72,10 @@ namespace Tyrant
         
         private void Remove()
         {
-            Destroy(previewItem.gameObject);
+            if (previewItem != null)
+            {
+                Destroy(previewItem.gameObject);    
+            }
             previewItem = null;
             RemoveMaterialFeature();
         }

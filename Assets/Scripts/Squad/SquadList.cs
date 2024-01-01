@@ -9,8 +9,11 @@ namespace Tyrant
 
         public SquadPlaceInList squadPrefab;
 
+        public SquadAllInfoDisplay squadAllInfoDisplayPrefab;
 
         public RectTransform panel;
+
+        private SquadAllInfoDisplay _latest;
         private void Start()
         {
 
@@ -24,9 +27,25 @@ namespace Tyrant
 
                 var squadPlaceInList = Instantiate(squadPrefab, panel);
                 squadPlaceInList.heroes = squad.ToArray();
+
+
+                squadPlaceInList.didSelect += DidSelectSquad;
             }
             
            
+        }
+
+
+        private void DidSelectSquad(Hero[] heroes)
+        {
+
+            if (!ReferenceEquals(_latest, null))
+            {
+                Destroy(_latest.gameObject);
+            }
+            
+            _latest = Instantiate(squadAllInfoDisplayPrefab, transform);
+            _latest.NewSquad(heroes);
         }
     }
 }

@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 namespace Tyrant
 {
     [Serializable]
-    public readonly struct AttackPower: IRemakeByQuality<AttackPower>
+    public readonly struct AttackPower: ILiftByQuality<AttackPower>
     {
 
         private readonly RangeInt _range;
@@ -33,7 +33,8 @@ namespace Tyrant
             return new AttackPower(first._range.start + value, first._range.end + value);
         }
 
-        public AttackPower RemakeByQuality(IQuality qualities)
+        // 通过品质提升攻强
+        public AttackPower LiftByQuality(IQuality qualities)
         {
             var i = qualities.quality.tier.ToInt();
             return this + i;

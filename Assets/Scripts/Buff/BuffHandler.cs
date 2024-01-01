@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace Tyrant
 {
+    [HideReferenceObjectPicker]
     public class BuffHandler
     {
         private readonly LinkedList<BuffInfo> _buffList = new();

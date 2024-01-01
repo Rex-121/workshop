@@ -32,7 +32,7 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 5
+      Data: 6
     - Name: 
       Entry: 7
       Data: 1|Tyrant.Material, Assembly-CSharp
@@ -203,23 +203,23 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 9|Tyrant.Sword, Assembly-CSharp
-    - Name: itemName
-      Entry: 1
-      Data: "\u4E00\u628A\u5251"
+      Data: 9|Tyrant.Weapon, Assembly-CSharp
     - Name: sprite
       Entry: 10
       Data: 4
+    - Name: itemName
+      Entry: 1
+      Data: "\u4E00\u628A\u5251"
     - Name: quality
       Entry: 7
       Data: Tyrant.Quality, Assembly-CSharp
     - Name: tier
       Entry: 3
-      Data: 1
+      Data: 0
     - Name: 
       Entry: 8
       Data: 
-    - Name: attribute
+    - Name: _attribute
       Entry: 7
       Data: Tyrant.Attribute, Assembly-CSharp
     - Name: strength
@@ -234,9 +234,39 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: power
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 7
-      Data: Tyrant.AttackPower, Assembly-CSharp
+      Data: 10|Tyrant.Weapon, Assembly-CSharp
+    - Name: sprite
+      Entry: 10
+      Data: 4
+    - Name: itemName
+      Entry: 1
+      Data: "\u4E00\u628A\u5251"
+    - Name: quality
+      Entry: 7
+      Data: Tyrant.Quality, Assembly-CSharp
+    - Name: tier
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _attribute
+      Entry: 7
+      Data: Tyrant.Attribute, Assembly-CSharp
+    - Name: strength
+      Entry: 3
+      Data: 3
+    - Name: dexterity
+      Entry: 3
+      Data: 0
+    - Name: intelligence
+      Entry: 3
+      Data: 0
     - Name: 
       Entry: 8
       Data: 

@@ -1,12 +1,16 @@
+using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Tyrant
 {
-    public class SquadPlaceInList: MonoBehaviour
+    public class SquadPlaceInList: MonoBehaviour, IPointerClickHandler
     {
 
         [ShowInInspector] private Hero[] _heroes;
+
+        public Action<Hero[]> didSelect;
 
         public Hero[] heroes
         {
@@ -33,7 +37,11 @@ namespace Tyrant
             AdventureManager.main.NewSquadOnAdventure(_heroes);
             Destroy(gameObject);
         }
-        
 
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            didSelect?.Invoke(_heroes);
+        }
     }
 }
