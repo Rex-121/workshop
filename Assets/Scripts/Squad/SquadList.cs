@@ -17,18 +17,26 @@ namespace Tyrant
         private void Start()
         {
 
-            var arrays = HeroGenesis.main.heroCodes;
-
-            foreach (var store in arrays)
+            // var arrays = HeroGenesis.main.heroCodes;
+            //
+            // foreach (var store in arrays)
+            // {
+            //     var squads = store.Split("-");
+            //     var aTeams = squads.Select(v => v.Split(":"));
+            //     var squad = aTeams.Select(v => HeroGenesis.main.RestoreByIDs(v));
+            //
+            //     var squadPlaceInList = Instantiate(squadPrefab, panel);
+            //     squadPlaceInList.heroes = squad.ToArray();
+            //
+            //
+            //     squadPlaceInList.didSelect += DidSelectSquad;
+            // }
+            
+            foreach (var heroSquad in HeroGenesis.main.GetAllSquads())
             {
-                var squads = store.Split("-");
-                var aTeams = squads.Select(v => v.Split(":"));
-                var squad = aTeams.Select(v => HeroGenesis.main.RestoreByIDs(v));
-
                 var squadPlaceInList = Instantiate(squadPrefab, panel);
-                squadPlaceInList.heroes = squad.ToArray();
-
-
+                squadPlaceInList.heroSquad = heroSquad;
+                
                 squadPlaceInList.didSelect += DidSelectSquad;
             }
             
@@ -36,7 +44,7 @@ namespace Tyrant
         }
 
 
-        private void DidSelectSquad(Hero[] heroes)
+        private void DidSelectSquad(HeroSquad squad)
         {
 
             if (!ReferenceEquals(_latest, null))
@@ -45,7 +53,7 @@ namespace Tyrant
             }
             
             _latest = Instantiate(squadAllInfoDisplayPrefab, transform);
-            _latest.NewSquad(heroes);
+            _latest.NewSquad(squad);
         }
     }
 }

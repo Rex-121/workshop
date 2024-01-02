@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 namespace Tyrant
@@ -9,14 +10,14 @@ namespace Tyrant
 
         public HeroInfoDisplay[] heroInfoDisplays;
         
-        public void NewSquad(Hero[] heroes)
+        public void NewSquad(HeroSquad squad)
         {
 
-            for (int i = 0; i < heroes.Length; i++)
+            for (int i = 0; i < squad.Count; i++)
             {
 
-                heroStands[i].hero = heroes[i];
-                heroInfoDisplays[i].hero = heroes[i];
+                heroStands[i].hero = squad.ElementAt(i);
+                heroInfoDisplays[i].hero = squad.ElementAt(i);
             }
             
         }

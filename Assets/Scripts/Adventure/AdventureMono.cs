@@ -21,7 +21,7 @@ public class AdventureMono : MonoBehaviour
     [FormerlySerializedAs("heroSquadPrefab")] public HeroSquadMono heroSquadMonoPrefab;
     
 
-    public void NewHeroSquadOnAdventure(Hero[] squad)
+    public void NewHeroSquadOnAdventure(HeroSquad squad)
     {
 
         if (heroSquads.Count >= positions.Length)

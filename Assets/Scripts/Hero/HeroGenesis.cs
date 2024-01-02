@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -16,6 +17,19 @@ namespace Tyrant
         public JobSO[] jobSos;
 
         public string[] heroCodes;
+
+        public IEnumerable<HeroSquad> GetAllSquads()
+        {
+            return heroCodes.Select(SquadByCode);
+        }
+
+        public HeroSquad SquadByCode(string store)
+        {
+            var squads = store.Split("-");
+            var aTeams = squads.Select(v => v.Split(":"));
+            var squad = aTeams.Select(v => HeroGenesis.main.RestoreByIDs(v));
+            return new HeroSquad(squad);
+        }
         
         public Hero RestoreByIDs(string[] ids)
         {

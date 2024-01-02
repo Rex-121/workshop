@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,16 +9,16 @@ namespace Tyrant
     public class SquadPlaceInList: MonoBehaviour, IPointerClickHandler
     {
 
-        [ShowInInspector] private Hero[] _heroes;
+        [ShowInInspector] private HeroSquad _heroSquad;
 
-        public Action<Hero[]> didSelect;
+        public Action<HeroSquad> didSelect;
 
-        public Hero[] heroes
+        public HeroSquad heroSquad
         {
-            get => _heroes;
+            get => _heroSquad;
             set
             {
-                _heroes = value;
+                _heroSquad = value;
                 Refresh();
             }
         }
@@ -28,20 +29,20 @@ namespace Tyrant
         {
             for (var i = 0; i < heroStands.Length; i++)
             {
-                heroStands[i].hero = _heroes[i];
+                heroStands[i].hero = heroSquad.ElementAt(i);
             }
         }
 
         public void SquadOnAdventure()
         {
-            AdventureManager.main.NewSquadOnAdventure(_heroes);
+            AdventureManager.main.NewSquadOnAdventure(heroSquad);
             Destroy(gameObject);
         }
 
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            didSelect?.Invoke(_heroes);
+            didSelect?.Invoke(heroSquad);
         }
     }
 }

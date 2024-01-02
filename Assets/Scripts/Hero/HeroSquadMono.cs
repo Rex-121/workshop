@@ -63,15 +63,15 @@ namespace Tyrant
         }
         
 
-        public void NewSquad(Hero[] newHeroes)
+        public void NewSquad(HeroSquad squad)
         {
             heroes = new HeroMono[3];
             
-            for (var i = 0; i < newHeroes.Length; i++)
+            for (var i = 0; i < squad.Count; i++)
             {
                  var hero = Instantiate(heroMonoPrefab, new Vector3(1.2f * i, 0, 0), Quaternion.identity, transform);
                  hero.transform.localPosition = new Vector3(1f * i + 0.5f, 0, 0);
-                 hero.hero = newHeroes[i];
+                 hero.hero = squad.ElementAt(i);
                  hero.heroInfoDisplay += DisplayHeroInfo;
                  heroes[i] = hero;
             }
