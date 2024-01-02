@@ -49,7 +49,7 @@ namespace Tyrant
                 AddEquipment(equipment);
             }
             
-            inventoryBag.AddItem(item);
+            // inventoryBag.AddItem(item);
             
             storageSO.items.Add(item);
         }

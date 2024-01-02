@@ -15,6 +15,8 @@ namespace Tyrant
         public Canvas canvas;
 
         public Transform pointToDrag;
+
+        public CanvasGroup canvasGroup;
         
         private void Awake()
         {
@@ -45,12 +47,15 @@ namespace Tyrant
         {
             transform.SetParent(pointToDrag);
             _rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+
+            canvasGroup.blocksRaycasts = false;
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
             transform.SetParent(previousParent);
             _rectTransform.anchoredPosition = Vector2.zero;
+            canvasGroup.blocksRaycasts = true;
         }
     }
 }

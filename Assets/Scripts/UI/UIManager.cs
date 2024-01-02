@@ -52,9 +52,11 @@ namespace Tyrant
                 if (_latestDisplay.TryGetComponent(out InventoryBag bag))
                 {
                     bag.dragPointForItem = dragPointForItem;
-                    dragPointForItem.SetAsLastSibling();
                 }
             }
+            
+            
+            dragPointForItem.SetAsLastSibling();
         }
 
         private void DestroyPrevious()
