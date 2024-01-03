@@ -33,7 +33,7 @@ namespace Tyrant
         public InventoryStorageSO storageSO;
         
         // 所有的材料
-        public IEnumerable<IItem> allMaterials => storageSO.items.OfType<IEquipment>();
+        public IEnumerable<IItem> allMaterials => storageSO.items.OfType<IMaterial>();
         
         public IEnumerable<IEquipment> allEquipments => storageSO.items.OfType<IEquipment>();
         

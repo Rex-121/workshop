@@ -17,7 +17,7 @@ namespace Tyrant
         private void Start()
         {
             
-            foreach (var heroSquad in HeroGenesis.main.GetAllSquads())
+            foreach (var heroSquad in SquadManager.main.GetAllSquads())
             {
                 var squadPlaceInList = Instantiate(squadPrefab, panel);
                 squadPlaceInList.heroSquad = heroSquad;

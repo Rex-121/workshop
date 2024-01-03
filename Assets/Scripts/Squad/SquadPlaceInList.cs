@@ -29,7 +29,7 @@ namespace Tyrant
         {
             for (var i = 0; i < heroStands.Length; i++)
             {
-                heroStands[i].hero = heroSquad.ElementAt(i);
+                heroStands[i].hero = heroSquad.heroes.ElementAt(i);
             }
         }
 

@@ -21,4 +21,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  weaponSOs: []
+  weaponSOs:
+  - {fileID: 11400000, guid: e8045a1ddcc9d4462bbd6acf31a0e21c, type: 2}
+  - {fileID: 11400000, guid: f8246e8bd67e7466ba33719b549f7cba, type: 2}
+  - {fileID: 11400000, guid: a870c2cd4e198474c99c413d7aef4b8b, type: 2}

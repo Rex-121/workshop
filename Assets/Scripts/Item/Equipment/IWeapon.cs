@@ -31,6 +31,7 @@ namespace Tyrant
 
         [ShowInInspector, VerticalGroup("Basic/Basic"), HideLabel]
         public AttackPower power => _powerFromBluePrint.LiftByQuality(quality);
+        [SerializeField]
         private AttackPower _powerFromBluePrint;
         public Attribute _attribute;
         

@@ -6,10 +6,11 @@ using Random = UnityEngine.Random;
 namespace Tyrant
 {
     [Serializable]
-    public readonly struct AttackPower: ILiftByQuality<AttackPower>
+    public struct AttackPower: ILiftByQuality<AttackPower>
     {
 
-        private readonly RangeInt _range;
+        [SerializeField]
+        private RangeInt _range;
 
         [LabelText("伤害"), ShowInInspector]
         public string predictPower => $"{_range.start} - {_range.end}";
