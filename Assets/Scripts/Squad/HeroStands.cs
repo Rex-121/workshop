@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -10,6 +11,8 @@ namespace Tyrant
     {
         [ShowInInspector]
         private Hero _hero;
+
+        private IDisposable _dis;
         
         public Hero hero
         {
@@ -23,6 +26,8 @@ namespace Tyrant
             get => _hero;
         }
 
+        public HeroInfoDisplay heroInfoDisplay;
+
         private Sprite[] _sprites;
 
         public Image image;
@@ -31,8 +36,15 @@ namespace Tyrant
         
         private void Refresh()
         {
+            if (heroInfoDisplay != null)
+            {
+                heroInfoDisplay.hero = hero;
+            }
+            
+            _dis?.Dispose();
+            
             image.sprite = _sprites.FirstOrDefault();
-            Observable.Interval(TimeSpan.FromSeconds(timeSpan))
+            _dis = Observable.Interval(TimeSpan.FromSeconds(timeSpan))
                 .Select(_ => GetIndex())
                 .Subscribe(v => image.sprite = _sprites[v])
                 .AddTo(this);

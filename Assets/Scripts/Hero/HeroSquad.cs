@@ -1,22 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Tyrant
 {
+    [System.Serializable]
     public class HeroSquad: ICollection<Hero>
     {
         
         
-        private readonly List<Hero> _heroes;
+        [SerializeField]
+        private List<Hero> _heroes;
 
 
         public HeroSquad(IEnumerable<Hero> heroes)
         {
             _heroes = heroes.ToList();
         }
-        
 
+
+        public void Restore()
+        {
+            _heroes.ForEach(v => v.Restore());
+        }
 
 
 

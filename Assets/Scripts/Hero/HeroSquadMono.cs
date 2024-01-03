@@ -194,7 +194,7 @@ namespace Tyrant
 
             var hero = battles.ElementAt(index);
 
-            var canAction = hero.actionQueue.CanAction(20);
+            var canAction = hero.actionQueue.CanAction(20) && !hero.heroic.health.isEmpty;
     
             ++index;
             

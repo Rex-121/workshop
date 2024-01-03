@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Algorithm;
 using Sirenix.OdinInspector;
 using UnityEngine;
 #if UNITY_EDITOR
@@ -16,19 +17,36 @@ namespace Tyrant
 
         public JobSO[] jobSos;
 
-        public string[] heroCodes;
+        // public string[] heroCodes;
+
+        public HeroSquad[] squads;
 
         public IEnumerable<HeroSquad> GetAllSquads()
         {
-            return heroCodes.Select(SquadByCode);
+
+            squads = ES3.Load<HeroSquad[]>("SQUAD");
+            foreach (var heroSquad in squads)
+            {
+                heroSquad.Restore();
+            }
+            return squads;
+            // return new []{}
+            // return heroCodes.Select(SquadByCode);
         }
 
-        public HeroSquad SquadByCode(string store)
+        // public HeroSquad SquadByCode(string store)
+        // {
+        //     var squads = store.Split("-");
+        //     var aTeams = squads.Select(v => v.Split(":"));
+        //     var squad = aTeams.Select(v => HeroGenesis.main.RestoreByIDs(v));
+        //     return new HeroSquad(squad);
+        // }
+
+        public Hero RandomHero()
         {
-            var squads = store.Split("-");
-            var aTeams = squads.Select(v => v.Split(":"));
-            var squad = aTeams.Select(v => HeroGenesis.main.RestoreByIDs(v));
-            return new HeroSquad(squad);
+            var hero = Hero.FromSO(characterSos.RandomElement(), jobSos.RandomElement());
+            hero.equipments.ChangeEquipment(Arsenal.main.RandomWeapon());
+            return hero;
         }
         
         public Hero RestoreByIDs(string[] ids)
@@ -40,12 +58,12 @@ namespace Tyrant
             );
         }
 
-        private CharacterSO FindCharacterByID(int id)
+        public CharacterSO FindCharacterByID(int id)
         {
             return Instantiate(characterSos.First(v => v.id == id));
         }
         
-        private JobSO FindJobByID(int id)
+        public JobSO FindJobByID(int id)
         {
             return Instantiate(jobSos.First(v => v.id == id));
         }

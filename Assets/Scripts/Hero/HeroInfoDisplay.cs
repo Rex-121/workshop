@@ -26,15 +26,30 @@ namespace Tyrant
 
         public TextMeshProUGUI nameLabel, sLabel, dLabel, iLabel, attackPowerLabel;
 
+        public TMP_InputField nameInputField;
+        
         public EquipmentBriefDisplay equipmentBriefDisplays;
 
         private void Refresh()
         {
             if (ReferenceEquals(hero, null)) return;
 
-            weaponEquip.equipments = hero.equipments;
+            if (!ReferenceEquals(weaponEquip, null))
+            {
+                weaponEquip.equipments = hero.equipments;
+            }
+
+            if (!ReferenceEquals(nameInputField, null))
+            {
+                nameInputField.text = hero.heroName;
+            }
             
-            nameLabel.text = hero.heroName;
+            if (!ReferenceEquals(nameLabel, null))
+            {
+                nameLabel.text = hero.heroName;
+            }
+            
+            
             sLabel.text = $"{hero.equipAttribute.strength}";
             dLabel.text = $"{hero.equipAttribute.dexterity}";
             iLabel.text = $"{hero.equipAttribute.intelligence}";
@@ -55,6 +70,12 @@ namespace Tyrant
                 equipmentBriefDisplays.Equipment(hero.equipments.weapon);
             }
            
+        }
+
+
+        public void OnNameChanged()
+        {
+            hero.heroName = nameInputField.text;
         }
     }
 }

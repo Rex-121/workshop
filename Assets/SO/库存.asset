@@ -32,7 +32,7 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 6
+      Data: 7
     - Name: 
       Entry: 7
       Data: 1|Tyrant.Material, Assembly-CSharp
@@ -264,6 +264,42 @@ MonoBehaviour:
     - Name: dexterity
       Entry: 3
       Data: 0
+    - Name: intelligence
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 11|Tyrant.Weapon, Assembly-CSharp
+    - Name: sprite
+      Entry: 10
+      Data: 4
+    - Name: itemName
+      Entry: 6
+      Data: 
+    - Name: quality
+      Entry: 7
+      Data: Tyrant.Quality, Assembly-CSharp
+    - Name: tier
+      Entry: 3
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _attribute
+      Entry: 7
+      Data: Tyrant.Attribute, Assembly-CSharp
+    - Name: strength
+      Entry: 3
+      Data: 5
+    - Name: dexterity
+      Entry: 3
+      Data: 2
     - Name: intelligence
       Entry: 3
       Data: 0

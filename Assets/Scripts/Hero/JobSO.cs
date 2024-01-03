@@ -34,6 +34,7 @@ namespace Tyrant
             AttributeTypes.Intelligence => Math.Max(0, (attribute.intelligence - 2) / 2) + 1,
             _ => 0
         };
-        
+
+        public Job ToJob() => new Job(id, jobName, icon, mainAttribute);
     }
 }

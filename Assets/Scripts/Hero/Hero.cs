@@ -9,31 +9,35 @@ namespace Tyrant
     [HideReferenceObjectPicker, InlineProperty, HideLabel, BoxGroup("HERO", centerLabel: true)]
     public class Hero: IAmHero
     {
-        
-        [ShowInInspector, ReadOnly, HideLabel, PropertyOrder(-2), HorizontalGroup("Basic")]
+
+        [ReadOnly, HideLabel, SerializeField, PropertyOrder(-2), HorizontalGroup("Basic")]
         public string heroName { get; set; }
         
-        [ShowInInspector, PropertyOrder(-1)]
+        [SerializeField, PropertyOrder(-1)]
         public Health health { get; set; }
         
-        [ShowInInspector, PropertyOrder(-1)]
+        [PropertyOrder(-1), SerializeField]
         public Attribute attribute { get; set; }
         
         [ShowInInspector, BoxGroup("装备后的属性")]
         public Attribute equipAttribute => attribute + equipments.attribute;
         
         [ShowInInspector, ReadOnly, HideLabel, HorizontalGroup("Basic")]
-        public JobSO job;
+        public Job job;
+
         [ReadOnly, HideLabel, HorizontalGroup("Basic")]
-        public readonly CharacterSO characterSO;
-        
+        public CharacterSO characterSO => HeroGenesis.main.FindCharacterByID(_characterId);
+
+        [SerializeField]
+        private int _characterId;
 
         public IAmHero heroic => this;
 
+        [SerializeField]
         public HeroActionQueue actionQueue { get; private set; }
         
         [InlineProperty, HideLabel]
-        public readonly BuffHandler buffHandler = new ();
+        public BuffHandler buffHandler = new ();
 
         [ShowInInspector, InlineProperty, HideLabel, PropertyOrder(100), BoxGroup("装备后的属性")]
         public AttackPower attackPower =>  equipments.PowerCombine(job.AttributePower(equipAttribute));
@@ -41,33 +45,45 @@ namespace Tyrant
         public bool stillAlive => !health.isEmpty;
         
         [BoxGroup("装备"), InlineProperty, HideLabel, HideReferenceObjectPicker]
-        public readonly HeroEquipments equipments;
+        public HeroEquipments equipments;
+
+        // public Hero()
+        // {
+        //     
+        // }
         
         Hero(Attribute a, HeroHealthStrategy healthStrategy, JobSO jobSO, CharacterSO characterSO)
         {
-            this.characterSO = characterSO;
+            // this.characterSO = characterSO;
+
+            _characterId = characterSO.id;
             
             attribute = a + jobSO.weaponSO.attribute;
             
             health = new Health(attribute, healthStrategy);
 
-            job = Object.Instantiate(jobSO);
-            heroName = $"[{jobSO.jobName}]{NVJOBNameGen.Uppercase(NVJOBNameGen.GiveAName(7))}";
+            job = jobSO.ToJob();//Object.Instantiate(jobSO);
+            heroName = $"[{job.jobName}]{NVJOBNameGen.Uppercase(NVJOBNameGen.GiveAName(7))}";
 
             actionQueue = new HeroActionQueue(this);
             
-            var weapon = jobSO.weaponSO.ToEquipment();
+            // var weapon = jobSO.weaponSO.ToEquipment();
 
-            equipments = new HeroEquipments(weapon);
+            equipments = new HeroEquipments();
             // attackPower = weapon.power + jobSO.AttributePower(attribute);
 
-            (job.skills ?? new BuffDataSO[] {}).Select(v => v.ToBuff())
+            (jobSO.skills ?? new BuffDataSO[] {}).Select(v => v.ToBuff())
                 .ForEach(v =>
             {
                 buffHandler.AddBuff(v);
             });
+        }
 
-
+        public void Restore()
+        {
+            (job.jobSO.skills ?? new BuffDataSO[] {})
+                .Select(v => v.ToBuff())
+                .ForEach(buffHandler.AddBuff);
         }
 
         public static Hero FromSO(CharacterSO characterSO, JobSO jobSO)
