@@ -28,7 +28,7 @@ namespace Tyrant
 
         public TMP_InputField nameInputField;
         
-        public EquipmentBriefDisplay equipmentBriefDisplays;
+        // public EquipmentBriefDisplay equipmentBriefDisplays;
 
         private void Refresh()
         {
@@ -65,10 +65,10 @@ namespace Tyrant
             }
             
 
-            if (!ReferenceEquals(equipmentBriefDisplays, null))
-            {
-                equipmentBriefDisplays.Equipment(hero.equipments.weapon);
-            }
+            // if (!ReferenceEquals(equipmentBriefDisplays, null))
+            // {
+            //     equipmentBriefDisplays.Equipment(hero.equipments.weapon);
+            // }
            
         }
 

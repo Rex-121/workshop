@@ -1,5 +1,6 @@
 using System.Linq;
 using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace Tyrant
 {
@@ -8,9 +9,9 @@ namespace Tyrant
         [ShowInInspector, InlineProperty, HideLabel, Title("武器")]
         public IEquipment weapon;
         
-        public HeroEquipments(IEquipment weapon = null)
+        public HeroEquipments()
         {
-            // this.weapon = weapon;
+            
         }
 
         public Attribute attribute
@@ -19,8 +20,6 @@ namespace Tyrant
             {
                 var d = new[] {weapon}.FirstOrDefault(v => v != null);
                 return d?.attribute ?? new Attribute(0,0,0);
-                // if (weapon == null) return new Attribute(0, 0, 0);
-                // return weapon.attribute;
             }
         }
 
@@ -30,14 +29,16 @@ namespace Tyrant
             return weapon.power + attributeLift;
         }
 
-        public void ChangeEquipment(IEquipment equipment)
+        public HeroEquipments ChangeEquipment(IEquipment equipment)
         {
 
             if (equipment is Weapon)
             {
                 weapon = equipment;
+                Debug.Log($"#装备# 更换装备{weapon}");
             }
-            
+
+            return this;
         }
         
     }

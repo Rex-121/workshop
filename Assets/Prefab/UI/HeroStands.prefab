@@ -788,6 +788,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e197024f8924607ba94322fa0f9ec0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponBriefDisplay: {fileID: 6765671607408945688}
 --- !u!1 &3017472793719811279
 GameObject:
   m_ObjectHideFlags: 0
@@ -2212,7 +2213,6 @@ MonoBehaviour:
   iLabel: {fileID: 913515479704644184}
   attackPowerLabel: {fileID: 936647306080999133}
   nameInputField: {fileID: 5155915085057150367}
-  equipmentBriefDisplays: {fileID: 6765671607408945688}
 --- !u!1 &7577325874754598113
 GameObject:
   m_ObjectHideFlags: 0

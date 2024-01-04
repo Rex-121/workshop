@@ -688,13 +688,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79ec818414f8d48c786affd07c8002de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jobSO:
-  - {fileID: 11400000, guid: a7af70d5e89bb423a8dae2e97f1ad982, type: 2}
-  - {fileID: 11400000, guid: 6927e76d3dfe14d26b362a81eeb13e43, type: 2}
-  - {fileID: 11400000, guid: 55fe8f7f3a9164d11856c227b47f9231, type: 2}
-  characterSos:
-  - {fileID: 11400000, guid: 27a634e387fce417a83491bb06468eb9, type: 2}
-  - {fileID: 11400000, guid: bcf38475978034029a88ffe4b8a8dc58, type: 2}
+  indexInAdventure: 0
   heroes: []
   heroMonoPrefab: {fileID: 114118514635062416, guid: 608ee5aa5078040bbb63498e1d0cb3c7, type: 3}
   enemyMonoPrefab: {fileID: 8081380150682540390, guid: 20addfd5dc39a4f68b547986932f4f58, type: 3}
@@ -702,7 +696,7 @@ MonoBehaviour:
   dungeonLabel: {fileID: 1905070052674811990}
   dungeonRoadMapLabel: {fileID: 1905070053212946791}
   dungeonInfo: {fileID: 8611167684140100726}
-  backpack: {fileID: 5168350780261729810}
+  backpackMono: {fileID: 5168350780261729810}
   parentCanvas: {fileID: 1905070052848690635}
   canvasOffset: {x: -32, y: -20}
 --- !u!1 &1905070052674811976
@@ -2095,10 +2089,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotPrefab: {fileID: 8086996122444461036, guid: 357dc39e0a42e40568f3f18ac83ed026, type: 3}
   panel: {fileID: 5168350780261729813}
-  maxSlot: 6
   occupied: 0
   occupiedLabel: {fileID: 4182642283150553178}
-  dragPointForItem: {fileID: 0}
 --- !u!1 &5346883185922331130
 GameObject:
   m_ObjectHideFlags: 0
@@ -2482,8 +2474,9 @@ GameObject:
   - component: {fileID: 3541122435060118126}
   - component: {fileID: 5011939160799805011}
   - component: {fileID: 4185259655102341217}
+  - component: {fileID: 4716299949685187202}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Equipments
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2552,6 +2545,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 2
+--- !u!114 &4716299949685187202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6701856330236630352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e197024f8924607ba94322fa0f9ec0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponBriefDisplay: {fileID: 7084465594404958764}
 --- !u!1 &7365483591358361807
 GameObject:
   m_ObjectHideFlags: 0
@@ -2740,13 +2746,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef240d3426294226913fa6a53661ce60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponEquip: {fileID: 4716299949685187202}
   jobIcon: {fileID: 6097265070827192585}
   nameLabel: {fileID: 5801441985154210675}
   sLabel: {fileID: 7173803503048464506}
   dLabel: {fileID: 2158885209203145408}
   iLabel: {fileID: 3917973817135274740}
   attackPowerLabel: {fileID: 1000949698363231387}
-  equipmentBriefDisplays: {fileID: 7084465594404958764}
+  nameInputField: {fileID: 0}
 --- !u!1 &7719936832205022216
 GameObject:
   m_ObjectHideFlags: 0

@@ -56,7 +56,6 @@ MonoBehaviour:
   - {fileID: 6663270815966725088}
   - {fileID: 4393614455297049973}
   - {fileID: 4815988031159743410}
-  heroInfoDisplays: []
 --- !u!1001 &2398219741239841378
 PrefabInstance:
   m_ObjectHideFlags: 0
