@@ -17,8 +17,16 @@ namespace Tyrant
             if (main == null)
             {
                 main = this;
-                equipments = new Inventory(Storage.main.LoadAllItems("EQUIPMENTS"), "EQUIPMENTS");
-                items = new Inventory(Storage.main.LoadAllItems("ITEMS"), "ITEMS");
+                equipments = new Inventory(
+                    Storage.main.LoadAllItems("EQUIPMENTS"),
+                    "EQUIPMENTS",
+                    item => item is IEquipment
+                    );
+                items = new Inventory(
+                    Storage.main.LoadAllItems("ITEMS"),
+                    "ITEMS", 
+                    item => item is IMaterial
+                    );
                 DontDestroyOnLoad(this);
             }
             else
@@ -37,82 +45,15 @@ namespace Tyrant
 
         public BirthPackSO birthPackSO;
 
-        public InventoryBag inventoryBag;
-
-        // public List<Inventory.Slot> all;
-        
-        // 所有的材料
-        public IEnumerable<Inventory.Slot> allMaterials => items.slots;
+        private IEnumerable<Inventory> allInventories => new[] {items, equipments};
 
         public IEnumerable<Inventory.Slot> allEquipments => equipments.slots;
+        public void AddSlot(Inventory.Slot slot) => allInventories.AddSlot(slot);
+
+        public void AddItem(IItem item) => allInventories.CollectItem(item);
+
+        public void Remove(Inventory.Slot slot) => allInventories.RemoveSlot(slot);
         
-        private void Start()
-        {
-            // storageSO.AddBirth();
-        }
-
-        public void AddSlot(Inventory.Slot slot)
-        {
-            if (slot.item is IMaterial)
-            {
-                items.slots.Add(slot);
-                items.Save();
-            }
-
-            if (slot.item is IEquipment)
-            {
-                equipments.slots.Add(slot);
-                equipments.Save();
-            }
-        }
-
-        public void AddItem(IItem item)
-        {
-            if (item is IEquipment equipment)
-            {
-                AddEquipment(equipment);
-            }
-
-            if (item is IMaterial)
-            {
-                items.CollectItem(item);
-                
-                items.Save();
-            }
-
-            if (item is IEquipment)
-            {
-                equipments.CollectItem(item);
-                
-                equipments.Save();
-            }
-            // all.Add(item);
-            
-            // Storage.main.Save(all.ToArray());
-            // inventoryBag.AddItem(item);
-            
-            // storageSO.items.Add(item);
-        }
-
-        public void Remove(Inventory.Slot slot)
-        {
-            if (slot.item is IMaterial)
-            {
-                items.Remove(slot);
-                items.Save();
-            }
-            
-            if (slot.item is IEquipment)
-            {
-                equipments.Remove(slot);
-                equipments.Save();
-            }
-        }
-
-        private void AddEquipment(IEquipment equipment)
-        {
-            Debug.Log($"#背包# 背包+{equipment.itemName}-{equipment.quality.tier}");
-        }
         
     }
 }

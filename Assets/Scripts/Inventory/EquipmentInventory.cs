@@ -12,6 +12,8 @@ namespace Tyrant
         public Canvas canvas;
         public Transform pointToDrag;
 
+        public Transform panel;
+
         private List<EquipmentInventorySlot> _allSlots = new();
 
         private void Start()
@@ -22,7 +24,7 @@ namespace Tyrant
 
             for (int i = 0; i < InventoryManager.main.equipments.maxSlot; i++)
             {
-                var gb = Instantiate(equipmentInventorySlotPrefab, transform);
+                var gb = Instantiate(equipmentInventorySlotPrefab, panel);
                 gb.index = i;
                 gb.Register(canvas, pointToDrag);
                 _allSlots.Add(gb);

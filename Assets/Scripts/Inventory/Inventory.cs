@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
@@ -16,9 +17,12 @@ namespace Tyrant
 
         [ShowInInspector]
         public List<Slot> slots;
+
+        private Func<IItem, bool> _canStore;
         
-        public Inventory(IEnumerable<Slot> items, string key)
+        public Inventory(IEnumerable<Slot> items, string key, Func<IItem, bool> canStore)
         {
+            _canStore = canStore;
             slots = items.ToList();
             saveKey = key;
         }
@@ -29,31 +33,48 @@ namespace Tyrant
 
             if (!slots.IsNullOrEmpty())
             {
-                foreach (var slot in slots)
+                foreach (var slot in slots.TakeWhile(slot => index >= slot.index))
                 {
-                    if (index < slot.index) break;
                     index = slot.index + 1;
                 }
             }
 
-            slots.Add(new Slot(index, item));
+            AddSlot(new Slot(index, item));
         }
 
 
-        public void Remove(Inventory.Slot slot)
+        public void AddSlot(Slot slot)
         {
-            slots.RemoveAll(v => v.index == slot.index);
+            if (!_canStore.Invoke(slot.item)) return;
+            
+            slots.Add(slot);
+            
+            Debug.Log($"#背包# 背包+{slot.item.itemName}-{slot.item.quality.tier}");
+            
+            Save();
         }
 
 
-        public void Save()
+        public void RemoveSlot(Inventory.Slot slot)
+        {
+            if (!_canStore.Invoke(slot.item)) return;
+            
+            slots.RemoveAll(v => v.index == slot.index);
+            
+            Debug.Log($"#背包# 背包 移除 {slot.item.itemName}-{slot.item.quality.tier}");
+            
+            Save();
+        }
+
+
+        internal void Save()
         {
             Storage.main.Save(saveKey, slots.ToArray());
         }
         
         
         
-        [System.Serializable]
+        [Serializable]
         public struct Slot
         {
             [SerializeField]
@@ -68,5 +89,30 @@ namespace Tyrant
                 this.item = item;
             }
         }
+    }
+    
+    public static class InventoryArrayExt
+    {
+        public static void Save<T>(this IEnumerable<T> o) where T: Inventory
+        {
+                o.ForEach(v => v.Save());
+        }
+        
+        public static void AddSlot<T>(this IEnumerable<T> o, Inventory.Slot slot) where T: Inventory
+        {
+            o.ForEach(v => v.AddSlot(slot));
+        }
+        
+        public static void RemoveSlot<T>(this IEnumerable<T> o, Inventory.Slot slot) where T: Inventory
+        {
+            o.ForEach(v => v.RemoveSlot(slot));
+        }
+        
+        public static void CollectItem<T>(this IEnumerable<T> o, IItem item) where T: Inventory
+        {
+            o.ForEach(v => v.CollectItem(item));
+        }
+        
+        
     }
 }
