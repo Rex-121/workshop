@@ -7,6 +7,7 @@ using Sirenix.Utilities;
 using TMPro;
 using UniRx;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Tyrant
 {
@@ -43,8 +44,8 @@ namespace Tyrant
         public TextMeshProUGUI dungeonRoadMapLabel;
         [BoxGroup("CanvasUI")]
         public RectTransform dungeonInfo;
-        [BoxGroup("CanvasUI")]
-        public HeroSquadBackpack backpack;
+        [FormerlySerializedAs("backpack")] [BoxGroup("CanvasUI")]
+        public HeroSquadBackpackMono backpackMono;
         [BoxGroup("CanvasUI")]
         public Canvas parentCanvas;
         [BoxGroup("CanvasUI")]
@@ -80,6 +81,8 @@ namespace Tyrant
                  hero.heroInfoDisplay += DisplayHeroInfo;
                  heroes[i] = hero;
             }
+
+            backpackMono.squadInventory = squad.inventory;
         }
 
         // 展示信息
@@ -160,8 +163,8 @@ namespace Tyrant
         {
             enemyDefeated.Invoke(_enemyMono);
             var rawMaterials = _enemyMono.enemy.loot.Select(v => v.toRawMaterial.toMaterial);
-            rawMaterials.ForEach(backpack.AddItem);
-            rawMaterials.ForEach(_squad.AddItem);
+            // rawMaterials.ForEach(backpack.AddItem);
+            rawMaterials.ForEach(_squad.CollectItem);
             
 
             _dungeon.DidFinishThisNode(this);

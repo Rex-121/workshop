@@ -16,31 +16,45 @@ namespace Tyrant
     public struct Weapon : IWeapon
     {
         
-        [SerializeField, PreviewField(60, ObjectFieldAlignment.Left), HorizontalGroup("Basic", 60), HideLabel]
-        public Sprite sprite { get; set; }
-
+        [ReadOnly, HideLabel]
+        [VerticalGroup("Basic/VBasic")]
+        public string id;
         
-        [SerializeField, VerticalGroup("Basic/Basic"), HideLabel]
+        [ShowInInspector]
+        [HideLabel]
+        [PreviewField(60, ObjectFieldAlignment.Left)]
+        [HorizontalGroup("Basic", 60)]
+        public Sprite sprite => _weaponSO.icon;
+        
+        [ShowInInspector]
+        [HideLabel]
+        [VerticalGroup("Basic/VBasic")]
         public string itemName { get; set; }
         
        
-        [SerializeField, VerticalGroup("Basic/Basic"), HideLabel]
+        [SerializeField, VerticalGroup("Basic/VBasic"), HideLabel]
         public Quality quality { get; set; }
 
-        [SerializeField, PropertyOrder(100)] public Attribute attribute => _attribute.LiftByQuality(quality);
+        [PropertyOrder(100)] public Attribute attribute => _attribute.LiftByQuality(quality);
 
-        [ShowInInspector, VerticalGroup("Basic/Basic"), HideLabel]
+        // [ShowInInspector, VerticalGroup("Basic/Basic"), HideLabel]
         public AttackPower power => _powerFromBluePrint.LiftByQuality(quality);
+
+        private WeaponSO _weaponSO => EquipmentGenesis.main.FindWeaponSOById(id);
+        
         [SerializeField]
         private AttackPower _powerFromBluePrint;
-        public Attribute _attribute;
+        
+        [SerializeField]
+        private Attribute _attribute;
         
         
-        public Weapon(string name, Attribute attribute, Sprite sprite, AttackPower powerFromBluePrint, Quality qualities)
+        public Weapon(string name, Attribute attribute, string id, AttackPower powerFromBluePrint, Quality qualities)
         {
             _attribute = attribute;
 
-            this.sprite = sprite;
+            // this.sprite = sprite;
+            this.id = id;
 
             _powerFromBluePrint = powerFromBluePrint;
             
@@ -51,12 +65,12 @@ namespace Tyrant
         
         public static Weapon FromSwordSO(WeaponSO weaponSO)
         {
-            return new Weapon(weaponSO.equipmentName, weaponSO.attribute, weaponSO.icon, new AttackPower(weaponSO.power.x, weaponSO.power.y), new Quality());
+            return new Weapon(weaponSO.equipmentName, weaponSO.attribute, weaponSO.id.ToString(), new AttackPower(weaponSO.power.x, weaponSO.power.y), new Quality());
         }
 
         public IEquipment LiftByQuality(IQuality qualities)
         {
-            return new Weapon(itemName, attribute, sprite, power, qualities.quality);
+            return new Weapon(itemName, attribute, id, power, qualities.quality);
         }
     }
     

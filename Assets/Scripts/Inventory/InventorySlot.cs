@@ -7,22 +7,22 @@ using UnityEngine.UI;
 
 namespace Tyrant
 {
-    public class InventorySlot: MonoBehaviour, IDropHandler, ItemPreviewForInventorySlot.IInventoryItemDragging
+    public class InventorySlot: MonoBehaviour, IDropHandler//, ItemPreviewForInventorySlot.IInventoryItemDragging
     {
 
         [LabelText("展示道具"), BoxGroup("Prefabs")]
         public ItemPreviewForInventorySlot previewPrefab;
-        [LabelText("需求道具"),BoxGroup("Prefabs")]
-        public ItemRequireForInventorySlot requirePrefab;
-        [LabelText("特性展示"),BoxGroup("Prefabs")]
-        public MaterialFeatureDisplayPanel featurePrefab;
+        // [LabelText("需求道具"),BoxGroup("Prefabs")]
+        // public ItemRequireForInventorySlot requirePrefab;
+        // [LabelText("特性展示"),BoxGroup("Prefabs")]
+        // public MaterialFeatureDisplayPanel featurePrefab;
         
-        private RawMaterial? _rawMaterial;
+        // private RawMaterial? _rawMaterial;
             
         [ShowInInspector, LabelText("物品")]
         public ItemPreviewForInventorySlot previewItem { get; private set; }
-        private ItemRequireForInventorySlot _requireItem;
-        private MaterialFeatureDisplayPanel _featureItem;
+        // private ItemRequireForInventorySlot _requireItem;
+        // private MaterialFeatureDisplayPanel _featureItem;
             
         [ShowInInspector, BoxGroup("Delegate")]
         public IInventorySlotDrag handler;
@@ -43,7 +43,7 @@ namespace Tyrant
             if (ReferenceEquals(item, null))
             {
                 Remove();
-                DisplayRequireIfNeeded();
+                // DisplayRequireIfNeeded();
             }
             else
             {
@@ -51,24 +51,26 @@ namespace Tyrant
             }
         }
         
-        public void AddRequire(RawMaterial rawMaterial)
-        {
-            _rawMaterial = rawMaterial;
-            DisplayRequireIfNeeded();
-        }
+        // public void AddRequire(RawMaterial rawMaterial)
+        // {
+        //     _rawMaterial = rawMaterial;
+        //     // DisplayRequireIfNeeded();
+        // }
 
-        private void DisplayRequireIfNeeded()
-        {
-            if (_rawMaterial == null || _requireItem != null) return;
-            _requireItem = Instantiate(requirePrefab, transform).GetComponent<ItemRequireForInventorySlot>();
-            _requireItem.AddItem(_rawMaterial);
-        }
+        // private void DisplayRequireIfNeeded()
+        // {
+        //     if (_rawMaterial == null || _requireItem != null) return;
+        //     _requireItem = Instantiate(requirePrefab, transform).GetComponent<ItemRequireForInventorySlot>();
+        //     _requireItem.AddItem(_rawMaterial);
+        // }
 
-        private void RemoveRequireIfNeeded()
-        {
-            if (_requireItem == null) return;
-            Destroy(_requireItem.gameObject);
-        }
+        // private void RemoveRequireIfNeeded()
+        // {
+        //     if (_requireItem == null) return;
+        //     Destroy(_requireItem.gameObject);
+        // }
+
+        public void Clear() => Remove();
         
         private void Remove()
         {
@@ -77,29 +79,29 @@ namespace Tyrant
                 Destroy(previewItem.gameObject);    
             }
             previewItem = null;
-            RemoveMaterialFeature();
+            // RemoveMaterialFeature();
         }
 
-        private void RemoveMaterialFeature()
-        {
-            if (ReferenceEquals(_featureItem, null)) return;
-            Destroy(_featureItem.gameObject);
-            _featureItem = null;
-        }
+        // private void RemoveMaterialFeature()
+        // {
+        //     if (ReferenceEquals(_featureItem, null)) return;
+        //     Destroy(_featureItem.gameObject);
+        //     _featureItem = null;
+        // }
         
         private void Refresh(IItem item)
         {
             previewItem = Instantiate(previewPrefab, transform).GetComponent<ItemPreviewForInventorySlot>();
-            previewItem.handler = this;
+            // previewItem.handler = this;
             previewItem.AddItem(item);
 
-            if (item is Material material)
-            {
-                _featureItem = Instantiate(featurePrefab, transform).GetComponent<MaterialFeatureDisplayPanel>();
-                _featureItem.materialFeature = material.features;
-            }
+            // if (item is Material material)
+            // {
+            //     _featureItem = Instantiate(featurePrefab, transform).GetComponent<MaterialFeatureDisplayPanel>();
+            //     _featureItem.materialFeature = material.features;
+            // }
             
-            RemoveRequireIfNeeded();
+            // RemoveRequireIfNeeded();
         }
 
         // 是否有空位
@@ -130,7 +132,7 @@ namespace Tyrant
         public void OnWillDestroy(ItemPreviewForInventorySlot item)
         {
             AddItem(null);
-            RemoveMaterialFeature();
+            // RemoveMaterialFeature();
         }
 
         public void OnItemIsDragging(ItemPreviewForInventorySlot item)
@@ -138,23 +140,23 @@ namespace Tyrant
             
         }
 
-        public void OnItemEndDragging(ItemPreviewForInventorySlot item)
-        {
-            SetOtherLayerActive(true);
-        }
-
-        public void OnItemBeginDrag(ItemPreviewForInventorySlot item)
-        {
-            SetOtherLayerActive(false);
-            DisplayRequireIfNeeded();
-        }
+        // public void OnItemEndDragging(ItemPreviewForInventorySlot item)
+        // {
+        //     SetOtherLayerActive(true);
+        // }
+        //
+        // public void OnItemBeginDrag(ItemPreviewForInventorySlot item)
+        // {
+        //     SetOtherLayerActive(false);
+        //     // DisplayRequireIfNeeded();
+        // }
 
         private void SetOtherLayerActive(bool active)
         {
-            if (_featureItem is { } panel)
-            {
-                panel.gameObject.SetActive(false);
-            }
+            // if (_featureItem is { } panel)
+            // {
+            //     panel.gameObject.SetActive(false);
+            // }
         }
         
     }

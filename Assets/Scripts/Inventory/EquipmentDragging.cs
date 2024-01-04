@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
@@ -8,6 +9,7 @@ namespace Tyrant
     public class EquipmentDragging: MonoBehaviour, IDragHandler, IEndDragHandler
     {
         
+        [ShowInInspector]
         private IEquipment _equipment;
 
         public Image image;

@@ -1,4 +1,7 @@
+using System.ComponentModel;
+using System.Linq;
 using Sirenix.OdinInspector;
+using UnityEditor;
 using UnityEngine;
 
 namespace Tyrant
@@ -7,7 +10,8 @@ namespace Tyrant
     public class EquipmentGenesis: SingletonSO<EquipmentGenesis>
     {
 
-        // public EquipmentSO equipmentSO;
+        [Sirenix.OdinInspector.ReadOnly]
+        public WeaponSO[] weaponSos;
 
         [ShowInInspector]
         public IEquipment before;
@@ -29,6 +33,21 @@ namespace Tyrant
 
             return remake;
         }
+
+        public WeaponSO FindWeaponSOById(string id)
+        {
+            return weaponSos.First(v => v.id.ToString() == id);
+        }
+        
+#if UNITY_EDITOR
+        [Button(ButtonSizes.Medium), PropertyOrder(-1)]
+        public void UpdateEquipmentSO()
+        {
+            weaponSos = AssetDatabase.FindAssets("t:WeaponSO")
+                .Select(guid => AssetDatabase.LoadAssetAtPath<WeaponSO>(AssetDatabase.GUIDToAssetPath(guid)))
+                .ToArray();
+        }
+#endif
 
     }
 }

@@ -126,7 +126,9 @@ namespace Tyrant
             var value = a.tier.ToInt() + b.quality.tier.ToInt();
             return On(value.TierFromInt());
         }
-        
+
+        public override string ToString() => $"品级{tier}";
+
         [HideLabel, SuffixLabel("品级  ", true), Serializable]
         public enum Tier
         {

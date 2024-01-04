@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Tyrant
 {
     [System.Serializable]
-    public class HeroSquad//: ICollection<Hero>
+    public class HeroSquad: IDoCollectItem
     {
         public Hero[] heroes => _heroes.ToArray();
         
@@ -23,11 +23,14 @@ namespace Tyrant
             _heroes = heroes.ToList();
         }
 
-        public void AddItem(IItem item)
+        
+        // 收集道具
+        public void CollectItem(IItem item)
         {
-            inventory?.AddItem(item);
+            inventory?.CollectItem(item);
         }
 
+        // 恢复存档
         public void Restore()
         {
             _heroes.ForEach(v => v.Restore());

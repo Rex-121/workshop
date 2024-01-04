@@ -63,7 +63,12 @@ namespace Tyrant
         //     rawMaterial = new RawMaterial(name, sprite, code, new MaterialFeature[] { });
         //     quality = Quality.Random();
         // }
-        
+
+        public override string ToString()
+        {
+            return $"{base.ToString()}-{rawMaterial.itemName}-({quality})";
+        }
+
         public Material(RawMaterial rawMaterial)
         {
             this.rawMaterial = rawMaterial;
