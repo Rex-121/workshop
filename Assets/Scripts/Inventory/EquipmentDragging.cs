@@ -6,11 +6,11 @@ using UnityEngine.UI;
 
 namespace Tyrant
 {
-    public class EquipmentDragging: MonoBehaviour, IDragHandler, IEndDragHandler
+    public class EquipmentDragging: MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
     {
         
         [ShowInInspector]
-        private IEquipment _equipment;
+        private Inventory.Slot _equipment;
 
         public Image image;
 
@@ -19,6 +19,10 @@ namespace Tyrant
         public Transform pointToDrag;
 
         public CanvasGroup canvasGroup;
+
+
+
+        // private GameObject _inspector;
         
         private void Awake()
         {
@@ -26,7 +30,7 @@ namespace Tyrant
         }
         private RectTransform _rectTransform;
         
-        public IEquipment equipment
+        public Inventory.Slot equipment
         {
             get => _equipment;
             set
@@ -42,12 +46,15 @@ namespace Tyrant
         {
             previousParent = transform.parent;
             
-            image.sprite = equipment.sprite;
+            image.sprite = equipment.item.sprite;
         }
         
         public void OnDrag(PointerEventData eventData)
         {
             transform.SetParent(pointToDrag);
+            
+            // if (canvas == null) return;
+            
             _rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
 
             canvasGroup.blocksRaycasts = false;
@@ -59,5 +66,24 @@ namespace Tyrant
             _rectTransform.anchoredPosition = Vector2.zero;
             canvasGroup.blocksRaycasts = true;
         }
+
+
+        public void DidRemoveItem()
+        {
+            InventoryManager.main.Remove(equipment);
+        }
+        
+                
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            UIManager.main.InspectorItem(_equipment.item);
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            UIManager.main.InspectorItem(null);
+        }
+
+
     }
 }

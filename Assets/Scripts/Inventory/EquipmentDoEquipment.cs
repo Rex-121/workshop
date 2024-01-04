@@ -28,7 +28,7 @@ namespace Tyrant
             {
                 // equipmentDragging.previousParent = transform;
                 
-                equipments.ChangeEquipment(equipmentDragging.equipment);
+                equipments.ChangeEquipment(equipmentDragging.equipment.item as IEquipment);
 
                 
                 Destroy(equipmentDragging.gameObject);

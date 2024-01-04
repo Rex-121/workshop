@@ -5,9 +5,9 @@ namespace Algorithm
     public static class CameraExtension
     {
 
-        public static Vector2 GetCanvasPosition(this Camera camera, Transform transform, Canvas canvas)
+        public static Vector2 GetCanvasPosition(this Camera camera, Vector3 position, Canvas canvas)
         {
-            var viewportPos = camera.WorldToViewportPoint(transform.position);
+            var viewportPos = camera.WorldToViewportPoint(position);
             var canvasRtm = canvas.GetComponent<RectTransform>();
             var uguiPos = Vector2.zero;
             var sizeDelta = canvasRtm.sizeDelta;

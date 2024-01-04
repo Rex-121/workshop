@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Algorithm;
 using Sirenix.Utilities;
 using UnityEngine;
 
@@ -7,6 +8,20 @@ namespace Tyrant
 {
     public class UIManager: MonoBehaviour
     {
+
+        public static UIManager main;
+
+        private void Awake()
+        {
+            if (main == null)
+            {
+                main = this;
+            }
+            else
+            {
+                Destroy(this);
+            }
+        }
 
         public UIManagerSO uiManagerSO;
 
@@ -17,6 +32,31 @@ namespace Tyrant
         private KeyCode _latestKey;
 
         public Transform dragPointForItem;
+
+        public Canvas canvas;
+        // 用于查看道具属性
+        public Transform inspectorTransform;
+        public EquipmentInspector inspectorPrefab;
+        [NonSerialized]
+        private EquipmentInspector _inspector;
+        public void InspectorItem(IItem item)
+        {
+            if (item == null)
+            {
+                Destroy(_inspector.gameObject);
+                _inspector = null;
+            }
+            else
+            {
+                if (_inspector == null)
+                {
+                    _inspector = Instantiate(inspectorPrefab, inspectorTransform);
+                    _inspector.equipment = item as IEquipment;
+                    _inspector.transform.position = Input.mousePosition;
+                }
+                inspectorTransform.SetAsLastSibling();
+            }
+        }
         
         private void Start()
         {
@@ -30,6 +70,11 @@ namespace Tyrant
                 if (!Input.GetKeyDown(key)) continue;
                 DisplayBy(key);
                 break;
+            }
+
+            if (!ReferenceEquals(_inspector, null))
+            {
+                _inspector.transform.position = Input.mousePosition;
             }
         }
 
@@ -52,6 +97,12 @@ namespace Tyrant
                 if (_latestDisplay.TryGetComponent(out InventoryBag bag))
                 {
                     bag.dragPointForItem = dragPointForItem;
+                }
+                
+                if (_latestDisplay.TryGetComponent(out EquipmentInventory inventory))
+                {
+                    inventory.canvas = canvas;
+                    inventory.pointToDrag = dragPointForItem;
                 }
             }
             

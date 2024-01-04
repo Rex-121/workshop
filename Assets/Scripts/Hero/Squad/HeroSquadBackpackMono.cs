@@ -4,18 +4,20 @@ using System.Linq;
 using Sirenix.Utilities;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
+
 namespace Tyrant
 {
         public class HeroSquadBackpackMono : MonoBehaviour
         {
     
-            public InventorySlot slotPrefab;
+            [FormerlySerializedAs("slotPrefab")] public InventorySlotMono slotMonoPrefab;
     
             public Transform panel;
             
             public int occupied = 0;
     
-            private readonly List<InventorySlot> _slots = new();
+            private readonly List<InventorySlotMono> _slots = new();
 
             public TextMeshProUGUI occupiedLabel;
 
@@ -48,7 +50,7 @@ namespace Tyrant
             {
                 // 所有空格
                 var allEmpty = _slots.Where(v => !v.isOccupied);
-                var inventorySlots = allEmpty as InventorySlot[] ?? allEmpty.ToArray();
+                var inventorySlots = allEmpty as InventorySlotMono[] ?? allEmpty.ToArray();
                 if (!inventorySlots.Any())
                 {
                     // 如果没有空格
@@ -79,7 +81,7 @@ namespace Tyrant
                 {
                     for (var i = 0; i < maxSlot; i++)
                     {
-                        _slots.Add(Instantiate(slotPrefab, panel));
+                        _slots.Add(Instantiate(slotMonoPrefab, panel));
                     }
                 }
                 

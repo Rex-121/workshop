@@ -94,6 +94,7 @@ MonoBehaviour:
   canvas: {fileID: 0}
   pointToDrag: {fileID: 0}
   canvasGroup: {fileID: 1071429457108999103}
+  inspectorPrefab: {fileID: 2196506033936839238, guid: 852cac96b2a4e4b3595bac4c26cbbeed, type: 3}
   previousParent: {fileID: 0}
 --- !u!225 &1071429457108999103
 CanvasGroup:

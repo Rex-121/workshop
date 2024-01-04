@@ -26,7 +26,7 @@ namespace Tyrant
         [HorizontalGroup("Basic", 60)]
         public Sprite sprite => _weaponSO.icon;
         
-        [ShowInInspector]
+        [SerializeField]
         [HideLabel]
         [VerticalGroup("Basic/VBasic")]
         public string itemName { get; set; }

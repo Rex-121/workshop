@@ -55,7 +55,7 @@ namespace Tyrant
         private void PositionCanvas()
         {
             parentCanvas.worldCamera = Camera.main;
-            var position = Camera.main.GetCanvasPosition(transform, parentCanvas);
+            var position = Camera.main.GetCanvasPosition(transform.position, parentCanvas);
             dungeonInfo.transform.localPosition = position + canvasOffset;
         }
         #endregion
