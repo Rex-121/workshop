@@ -67,16 +67,18 @@ namespace Tyrant
 
         public void SwapSlot(Slot a, Slot? b, int toIndex)
         {
-
+            // 移除原先的
+            RemoveSlot(a, false);
+            
             if (b == null)
             {
-                RemoveSlot(a);
+                // 如果没有可交换的，直接将物品添加到指定位置
                 AddSlot(new Slot(toIndex, a.item), false);
             }
             else
             {
+                // 交换
                 var c = b.Value!;
-                RemoveSlot(a, false);
                 RemoveSlot(b.Value!, false);
                 AddSlot(new Slot(a.index, c.item));
                 AddSlot(new Slot(c.index, a.item));
