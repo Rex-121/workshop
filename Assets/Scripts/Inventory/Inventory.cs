@@ -80,8 +80,8 @@ namespace Tyrant
                 // 交换
                 var c = b.Value!;
                 RemoveSlot(b.Value!, false);
-                AddSlot(new Slot(a.index, c.item));
-                AddSlot(new Slot(c.index, a.item));
+                AddSlot(new Slot(a.index, c.item), false);
+                AddSlot(new Slot(c.index, a.item), false);
             }
             
             Save();
