@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Sirenix.Utilities;
 using UnityEngine;
 
 namespace Tyrant
@@ -9,12 +8,9 @@ namespace Tyrant
 
         public EquipmentInventorySlot equipmentInventorySlotPrefab;
 
-        public Canvas canvas;
-        public Transform pointToDrag;
-
         public Transform panel;
 
-        private List<EquipmentInventorySlot> _allSlots = new();
+        private readonly List<EquipmentInventorySlot> _allSlots = new();
 
         private void Start()
         {
@@ -26,7 +22,6 @@ namespace Tyrant
             {
                 var gb = Instantiate(equipmentInventorySlotPrefab, panel);
                 gb.index = i;
-                gb.Register(canvas, pointToDrag);
                 _allSlots.Add(gb);
             }
             
@@ -35,14 +30,6 @@ namespace Tyrant
             {
                 _allSlots[equipment.index].Refresh(equipment);
             }
-            
-
-            // equipments.ForEach(v =>
-            // {
-            //
-            //     var slot = Instantiate(equipmentInventorySlotPrefab, transform);
-            //     slot.Refresh(v.item as IEquipment, canvas, pointToDrag);
-            // });
         }
         
         

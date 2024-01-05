@@ -43,8 +43,7 @@ namespace Tyrant
         {
             if (item == null)
             {
-                Destroy(_inspector.gameObject);
-                _inspector = null;
+                DestroyInspector();
             }
             else
             {
@@ -98,16 +97,18 @@ namespace Tyrant
                 {
                     bag.dragPointForItem = dragPointForItem;
                 }
-                
-                if (_latestDisplay.TryGetComponent(out EquipmentInventory inventory))
-                {
-                    inventory.canvas = canvas;
-                    inventory.pointToDrag = dragPointForItem;
-                }
             }
             
             
             dragPointForItem.SetAsLastSibling();
+        }
+
+
+        private void DestroyInspector()
+        {
+            if (_inspector == null) return;
+            Destroy(_inspector.gameObject);
+            _inspector = null;
         }
 
         private void DestroyPrevious()
@@ -116,6 +117,8 @@ namespace Tyrant
             {
                 Destroy(_latestDisplay);
             }
+
+            DestroyInspector();
         }
         
     }

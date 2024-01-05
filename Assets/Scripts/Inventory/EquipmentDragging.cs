@@ -14,9 +14,9 @@ namespace Tyrant
 
         public Image image;
 
-        public Canvas canvas;
+        private Canvas _canvas;
 
-        public Transform pointToDrag;
+        private Transform _pointToDrag;
 
         public CanvasGroup canvasGroup;
 
@@ -27,6 +27,9 @@ namespace Tyrant
         private void Awake()
         {
             _rectTransform = GetComponent<RectTransform>();
+
+            _canvas = UIManager.main.canvas;
+            _pointToDrag = UIManager.main.dragPointForItem;
         }
         private RectTransform _rectTransform;
         
@@ -51,11 +54,11 @@ namespace Tyrant
         
         public void OnDrag(PointerEventData eventData)
         {
-            transform.SetParent(pointToDrag);
+            transform.SetParent(_pointToDrag);
             
             // if (canvas == null) return;
             
-            _rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+            _rectTransform.anchoredPosition += eventData.delta / _canvas.scaleFactor;
 
             canvasGroup.blocksRaycasts = false;
         }
