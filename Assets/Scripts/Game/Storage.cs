@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Tyrant
@@ -8,15 +9,15 @@ namespace Tyrant
     {
 
 
-        public Inventory.Slot[] LoadAllItems(string key)
+        public Dictionary<int, Inventory.Slot> LoadAllItems(string key)
         {
             try
             {
-                return ES3.Load<Inventory.Slot[]>(key);
+                return ES3.Load<Dictionary<int, Inventory.Slot>>(key);
             }
             catch (Exception e)
             {
-                return new Inventory.Slot[] { };
+                return new Dictionary<int, Inventory.Slot> { };
             }
         }
 

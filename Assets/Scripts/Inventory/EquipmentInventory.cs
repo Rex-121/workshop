@@ -26,10 +26,10 @@ namespace Tyrant
             }
             
             
-            foreach (var equipment in equipments)
-            {
-                _allSlots[equipment.index].Refresh(equipment);
-            }
+            // foreach (var equipment in equipments)
+            // {
+            //     _allSlots[equipment.Value.index].Refresh(equipment.Value);
+            // }
         }
         
         

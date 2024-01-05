@@ -71,10 +71,10 @@ namespace Tyrant
         }
 
 
-        public void DidRemoveItem()
-        {
-            InventoryManager.main.Remove(equipment);
-        }
+        // public void DidRemoveItem()
+        // {
+        //     InventoryManager.main.Remove(equipment);
+        // }
         
                 
         public void OnPointerEnter(PointerEventData eventData)

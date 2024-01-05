@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
+using UniRx;
 using UnityEngine;
 
 namespace Tyrant
@@ -16,60 +17,110 @@ namespace Tyrant
         public string saveKey;
 
         [ShowInInspector]
-        public List<Slot> slots;
+        public Dictionary<int, Slot> slots;
 
         private Func<IItem, bool> _canStore;
+
+        private ReplaySubject<Dictionary<int, Slot>> _slotsRx = new ();
+
+        // 获取当前的物品
+        public IObservable<Slot> SlotBy(int index) => _slotsRx
+            // .Where(v => v.ContainsKey(index))
+            .Select(v =>
+            {
+                if (v.TryGetValue(index, out var expression)) return expression;
+                return new Slot(-1, null);
+            });
         
-        public Inventory(IEnumerable<Slot> items, string key, Func<IItem, bool> canStore)
+        public Inventory(Dictionary<int, Slot> items, string key, Func<IItem, bool> canStore)
         {
             _canStore = canStore;
-            slots = items.ToList();
+            slots = items;//.ToList();
             saveKey = key;
+            _slotsRx.OnNext(items);
         }
 
         public void CollectItem(IItem item)
         {
+            // 如果不是此背包类型
+            if (!_canStore.Invoke(item)) return;
+            
             var index = 0;
 
-            if (!slots.IsNullOrEmpty())
+            // if (slots.Count != 0)
+            // {
+            //     foreach (var slot in slots.Keys.TakeWhile(slot => index >= slot))
+            //     {
+            //         index = slot + 1;
+            //     }
+            // }
+
+            while (slots.ContainsKey(index))
             {
-                foreach (var slot in slots.TakeWhile(slot => index >= slot.index))
-                {
-                    index = slot.index + 1;
-                }
+                index++;
             }
+            
+            Debug.Log(index);
 
             AddSlot(new Slot(index, item));
         }
 
-
-        public void AddSlot(Slot slot)
+        public void SwapSlot(Slot a, Slot? b, int toIndex)
         {
-            if (!_canStore.Invoke(slot.item)) return;
-            
-            slots.Add(slot);
-            
-            Debug.Log($"#背包# 背包+{slot.item.itemName}-{slot.item.quality.tier}");
+
+            if (b == null)
+            {
+                RemoveSlot(a);
+                AddSlot(new Slot(toIndex, a.item), false);
+            }
+            else
+            {
+                var c = b.Value!;
+                RemoveSlot(a, false);
+                RemoveSlot(b.Value!, false);
+                AddSlot(new Slot(a.index, c.item));
+                AddSlot(new Slot(c.index, a.item));
+            }
             
             Save();
         }
 
-
-        public void RemoveSlot(Inventory.Slot slot)
+        public void AddSlot(Slot slot, bool save = true)
         {
             if (!_canStore.Invoke(slot.item)) return;
             
-            slots.RemoveAll(v => v.index == slot.index);
+            slots.Add(slot.index, slot);
             
-            Debug.Log($"#背包# 背包 移除 {slot.item.itemName}-{slot.item.quality.tier}");
+            Debug.Log($"#背包# 背包{slot.index} 增加++{slot.item.itemName}-{slot.item.quality.tier}");
             
-            Save();
+            if (save)
+            {
+                Save();
+            }
+        }
+
+
+        public void RemoveSlot(Inventory.Slot slot, bool save = true)
+        {
+            if (!_canStore.Invoke(slot.item)) return;
+            
+            slots.Remove(slot.index);
+            
+            Debug.Log($"#背包# 背包{slot.index} 移除--{slot.item.itemName}-{slot.item.quality.tier}");
+            
+            if (save)
+            {
+                Save();
+            }
         }
 
 
         internal void Save()
         {
-            Storage.main.Save(saveKey, slots.ToArray());
+            
+            _slotsRx.OnNext(slots);
+            
+            Storage.main.Save(saveKey, slots);
         }
         
         
@@ -111,6 +162,11 @@ namespace Tyrant
         public static void CollectItem<T>(this IEnumerable<T> o, IItem item) where T: Inventory
         {
             o.ForEach(v => v.CollectItem(item));
+        }
+        
+        public static void SwapSlot<T>(this IEnumerable<T> o, Inventory.Slot a, Inventory.Slot? b, int toIndex) where T: Inventory
+        {
+            o.ForEach(v => v.SwapSlot(a, b, toIndex));
         }
         
         
