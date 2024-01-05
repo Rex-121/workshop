@@ -58,6 +58,9 @@ namespace Tyrant
         public void Remove(Inventory.Slot slot) => allInventories.RemoveSlot(slot);
         
         public void SwapSlot(Inventory.Slot a, Inventory.Slot? b, int toIndex) => allInventories.SwapSlot(a, b, toIndex);
-        
+
+
+        public void Replace(Inventory.Slot slot, IItem item) => allInventories.Replace(slot, item);
+
     }
 }

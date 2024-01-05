@@ -87,6 +87,12 @@ namespace Tyrant
             Save();
         }
 
+        public void Replace(Inventory.Slot slot, IItem item)
+        {
+            RemoveSlot(slot, false);
+            AddSlot(new Slot(slot.index, item));
+        }
+
         public void AddSlot(Slot slot, bool save = true)
         {
             if (!_canStore.Invoke(slot.item)) return;
@@ -170,7 +176,10 @@ namespace Tyrant
         {
             o.ForEach(v => v.SwapSlot(a, b, toIndex));
         }
-        
-        
+
+
+        public static void Replace<T>(this IEnumerable<T> o, Inventory.Slot slot, IItem item) where T : Inventory =>
+            o.ForEach(v => v.Replace(slot, item));
+
     }
 }

@@ -27,12 +27,16 @@ namespace Tyrant
             if (gb.TryGetComponent(out EquipmentDragging equipmentDragging))
             {
                 // equipmentDragging.previousParent = transform;
-                
-                equipments.ChangeEquipment(equipmentDragging.equipment.item as IEquipment);
 
+                var slot = equipmentDragging.equipment;
+                
+                // 与背包物品更换
+                InventoryManager.main.Replace(slot, equipments.weapon);
+                
+                // 装备新物品
+                equipments.ChangeEquipment(slot.item as IEquipment);
                 
                 Destroy(equipmentDragging.gameObject);
-                
                 
             }
             
