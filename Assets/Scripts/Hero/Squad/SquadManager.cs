@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Sirenix.Utilities;
 using UnityEngine;
 
 namespace Tyrant
@@ -12,8 +13,11 @@ namespace Tyrant
             if (main == null)
             {
                 main = this;
+
+                var data = Storage.main.Load<HeroSquad[]>("SQUAD");
+                data.ForEach(v => v.Restore());
                 
-                heroSquads.AddRange(HeroGenesis.main.GetAllSquads());
+                _heroSquads.AddRange(data);
                 
                 DontDestroyOnLoad(this);
             }
@@ -24,11 +28,17 @@ namespace Tyrant
         }
 
 
+        public void Save()
+        {
+            Storage.main.SaveSquad(_heroSquads.ToArray());
+        }
+
+
         [NonSerialized]
-        private List<HeroSquad> heroSquads = new List<HeroSquad>();
+        private readonly List<HeroSquad> _heroSquads = new List<HeroSquad>();
 
 
-        public IEnumerable<HeroSquad> GetAllSquads() => heroSquads;
+        public IEnumerable<HeroSquad> GetAllSquads() => _heroSquads;
 
 
     }

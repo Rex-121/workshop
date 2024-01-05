@@ -20,7 +20,10 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
+    SerializationNodes:
+    - Name: id
+      Entry: 2
+      Data: f31f79cfb296402daf20c14b9f0b851b
   equipmentName: "\u5F13"
   icon: {fileID: 1276036978, guid: 5adafed67f17e41e39188696d7ba4771, type: 3}
   attribute:

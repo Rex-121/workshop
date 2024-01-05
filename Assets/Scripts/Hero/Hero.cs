@@ -2,7 +2,7 @@ using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEngine;
-using Object = UnityEngine.Object;
+using UniRx;
 
 namespace Tyrant
 {
@@ -84,6 +84,19 @@ namespace Tyrant
             (job.jobSO.skills ?? new BuffDataSO[] {})
                 .Select(v => v.ToBuff())
                 .ForEach(buffHandler.AddBuff);
+            
+            // equipments.Restore();
+            
+            equipments
+                .needSave
+                .Skip(1)
+                .Subscribe(v => Save());
+        }
+
+
+        public void Save()
+        {
+            SquadManager.main.Save();
         }
 
         public static Hero FromSO(CharacterSO characterSO, JobSO jobSO)

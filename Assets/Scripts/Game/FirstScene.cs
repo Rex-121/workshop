@@ -18,7 +18,7 @@ namespace Tyrant
 
             var squad = new HeroSquad(heroes);
             
-            ES3.Save("SQUAD", new HeroSquad[] { squad });
+            Storage.main.SaveSquad(new HeroSquad[] { squad });
             
             SceneManager.LoadScene("Scenes/SampleScene");
 

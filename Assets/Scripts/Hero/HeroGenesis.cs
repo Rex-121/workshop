@@ -19,20 +19,20 @@ namespace Tyrant
 
         // public string[] heroCodes;
 
-        public HeroSquad[] squads;
+        // public HeroSquad[] squads;
 
-        public IEnumerable<HeroSquad> GetAllSquads()
-        {
-
-            squads = ES3.Load<HeroSquad[]>("SQUAD");
-            foreach (var heroSquad in squads)
-            {
-                heroSquad.Restore();
-            }
-            return squads;
-            // return new []{}
-            // return heroCodes.Select(SquadByCode);
-        }
+        // public IEnumerable<HeroSquad> GetAllSquads()
+        // {
+        //
+        //     squads = Storage.main.Load<HeroSquad[]>("SQUAD");
+        //     foreach (var heroSquad in squads)
+        //     {
+        //         heroSquad.Restore();
+        //     }
+        //     return squads;
+        //     // return new []{}
+        //     // return heroCodes.Select(SquadByCode);
+        // }
 
         // public HeroSquad SquadByCode(string store)
         // {
@@ -49,14 +49,14 @@ namespace Tyrant
             return hero;
         }
         
-        public Hero RestoreByIDs(string[] ids)
-        {
-            return Hero.FromSO
-            (
-                FindCharacterByID(int.Parse(ids.First())),
-                FindJobByID(int.Parse(ids[1]))
-            );
-        }
+        // public Hero RestoreByIDs(string[] ids)
+        // {
+        //     return Hero.FromSO
+        //     (
+        //         FindCharacterByID(int.Parse(ids.First())),
+        //         FindJobByID(int.Parse(ids[1]))
+        //     );
+        // }
 
         public CharacterSO FindCharacterByID(int id)
         {

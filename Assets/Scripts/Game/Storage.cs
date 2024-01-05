@@ -21,8 +21,20 @@ namespace Tyrant
             }
         }
 
+
+        public T Load<T>(string key)
+        {
+            return ES3.Load<T>(key);
+        }
+
+        public void SaveSquad(HeroSquad[] squads)
+        {
+            Save("SQUAD", squads);
+        }
+
         public void Save<T>(string key, T value) 
         {
+            Debug.Log($"#SAVE# 存盘{key}");
             ES3.Save(key, value);
         }
         
