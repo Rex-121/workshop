@@ -43,6 +43,10 @@ namespace Tyrant
 
         public void NewSquadOnAdventure(HeroSquad squad)
         {
+            
+            // 开始冒险
+            squad.OnAdventure();
+            
             adventureMono.NewHeroSquadOnAdventure(squad);
         }
     }

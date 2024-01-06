@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Tyrant
@@ -12,6 +15,8 @@ namespace Tyrant
         public RectTransform panel;
 
         private SquadAllInfoDisplay _latest;
+
+        private List<HeroSquad> _squads = new();
         private void Start()
         {
             
@@ -19,11 +24,20 @@ namespace Tyrant
             {
                 var squadPlaceInList = Instantiate(squadPrefab, panel);
                 squadPlaceInList.heroSquad = heroSquad;
-                
+                _squads.Add(heroSquad);
                 squadPlaceInList.didSelect += DidSelectSquad;
             }
             
            
+        }
+
+
+        private void Update()
+        {
+            if (_squads.All(v => v.isOnAdventure))
+            {
+                Destroy(gameObject);
+            }
         }
 
 

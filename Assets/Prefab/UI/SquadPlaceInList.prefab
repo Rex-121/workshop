@@ -145,6 +145,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4402026503600598150}
   - component: {fileID: 212864203294035683}
+  - component: {fileID: 4699090354486077572}
   m_Layer: 5
   m_Name: Main
   m_TagString: Untagged
@@ -172,7 +173,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &212864203294035683
 MonoBehaviour:
@@ -200,6 +201,20 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &4699090354486077572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5430243753706099765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 2
+  m_VerticalFit: 2
 --- !u!1 &6622998413683404238
 GameObject:
   m_ObjectHideFlags: 0
@@ -209,7 +224,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6622998413683404239}
-  - component: {fileID: 6622998413683404234}
   - component: {fileID: 6622998413683404233}
   - component: {fileID: 7753354043051530882}
   m_Layer: 5
@@ -235,25 +249,11 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -20, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 156, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6622998413683404234
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6622998413683404238}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
-  m_VerticalFit: 2
 --- !u!222 &6622998413683404233
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -274,6 +274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceea17b0705b4e6b818067f95937d425, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goAdventureButton: {fileID: 1368292496454956169}
   heroStands:
   - {fileID: 2136248914637091919}
   - {fileID: 175729807963664411}
@@ -823,7 +824,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 40, y: 50}
+  m_SizeDelta: {x: 40, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5551872003998400592
 CanvasRenderer:

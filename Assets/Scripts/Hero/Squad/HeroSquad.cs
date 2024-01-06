@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,11 @@ namespace Tyrant
     public class HeroSquad: IDoCollectItem
     {
         public Hero[] heroes => _heroes.ToArray();
+
+        [NonSerialized]
+        public bool isOnAdventure = false;
+
+        public void OnAdventure() => isOnAdventure = true;
         
         [SerializeField]
         private List<Hero> _heroes;
