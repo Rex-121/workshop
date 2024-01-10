@@ -6,9 +6,17 @@ using Sirenix.Utilities;
 using Tyrant.UI;
 using UniRx;
 using UnityEngine;
+using WorkBench;
 
 namespace Tyrant
 {
+    /*
+     * 1. 准备蓝图
+     * 2. PrepareNewRound
+     * 3. NewTurn
+     * 4. DidForgeThisTurn
+     * 5. 计算分数 ♾️️
+     */
     public class WorkBenchManager : MonoBehaviour, IWorkBenchUIHandler, IWorkBenchRound
     {
         #region 单例
@@ -19,7 +27,7 @@ namespace Tyrant
             if (main == null)
             {
                 main = this;
-                DontDestroyOnLoad(this);
+                // DontDestroyOnLoad(this);
             }
             else
             {
@@ -33,6 +41,8 @@ namespace Tyrant
         [ShowInInspector, NonSerialized] public GameObject workBenchUI;
         [ShowInInspector, NonSerialized] public int staminaCost = 0;
         public ForgeItem forgeItem;
+
+        public WorkBenchEventSO workBenchEventSO;
         
         [LabelText("工作台Prefab")]
         public GameObject workBenchPrefab;
@@ -68,8 +78,11 @@ namespace Tyrant
         
         private void CalculateScore()
         {
-            make.OnNext(allMakesScore);
-            quality.OnNext(allQualityScore);
+            var makes = allMakesScore;
+            var qualities = allQualityScore;
+            workBenchEventSO.ScoreDidChange(makes, qualities);
+            make.OnNext(makes);
+            quality.OnNext(qualities);
         }
         
 
@@ -154,8 +167,11 @@ namespace Tyrant
             var bluePrint = BluePrint.FromSO(bluePrintSO);
             
             workBench = new WorkBench(bluePrint);
-
+            
             workBenchUI = Instantiate(workBenchPrefab);
+            
+            // 广播 需要延迟到所有prefab创建完成
+            workBenchEventSO.BlueprintDidSelected(bluePrint);
 
             var toolsBox = workBenchUI.GetComponent<ToolsBox>();
             
@@ -166,12 +182,15 @@ namespace Tyrant
             _allQueues.Add(toolsBox);
             
             PrepareNewRound();
+            
+            
 
             NewTurn();
         }
         
         public void DidForgeThisTurn()
         {
+            workBenchEventSO.TurnDidEnded();
             staminaCost += 1;
 
             var makes = allMakesScore;
@@ -207,6 +226,7 @@ namespace Tyrant
 
         public void PrepareNewRound()
         {
+            workBenchEventSO.PrepareNewRound();
             staminaCost = 0;
             _allQueues.ForEach(v => v.PrepareNewRound());
         }
@@ -215,6 +235,7 @@ namespace Tyrant
         // 打造结束
         public void DidEndRound()
         {
+            
             // 合成
             var equipment = forgeItem.DoForge();
 
@@ -230,6 +251,7 @@ namespace Tyrant
 
         public void NewTurn()
         {
+            workBenchEventSO.NewTurnDidStarted();
             _allQueues.ForEach(v => v.NewTurn());
         }
     }

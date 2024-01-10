@@ -34,13 +34,16 @@ namespace Tyrant
             {
                 heroStands[i].hero = heroSquad.heroes.ElementAt(i);
             }
+            
+            // 禁用按钮
+            goAdventureButton.interactable = !heroSquad.isOnAdventure;
         }
 
         public void SquadOnAdventure()
         {
             if (heroSquad.isOnAdventure) return;
             AdventureManager.main.NewSquadOnAdventure(heroSquad);
-            Destroy(gameObject);
+            // Destroy(gameObject);
         }
 
         private void Update()

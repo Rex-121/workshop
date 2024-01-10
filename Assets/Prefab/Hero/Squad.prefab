@@ -2087,7 +2087,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98062851de204e758382f2b60fd76000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotPrefab: {fileID: 8086996122444461036, guid: 357dc39e0a42e40568f3f18ac83ed026, type: 3}
+  slotMonoPrefab: {fileID: 8086996122444461036, guid: 357dc39e0a42e40568f3f18ac83ed026, type: 3}
   panel: {fileID: 5168350780261729813}
   occupied: 0
   occupiedLabel: {fileID: 4182642283150553178}

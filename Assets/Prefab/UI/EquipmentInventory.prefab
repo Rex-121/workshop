@@ -219,8 +219,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipmentInventorySlotPrefab: {fileID: 5170236632348220821, guid: 41e3af99b21624103a7c591262a38789, type: 3}
-  canvas: {fileID: 0}
-  pointToDrag: {fileID: 0}
   panel: {fileID: 4394990021992298179}
 --- !u!1 &7913401427612291286
 GameObject:

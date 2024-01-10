@@ -32,13 +32,13 @@ namespace Tyrant
         }
 
 
-        private void Update()
-        {
-            if (_squads.All(v => v.isOnAdventure))
-            {
-                Destroy(gameObject);
-            }
-        }
+        // private void Update()
+        // {
+        //     if (_squads.All(v => v.isOnAdventure))
+        //     {
+        //         Destroy(gameObject);
+        //     }
+        // }
 
 
         private void DidSelectSquad(HeroSquad squad)
