@@ -16,7 +16,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ac1314e9315df4e5e8801de8b50b1dc5, type: 2}
   - {fileID: 11400000, guid: c8e53f76dbdd64650b02ec5646b34652, type: 2}
   icon: {fileID: 1489847695, guid: 7499f13c7512c487cb01c2c358ef10d8, type: 3}
-  board: 0010:2121:0010
+  board: 0020:2112:0020
   equipmentSO: {fileID: 11400000, guid: e8045a1ddcc9d4462bbd6acf31a0e21c, type: 2}
   makePoints: 10
   qualityPoints: 20
