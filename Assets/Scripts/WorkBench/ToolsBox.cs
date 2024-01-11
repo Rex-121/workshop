@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Tyrant.UI
 {
-    public class ToolsBox: MonoBehaviour
+    public class ToolsBox: MonoBehaviour, IWorkBenchRound
     {
         // public static ToolsBox main;
 
@@ -37,15 +37,19 @@ namespace Tyrant.UI
         private static IEnumerable<ToolSO> toolSos => WorkBenchManager.main.toolSos;
         
         
-        private void Start()
+        // private void Start()
+        // {
+        //     NewTurn();
+        // }
+
+        // 准备新的一轮铸造
+        public void PrepareNewRound()
         {
-            NewTurn();
+            ResetBox();
         }
 
         public void NewTurn()
         {
-           ResetBox();
-
            BeforeDrawTools();
         }
 
@@ -69,6 +73,11 @@ namespace Tyrant.UI
             }
             
             DuringDrawTools(array);
+        }
+
+        public void DidEndRound()
+        {
+            
         }
 
         public void DuringDrawTools(Tool[] tools)

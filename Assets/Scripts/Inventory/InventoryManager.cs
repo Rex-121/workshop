@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEngine;
 
@@ -16,6 +17,16 @@ namespace Tyrant
             if (main == null)
             {
                 main = this;
+                equipments = new Inventory(
+                    Storage.main.LoadAllItems("EQUIPMENTS"),
+                    "EQUIPMENTS",
+                    item => item is IEquipment
+                    );
+                items = new Inventory(
+                    Storage.main.LoadAllItems("ITEMS"),
+                    "ITEMS", 
+                    item => item is IMaterial
+                    );
                 DontDestroyOnLoad(this);
             }
             else
@@ -26,28 +37,30 @@ namespace Tyrant
         
         #endregion
 
+
+        
+
+
+        [ShowInInspector]
+        public Inventory equipments;
+        [ShowInInspector]
+        public Inventory items;
+
         public BirthPackSO birthPackSO;
 
-        public InventoryBag inventoryBag;
-        
-        
-        // 所有的材料
-        public IEnumerable<IItem> allMaterials => birthPackSO.materials.Select(v => v.toRawMaterial.toMaterial);
+        private IEnumerable<Inventory> allInventories => new[] {items, equipments};
 
-        public void AddItem(IItem item)
-        {
-            if (item is IEquipment equipment)
-            {
-                AddEquipment(equipment);
-            }
-            
-            inventoryBag.AddItem(item);
-        }
+        public Dictionary<int, Inventory.Slot> allEquipments => equipments.slots;
+        public void AddSlot(Inventory.Slot slot) => allInventories.AddSlot(slot);
 
-        private void AddEquipment(IEquipment equipment)
-        {
-            Debug.Log($"背包+{equipment.itemName}");
-        }
+        public void AddItem(IItem item) => allInventories.CollectItem(item);
+
+        public void Remove(Inventory.Slot slot) => allInventories.RemoveSlot(slot);
         
+        public void SwapSlot(Inventory.Slot a, Inventory.Slot? b, int toIndex) => allInventories.SwapSlot(a, b, toIndex);
+
+
+        public void Replace(Inventory.Slot slot, IItem item) => allInventories.Replace(slot, item);
+
     }
 }

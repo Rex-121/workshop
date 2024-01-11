@@ -7,13 +7,9 @@ namespace Tyrant
     [CreateAssetMenu(menuName = "Hero/Hero", fileName = "Hero")]
     public class JobSO: SerializedScriptableObject
     {
+        public int id;
+        
         public string jobName;
-        
-        // [HorizontalGroup("Basic"), HideLabel]
-        // public HeroMono heroMonoPrefab;
-        
-        // [HideLabel, VerticalGroup("Basic/Att")]
-        // public Attribute attribute;
 
         [PreviewField]
         public Sprite icon;
@@ -38,5 +34,7 @@ namespace Tyrant
             AttributeTypes.Intelligence => Math.Max(0, (attribute.intelligence - 2) / 2) + 1,
             _ => 0
         };
+
+        public Job ToJob() => new Job(id, jobName, icon, mainAttribute);
     }
 }

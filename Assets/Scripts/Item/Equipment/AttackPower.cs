@@ -5,11 +5,12 @@ using Random = UnityEngine.Random;
 
 namespace Tyrant
 {
-    public readonly struct AttackPower
+    [Serializable]
+    public struct AttackPower: ILiftByQuality<AttackPower>
     {
 
-        [ShowInInspector, ReadOnly]
-        private readonly RangeInt _range;
+        [SerializeField]
+        private RangeInt _range;
 
         [LabelText("伤害"), ShowInInspector]
         public string predictPower => $"{_range.start} - {_range.end}";
@@ -31,6 +32,13 @@ namespace Tyrant
         public static AttackPower operator +(AttackPower first, int value)
         {
             return new AttackPower(first._range.start + value, first._range.end + value);
+        }
+
+        // 通过品质提升攻强
+        public AttackPower LiftByQuality(IQuality qualities)
+        {
+            var i = qualities.quality.tier.ToInt();
+            return this + i;
         }
     }
 

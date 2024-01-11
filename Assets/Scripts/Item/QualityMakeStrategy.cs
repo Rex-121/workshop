@@ -1,10 +1,10 @@
 
 namespace Tyrant
 {
-    public interface IQualityMakeStrategy<in T> //: IQuality
-    {
-        public IQuality QualityBy(T item);
-    }
+    // public interface IQualityMakeStrategy<in T> //: IQuality
+    // {
+    //     public IQuality QualityBy(T item);
+    // }
 
 
     // /// <summary>

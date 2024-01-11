@@ -1,76 +1,108 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEngine;
-using Object = UnityEngine.Object;
+using UniRx;
 
 namespace Tyrant
 {
+    [HideReferenceObjectPicker, InlineProperty, HideLabel, BoxGroup("HERO", centerLabel: true)]
     public class Hero: IAmHero
     {
+
+        [ReadOnly, HideLabel, SerializeField, PropertyOrder(-2), HorizontalGroup("Basic")]
+        public string heroName { get; set; }
+        
+        [SerializeField, PropertyOrder(-1)]
+        public Health health { get; set; }
+        
+        [PropertyOrder(-1), SerializeField]
         public Attribute attribute { get; set; }
         
-        [LabelText("生命值")]
-        public Health health { get; set; }
-        public string heroName { get; set; }
+        [ShowInInspector, BoxGroup("装备后的属性")]
+        public Attribute equipAttribute => attribute + equipments.attribute;
+        
+        [ShowInInspector, ReadOnly, HideLabel, HorizontalGroup("Basic")]
+        public Job job;
 
-        // public AttributeTypes mainAttribute;
+        [ReadOnly, HideLabel, HorizontalGroup("Basic")]
+        public CharacterSO characterSO => HeroGenesis.main.FindCharacterByID(_characterId);
+
+        [SerializeField]
+        private int _characterId;
+
         public IAmHero heroic => this;
 
+        [SerializeField]
         public HeroActionQueue actionQueue { get; private set; }
+        
+        [InlineProperty, HideLabel]
+        public BuffHandler buffHandler = new ();
 
-
-        [ShowInInspector, LabelText("伤害")]
-        public AttackPower attackPower;
+        [ShowInInspector, InlineProperty, HideLabel, PropertyOrder(100), BoxGroup("装备后的属性")]
+        public AttackPower attackPower =>  equipments.PowerCombine(job.AttributePower(equipAttribute));
         
         public bool stillAlive => !health.isEmpty;
         
-        public BuffHandler buffHandler = new BuffHandler();
+        [BoxGroup("装备"), InlineProperty, HideLabel, HideReferenceObjectPicker]
+        public HeroEquipments equipments;
 
-        [ShowInInspector]
-        public IEquipment weapon;// = new Sword(new Attribute(5, 5, 5), null);
-
-        [ShowInInspector]
-        public JobSO job;
+        // public Hero()
+        // {
+        //     
+        // }
         
-        Hero(Attribute a, HeroHealthStrategy healthStrategy, JobSO jobSO)//IEnumerable<BuffInfo> skills)
+        Hero(Attribute a, HeroHealthStrategy healthStrategy, JobSO jobSO, CharacterSO characterSO)
         {
+            // this.characterSO = characterSO;
+
+            _characterId = characterSO.id;
+            
             attribute = a + jobSO.weaponSO.attribute;
             
             health = new Health(attribute, healthStrategy);
 
-            job = Object.Instantiate(jobSO);
-            heroName = $"[{jobSO.jobName}]{NVJOBNameGen.Uppercase(NVJOBNameGen.GiveAName(7))}";
+            job = jobSO.ToJob();//Object.Instantiate(jobSO);
+            heroName = $"[{job.jobName}]{NVJOBNameGen.Uppercase(NVJOBNameGen.GiveAName(7))}";
 
             actionQueue = new HeroActionQueue(this);
             
-            weapon = jobSO.weaponSO.ToEquipment();
+            // var weapon = jobSO.weaponSO.ToEquipment();
 
+            equipments = new HeroEquipments();
+            // attackPower = weapon.power + jobSO.AttributePower(attribute);
 
-            attackPower = weapon.power + jobSO.AttributePower(attribute);
-
-            (job.skills ?? new BuffDataSO[] {}).Select(v => v.ToBuff())
+            (jobSO.skills ?? new BuffDataSO[] {}).Select(v => v.ToBuff())
                 .ForEach(v =>
             {
                 buffHandler.AddBuff(v);
             });
+        }
+
+        public void Restore()
+        {
+            (job.jobSO.skills ?? new BuffDataSO[] {})
+                .Select(v => v.ToBuff())
+                .ForEach(buffHandler.AddBuff);
+            
+            // equipments.Restore();
+            
+            equipments
+                .needSave
+                .Skip(1)
+                .Subscribe(v => Save());
+        }
 
 
+        public void Save()
+        {
+            SquadManager.main.Save();
         }
 
         public static Hero FromSO(CharacterSO characterSO, JobSO jobSO)
         {
-            return new Hero(characterSO.attribute, characterSO.healthStrategy, jobSO);
+            return new Hero(characterSO.attribute, characterSO.healthStrategy, jobSO, characterSO);
         }
-        // private int attributePower => mainAttribute switch
-        // {
-        //     AttributeTypes.Strength => Math.Max(0, (attribute.strength - 10) / 2) + 1,
-        //     AttributeTypes.Dexterity => Math.Max(0, (attribute.dexterity - 10) / 2) + 1,
-        //     AttributeTypes.Intelligence => Math.Max(0, (attribute.intelligence - 10) / 2) + 1,
-        //     _ => 0
-        // };
 
         public void BattleDidEnd()
         {

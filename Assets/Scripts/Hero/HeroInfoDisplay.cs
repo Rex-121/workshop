@@ -20,33 +20,62 @@ namespace Tyrant
         }
 
 
+        public EquipmentDoEquipment weaponEquip;
+
         public Image jobIcon;
 
         public TextMeshProUGUI nameLabel, sLabel, dLabel, iLabel, attackPowerLabel;
 
-        public EquipmentBriefDisplay equipmentBriefDisplays;
+        public TMP_InputField nameInputField;
+        
+        // public EquipmentBriefDisplay equipmentBriefDisplays;
 
         private void Refresh()
         {
             if (ReferenceEquals(hero, null)) return;
+
+            if (!ReferenceEquals(weaponEquip, null))
+            {
+                weaponEquip.equipments = hero.equipments;
+            }
+
+            if (!ReferenceEquals(nameInputField, null))
+            {
+                nameInputField.text = hero.heroName;
+            }
             
-            nameLabel.text = hero.heroName;
-            sLabel.text = $"{hero.attribute.strength}";
-            dLabel.text = $"{hero.attribute.dexterity}";
-            iLabel.text = $"{hero.attribute.intelligence}";
+            if (!ReferenceEquals(nameLabel, null))
+            {
+                nameLabel.text = hero.heroName;
+            }
+            
+            
+            sLabel.text = $"{hero.equipAttribute.strength}";
+            dLabel.text = $"{hero.equipAttribute.dexterity}";
+            iLabel.text = $"{hero.equipAttribute.intelligence}";
 
             if (!ReferenceEquals(jobIcon, null))
             {
                 jobIcon.sprite = hero.job.icon;
             }
 
-            attackPowerLabel.text = hero.attackPower.predictPower;
-
-            if (!ReferenceEquals(equipmentBriefDisplays, null))
+            if (!ReferenceEquals(attackPowerLabel, null))
             {
-                equipmentBriefDisplays.Equipment(hero.weapon);
+                attackPowerLabel.text = hero.attackPower.predictPower;
             }
+            
+
+            // if (!ReferenceEquals(equipmentBriefDisplays, null))
+            // {
+            //     equipmentBriefDisplays.Equipment(hero.equipments.weapon);
+            // }
            
+        }
+
+
+        public void OnNameChanged()
+        {
+            hero.heroName = nameInputField.text;
         }
     }
 }

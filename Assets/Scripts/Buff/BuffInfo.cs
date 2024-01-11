@@ -12,7 +12,7 @@ namespace Tyrant
             currentStack = s.startWithStack;
         }
 
-        public readonly BuffDataSO buffDataSO;
+        public BuffDataSO buffDataSO;
 
         public int currentStack;
 

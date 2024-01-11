@@ -1,15 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEngine;
 
 namespace Tyrant
 {
+    [HideReferenceObjectPicker]
     public class BuffHandler
     {
-        private readonly LinkedList<BuffInfo> _buffList = new();
+        [SerializeField]
+        private LinkedList<BuffInfo> _buffList = new();
 
+        [ShowInInspector]
         public BuffInfo[] buffs => _buffList.ToArray();
         
         public Attack WillHit(Attack attack)

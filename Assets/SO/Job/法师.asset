@@ -21,8 +21,9 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
+  id: 1
   jobName: "\u6CD5\u5E08"
   icon: {fileID: 1536886222, guid: 5adafed67f17e41e39188696d7ba4771, type: 3}
   mainAttribute: 2
   skills: []
-  weaponSO: {fileID: 11400000, guid: f8246e8bd67e7466ba33719b549f7cba, type: 2}
+  weaponSO: {fileID: 11400000, guid: 3cc9bedf8007240cd9477348ebfd9bb3, type: 2}

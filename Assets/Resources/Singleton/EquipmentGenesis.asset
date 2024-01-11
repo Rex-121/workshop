@@ -20,5 +20,111 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
-  equipmentSO: {fileID: 11400000, guid: dca6efd4335b7499bb71b82c5dd95636, type: 2}
+    SerializationNodes:
+    - Name: before
+      Entry: 7
+      Data: 0|Tyrant.Weapon, Assembly-CSharp
+    - Name: quality
+      Entry: 7
+      Data: Tyrant.Quality, Assembly-CSharp
+    - Name: tier
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: id
+      Entry: 1
+      Data: 2e75c57a-8f0b-4534-bb40-734b908f9c9b
+    - Name: _powerFromBluePrint
+      Entry: 7
+      Data: Tyrant.AttackPower, Assembly-CSharp
+    - Name: _range
+      Entry: 7
+      Data: UnityEngine.RangeInt, UnityEngine.CoreModule
+    - Name: start
+      Entry: 3
+      Data: 5
+    - Name: length
+      Entry: 3
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _attribute
+      Entry: 7
+      Data: Tyrant.Attribute, Assembly-CSharp
+    - Name: strength
+      Entry: 3
+      Data: 3
+    - Name: dexterity
+      Entry: 3
+      Data: 0
+    - Name: intelligence
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: remake
+      Entry: 7
+      Data: 1|Tyrant.Weapon, Assembly-CSharp
+    - Name: quality
+      Entry: 7
+      Data: Tyrant.Quality, Assembly-CSharp
+    - Name: tier
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: id
+      Entry: 1
+      Data: 2e75c57a-8f0b-4534-bb40-734b908f9c9b
+    - Name: _powerFromBluePrint
+      Entry: 7
+      Data: Tyrant.AttackPower, Assembly-CSharp
+    - Name: _range
+      Entry: 7
+      Data: UnityEngine.RangeInt, UnityEngine.CoreModule
+    - Name: start
+      Entry: 3
+      Data: 5
+    - Name: length
+      Entry: 3
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _attribute
+      Entry: 7
+      Data: Tyrant.Attribute, Assembly-CSharp
+    - Name: strength
+      Entry: 3
+      Data: 3
+    - Name: dexterity
+      Entry: 3
+      Data: 0
+    - Name: intelligence
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  weaponSos:
+  - {fileID: 11400000, guid: f8246e8bd67e7466ba33719b549f7cba, type: 2}
+  - {fileID: 11400000, guid: e8045a1ddcc9d4462bbd6acf31a0e21c, type: 2}
+  - {fileID: 11400000, guid: a870c2cd4e198474c99c413d7aef4b8b, type: 2}
+  - {fileID: 11400000, guid: 3cc9bedf8007240cd9477348ebfd9bb3, type: 2}

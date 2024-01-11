@@ -1,8 +1,10 @@
+using System;
 using UniRx;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using WorkBench;
 
 namespace Tyrant.UI
 {
@@ -18,9 +20,15 @@ namespace Tyrant.UI
         public TextMeshProUGUI makeText;
         public TextMeshProUGUI qualityText;
 
+        [BoxGroup("进度条")]
+        [LabelText("制作进度条")]
+        public WorkBenchMakeProgressBar makeProgressBar;
+        [BoxGroup("进度条")]
+        [LabelText("品质进度条")]
+        public WorkBenchQualityProgressBar qualityProgressBar;
         private void Start()
         {
-            DisplayInformation();
+            // DisplayInformation();
           
             
             var list = workBench.Start();
@@ -37,20 +45,48 @@ namespace Tyrant.UI
             }
         }
 
-        // 显示信息
-        private void DisplayInformation()
+        public WorkBenchEventSO workBenchEventSO;
+
+
+        private void OnEnable()
         {
-            WorkBenchManager.main.make
-                .Select(v => $"+ {v}")
-                .Subscribe(v =>
-            {
-                makeText.text = v;
-            }).AddTo(this);
-            WorkBenchManager.main.quality.Select(v => $"+ {v}")
-                .Subscribe(v =>
-            {
-                qualityText.text = v;
-            }).AddTo(this);
+            workBenchEventSO.scoreDidChange += DisplayInformation;
+            workBenchEventSO.blueprintDidSelected += BlueprintInformation;
+        }
+        
+
+        [ShowInInspector]
+        private BluePrint _bluePrint;
+        private void BlueprintInformation(BluePrint bluePrint)
+        {
+            _bluePrint = bluePrint;
+        }
+
+        private void OnDisable()
+        {
+            workBenchEventSO.scoreDidChange -= DisplayInformation;
+            workBenchEventSO.blueprintDidSelected -= BlueprintInformation;
+        }
+
+        // 显示信息
+        private void DisplayInformation(int make, int quality)
+        {
+            makeText.text = $"{make}/{_bluePrint.make}";
+            qualityText.text = $"{quality}/{_bluePrint.quality}";
+
+            makeProgressBar.Predict(make / (_bluePrint.make * 1.0f));
+            qualityProgressBar.Predict(quality / (_bluePrint.quality * 1.0f));
+            // WorkBenchManager.main.make
+            //     .Select(v => $"+ {v}")
+            //     .Subscribe(v =>
+            // {
+            //     makeText.text = v;
+            // }).AddTo(this);
+            // WorkBenchManager.main.quality.Select(v => $"+ {v}")
+            //     .Subscribe(v =>
+            // {
+            //     qualityText.text = v;
+            // }).AddTo(this);
         }
 
         [Button]

@@ -15,7 +15,7 @@ namespace Tyrant
             if (main == null)
             {
                 main = this;
-                DontDestroyOnLoad(this);
+                // DontDestroyOnLoad(this);
             }
             else
             {
@@ -41,9 +41,13 @@ namespace Tyrant
         }
 
 
-        public void NewDungeon()
+        public void NewSquadOnAdventure(HeroSquad squad)
         {
-            adventureMono.NewHeroSquadOnAdventure();
+            
+            // 开始冒险
+            squad.OnAdventure();
+            
+            adventureMono.NewHeroSquadOnAdventure(squad);
         }
     }
 }

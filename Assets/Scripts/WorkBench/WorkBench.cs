@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Tyrant
 {
-    public class WorkBench
+    public class WorkBench: IWorkBenchRound
     {
         [Serializable]
         public enum SlotType
@@ -22,6 +22,12 @@ namespace Tyrant
 
         public Dictionary<ToolWrapper, WorkBenchSlot> allSlots => _dic;
 
+        public BluePrint bluePrint;
+        
+        public WorkBench(BluePrint bluePrint)
+        {
+            this.bluePrint = bluePrint;
+        }
         
         [HideReferenceObjectPicker]
         public struct ToolWrapper
@@ -43,13 +49,6 @@ namespace Tyrant
             .Where(v => v.toolWrapper.type == WorkBench.SlotType.Make);
         public IEnumerable<WorkBenchSlot> allQuality => _dic.Values
             .Where(v => v.toolWrapper.type == WorkBench.SlotType.Quality);
-
-        // public bool HasSlot(Vector2Int vector2Int)
-        // {
-        //     return !dic.Keys.Where(v => v.position == vector2Int).ToArray().IsNullOrEmpty();
-        // }
-
-        // public Vector2Int[] allS => dic.Keys.Select(v => v.position).ToArray();
         
         // 获取所有受影响的Slot
         public IEnumerable<WorkBenchSlot> GetAllEffectPositions(Vector2Int location, ToolOnTable toolOnTable)
@@ -74,30 +73,21 @@ namespace Tyrant
                 .ForEach(v => v.NewPreviewBuff(toolOnTable.diceBuffInfo));
         }
 
-        public void DidForgeThisTurn()
+        private List<WorkBenchSlot> LockBluePrint(BluePrint bluePrint)
         {
-            _dic.Values.ForEach(v => v.DidForgeThisTurn());
-        }
+            var requires = bluePrint.boardLines;
 
-        public List<WorkBenchSlot> Start()
-        {
-
-            int[][] a = new int[3][]
-            {
-                new int[5] {0, 0, 0, 1, 0},
-                new int[5] {1, 2, 1, 2, 1},
-                new int[5] {0, 0, 0, 1, 0},
-            };
-
+            // panel.constraintCount = requires.First().Count();
+            
             var list = new List<WorkBenchSlot>();
-
-            for (var i = a.Length - 1; i >= 0; i--)
+            
+            for (var i = requires.Count() - 1; i >= 0; i--)
             {
-                var b = a[i];
-                for (var j = 0; j < b.Length; j++)
+                var b = requires.ElementAt(i);
+                for (var j = 0; j < b.Count(); j++)
                 {
                     var position = new Vector2Int(i, j);
-                    var slotType = b[j].toSlotType();
+                    var slotType = b.ElementAt(j).toSlotType();
                     var item = new ToolWrapper(position, slotType);
                     var slot = new WorkBenchSlot(item);
                     if (slotType != SlotType.Empty)
@@ -110,6 +100,26 @@ namespace Tyrant
             }
 
             return list;
+        }
+
+        public List<WorkBenchSlot> Start()
+        {
+            return LockBluePrint(this.bluePrint);
+        }
+
+        public void PrepareNewRound()
+        {
+            
+        }
+
+        public void DidEndRound()
+        {
+            
+        }
+
+        public void NewTurn()
+        {
+            _dic.Values.ForEach(v => v.DidForgeThisTurn());
         }
     }
 

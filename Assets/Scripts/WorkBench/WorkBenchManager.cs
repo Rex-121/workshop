@@ -1,14 +1,23 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using Tyrant.UI;
 using UniRx;
 using UnityEngine;
+using WorkBench;
 
 namespace Tyrant
 {
-    public class WorkBenchManager : MonoBehaviour, IWorkBenchUIHandler
+    /*
+     * 1. 准备蓝图
+     * 2. PrepareNewRound
+     * 3. NewTurn
+     * 4. DidForgeThisTurn
+     * 5. 计算分数 ♾️️
+     */
+    public class WorkBenchManager : MonoBehaviour, IWorkBenchUIHandler, IWorkBenchRound
     {
         #region 单例
 
@@ -18,7 +27,7 @@ namespace Tyrant
             if (main == null)
             {
                 main = this;
-                DontDestroyOnLoad(this);
+                // DontDestroyOnLoad(this);
             }
             else
             {
@@ -28,18 +37,25 @@ namespace Tyrant
         
         #endregion
         
-        [ShowInInspector, NonSerialized] public WorkBench workBench = new WorkBench();
+        [ShowInInspector, NonSerialized] public WorkBench workBench;
+        [ShowInInspector, NonSerialized] public GameObject workBenchUI;
+        [ShowInInspector, NonSerialized] public int staminaCost = 0;
+        public ForgeItem forgeItem;
 
+        public WorkBenchEventSO workBenchEventSO;
+        
         [LabelText("工作台Prefab")]
         public GameObject workBenchPrefab;
 
+        public BluePrintSO bluePrintSO;
         
         public ToolSO[] toolSos;
+
+        private readonly List<IWorkBenchRound> _allQueues = new();
         
-        
-        [ShowInInspector] public int allOccupiedInThisTurn => workBench
-            .allSlots.Values
-            .Count(v => v.isOccupied);
+        [ShowInInspector, HideIf("@this.workBench != null")] public int allOccupiedInThisTurn => workBench?
+                    .allSlots.Values
+                    .Count(v => v.isOccupied) ?? 0;
 
         [LabelText("每回合最大使用灵感数")]
         public int maxWorkBenchOccupied = 3;
@@ -62,8 +78,11 @@ namespace Tyrant
         
         private void CalculateScore()
         {
-            make.OnNext(allMakesScore);
-            quality.OnNext(allQualityScore);
+            var makes = allMakesScore;
+            var qualities = allQualityScore;
+            workBenchEventSO.ScoreDidChange(makes, qualities);
+            make.OnNext(makes);
+            quality.OnNext(qualities);
         }
         
 
@@ -144,28 +163,96 @@ namespace Tyrant
         [Button]
         public void StartAWorkBench()
         {
-            Instantiate(workBenchPrefab);
+
+            var bluePrint = BluePrint.FromSO(bluePrintSO);
+            
+            workBench = new WorkBench(bluePrint);
+            
+            workBenchUI = Instantiate(workBenchPrefab);
+            
+            // 广播 需要延迟到所有prefab创建完成
+            workBenchEventSO.BlueprintDidSelected(bluePrint);
+
+            var toolsBox = workBenchUI.GetComponent<ToolsBox>();
+            
+            forgeItem = new ForgeItem(bluePrint);
+            
+            _allQueues.Clear();
+            _allQueues.Add(workBench);
+            _allQueues.Add(toolsBox);
+            
+            PrepareNewRound();
+            
+            
+
+            NewTurn();
         }
+        
         public void DidForgeThisTurn()
         {
-            Debug.Log("End Forge!");
+            workBenchEventSO.TurnDidEnded();
+            staminaCost += 1;
 
             var makes = allMakesScore;
             var qualities = allQualityScore;
             
-            Debug.Log($"make={makes}, quality={qualities}");
-            
-            // 合成
-            var equipment = EquipmentGenesis.main.DoCraft(makes, qualities);
-            
-            InventoryManager.main.AddItem(equipment);
-            
-            // 清空棋盘
-            workBench.DidForgeThisTurn();
-            
-            // 重新计算分数
-            CalculateScore();
+            ForgeItemTakePower(makes, qualities);
+  
+            // 决策是否需要结束或者下一回合
+            DetermineIfEndForge();
+        }
+
+        private void ForgeItemTakePower(int makes, int qualities)
+        {
+            forgeItem.NewStrike(new StrikePower(Strike.Shape, makes));
+            forgeItem.NewStrike(new StrikePower(Strike.Quality, qualities));
+        }
+
+        private void DetermineIfEndForge()
+        {
+            if (staminaCost < Protagonist.main.stamina)
+            {
+                NewTurn();
+                // 重新计算分数
+                CalculateScore();
+            }
+            else
+            {
+                DidEndRound();
+            }
+        }
+
+        
+
+        public void PrepareNewRound()
+        {
+            workBenchEventSO.PrepareNewRound();
+            staminaCost = 0;
+            _allQueues.ForEach(v => v.PrepareNewRound());
         }
         
+
+        // 打造结束
+        public void DidEndRound()
+        {
+            
+            // 合成
+            var equipment = forgeItem.DoForge();
+
+            InventoryManager.main.AddItem(equipment);
+            
+            _allQueues.ForEach(v => v.DidEndRound());
+            Destroy(workBenchUI);
+            workBench = null;
+            forgeItem = null;
+            _allQueues.Clear();
+        }
+
+
+        public void NewTurn()
+        {
+            workBenchEventSO.NewTurnDidStarted();
+            _allQueues.ForEach(v => v.NewTurn());
+        }
     }
 }

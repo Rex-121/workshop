@@ -1,30 +1,62 @@
 using System;
+using Sirenix.OdinInspector;
 using UniRx;
+using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Tyrant
 {
+    [HideReferenceObjectPicker, HideLabel, InlineProperty, Serializable]
     public class Health
     {
+        [SerializeField]
+        private int totalHealth;
 
-        public readonly int totalHealth;
+        // [ProgressBar(0, "totalHealth", ColorGetter = "GetHealthBarColor", Height = 30), ShowInInspector, HideLabel]
+        [SerializeField] private int _currentHealth;
+        // {
+        //     set => currentHealth.Value = Math.Min(totalHealth, value);
+        //     get => currentHealth.Value;
+        // }
 
-        private int _currentHealth
+        private Color GetHealthBarColor(float value)
         {
-            set => currentHealth.Value = Math.Min(totalHealth, value);
-            get => currentHealth.Value;
+            return Color.Lerp(Color.red, Color.green, Mathf.Pow(value / totalHealth, 2));
         }
         
-        public string healthDisplay => $"{_currentHealth}/{totalHealth}";
-        
-        public readonly ReactiveProperty<int> currentHealth = new ReactiveProperty<int>(0);
+        private string healthDisplay => $"{_currentHealth}/{totalHealth}";
 
-        public readonly ReadOnlyReactiveProperty<string> healthBarDisplay;
+        [ShowInInspector]
+        private ReactiveProperty<int> currentHealth
+        {
+            get
+            {
+                if (_currentHealthRx == null)
+                {
+                    _currentHealthRx = new ReactiveProperty<int>(_currentHealth);
+                }
+
+                return _currentHealthRx;
+            }
+        }
+
+        private ReactiveProperty<int> _currentHealthRx;
+        [HideInInspector]
+        public ReadOnlyReactiveProperty<string> healthBarDisplay => currentHealth.Select(_ => healthDisplay).ToReadOnlyReactiveProperty();
+        //         }
+        //
+        //         return _healthBarDisplay;
+        //     }
+        // }
+        //
+        // ReadOnlyReactiveProperty<string> _healthBarDisplay;
+        
         public Health(Attribute attribute, HeroHealthStrategy heroHealthStrategy)
         {
             totalHealth = heroHealthStrategy.Health(attribute);
             _currentHealth = totalHealth;
 
-            healthBarDisplay = currentHealth.Select(_ => healthDisplay).ToReadOnlyReactiveProperty();
+            // healthBarDisplay = currentHealth.Select(_ => healthDisplay).ToReadOnlyReactiveProperty();
         }
 
         public bool isEmpty => _currentHealth <= 0;
@@ -37,7 +69,9 @@ namespace Tyrant
         /// <returns></returns>
         public int TakeDamage(int damage)
         {
-            _currentHealth = Math.Max(0, _currentHealth - damage);
+            
+            _currentHealth = Math.Min(totalHealth, Math.Max(0, _currentHealth - damage));
+            currentHealth.Value = _currentHealth;
             return _currentHealth;
         }
         

@@ -15,7 +15,7 @@ namespace Tyrant
 
         public int maxSlot = 36;
 
-        private readonly List<InventorySlot> _slots = new();
+        private readonly List<InventorySlotMono> _slots = new();
         
         [LabelText("用于物品拖拽的点")]
         public Transform dragPointForItem;
@@ -26,7 +26,7 @@ namespace Tyrant
             GenerateSlots();
 
             // 增加进背包
-            InventoryManager.main.allMaterials.ForEach(AddItem);
+            // InventoryManager.main.allMaterials.ForEach(AddItem);
         }
 
 
@@ -35,7 +35,7 @@ namespace Tyrant
         {
             // 所有空格
             var allEmpty = _slots.Where(v => !v.isOccupied);
-            var inventorySlots = allEmpty as InventorySlot[] ?? allEmpty.ToArray();
+            var inventorySlots = allEmpty as InventorySlotMono[] ?? allEmpty.ToArray();
             if (!inventorySlots.Any())
             {
                 // 如果没有空格
@@ -55,7 +55,7 @@ namespace Tyrant
             for (var i = 0; i < maxSlot; i++)
             {
                 var gb = Instantiate(slotPrefab, panel);
-                var sc = gb.GetComponent<InventorySlot>();
+                var sc = gb.GetComponent<InventorySlotMono>();
                 sc.itemDraggingHandle = new ItemPreviewForInventorySlot.DefaultDragging(dragPointForItem);
                 _slots.Add(sc);
             }

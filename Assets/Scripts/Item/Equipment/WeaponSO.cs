@@ -8,7 +8,7 @@ namespace Tyrant
     {
         public override IEquipment ToEquipment()
         {
-            return Sword.FromSwordSO(this);
+            return Weapon.FromSwordSO(this);
         }
     }
 }

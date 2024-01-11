@@ -12,43 +12,66 @@ namespace Tyrant
     }
 
 
-    public struct Sword : IWeapon
+    [System.Serializable, HideReferenceObjectPicker]
+    public struct Weapon : IWeapon
     {
+        
+        [ReadOnly, HideLabel]
+        [VerticalGroup("Basic/VBasic")]
+        public string id;
+        
         [ShowInInspector]
+        [HideLabel]
+        [PreviewField(60, ObjectFieldAlignment.Left)]
+        [HorizontalGroup("Basic", 60)]
+        public Sprite sprite => _weaponSO.icon;
+        
+        [SerializeField]
+        [HideLabel]
+        [VerticalGroup("Basic/VBasic")]
         public string itemName { get; set; }
         
-        [ShowInInspector]
-        public Sprite sprite { get; }
-        
-        [ShowInInspector]
-        public Quality quality => Quality.On(Quality.Tier.Fine);
-        
-        [ShowInInspector]
-        public Attribute attribute { get; set; }
+       
+        [SerializeField, VerticalGroup("Basic/VBasic"), HideLabel]
+        public Quality quality { get; set; }
 
-        [ShowInInspector]
-        public AttackPower power { get; set; }// => new AttackPower(5, 8);
+        [PropertyOrder(100)] public Attribute attribute => _attribute.LiftByQuality(quality);
 
-        public Sword(string name, Attribute attribute, Sprite sprite, AttackPower power)
+        // [ShowInInspector, VerticalGroup("Basic/Basic"), HideLabel]
+        public AttackPower power => _powerFromBluePrint.LiftByQuality(quality);
+
+        private WeaponSO _weaponSO => EquipmentGenesis.main.FindWeaponSOById(id);
+        
+        [SerializeField]
+        private AttackPower _powerFromBluePrint;
+        
+        [SerializeField]
+        private Attribute _attribute;
+        
+        
+        public Weapon(string name, Attribute attribute, string id, AttackPower powerFromBluePrint, Quality qualities)
         {
-            this.attribute = attribute;
+            _attribute = attribute;
 
-            this.sprite = sprite;
+            // this.sprite = sprite;
+            this.id = id;
 
-            this.power = power;
-            this.itemName = name;
+            _powerFromBluePrint = powerFromBluePrint;
+            
+            itemName = name;
+
+            quality = qualities;
         }
         
-        public static Sword FromSwordSO(WeaponSO weaponSO)
+        public static Weapon FromSwordSO(WeaponSO weaponSO)
         {
-            return new Sword(weaponSO.name, weaponSO.attribute, weaponSO.icon, new AttackPower(weaponSO.power.x, weaponSO.power.y));
+            return new Weapon(weaponSO.equipmentName, weaponSO.attribute, weaponSO.id.ToString(), new AttackPower(weaponSO.power.x, weaponSO.power.y), new Quality());
         }
-        
-        // public Sword(EquipmentSO so)
-        // {
-        //     itemName = so.equipmentName;
-        //     sprite = so.icon;
-        // }
+
+        public IEquipment LiftByQuality(IQuality qualities)
+        {
+            return new Weapon(itemName, attribute, id, power, qualities.quality);
+        }
     }
     
 }

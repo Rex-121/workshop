@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace Tyrant
 {
@@ -12,6 +13,7 @@ namespace Tyrant
         public Quality quality { get; }
     }
 
+    [Serializable]
     public struct QualityGroup: IQuality
     {
         
@@ -107,9 +109,10 @@ namespace Tyrant
         }
     }
     
-    public readonly struct Quality: IQuality
+    [Serializable]
+    public struct Quality: IQuality
     {
-        public readonly Tier tier;
+        [SerializeField] public Tier tier;
         
         private Quality(Tier t)
         {
@@ -123,8 +126,10 @@ namespace Tyrant
             var value = a.tier.ToInt() + b.quality.tier.ToInt();
             return On(value.TierFromInt());
         }
-        
-        [HideLabel, SuffixLabel("品级  ", true)]
+
+        public override string ToString() => $"品级{tier}";
+
+        [HideLabel, SuffixLabel("品级  ", true), Serializable]
         public enum Tier
         {
             Defectives,

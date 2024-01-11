@@ -6,22 +6,22 @@ using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using Tyrant;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class AdventureMono : MonoBehaviour
 {
 
-    private Dictionary<int, HeroSquad> heroSquads = new();
+    private Dictionary<int, HeroSquadMono> heroSquads = new();
 
     public DungeonSO dungeonSO;
 
     public Vector2[] positions;
 
-    public HeroSquad heroSquadPrefab;
+    [FormerlySerializedAs("heroSquadPrefab")] public HeroSquadMono heroSquadMonoPrefab;
     
 
-    [Button]
-    public void NewHeroSquadOnAdventure()
+    public void NewHeroSquadOnAdventure(HeroSquad squad)
     {
 
         if (heroSquads.Count >= positions.Length)
@@ -49,8 +49,10 @@ public class AdventureMono : MonoBehaviour
         
         var position = positions[ii];
             
-        var heroSquad = Instantiate(heroSquadPrefab, position, Quaternion.identity, transform);
+        var heroSquad = Instantiate(heroSquadMonoPrefab, position, Quaternion.identity, transform);
 
+        heroSquad.NewSquad(squad);
+        
         heroSquad.indexInAdventure = ii;
         
         heroSquad.transform.localPosition = position;
@@ -117,13 +119,13 @@ public class AdventureMono : MonoBehaviour
         Destroy(eMono.gameObject);
     }
 
-    private void DungeonDidFinished(HeroSquad heroSquad, Dungeon dungeon)
+    // 冒险完成
+    private void DungeonDidFinished(HeroSquadMono heroSquadMono, Dungeon dungeon)
     {
         
-        heroSquads.Remove(heroSquad.indexInAdventure);
+        // heroSquads.Remove(heroSquadMono.indexInAdventure);
+        //
+        // Destroy(heroSquadMono.gameObject);
         
-        Destroy(heroSquad.gameObject);
-        
-        NewHeroSquadOnAdventure();
     }
 }

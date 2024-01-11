@@ -22,7 +22,7 @@ namespace Tyrant
         [LabelText("拖拽点")]
         public Transform anchor;
         
-        public List<InventorySlot> slots = new();
+        public List<InventorySlotMono> slots = new();
         
         private static BluePrint bluePrint => RequestManager.main.bluePrint;
         private void Start()
@@ -45,7 +45,7 @@ namespace Tyrant
                     }
                     else
                     {
-                        var gb = Instantiate(slotPrefab, panel.transform).GetComponent<InventorySlot>();
+                        var gb = Instantiate(slotPrefab, panel.transform).GetComponent<InventorySlotMono>();
                     
                         // gb.AddRequire(requires.ElementAt(i));
                     
@@ -81,7 +81,7 @@ namespace Tyrant
         }
         
 
-        private class MyStruct: InventorySlot.IInventorySlotDrag
+        private class MyStruct: InventorySlotMono.IInventorySlotDrag
         {
             private Action<ItemPreviewForInventorySlot> v;
 

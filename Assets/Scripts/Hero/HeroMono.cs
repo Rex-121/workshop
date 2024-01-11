@@ -4,19 +4,34 @@ using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using TMPro;
 using UniRx;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Tyrant
 {
     [RequireComponent(typeof(HeroRequest))]
-    public class HeroMono : MonoBehaviour, IAmHero
+    public class HeroMono : MonoBehaviour, IAmHero, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         
         private HeroRequest _heroRequest;
         public TextMeshProUGUI healthBar;
 
-        [ShowInInspector]
+        [ShowInInspector, BoxGroup("HERO", centerLabel: true, AnimateVisibility = true), InlineProperty, HideLabel]
         private Hero _hero;
+
+        public Hero hero
+        {
+            set
+            {
+                _hero = value;
+                
+                _character = Instantiate(_hero.characterSO.characterMonoPrefab, transform);
+            
+                nameLabel.text = _hero.heroName;
+            }
+            get => _hero;
+        }
 
         public Attribute attribute => _hero.attribute;
 
@@ -42,15 +57,6 @@ namespace Tyrant
         private void Awake()
         {
             _heroRequest = GetComponent<HeroRequest>();
-        }
-
-        public void RestoreFromSO(CharacterSO characterSO, JobSO jobSO)
-        {
-            _hero = Hero.FromSO(characterSO, jobSO);
-            
-            _character = Instantiate(characterSO.characterMonoPrefab, transform);
-            
-            nameLabel.text = _hero.heroName;
         }
 
         private CharacterMono _character;
@@ -121,18 +127,18 @@ namespace Tyrant
                 _character.Death();
             }
         }
-
-        private void OnMouseEnter()
+        
+        public void OnPointerEnter(PointerEventData eventData)
         {
             nameLabel.enabled = true;
         }
 
-        private void OnMouseExit()
+        public void OnPointerExit(PointerEventData eventData)
         {
             nameLabel.enabled = false;
         }
 
-        private void OnMouseDown()
+        public void OnPointerClick(PointerEventData eventData)
         {
             heroInfoDisplay?.Invoke(_hero);
         }

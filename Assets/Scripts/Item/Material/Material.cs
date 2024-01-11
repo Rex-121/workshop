@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
@@ -7,22 +8,26 @@ namespace Tyrant
 {
     
     
+    [System.Serializable]
     public struct RawMaterial
     {
-        [ShowInInspector]
+        [SerializeField]
         public string itemName { get; }
+
+        public string id;
         
-        
-        [ShowInInspector]
+        [SerializeField]
         public Sprite sprite { get; set; }
         
+        [SerializeField]
         public string code { get; set; }
 
         
         public MaterialFeature[] features;
         
-        public RawMaterial(string name, Sprite sprite, string code, IEnumerable<MaterialFeature> features)
+        public RawMaterial(string name, Sprite sprite, string code, IEnumerable<MaterialFeature> features, Guid id)
         {
+            this.id = id.ToString(); 
             itemName = name;
             this.sprite = sprite;
             this.code = code;
@@ -32,6 +37,7 @@ namespace Tyrant
         public IMaterial toMaterial => new Material(this);
     }
     
+    [System.Serializable]
     public struct Material: IMaterial
     {
         [ShowInInspector] public string itemName => rawMaterial.itemName + $"<sprite={quality.tier.ToInt()}>";
@@ -41,10 +47,15 @@ namespace Tyrant
         [ShowInInspector, ReadOnly]
         public string code => rawMaterial.code;
 
+        [SerializeField]
+        public string id;
+
         [ShowInInspector]
         public RawMaterial rawMaterial;
 
         public MaterialFeature[] features => rawMaterial.features;
+        
+        [SerializeField]
         public Quality quality { get; set; }
 
         // public Material(string name, Sprite sprite, string code)
@@ -52,11 +63,17 @@ namespace Tyrant
         //     rawMaterial = new RawMaterial(name, sprite, code, new MaterialFeature[] { });
         //     quality = Quality.Random();
         // }
-        
+
+        public override string ToString()
+        {
+            return $"{base.ToString()}-{rawMaterial.itemName}-({quality})";
+        }
+
         public Material(RawMaterial rawMaterial)
         {
             this.rawMaterial = rawMaterial;
             quality = Quality.Random();
+            id = rawMaterial.id;
         }
     }
 }
