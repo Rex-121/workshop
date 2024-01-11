@@ -19,7 +19,7 @@ namespace Tyrant
                 
                 _heroSquads.AddRange(data);
                 
-                DontDestroyOnLoad(this);
+                // DontDestroyOnLoad(this);
             }
             else
             {

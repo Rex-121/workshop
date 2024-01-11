@@ -12,14 +12,13 @@ namespace Tyrant
     {
         public Hero[] heroes => _heroes.ToArray();
 
-        [NonSerialized]
+        [NonSerialized, ShowInInspector, LabelText("是否处在冒险途中")]
         public bool isOnAdventure = false;
 
         public void OnAdventure() => isOnAdventure = true;
         
         [SerializeField]
         private List<Hero> _heroes;
-
 
         [ShowInInspector]
         public SquadInventory inventory = new();
