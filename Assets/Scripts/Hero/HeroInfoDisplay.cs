@@ -1,19 +1,27 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
-
+using UniRx;
 namespace Tyrant
 {
     public class HeroInfoDisplay: MonoBehaviour
     {
 
         private Hero _hero;
+
+        private IDisposable _infoDis;
         public Hero hero
         {
             set
             {
                 _hero = value;
+                _infoDis?.Dispose();
+                _infoDis = hero?.heroDidChange
+                    .Subscribe(v => Refresh())
+                    .AddTo(this);
+                
                 Refresh();
             }
             get => _hero;
@@ -33,6 +41,10 @@ namespace Tyrant
         private void Refresh()
         {
             if (ReferenceEquals(hero, null)) return;
+
+
+         
+            
 
             if (!ReferenceEquals(weaponEquip, null))
             {

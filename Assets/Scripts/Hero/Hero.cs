@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
@@ -47,10 +48,8 @@ namespace Tyrant
         [BoxGroup("装备"), InlineProperty, HideLabel, HideReferenceObjectPicker]
         public HeroEquipments equipments;
 
-        // public Hero()
-        // {
-        //     
-        // }
+        [NonSerialized]
+        public BehaviorSubject<bool> heroDidChange = new BehaviorSubject<bool>(false);
         
         Hero(Attribute a, HeroHealthStrategy healthStrategy, JobSO jobSO, CharacterSO characterSO)
         {
@@ -91,12 +90,15 @@ namespace Tyrant
                 .needSave
                 .Skip(1)
                 .Subscribe(v => Save());
+
+            heroDidChange ??= new BehaviorSubject<bool>(false);
         }
 
 
         public void Save()
         {
             SquadManager.main.Save();
+            heroDidChange.OnNext(true);
         }
 
         public static Hero FromSO(CharacterSO characterSO, JobSO jobSO)
