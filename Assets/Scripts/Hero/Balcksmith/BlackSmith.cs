@@ -2,7 +2,7 @@ using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using WorkBench;
-
+using UniRx;
 namespace Tyrant.BlackSmith
 {
     public class BlackSmith : MonoBehaviour
@@ -32,7 +32,6 @@ namespace Tyrant.BlackSmith
         {
             _animator = GetComponent<Animator>();
         }
-
         private void OnEnable()
         {
             workBenchEventSO.prepareNewRound += StartHammer;

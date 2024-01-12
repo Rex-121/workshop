@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UniRx;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -28,12 +29,10 @@ namespace Tyrant.UI
         public WorkBenchQualityProgressBar qualityProgressBar;
         private void Start()
         {
-            // DisplayInformation();
-          
             
             var list = workBench.Start();
-
-            GetComponent<GridLayoutGroup>().constraintCount = 3;
+            
+            GetComponent<GridLayoutGroup>().constraintCount = _bluePrint.boardLines.First().Count();
             
             for (var i = 0; i < list.Count; i++)
             {

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9925fb1d62ccc465085a31a129ded3d2, type: 3}
+  m_Name: "\u77ED\u5F13"
+  m_EditorClassIdentifier: 
+  materialRequires: 0000000000000000
+  icon: {fileID: 1276036978, guid: 5adafed67f17e41e39188696d7ba4771, type: 3}
+  board: 220:101:101:220
+  equipmentSO: {fileID: 11400000, guid: a870c2cd4e198474c99c413d7aef4b8b, type: 2}
+  makePoints: 10
+  qualityPoints: 20

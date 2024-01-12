@@ -29,8 +29,3 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 55fe8f7f3a9164d11856c227b47f9231, type: 2}
   - {fileID: 11400000, guid: a7af70d5e89bb423a8dae2e97f1ad982, type: 2}
   - {fileID: 11400000, guid: 6927e76d3dfe14d26b362a81eeb13e43, type: 2}
-  heroCodes:
-  - 0:1-1:2-2:2
-  - 1:1-2:2-1:2
-  - 2:1-1:2-2:1
-  - 1:1-1:0-2:0

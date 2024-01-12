@@ -23,4 +23,3 @@ MonoBehaviour:
     SerializationNodes: []
   bluePrintSO:
   - {fileID: 11400000, guid: 9baeb6b3018df4440a6714b87ca05554, type: 2}
-  - {fileID: 11400000, guid: 40c2ecf75a79b476cbcea160120b293a, type: 2}

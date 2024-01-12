@@ -59,7 +59,7 @@ namespace Tyrant
         
         private void Start()
         {
-            _allKeys = uiManagerSO.allItems.Keys.ToArray();
+            _allKeys = uiManagerSO.allUIItems.Keys.ToArray();
         }
 
         private void Update()
@@ -89,9 +89,10 @@ namespace Tyrant
             else
             {
                 _latestKey = keyName;
-                _latestDisplay = Instantiate(uiManagerSO.allItems[keyName], transform);
 
+                var item = uiManagerSO.allUIItems[keyName];
 
+                _latestDisplay = item.isOnCanvas ? Instantiate(item.gameObject, transform) : Instantiate(item.gameObject);
 
                 if (_latestDisplay.TryGetComponent(out InventoryBag bag))
                 {

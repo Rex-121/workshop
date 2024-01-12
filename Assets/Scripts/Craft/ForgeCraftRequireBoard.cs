@@ -24,7 +24,7 @@ namespace Tyrant
         
         public List<InventorySlotMono> slots = new();
         
-        private static BluePrint bluePrint => RequestManager.main.bluePrint;
+        private static BluePrint bluePrint => WorkBenchManager.main.bluePrint;
         private void Start()
         {
             

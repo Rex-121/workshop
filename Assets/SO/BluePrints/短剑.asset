@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9925fb1d62ccc465085a31a129ded3d2, type: 3}
   m_Name: "\u77ED\u5251"
   m_EditorClassIdentifier: 
-  materialSos:
-  - {fileID: 11400000, guid: ac1314e9315df4e5e8801de8b50b1dc5, type: 2}
-  - {fileID: 11400000, guid: c8e53f76dbdd64650b02ec5646b34652, type: 2}
+  materialRequires: 0000000001000000
   icon: {fileID: -1497093070, guid: 5adafed67f17e41e39188696d7ba4771, type: 3}
   board: 0020:2112:0020
   equipmentSO: {fileID: 11400000, guid: e8045a1ddcc9d4462bbd6acf31a0e21c, type: 2}

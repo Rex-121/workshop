@@ -47,7 +47,7 @@ namespace Tyrant
         [LabelText("工作台Prefab")]
         public GameObject workBenchPrefab;
 
-        public BluePrintSO bluePrintSO;
+        public BluePrint bluePrint;
         
         public ToolSO[] toolSos;
 
@@ -164,7 +164,7 @@ namespace Tyrant
         public void StartAWorkBench()
         {
 
-            var bluePrint = BluePrint.FromSO(bluePrintSO);
+            // var bluePrint = BluePrint.FromSO(bluePrintSO);
             
             workBench = new WorkBench(bluePrint);
             

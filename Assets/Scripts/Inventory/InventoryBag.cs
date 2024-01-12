@@ -26,7 +26,7 @@ namespace Tyrant
             GenerateSlots();
 
             // 增加进背包
-            // InventoryManager.main.allMaterials.ForEach(AddItem);
+            InventoryManager.main.items.slots.Select(v => v.Value.item).ForEach(AddItem);
         }
 
 

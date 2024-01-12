@@ -17,17 +17,18 @@ MonoBehaviour:
     SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 4322071449646642922, guid: a4bfa179494d24a84a5df4694b8040f5, type: 3}
-    - {fileID: 187675904500015612, guid: a56b9fdd798ce4a3ab997bec4128a5d8, type: 3}
     - {fileID: 4891744517426476143, guid: b8c55f4bf1b8548dba170325f553c363, type: 3}
+    - {fileID: 187675904500015612, guid: a56b9fdd798ce4a3ab997bec4128a5d8, type: 3}
+    - {fileID: 2980155221130879696, guid: 88d6badb007414c569d1baf2929baed3, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: allItems
+    - Name: allUIItems
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[UnityEngine.KeyCode, UnityEngine.CoreModule],[UnityEngine.GameObject,
-        UnityEngine.CoreModule]], mscorlib
+      Data: 0|System.Collections.Generic.Dictionary`2[[UnityEngine.KeyCode, UnityEngine.CoreModule],[Tyrant.UIManagerSO+Wrapper,
+        Assembly-CSharp]], mscorlib
     - Name: comparer
       Entry: 7
       Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[UnityEngine.KeyCode,
@@ -43,7 +44,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 3
+      Data: 4
     - Name: 
       Entry: 7
       Data: 
@@ -51,20 +52,17 @@ MonoBehaviour:
       Entry: 3
       Data: 98
     - Name: $v
+      Entry: 7
+      Data: Tyrant.UIManagerSO+Wrapper, Assembly-CSharp
+    - Name: isOnCanvas
+      Entry: 5
+      Data: true
+    - Name: gameObject
       Entry: 10
       Data: 0
     - Name: 
       Entry: 8
       Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 116
-    - Name: $v
-      Entry: 10
-      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -75,8 +73,59 @@ MonoBehaviour:
       Entry: 3
       Data: 103
     - Name: $v
+      Entry: 7
+      Data: Tyrant.UIManagerSO+Wrapper, Assembly-CSharp
+    - Name: isOnCanvas
+      Entry: 5
+      Data: true
+    - Name: gameObject
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 116
+    - Name: $v
+      Entry: 7
+      Data: Tyrant.UIManagerSO+Wrapper, Assembly-CSharp
+    - Name: isOnCanvas
+      Entry: 5
+      Data: true
+    - Name: gameObject
       Entry: 10
       Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 122
+    - Name: $v
+      Entry: 7
+      Data: Tyrant.UIManagerSO+Wrapper, Assembly-CSharp
+    - Name: isOnCanvas
+      Entry: 5
+      Data: true
+    - Name: gameObject
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
