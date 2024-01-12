@@ -27,12 +27,15 @@ namespace WorkBench
         public UnityAction<int> turnDidEnded;
         // 计算分数
         public UnityAction<int, int> scoreDidChange;
+        // 4. DidForgeThisTurn
+        public UnityAction<int> roundDidEnded;
 
         public void BlueprintDidSelected(BluePrint bluePrint) => blueprintDidSelected?.Invoke(bluePrint);
         public void PrepareNewRound() => prepareNewRound?.Invoke(0);
         public void NewTurnDidStarted() => newTurnDidStarted?.Invoke(0);
         public void TurnDidEnded() => turnDidEnded?.Invoke(0);
         public void ScoreDidChange(int make, int quality) => scoreDidChange?.Invoke(make, quality);
+        public void RoundDidEnd() => roundDidEnded?.Invoke(0);
 
     }
 }

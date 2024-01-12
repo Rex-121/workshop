@@ -19,6 +19,8 @@ namespace Tyrant.BlackSmith
             _animator.SetBool(IsHammer, _isHammer);
         }
 
+        public SpriteRenderer forgeItem;
+
         private bool _isHammer = false;
 
         public WorkBenchEventSO workBenchEventSO;
@@ -35,12 +37,26 @@ namespace Tyrant.BlackSmith
         {
             workBenchEventSO.prepareNewRound += StartHammer;
             workBenchEventSO.turnDidEnded += EndHammer;
+            workBenchEventSO.blueprintDidSelected += BlueprintDidSelected;
+            workBenchEventSO.roundDidEnded += RoundDidEnded;
+        }
+
+        private void RoundDidEnded(int arg0)
+        {
+            forgeItem.sprite = null;
+        }
+
+        private void BlueprintDidSelected(BluePrint arg0)
+        {
+            forgeItem.sprite = arg0.icon;
         }
 
         private void OnDisable()
         {
             workBenchEventSO.prepareNewRound -= StartHammer;
             workBenchEventSO.turnDidEnded -= EndHammer;
+            workBenchEventSO.blueprintDidSelected -= BlueprintDidSelected;
+            workBenchEventSO.roundDidEnded -= RoundDidEnded;
         }
 
         private void StartHammer(int arg0)

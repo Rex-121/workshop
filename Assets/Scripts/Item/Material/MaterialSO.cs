@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Sirenix.OdinInspector;
+using Tyrant.Items;
 using UnityEngine;
 
 namespace Tyrant
@@ -10,7 +11,7 @@ namespace Tyrant
     {
         
         [ReadOnly]
-        public Guid id = Guid.NewGuid();
+        public Guid id;
         
         public string materialName;
         
@@ -18,10 +19,19 @@ namespace Tyrant
 
         public string code;
 
+        public MaterialType type;
+
         [LabelText("特性")]
         public MaterialFeatureSO[] featureSOs;
         
-        public RawMaterial toRawMaterial => new (materialName, icon, code, featureSOs.Select(MaterialFeatureMakes.From), id);
+        public RawMaterial toRawMaterial => new (this, featureSOs.Select(MaterialFeatureMakes.From));
 
+        
+        
+        [Button]
+        public void AssignGuid()
+        {
+            id = Guid.NewGuid();
+        } 
     }
 }

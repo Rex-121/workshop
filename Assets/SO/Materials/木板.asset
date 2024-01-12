@@ -12,8 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c829262ebb00d417eb9e31580f6a157b, type: 3}
   m_Name: "\u6728\u677F"
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: id
+      Entry: 2
+      Data: 9cab7a5ebe53494bbbb971a87ea23764
   materialName: "\u6728\u677F"
   icon: {fileID: -45777601, guid: 9c68229f041134606ba844e5bda5c2cc, type: 3}
   code: 
+  type: 0
   featureSOs:
   - {fileID: 11400000, guid: 30bf1d8bf266f43a2afcfc22e4565ad1, type: 2}

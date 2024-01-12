@@ -24,6 +24,9 @@ MonoBehaviour:
     - Name: before
       Entry: 7
       Data: 0|Tyrant.Weapon, Assembly-CSharp
+    - Name: itemName
+      Entry: 1
+      Data: "\u4E00\u628A\u5251"
     - Name: quality
       Entry: 7
       Data: Tyrant.Quality, Assembly-CSharp
@@ -35,7 +38,7 @@ MonoBehaviour:
       Data: 
     - Name: id
       Entry: 1
-      Data: 2e75c57a-8f0b-4534-bb40-734b908f9c9b
+      Data: aa3edf58-7bf2-4769-97ad-1658ca7f1982
     - Name: _powerFromBluePrint
       Entry: 7
       Data: Tyrant.AttackPower, Assembly-CSharp
@@ -75,18 +78,21 @@ MonoBehaviour:
     - Name: remake
       Entry: 7
       Data: 1|Tyrant.Weapon, Assembly-CSharp
+    - Name: itemName
+      Entry: 1
+      Data: "\u4E00\u628A\u5251"
     - Name: quality
       Entry: 7
       Data: Tyrant.Quality, Assembly-CSharp
     - Name: tier
       Entry: 3
-      Data: 2
+      Data: 0
     - Name: 
       Entry: 8
       Data: 
     - Name: id
       Entry: 1
-      Data: 2e75c57a-8f0b-4534-bb40-734b908f9c9b
+      Data: aa3edf58-7bf2-4769-97ad-1658ca7f1982
     - Name: _powerFromBluePrint
       Entry: 7
       Data: Tyrant.AttackPower, Assembly-CSharp

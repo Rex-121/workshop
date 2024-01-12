@@ -240,8 +240,10 @@ namespace Tyrant
             var equipment = forgeItem.DoForge();
 
             InventoryManager.main.AddItem(equipment);
-            
             _allQueues.ForEach(v => v.DidEndRound());
+            
+            workBenchEventSO.RoundDidEnd();
+            
             Destroy(workBenchUI);
             workBench = null;
             forgeItem = null;

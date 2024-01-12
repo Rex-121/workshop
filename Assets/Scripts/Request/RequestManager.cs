@@ -15,7 +15,7 @@ namespace Tyrant
             if (main == null)
             {
                 main = this;
-                DontDestroyOnLoad(this);
+                // DontDestroyOnLoad(this);
             }
             else
             {

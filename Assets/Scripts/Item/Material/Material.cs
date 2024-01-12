@@ -2,35 +2,35 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
+using Tyrant.Items;
 using UnityEngine;
 
 namespace Tyrant
 {
     
-    
-    [System.Serializable]
+    [Serializable]
     public struct RawMaterial
     {
-        [SerializeField]
-        public string itemName { get; }
+        public string itemName => _materialSO.materialName;
 
         public string id;
-        
-        [SerializeField]
-        public Sprite sprite { get; set; }
-        
-        [SerializeField]
-        public string code { get; set; }
 
+        public Sprite sprite => _materialSO.icon;
+
+        public string code => _materialSO.code;
+
+        public MaterialType type => _materialSO.type;
+
+        private MaterialSO _materialSO => ItemGenesis.main.FindMaterialSOById(id);
         
         public MaterialFeature[] features;
         
-        public RawMaterial(string name, Sprite sprite, string code, IEnumerable<MaterialFeature> features, Guid id)
+        public RawMaterial(MaterialSO so, IEnumerable<MaterialFeature> features)
         {
-            this.id = id.ToString(); 
-            itemName = name;
-            this.sprite = sprite;
-            this.code = code;
+            this.id = so.id.ToString(); 
+            // itemName = name;
+            // this.sprite = sprite;
+            // this.code = code;
             this.features = features.ToArray();
         }
 
@@ -47,8 +47,7 @@ namespace Tyrant
         [ShowInInspector, ReadOnly]
         public string code => rawMaterial.code;
 
-        [SerializeField]
-        public string id;
+        public string id => rawMaterial.id;
 
         [ShowInInspector]
         public RawMaterial rawMaterial;
@@ -73,7 +72,7 @@ namespace Tyrant
         {
             this.rawMaterial = rawMaterial;
             quality = Quality.Random();
-            id = rawMaterial.id;
+            // id = rawMaterial.id;
         }
     }
 }

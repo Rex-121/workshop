@@ -27,7 +27,6 @@ namespace Tyrant
                     "ITEMS", 
                     item => item is IMaterial
                     );
-                DontDestroyOnLoad(this);
             }
             else
             {
