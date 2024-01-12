@@ -10,11 +10,8 @@ using UnityEngine.EventSystems;
 
 namespace Tyrant
 {
-    [RequireComponent(typeof(HeroRequest))]
     public class HeroMono : MonoBehaviour, IAmHero, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
-        
-        private HeroRequest _heroRequest;
         public TextMeshProUGUI healthBar;
 
         [ShowInInspector, BoxGroup("HERO", centerLabel: true, AnimateVisibility = true), InlineProperty, HideLabel]
@@ -53,11 +50,6 @@ namespace Tyrant
 
 
         public Action<Hero> heroInfoDisplay;
-        
-        private void Awake()
-        {
-            _heroRequest = GetComponent<HeroRequest>();
-        }
 
         private CharacterMono _character;
         private void OnEnable()
