@@ -15,7 +15,7 @@ namespace Tyrant
             {
                 return ES3.Load<Dictionary<int, Inventory.Slot>>(key);
             }
-            catch (Exception e)
+            catch
             {
                 return new Dictionary<int, Inventory.Slot> { };
             }

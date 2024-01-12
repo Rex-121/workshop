@@ -1,3 +1,4 @@
+using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -15,8 +16,7 @@ namespace Tyrant
         {
             animator = GetComponent<Animator>();
         }
-
-
+        
         [Button]
         public void Attack()
         {

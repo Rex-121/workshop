@@ -13,14 +13,14 @@ namespace Tyrant.UI
 
         private Vector2 _originPosition;
 
-        private bool _isLocked = false;
+        // private bool _isLocked = false;
 
         public Action endDrag;
         
         public Action startDrag;
         public void Lock()
         {
-            _isLocked = true;
+            // _isLocked = true;
         }
         
         private void Awake()
