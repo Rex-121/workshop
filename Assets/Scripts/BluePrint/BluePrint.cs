@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
+using Tyrant.Items;
 using UnityEngine;
 
 namespace Tyrant
@@ -9,7 +10,7 @@ namespace Tyrant
     {
 
         [ShowInInspector]
-        public RawMaterial[] rawMaterialsRequires;
+        public MaterialType[] rawMaterialsRequires;
 
         public Sprite icon;
 
@@ -19,7 +20,7 @@ namespace Tyrant
         
         public EquipmentSO equipmentSO;
 
-        public BluePrint(IEnumerable<RawMaterial> requires, Sprite icon, string board, int make, int quality, BluePrintSO bluePrintSO)
+        public BluePrint(IEnumerable<MaterialType> requires, Sprite icon, string board, int make, int quality, BluePrintSO bluePrintSO)
         {
             rawMaterialsRequires = requires.ToArray();
             this.icon = icon;
@@ -52,15 +53,16 @@ namespace Tyrant
 
         public static BluePrint FromSO(BluePrintSO so)
         {
-            return new BluePrint(so.materialSos.Select(v => v.toRawMaterial), so.icon, so.board, so.makePoints, so.qualityPoints, so);
+            return new BluePrint(so.materialRequires, so.icon, so.board, so.makePoints, so.qualityPoints, so);
         }
 
         public bool IsMaterialEnough(IEnumerable<IMaterial> materials)
         {
-            var codes = rawMaterialsRequires.Select(v => v.code);
-            var code = string.Join(":", codes);
-            var other = string.Join(":", materials.Select(v => v.code.Split("-").First()));
-            return code == other;
+            return true;
+            // var codes = rawMaterialsRequires.Select(v => v.code);
+            // var code = string.Join(":", codes);
+            // var other = string.Join(":", materials.Select(v => v.code.Split("-").First()));
+            // return code == other;
         }
         
     }

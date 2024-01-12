@@ -1,4 +1,5 @@
 using Sirenix.OdinInspector;
+using Tyrant.Items;
 using UnityEngine;
 
 namespace Tyrant
@@ -8,19 +9,20 @@ namespace Tyrant
     {
 
         [LabelText("所需材料")]
-        public MaterialSO[] materialSos;
+        public MaterialType[] materialRequires;
 
-        [PreviewField]
+        [PreviewField(60)]
         public Sprite icon;
 
-        public string board;
+        
 
         /*
          * 00010-
          * 12121-
          * 00010-
          */
-
+        public string board;
+        
         public EquipmentSO equipmentSO;
 
 
