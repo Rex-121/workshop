@@ -12,15 +12,19 @@ namespace Tyrant
 
         private readonly List<EquipmentInventorySlot> _allSlots = new();
 
+
+        public Inventory.Type inventoryType;
+
         private void Start()
         {
 
-            var equipments = InventoryManager.main.allEquipments;
+            var all = InventoryManager.main.InventoryBy(inventoryType);
 
 
-            for (int i = 0; i < InventoryManager.main.equipments.maxSlot; i++)
+            for (int i = 0; i < all.maxSlot; i++)
             {
                 var gb = Instantiate(equipmentInventorySlotPrefab, panel);
+                gb.inventoryType = inventoryType;
                 gb.index = i;
                 _allSlots.Add(gb);
             }

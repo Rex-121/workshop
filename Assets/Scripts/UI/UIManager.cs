@@ -49,9 +49,12 @@ namespace Tyrant
             {
                 if (_inspector == null)
                 {
-                    _inspector = Instantiate(inspectorPrefab, inspectorTransform);
-                    _inspector.equipment = item as IEquipment;
-                    _inspector.transform.position = Input.mousePosition;
+                    if (item is IEquipment equipment)
+                    {
+                        _inspector = Instantiate(inspectorPrefab, inspectorTransform);
+                        _inspector.equipment = equipment;
+                        _inspector.transform.position = Input.mousePosition;
+                    }
                 }
                 inspectorTransform.SetAsLastSibling();
             }

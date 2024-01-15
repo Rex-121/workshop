@@ -126,6 +126,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4322071449646642921}
   - component: {fileID: 4322071449646642920}
+  - component: {fileID: 5431163525001782039}
   m_Layer: 5
   m_Name: Inventory
   m_TagString: Untagged
@@ -161,7 +162,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4322071449646642922}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 56aba010ba2de4357a32bfd9cd2870b5, type: 3}
   m_Name: 
@@ -170,3 +171,18 @@ MonoBehaviour:
   panel: {fileID: 4322071449537766825}
   maxSlot: 36
   dragPointForItem: {fileID: 0}
+--- !u!114 &5431163525001782039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4322071449646642922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c413e5f0994146f5bbf9439c40c5e6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  equipmentInventorySlotPrefab: {fileID: 5170236632348220821, guid: 41e3af99b21624103a7c591262a38789, type: 3}
+  panel: {fileID: 4322071449537766825}
+  inventoryType: 1

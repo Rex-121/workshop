@@ -37,9 +37,6 @@ namespace Tyrant
         #endregion
 
 
-        
-
-
         [ShowInInspector]
         public Inventory equipments;
         [ShowInInspector]
@@ -49,7 +46,29 @@ namespace Tyrant
 
         private IEnumerable<Inventory> allInventories => new[] {items, equipments};
 
-        public Dictionary<int, Inventory.Slot> allEquipments => equipments.slots;
+        // private Dictionary<int, Inventory.Slot> allEquipments => equipments.slots;
+
+        // public Dictionary<int, Inventory.Slot> All(Inventory.Type by)
+        // {
+        //     return by switch
+        //     {
+        //         Inventory.Type.Equipment => allEquipments,
+        //         Inventory.Type.Item => allItems,
+        //         _ => allEquipments
+        //     };
+        // }
+        
+        public Inventory InventoryBy(Inventory.Type by)
+        {
+            return by switch
+            {
+                Inventory.Type.Equipment => equipments,
+                Inventory.Type.Item => items,
+                _ => items
+            };
+        }
+        
+        // private Dictionary<int, Inventory.Slot> allItems => items.slots;
         public void AddSlot(Inventory.Slot slot) => allInventories.AddSlot(slot);
 
         public void AddItem(IItem item) => allInventories.CollectItem(item);

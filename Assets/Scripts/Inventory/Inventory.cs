@@ -12,6 +12,14 @@ namespace Tyrant
 
     public class Inventory: IDoCollectItem
     {
+        
+        
+        public enum Type
+        {
+            Equipment, Item
+        }
+        
+        
         public int maxSlot = 24;
 
         public string saveKey;

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   materialRequires: 0000000000000000
   icon: {fileID: 1536886222, guid: 5adafed67f17e41e39188696d7ba4771, type: 3}
-  board: 212:121::212
+  board: 212:120::212
   equipmentSO: {fileID: 11400000, guid: f8246e8bd67e7466ba33719b549f7cba, type: 2}
   makePoints: 10
   qualityPoints: 20

@@ -11,6 +11,8 @@ namespace Tyrant
         public int index;
         
         private EquipmentDragging _equipmentDragging;
+        
+        public Inventory.Type inventoryType;
         private void Refresh(Inventory.Slot e)
         {
 
@@ -32,7 +34,7 @@ namespace Tyrant
 
         private void Start()
         {
-            InventoryManager.main.equipments
+            InventoryManager.main.InventoryBy(inventoryType)
                 .SlotBy(index)
                 .Subscribe(Refresh)
                 .AddTo(this);
