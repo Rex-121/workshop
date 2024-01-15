@@ -56,8 +56,6 @@ namespace Tyrant
         {
             transform.SetParent(_pointToDrag);
             
-            // if (canvas == null) return;
-            
             _rectTransform.anchoredPosition += eventData.delta / _canvas.scaleFactor;
 
             canvasGroup.blocksRaycasts = false;
@@ -65,18 +63,35 @@ namespace Tyrant
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            transform.SetParent(previousParent);
+            if (!_temporaryPinned)
+            {
+                transform.SetParent(previousParent);    
+            }
+            // transform.SetParent(previousParent);    
             _rectTransform.anchoredPosition = Vector2.zero;
             canvasGroup.blocksRaycasts = true;
         }
 
-
-        // public void DidRemoveItem()
-        // {
-        //     InventoryManager.main.Remove(equipment);
-        // }
+        [ShowInInspector]
+        private bool _temporaryPinned = false;
+        public void TemporaryPin()
+        {
+            _temporaryPinned = true;
+        }
         
-                
+        public void UnsetTemporaryPin()
+        {
+            _temporaryPinned = false;
+            
+            if (!_temporaryPinned)
+            {
+                transform.SetParent(previousParent);    
+            }
+            // transform.SetParent(previousParent);    
+            _rectTransform.anchoredPosition = Vector2.zero;
+            canvasGroup.blocksRaycasts = true;
+        }
+        
         public void OnPointerEnter(PointerEventData eventData)
         {
             UIManager.main.InspectorItem(_equipment.item);

@@ -16,9 +16,7 @@ namespace Tyrant
         public string materialName;
         
         public Sprite icon;
-
-        public string code;
-
+        
         public MaterialType type;
 
         [LabelText("特性")]

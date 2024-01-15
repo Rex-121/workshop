@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
@@ -9,8 +10,8 @@ namespace Tyrant
     public struct BluePrint
     {
 
-        [ShowInInspector]
-        public MaterialType[] rawMaterialsRequires;
+        [ShowInInspector, LabelText("所需材料")]
+        public MaterialRequiresGroup requires;
 
         public Sprite icon;
 
@@ -20,9 +21,9 @@ namespace Tyrant
         
         public EquipmentSO equipmentSO;
 
-        public BluePrint(IEnumerable<MaterialType> requires, Sprite icon, string board, int make, int quality, BluePrintSO bluePrintSO)
+        public BluePrint(MaterialRequiresGroup requires, Sprite icon, string board, int make, int quality, BluePrintSO bluePrintSO)
         {
-            rawMaterialsRequires = requires.ToArray();
+            this.requires = requires;
             this.icon = icon;
             this.board = board;
             this.make = make;
@@ -56,14 +57,95 @@ namespace Tyrant
             return new BluePrint(so.materialRequires, so.icon, so.board, so.makePoints, so.qualityPoints, so);
         }
 
-        public bool IsMaterialEnough(IEnumerable<IMaterial> materials)
-        {
+        public bool IsMaterialEnough(IMaterial[] materials)
+        { 
+            var count = materials.Count();
+            // 如果少于最小数量 或者 大于最大材料数量
+            if (count < requires.minRequiresCount || count > requires.maxCount) return false;
+
+
+            var e = requires.ConditionsForMinRequires(materials.ToList());
+            
+            if (!e.Item1) return false;
+            
             return true;
-            // var codes = rawMaterialsRequires.Select(v => v.code);
-            // var code = string.Join(":", codes);
-            // var other = string.Join(":", materials.Select(v => v.code.Split("-").First()));
-            // return code == other;
         }
         
+    }
+
+
+    [Serializable]
+    public struct MaterialRequiresGroup
+    {
+        [ShowInInspector]
+        public MaterialRequires[] rawMaterialsRequires;
+
+        [ShowInInspector, LabelText("必需材料")]
+        private MaterialRequires[] requires => rawMaterialsRequires
+            .Where(v => v.require)
+            .ToArray();
+        
+        
+        [ShowInInspector, LabelText("可选材料")]
+        private MaterialRequires[] options => rawMaterialsRequires
+            .Where(v => !v.require)
+            .ToArray();
+        
+        [ShowInInspector]
+        public int minRequiresCount => requires
+            .Sum(v => v.min);
+        
+        [ShowInInspector]
+        public int maxCount => rawMaterialsRequires
+            .Sum(v => v.max);
+
+
+
+        // 满足最小的制作材料需求
+        public Tuple<bool, List<IMaterial>> ConditionsForMinRequires(List<IMaterial> materials)
+        {
+            var k = materials;
+
+            var veryRequire = requires;
+
+            for (var x = 0; x < veryRequire.Count(); x++)
+            {
+                var require = veryRequire[x];
+
+                var requireCount = 0;
+
+                for (var i = k.Count() - 1; i >= 0; i--)
+                {
+                    if (!require.types.HasFlag(k[i].type)) continue;
+                    requireCount++;
+                    k.RemoveAt(i);
+                    if (requireCount == require.min) break;
+                }
+                
+                if (requireCount < require.min) return new Tuple<bool, List<IMaterial>>(false, k);
+            }
+
+            return new Tuple<bool, List<IMaterial>>(true, k);
+        }
+    }
+
+
+    [Serializable]
+    public struct MaterialRequires
+    {
+        
+        [HorizontalGroup("A"), HideLabel, VerticalGroup("A/C")]
+        public MaterialType types;
+        
+        
+        [LabelText("是否必需"), HorizontalGroup("A"), VerticalGroup("A/C")]
+        public bool require;
+
+        [HorizontalGroup("A"), VerticalGroup("A/B"), LabelText("最小数量")]
+        public int min;
+        [HorizontalGroup("A"), VerticalGroup("A/B"), LabelText("最大数量")]
+        public int max;
+        
+
     }
 }

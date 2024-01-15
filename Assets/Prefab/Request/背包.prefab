@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6758074245613230427}
   - component: {fileID: 6758074245613230405}
   - component: {fileID: 6758074245613230404}
-  - component: {fileID: 6758074245613230407}
   - component: {fileID: 6758074245613230406}
   - component: {fileID: 1015154700362560185}
   m_Layer: 5
@@ -119,22 +118,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 2
---- !u!114 &6758074245613230407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6758074245613230425}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56aba010ba2de4357a32bfd9cd2870b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slotPrefab: {fileID: 160293481406136190, guid: 357dc39e0a42e40568f3f18ac83ed026, type: 3}
-  panel: {fileID: 6758074245613230424}
-  maxSlot: 36
-  dragPointForItem: {fileID: 0}
 --- !u!114 &6758074245613230406
 MonoBehaviour:
   m_ObjectHideFlags: 0

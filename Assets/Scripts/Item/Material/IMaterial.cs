@@ -1,10 +1,10 @@
+using Tyrant.Items;
+
 namespace Tyrant
 {
     public interface IMaterial: IItem
     {
-        
-        
-        public string code { get; }
+        public MaterialType type { get; }
         
     }
 }

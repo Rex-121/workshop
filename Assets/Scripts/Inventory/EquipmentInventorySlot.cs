@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using UniRx;
 namespace Tyrant
 {
-    public class EquipmentInventorySlot: MonoBehaviour, IDropHandler
+    public class EquipmentInventorySlot: ItemsDroppableMonoBehavior
     {
         public EquipmentDragging equipmentDraggingPrefab;
 
@@ -40,21 +40,21 @@ namespace Tyrant
                 .AddTo(this);
         }
 
-        public void OnDrop(PointerEventData eventData)
+        protected override void ItemDidDrop(EquipmentDragging item)
         {
-            if (!eventData.pointerDrag.TryGetComponent(out EquipmentDragging v)) return;
 
-            if (v.equipment.index == index) return;
+            if (item.equipment.index == index) return;
 
-            var slot = v.equipment;
+            var slot = item.equipment;
             
-            // v.DidRemoveItem();
-            Destroy(v.gameObject);
+            // 移除拖拽物品
+            Destroy(item.gameObject);
 
             Inventory.Slot? old = null;
 
             if (_equipmentDragging != null)
             {
+                // 如果格子有旧物品
                 old = _equipmentDragging.equipment;
             }
             

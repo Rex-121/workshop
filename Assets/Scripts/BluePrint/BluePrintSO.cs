@@ -5,16 +5,14 @@ using UnityEngine;
 namespace Tyrant
 {
     [CreateAssetMenu(fileName = "蓝图")]
-    public class BluePrintSO : ScriptableObject
+    public class BluePrintSO : SerializedScriptableObject
     {
 
         [LabelText("所需材料")]
-        public MaterialType[] materialRequires;
+        public MaterialRequiresGroup materialRequires;
 
         [PreviewField(60)]
         public Sprite icon;
-
-        
 
         /*
          * 00010-

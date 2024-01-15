@@ -14,7 +14,11 @@ namespace Tyrant
     {
 
 
+        [BoxGroup("slots_prefab")]
+        [LabelText("插槽")]
         public GameObject slotPrefab;
+        [BoxGroup("slots_prefab")]
+        [LabelText("空插槽")]
         public GameObject emptySlotPrefab;
         
         public GridLayoutGroup panel;
@@ -22,7 +26,7 @@ namespace Tyrant
         [LabelText("拖拽点")]
         public Transform anchor;
         
-        public List<InventorySlotMono> slots = new();
+        public List<ForgeItemRequiresSlot> slots = new();
         
         private static BluePrint bluePrint => WorkBenchManager.main.bluePrint;
         private void Start()
@@ -45,23 +49,25 @@ namespace Tyrant
                     }
                     else
                     {
-                        var gb = Instantiate(slotPrefab, panel.transform).GetComponent<InventorySlotMono>();
-                    
+                        var gb = Instantiate(slotPrefab, panel.transform).GetComponent<ForgeItemRequiresSlot>();//.GetComponent<InventorySlotMono>();
+
+
+                        gb.itemDropped += ItemDropped;
                         // gb.AddRequire(requires.ElementAt(i));
                     
-                        gb.handler = new MyStruct(item =>
-                        {
-                            var success = gb.AddItemIfPossible(item.item);
-                            if (success)
-                            {
-                                item.Clear();
-                                Check();
-                            }
-                        });
-                    
+                        // gb.handler = new MyStruct(item =>
+                        // {
+                        //     var success = gb.AddItemIfPossible(item.item);
+                        //     if (success)
+                        //     {
+                        //         item.Clear();
+                        //         Check();
+                        //     }
+                        // });
+                        //
                         slots.Add(gb);
-                    
-                        gb.itemDraggingHandle = new ItemPreviewForInventorySlot.DefaultDragging(anchor);
+                        //
+                        // gb.itemDraggingHandle = new ItemPreviewForInventorySlot.DefaultDragging(anchor);
                     }
                    
 
@@ -71,29 +77,37 @@ namespace Tyrant
             }
         }
 
+        private void ItemDropped(IItem item)
+        {
+            Check();
+        }
+
         private void Check()
         {
-            var materials = slots.Where(v => v.previewItem != null)
-                .Select(v => v.previewItem.item as IMaterial);
+            var materials = slots
+                .Where(v => v.hasValue)
+                .Select(v => v.itemValue)
+                .OfType<IMaterial>()
+                .ToArray();
             
             var isEnough = bluePrint.IsMaterialEnough(materials);
             Debug.Log($"材料是否齐备 {isEnough}");
         }
         
 
-        private class MyStruct: InventorySlotMono.IInventorySlotDrag
-        {
-            private Action<ItemPreviewForInventorySlot> v;
-
-            public MyStruct(Action<ItemPreviewForInventorySlot> v)
-            {
-                this.v = v;
-            }
-            public void OnDrop(ItemPreviewForInventorySlot item)
-            {
-                v.Invoke(item);
-            }
-        }
+        // private class MyStruct: InventorySlotMono.IInventorySlotDrag
+        // {
+        //     private Action<ItemPreviewForInventorySlot> v;
+        //
+        //     public MyStruct(Action<ItemPreviewForInventorySlot> v)
+        //     {
+        //         this.v = v;
+        //     }
+        //     public void OnDrop(ItemPreviewForInventorySlot item)
+        //     {
+        //         v.Invoke(item);
+        //     }
+        // }
         
     }
 }

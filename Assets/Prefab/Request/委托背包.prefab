@@ -205,7 +205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6479cae640ab4607856358670d5e0101, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotPrefab: {fileID: 160293481406136190, guid: 357dc39e0a42e40568f3f18ac83ed026, type: 3}
+  slotPrefab: {fileID: 160293481406136190, guid: 17cfbb53c5a4f493da97a6766d345d5a, type: 3}
   emptySlotPrefab: {fileID: 160293481406136190, guid: 3b2263a10e0c546699fd4cb0782ec11a, type: 3}
   panel: {fileID: 7816142197471883134}
   anchor: {fileID: 7816142196924834308}

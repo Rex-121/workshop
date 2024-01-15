@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1173089446100202348}
   m_Layer: 5
-  m_Name: InventoryEmptySlot
+  m_Name: "\u7194\u94F8\u7269\u54C1(\u7A7A)\u9700\u6C42"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

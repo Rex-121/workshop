@@ -3,12 +3,12 @@ using Sirenix.OdinInspector;
 
 namespace Tyrant.Items
 {
-    [Serializable]
+    [Serializable, Flags]
     public enum MaterialType
     {
         [LabelText("木材")]
-        Wood,
+        Wood = 1,
         [LabelText("矿石")]
-        Ore,
+        Ore = 2,
     }
 }

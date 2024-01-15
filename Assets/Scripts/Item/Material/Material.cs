@@ -16,9 +16,7 @@ namespace Tyrant
         public string id;
 
         public Sprite sprite => _materialSO.icon;
-
-        public string code => _materialSO.code;
-
+        
         public MaterialType type => _materialSO.type;
 
         private MaterialSO _materialSO => ItemGenesis.main.FindMaterialSOById(id);
@@ -44,15 +42,14 @@ namespace Tyrant
         
         [ShowInInspector] public Sprite sprite => rawMaterial.sprite;
 
-        [ShowInInspector, ReadOnly]
-        public string code => rawMaterial.code;
-
         public string id => rawMaterial.id;
 
         [ShowInInspector]
         public RawMaterial rawMaterial;
 
         public MaterialFeature[] features => rawMaterial.features;
+        
+        public MaterialType type => rawMaterial.type;
         
         [SerializeField]
         public Quality quality { get; set; }
