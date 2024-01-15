@@ -1,7 +1,8 @@
 using System;
 using System.Linq;
-using Sirenix.OdinInspector;
+using UniRx;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Tyrant.UI
 {
@@ -17,6 +18,9 @@ namespace Tyrant.UI
         public GameObject mat;
 
         private GameObject _m;
+
+        public Button forgeButton;
+        
         void Start()
         {
             allBluePrints = BluePrintGenesis.main.allBlueprints;
@@ -48,6 +52,12 @@ namespace Tyrant.UI
             WorkBenchManager.main.bluePrint = bp;
             
             _m = Instantiate(mat, transform);
+
+            _m.GetComponentInChildren<ForgeCraftRequireBoard>().isMaterialEnough
+                .Subscribe(v =>
+                {
+                    forgeButton.interactable = v;
+                }).AddTo(_m);
         }
         
     }

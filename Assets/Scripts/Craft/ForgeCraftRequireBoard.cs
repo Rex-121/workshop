@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
+using UniRx;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -27,6 +28,8 @@ namespace Tyrant
         public Transform anchor;
         
         public List<ForgeItemRequiresSlot> slots = new();
+
+        public BehaviorSubject<bool> isMaterialEnough = new(false);
         
         private static BluePrint bluePrint => WorkBenchManager.main.bluePrint;
         private void Start()
@@ -92,6 +95,7 @@ namespace Tyrant
             
             var isEnough = bluePrint.IsMaterialEnough(materials);
             Debug.Log($"材料是否齐备 {isEnough}");
+            isMaterialEnough.OnNext(isEnough);
         }
         
 
