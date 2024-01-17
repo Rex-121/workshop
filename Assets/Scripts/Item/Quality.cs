@@ -127,7 +127,7 @@ namespace Tyrant
             return On(value.TierFromInt());
         }
 
-        public override string ToString() => $"品级{tier}";
+        public override string ToString() => $"{tier}";
 
         [HideLabel, SuffixLabel("品级  ", true), Serializable]
         public enum Tier

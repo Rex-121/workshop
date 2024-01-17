@@ -1,5 +1,9 @@
+using System;
+using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
+using WorkBench;
+
 namespace Tyrant.UI
 {
     public class SlotOnWorkBenchBuffDisplay: MonoBehaviour
@@ -7,8 +11,17 @@ namespace Tyrant.UI
 
         public TextMeshProUGUI buffLabel;
         
+        [ShowInInspector]
         private DiceBuffHandler _handler2;
         private DiceBuffHandler _handler;
+
+
+        public void NewTurnDidStarted(int arg0)
+        {
+            // _handler = new DiceBuffHandler("");
+            // _handler2 = new DiceBuffHandler("");
+        }
+
         public void RegisterSlot(WorkBenchSlot slot)
         {
             _handler2 = slot.previewBuffHandler;

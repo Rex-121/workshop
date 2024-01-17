@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
-using Algorithm;
-using Sirenix.Utilities;
+using Sirenix.OdinInspector;
 using UnityEngine;
+using Tyrant.UI;
 
 namespace Tyrant
 {
@@ -34,11 +34,17 @@ namespace Tyrant
         public Transform dragPointForItem;
 
         public Canvas canvas;
+        
+        
+        [BoxGroup("Inspectors"), LabelText("检查器图层")]
         // 用于查看道具属性
         public Transform inspectorTransform;
-        public EquipmentInspector inspectorPrefab;
+        [BoxGroup("Inspectors"), LabelText("装备")]
+        public ItemInspector equipsInspectorPrefab;
+        [BoxGroup("Inspectors"), LabelText("材料")]
+        public ItemInspector materialInspectorPrefab;
         [NonSerialized]
-        private EquipmentInspector _inspector;
+        private ItemInspector _inspector;
         public void InspectorItem(IItem item)
         {
             if (item == null)
@@ -49,12 +55,18 @@ namespace Tyrant
             {
                 if (_inspector == null)
                 {
-                    if (item is IEquipment equipment)
+                    switch (item)
                     {
-                        _inspector = Instantiate(inspectorPrefab, inspectorTransform);
-                        _inspector.equipment = equipment;
-                        _inspector.transform.position = Input.mousePosition;
+                        case IEquipment:
+                            _inspector = Instantiate(equipsInspectorPrefab, inspectorTransform);
+                            break;
+                        case IMaterial:
+                            _inspector = Instantiate(materialInspectorPrefab, inspectorTransform);
+                            break;
                     }
+                    
+                    _inspector.NewItem(item);
+                    _inspector.transform.position = Input.mousePosition;
                 }
                 inspectorTransform.SetAsLastSibling();
             }

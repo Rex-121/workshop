@@ -31,7 +31,7 @@ namespace Tyrant
                 {
                     Debug.Log("#SingletonSO# 多个单例");
                 }
-            
+                
                 _instance = assets[0];
                 sw.Stop();
                 _instance.SingletonInit();

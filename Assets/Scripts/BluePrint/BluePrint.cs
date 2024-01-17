@@ -77,7 +77,7 @@ namespace Tyrant
     [Serializable]
     public struct MaterialRequiresGroup
     {
-        [ShowInInspector]
+        [SerializeField]
         public MaterialRequires[] rawMaterialsRequires;
 
         [ShowInInspector, LabelText("必需材料")]

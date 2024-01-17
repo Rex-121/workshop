@@ -358,10 +358,9 @@ GameObject:
   - component: {fileID: 9157644406966954568}
   - component: {fileID: 7127739096074875076}
   - component: {fileID: 8654220676080098755}
-  - component: {fileID: 4643927556885783187}
   - component: {fileID: 3854974986820902966}
   m_Layer: 5
-  m_Name: ItemInspector
+  m_Name: "\u88C5\u5907\u68C0\u67E5\u5668"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -430,18 +429,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!225 &4643927556885783187
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2196506033936839238}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 0
-  m_BlocksRaycasts: 0
-  m_IgnoreParentGroups: 0
 --- !u!114 &3854974986820902966
 MonoBehaviour:
   m_ObjectHideFlags: 0

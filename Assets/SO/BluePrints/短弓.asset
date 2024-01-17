@@ -12,7 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9925fb1d62ccc465085a31a129ded3d2, type: 3}
   m_Name: "\u77ED\u5F13"
   m_EditorClassIdentifier: 
-  materialRequires: 0000000000000000
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  materialRequires:
+    rawMaterialsRequires:
+    - types: 1
+      require: 1
+      min: 1
+      max: 2
+    - types: 2
+      require: 0
+      min: 1
+      max: 1
   icon: {fileID: 1276036978, guid: 5adafed67f17e41e39188696d7ba4771, type: 3}
   board: 220:101:101:220
   equipmentSO: {fileID: 11400000, guid: a870c2cd4e198474c99c413d7aef4b8b, type: 2}

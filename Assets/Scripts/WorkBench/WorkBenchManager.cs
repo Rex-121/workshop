@@ -64,8 +64,8 @@ namespace Tyrant
         
         
         // public WorkBenchUI workBenchUI;
-        public readonly BehaviorSubject<int> make = new(0);
-        public readonly BehaviorSubject<int> quality = new(0);
+        // public readonly BehaviorSubject<int> make = new(0);
+        // public readonly BehaviorSubject<int> quality = new(0);
 
 
         private int allMakesScore => workBench.allMakes
@@ -80,9 +80,12 @@ namespace Tyrant
         {
             var makes = allMakesScore;
             var qualities = allQualityScore;
-            workBenchEventSO.ScoreDidChange(makes, qualities);
-            make.OnNext(makes);
-            quality.OnNext(qualities);
+            
+            
+            
+            workBenchEventSO.ScoreDidChange(forgeItem.make.power + makes, forgeItem.quality.power + qualities);
+            // make.OnNext(makes);
+            // quality.OnNext(qualities);
         }
         
 

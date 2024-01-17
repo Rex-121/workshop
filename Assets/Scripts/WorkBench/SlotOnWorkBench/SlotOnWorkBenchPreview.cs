@@ -32,10 +32,14 @@ namespace Tyrant.UI
         {
             powerDisplay.text = "";
         }
+        
+        public void NewTurnDidStarted(int arg0)
+        {
+            
+        }
 
         private void Preview(ToolOnTable tool)
         {
-            // powerDisplay.text = tool.dice.Roll().ToString();
         }
     }
 }

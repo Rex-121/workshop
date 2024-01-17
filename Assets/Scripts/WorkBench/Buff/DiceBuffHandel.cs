@@ -22,28 +22,20 @@ namespace Tyrant
             this.style = style;
         }
 
+        public void Clear()
+        {
+            _buffList.Clear();
+        }
+
         public int AllEffect(int startValue)
         {
             var b = startValue;
             buffs
                 .Where(v => v.buffDataSO.onUse != null)
                 .ForEach(diceBuffInfo => b = diceBuffInfo.buffDataSO.onUse.Apply(b, diceBuffInfo));
-            
-            
-            
-            
             return b;
         }
-
-        // public int AllEffectByFace(int face)
-        // {
-        //     var b = face;
-        //     buffs
-        //         .Where(v => v.buffDataSO.onDiceFaceChanged != null)
-        //         .ForEach(diceBuffInfo => b = diceBuffInfo.buffDataSO.onDiceFaceChanged.Apply(b, diceBuffInfo));
-        //     
-        //     return b;
-        // }
+        
 
         public void AddBuff(DiceBuffInfo buff)
         {
@@ -88,28 +80,6 @@ namespace Tyrant
             buff.buffDataSO.onRemove?.Apply();
             var success = _buffList.Remove(buff);
             Debug.Log($"#Buff# remove {success}");
-            // switch (buff.buffDataSO.stackRemoveType)
-            // {
-            //     case BuffRemoveStackUpdate.Clear:
-            //         buff.buffDataSO.onRemove?.Apply();
-            //         var success = _buffList.Remove(buff);
-            //         break;
-            //     case BuffRemoveStackUpdate.Reduce:
-            //         buff.currentStack--;
-            //
-            //         buff.buffDataSO.onRemove?.Apply();
-            //         
-            //
-            //         if (buff.currentStack == 0)
-            //         {
-            //             _buffList.Remove(buff);
-            //         }
-            //         
-            //         break;
-            //     default:
-            //         break;
-            // }
-
         }
         
 

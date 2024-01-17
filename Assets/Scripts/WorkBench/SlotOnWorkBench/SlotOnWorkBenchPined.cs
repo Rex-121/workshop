@@ -92,5 +92,9 @@ namespace Tyrant.UI
             gameObject.SetActive(false);
             handler?.DidUnPinTool(cellPosition, toolOnTable);
         }
+        
+        public void NewTurnDidStarted(int arg0)
+        {
+        }
     }
 }

@@ -1,9 +1,9 @@
-using System;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using WorkBench;
 
 namespace Tyrant.UI
 {
@@ -43,6 +43,26 @@ namespace Tyrant.UI
         
         [LabelText("是否可以放置骰子")]
         private bool canBePin => cellType != WorkBench.SlotType.Empty;
+        
+        public WorkBenchEventSO workBenchEventSO;
+
+        private void OnEnable()
+        {
+            workBenchEventSO.newTurnDidStarted += NewTurnDidStarted;
+        }
+
+        private void OnDisable()
+        {
+            workBenchEventSO.newTurnDidStarted -= NewTurnDidStarted;
+        }
+        
+        
+        private void NewTurnDidStarted(int arg0)
+        {
+            buffDisplay.NewTurnDidStarted(arg0);
+            pined.NewTurnDidStarted(arg0);
+            preview.NewTurnDidStarted(arg0);
+        }
 
         public void SetCellPosition(WorkBenchSlot slot)
         {

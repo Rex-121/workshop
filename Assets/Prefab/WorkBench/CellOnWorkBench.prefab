@@ -441,6 +441,7 @@ MonoBehaviour:
   pined: {fileID: 623059827723574738}
   preview: {fileID: 7977396798006307453}
   buffDisplay: {fileID: 3709979586440446336}
+  workBenchEventSO: {fileID: 11400000, guid: 87153fa94d4bd43508951fc25c3bfc6d, type: 2}
 --- !u!1 &6975704669623738068
 GameObject:
   m_ObjectHideFlags: 0

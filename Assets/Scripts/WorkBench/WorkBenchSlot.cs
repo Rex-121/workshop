@@ -44,7 +44,6 @@ namespace Tyrant
         public readonly BehaviorSubject<ToolOnTable> pined = new(null);
         public void DidForgeThisTurn()
         {
-            
             Clear();
         }
 
@@ -54,6 +53,10 @@ namespace Tyrant
             {
                 toolOnTable.DidUsedThisTurn();
             }
+            
+            buffHandler.Clear();
+            previewBuffHandler.Clear();
+            
             UnPin();
         }
         

@@ -2,9 +2,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Tyrant
+namespace Tyrant.UI
 {
-    public class EquipmentInspector: MonoBehaviour
+    public class EquipmentInspector: ItemInspector
     {
 
         public IEquipment equipment
@@ -19,6 +19,16 @@ namespace Tyrant
                 sLabel.text = att.strength.ToString();
                 dLabel.text = att.dexterity.ToString();
                 iLabel.text = att.intelligence.ToString();
+            }
+        }
+
+        public override void NewItem(IItem item)
+        {
+            base.NewItem(item);
+
+            if (item is IEquipment e)
+            {
+                equipment = e;
             }
         }
 
