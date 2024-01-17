@@ -21,6 +21,8 @@ namespace Tyrant.UI
         public TextMeshProUGUI makeText;
         public TextMeshProUGUI qualityText;
 
+        public TextMeshProUGUI staminaUsageLabel, cardsUsageLabel;
+        
         [BoxGroup("进度条")]
         [LabelText("制作进度条")]
         public WorkBenchMakeProgressBar makeProgressBar;
@@ -51,6 +53,7 @@ namespace Tyrant.UI
         {
             workBenchEventSO.scoreDidChange += DisplayInformation;
             workBenchEventSO.blueprintDidSelected += BlueprintInformation;
+            workBenchEventSO.newTurnDidStarted += NewTurnDidStarted;
         }
         
 
@@ -65,6 +68,12 @@ namespace Tyrant.UI
         {
             workBenchEventSO.scoreDidChange -= DisplayInformation;
             workBenchEventSO.blueprintDidSelected -= BlueprintInformation;
+            workBenchEventSO.newTurnDidStarted -= NewTurnDidStarted;
+        }
+
+        private void NewTurnDidStarted(int arg0)
+        {
+            staminaUsageLabel.text = $"{WorkBenchManager.main.staminaCost}/{WorkBenchManager.main.staminaMax}";
         }
 
         // 显示信息
@@ -75,17 +84,8 @@ namespace Tyrant.UI
 
             makeProgressBar.Predict(make / (_bluePrint.make * 1.0f));
             qualityProgressBar.Predict(quality / (_bluePrint.quality * 1.0f));
-            // WorkBenchManager.main.make
-            //     .Select(v => $"+ {v}")
-            //     .Subscribe(v =>
-            // {
-            //     makeText.text = v;
-            // }).AddTo(this);
-            // WorkBenchManager.main.quality.Select(v => $"+ {v}")
-            //     .Subscribe(v =>
-            // {
-            //     qualityText.text = v;
-            // }).AddTo(this);
+
+            cardsUsageLabel.text = $"{WorkBenchManager.main.allOccupiedInThisTurn}/{WorkBenchManager.main.maxWorkBenchOccupied}";
         }
 
         [Button]

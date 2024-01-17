@@ -27,7 +27,6 @@ namespace Tyrant
             if (main == null)
             {
                 main = this;
-                // DontDestroyOnLoad(this);
             }
             else
             {
@@ -39,7 +38,6 @@ namespace Tyrant
         
         [ShowInInspector, NonSerialized] public WorkBench workBench;
         [ShowInInspector, NonSerialized] public GameObject workBenchUI;
-        [ShowInInspector, NonSerialized] public int staminaCost = 0;
         public ForgeItem forgeItem;
 
         public WorkBenchEventSO workBenchEventSO;
@@ -57,16 +55,15 @@ namespace Tyrant
                     .allSlots.Values
                     .Count(v => v.isOccupied) ?? 0;
 
-        [LabelText("每回合最大使用灵感数")]
+        [LabelText("每回合最大使用卡牌")]
         public int maxWorkBenchOccupied = 3;
+        [ShowInInspector, NonSerialized, LabelText("已熔铸的次数")] 
+        public int staminaCost = 0;
+        [ShowInInspector, LabelText("可熔铸的次数")] 
+        public int staminaMax => Protagonist.main.stamina;
 
         #region 制作过程
         
-        
-        // public WorkBenchUI workBenchUI;
-        // public readonly BehaviorSubject<int> make = new(0);
-        // public readonly BehaviorSubject<int> quality = new(0);
-
 
         private int allMakesScore => workBench.allMakes
             .Select(v => v.CalculateScore())

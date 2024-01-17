@@ -21,7 +21,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  toolName: "\u5DE6\u53F3\u5F00\u5DE5"
+  toolName: "\u5361\u724C3"
   diceFace: 6
   toolDescription: "\u5DE6\u53F3\u4E24\u8FB9\u5404\u589E\u52A01\u70B9"
   diceBuffDataSO: {fileID: 11400000, guid: 07d00e4683871483496b13be5ea30921, type: 2}
