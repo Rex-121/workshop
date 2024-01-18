@@ -1,4 +1,5 @@
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Tyrant.UI
@@ -13,6 +14,7 @@ namespace Tyrant.UI
                 nameLabel.text = value.itemName;
                 icon.sprite = value.sprite;
                 qualityLabel.text = value.quality.ToString();
+                qualityLabel.color = value.quality.tier.Color();
             }
         }
         

@@ -103,6 +103,32 @@ namespace Tyrant
             };
         }
         
+        public static string Description(this Quality.Tier o)
+        {
+            return o switch
+            {
+                Quality.Tier.Defectives => "残次品",
+                Quality.Tier.Fine => "普通",
+                Quality.Tier.Superior => "精良",
+                Quality.Tier.Masterpiece => "大师",
+                Quality.Tier.Legendary => "传奇",
+                _ => ""
+            };
+        }
+        
+        public static Color Color(this Quality.Tier o)
+        {
+            return o switch
+            {
+                Quality.Tier.Defectives => new Color(124 / 255.0f,135 / 255.0f,138 /255.0f),
+                Quality.Tier.Fine => new Color(199/255.0f,205/255.0f,242/255.0f),
+                Quality.Tier.Superior => new Color(43/255.0f,217/255.0f,198/255.0f),
+                Quality.Tier.Masterpiece => new Color(43/255.0f,125/255.0f,217/255.0f),
+                Quality.Tier.Legendary => new Color(99/255.0f,75/255.0f,219/255.0f),
+                _ => UnityEngine.Color.white
+            };
+        }
+        
         public static Quality ToQuality(this Quality.Tier o)
         {
             return Quality.On(o);
@@ -127,7 +153,7 @@ namespace Tyrant
             return On(value.TierFromInt());
         }
 
-        public override string ToString() => $"{tier}";
+        public override string ToString() => tier.Description();
 
         [HideLabel, SuffixLabel("品级  ", true), Serializable]
         public enum Tier
