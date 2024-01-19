@@ -20,16 +20,12 @@ namespace Tyrant
         public MaterialType type => _materialSO.type;
 
         private MaterialSO _materialSO => ItemGenesis.main.FindMaterialSOById(id);
+
+        public MaterialFeatureSO[] features => _materialSO.featureSOs;
         
-        public MaterialFeature[] features;
-        
-        public RawMaterial(MaterialSO so, IEnumerable<MaterialFeature> features)
+        public RawMaterial(MaterialSO so)
         {
-            this.id = so.id.ToString(); 
-            // itemName = name;
-            // this.sprite = sprite;
-            // this.code = code;
-            this.features = features.ToArray();
+            id = so.id.ToString(); 
         }
 
         public IMaterial toMaterial => new Material(this);
@@ -47,7 +43,8 @@ namespace Tyrant
         [ShowInInspector]
         public RawMaterial rawMaterial;
 
-        public MaterialFeature[] features => rawMaterial.features;
+        [ShowInInspector]
+        public MaterialFeatureSO[] features => rawMaterial.features;
         
         public MaterialType type => rawMaterial.type;
         

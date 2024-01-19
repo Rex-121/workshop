@@ -54,7 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blueprintPrefab: {fileID: 2462998960969752477, guid: 6ba071fc0e62b446e88e4a2fac671650, type: 3}
   panel: {fileID: 5165469399059268461}
-  mat: {fileID: 7816142197103123713, guid: e1056b80458b64e75a17131cb6edd7a9, type: 3}
+  requireBoardPrefab: {fileID: 6663440111453045327, guid: e1056b80458b64e75a17131cb6edd7a9, type: 3}
   forgeButton: {fileID: 4498494609725984115}
 --- !u!1 &3267022072132154845
 GameObject:

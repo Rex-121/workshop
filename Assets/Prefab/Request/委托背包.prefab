@@ -45,6 +45,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7816142197103123717}
+  - component: {fileID: 6663440111453045327}
   m_Layer: 5
   m_Name: "\u59D4\u6258\u80CC\u5305"
   m_TagString: Untagged
@@ -75,6 +76,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6663440111453045327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7816142197103123713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6479cae640ab4607856358670d5e0101, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotPrefab: {fileID: 160293481406136190, guid: 17cfbb53c5a4f493da97a6766d345d5a, type: 3}
+  emptySlotPrefab: {fileID: 160293481406136190, guid: 3b2263a10e0c546699fd4cb0782ec11a, type: 3}
+  panel: {fileID: 7816142197471883134}
+  anchor: {fileID: 7816142196924834308}
+  slots: []
 --- !u!1 &7816142197471883129
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,7 +106,6 @@ GameObject:
   - component: {fileID: 7816142197471883133}
   - component: {fileID: 7816142197471883134}
   - component: {fileID: 7816142197471883135}
-  - component: {fileID: 7816142197471883123}
   - component: {fileID: 7816142197471883122}
   m_Layer: 5
   m_Name: "\u6750\u6599\u9700\u6C42\u677F"
@@ -193,23 +210,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 2
---- !u!114 &7816142197471883123
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7816142197471883129}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6479cae640ab4607856358670d5e0101, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slotPrefab: {fileID: 160293481406136190, guid: 17cfbb53c5a4f493da97a6766d345d5a, type: 3}
-  emptySlotPrefab: {fileID: 160293481406136190, guid: 3b2263a10e0c546699fd4cb0782ec11a, type: 3}
-  panel: {fileID: 7816142197471883134}
-  anchor: {fileID: 7816142196924834308}
-  slots: []
 --- !u!114 &7816142197471883122
 MonoBehaviour:
   m_ObjectHideFlags: 0

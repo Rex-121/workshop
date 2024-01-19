@@ -8,7 +8,7 @@ namespace Tyrant
     {
         public Image icon;
 
-        public MaterialFeature[] materialFeature
+        public MaterialFeatureSO[] materialFeature
         {
             get => _materialFeature;
             set
@@ -18,7 +18,7 @@ namespace Tyrant
             }
         }
 
-        private MaterialFeature[] _materialFeature;
+        private MaterialFeatureSO[] _materialFeature;
 
         private void Refresh()
         {

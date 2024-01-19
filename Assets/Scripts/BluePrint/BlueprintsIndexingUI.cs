@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Sirenix.OdinInspector;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,9 +16,10 @@ namespace Tyrant.UI
         public Transform panel;
 
 
-        public GameObject mat;
+        [LabelText("材料需求板")]
+        public ForgeCraftRequireBoard requireBoardPrefab;
 
-        private GameObject _m;
+        private ForgeCraftRequireBoard _m;
 
         public Button forgeButton;
         
@@ -38,7 +40,7 @@ namespace Tyrant.UI
 
         public void DoForge()
         {
-            WorkBenchManager.main.StartAWorkBench();
+            WorkBenchManager.main.StartAWorkBench(_m.selectedMaterials);
             Destroy(gameObject);
         }
 
@@ -51,9 +53,9 @@ namespace Tyrant.UI
             
             WorkBenchManager.main.bluePrint = bp;
             
-            _m = Instantiate(mat, transform);
+            _m = Instantiate(requireBoardPrefab, transform);
 
-            _m.GetComponentInChildren<ForgeCraftRequireBoard>().isMaterialEnough
+            _m.isMaterialEnough
                 .Subscribe(v =>
                 {
                     forgeButton.interactable = v;

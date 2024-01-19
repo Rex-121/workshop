@@ -11,6 +11,8 @@ namespace Tyrant.UI
 
         public TextMeshProUGUI buffLabel;
         
+        public TextMeshProUGUI materialFeatureLabel;
+        
         [ShowInInspector]
         private DiceBuffHandler _handler2;
         private DiceBuffHandler _handler;
@@ -26,6 +28,10 @@ namespace Tyrant.UI
         {
             _handler2 = slot.previewBuffHandler;
             _handler = slot.buffHandler;
+            if (!ReferenceEquals(slot.materialFeature, null))
+            {
+                materialFeatureLabel.text = slot.materialFeature.featureName;
+            }
         }
 
         private void Update() => buffLabel.text = $"{_handler2.AllEffect(_handler.AllEffect(0))}";

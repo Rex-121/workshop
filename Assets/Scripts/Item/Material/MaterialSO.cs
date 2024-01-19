@@ -17,12 +17,13 @@ namespace Tyrant
         
         public Sprite icon;
         
+        [SerializeField]
         public MaterialType type;
 
         [LabelText("特性")]
         public MaterialFeatureSO[] featureSOs;
         
-        public RawMaterial toRawMaterial => new (this, featureSOs.Select(MaterialFeatureMakes.From));
+        public RawMaterial toRawMaterial => new (this);
 
         
         

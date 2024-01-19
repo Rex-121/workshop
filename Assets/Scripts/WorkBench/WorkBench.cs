@@ -4,6 +4,7 @@ using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using Tyrant.UI;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Tyrant
@@ -23,10 +24,14 @@ namespace Tyrant
         public Dictionary<ToolWrapper, WorkBenchSlot> allSlots => _dic;
 
         public BluePrint bluePrint;
+
+        public Material[] materials;
         
-        public WorkBench(BluePrint bluePrint)
+        public WorkBench(BluePrint bluePrint, IMaterial[] material)
         {
             this.bluePrint = bluePrint;
+
+            materials = material.OfType<Material>().ToArray();
         }
         
         [HideReferenceObjectPicker]
@@ -61,12 +66,14 @@ namespace Tyrant
             return _dic.FirstOrDefault(v => v.Key.position == vector2Int).Value;
         }
 
+        // 增加buff
         public void NewBuffTo(Vector2Int position, ToolOnTable toolOnTable)
         {
             GetAllEffectPositions(position, toolOnTable)
                 .ForEach(v => v.NewBuff(toolOnTable.diceBuffInfo));
         }
         
+        // 增加buff预览
         public void NewPreviewBuffTo(Vector2Int position, ToolOnTable toolOnTable)
         {
             GetAllEffectPositions(position, toolOnTable)
@@ -76,8 +83,6 @@ namespace Tyrant
         private List<WorkBenchSlot> LockBluePrint(BluePrint bluePrint)
         {
             var requires = bluePrint.boardLines;
-
-            // panel.constraintCount = requires.First().Count();
             
             var list = new List<WorkBenchSlot>();
             
@@ -98,6 +103,15 @@ namespace Tyrant
                     list.Add(slot);
                 }
             }
+
+            var listx = new List<MaterialFeatureSO>();
+
+            materials.ForEach(v =>
+            {
+                listx.AddRange(v.features.Select(ScriptableObject.Instantiate));
+            });
+
+            MaterialFeatureMakes.From(listx.ToArray(), _dic.Values);
 
             return list;
         }

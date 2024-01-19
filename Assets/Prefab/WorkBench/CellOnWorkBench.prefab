@@ -505,6 +505,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buffLabel: {fileID: 1055542548069021388}
+  materialFeatureLabel: {fileID: 4185907405342269490}
 --- !u!114 &1839663369314087911
 MonoBehaviour:
   m_ObjectHideFlags: 0

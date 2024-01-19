@@ -1,12 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UniRx;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Tyrant
@@ -52,25 +49,9 @@ namespace Tyrant
                     }
                     else
                     {
-                        var gb = Instantiate(slotPrefab, panel.transform).GetComponent<ForgeItemRequiresSlot>();//.GetComponent<InventorySlotMono>();
-
-
+                        var gb = Instantiate(slotPrefab, panel.transform).GetComponent<ForgeItemRequiresSlot>();
                         gb.itemDropped += ItemDropped;
-                        // gb.AddRequire(requires.ElementAt(i));
-                    
-                        // gb.handler = new MyStruct(item =>
-                        // {
-                        //     var success = gb.AddItemIfPossible(item.item);
-                        //     if (success)
-                        //     {
-                        //         item.Clear();
-                        //         Check();
-                        //     }
-                        // });
-                        //
                         slots.Add(gb);
-                        //
-                        // gb.itemDraggingHandle = new ItemPreviewForInventorySlot.DefaultDragging(anchor);
                     }
                    
 
@@ -79,6 +60,14 @@ namespace Tyrant
                 
             }
         }
+        
+        
+        // 选择的材料
+        public IMaterial[] selectedMaterials => slots
+            .Where(v => v.hasValue)
+            .Select(v => v.itemValue)
+            .OfType<IMaterial>()
+            .ToArray();
 
         private void ItemDropped(IItem item)
         {
@@ -87,31 +76,10 @@ namespace Tyrant
 
         private void Check()
         {
-            var materials = slots
-                .Where(v => v.hasValue)
-                .Select(v => v.itemValue)
-                .OfType<IMaterial>()
-                .ToArray();
-            
-            var isEnough = bluePrint.IsMaterialEnough(materials);
+            var isEnough = bluePrint.IsMaterialEnough(selectedMaterials);
             Debug.Log($"材料是否齐备 {isEnough}");
             isMaterialEnough.OnNext(isEnough);
         }
-        
-
-        // private class MyStruct: InventorySlotMono.IInventorySlotDrag
-        // {
-        //     private Action<ItemPreviewForInventorySlot> v;
-        //
-        //     public MyStruct(Action<ItemPreviewForInventorySlot> v)
-        //     {
-        //         this.v = v;
-        //     }
-        //     public void OnDrop(ItemPreviewForInventorySlot item)
-        //     {
-        //         v.Invoke(item);
-        //     }
-        // }
         
     }
 }

@@ -1,4 +1,5 @@
 
+using System;
 using Sirenix.OdinInspector;
 using Tyrant.UI;
 using UniRx;
@@ -17,14 +18,24 @@ namespace Tyrant
             this.toolWrapper = toolWrapper;
         }
 
+        public MaterialFeatureSO materialFeature;
+
 
         public DiceBuffHandler buffHandler = new DiceBuffHandler("实体");
         public DiceBuffHandler previewBuffHandler = new DiceBuffHandler("预览");
 
+        public string monoName => $"{toolWrapper.position}-{materialFeature?.featureName}";
         
         public int AllEffect(int startValue)
         {
-            return previewBuffHandler.AllEffect(buffHandler.AllEffect(startValue));
+            if (ReferenceEquals(materialFeature, null))
+            {
+                return previewBuffHandler.AllEffect(buffHandler.AllEffect(startValue));
+            }
+            
+            var value = materialFeature.pinDice?.ApplyDice(startValue) ?? new Tuple<bool, int>(true, startValue);
+
+            return value.Item1 ? previewBuffHandler.AllEffect(buffHandler.AllEffect(value.Item2)) : value.Item2;
         }
         
         // 是否已经有骰子
@@ -104,9 +115,40 @@ namespace Tyrant
             
         }
         
+        
+        public void NewBuff(DiceBuffInfo buffInfo)
+        {
+            
+            // 是否被特性改造buff
+            if (materialFeature != null)
+            {
+                var buff = materialFeature.buffConfig?.ApplyDice(0) ?? new Tuple<bool, int>(true, 0);
+                if (!buff.Item1)
+                {
+                    return;
+                }
+            }
+            
+            previewBuffHandler.RemoveBuff(buffInfo);
+            buffHandler.AddBuff(buffInfo);
+            
+            DiceValueDidBuffed();
+        }
 
         public void NewPreviewBuff(DiceBuffInfo buffInfo)
         {
+            
+            // 是否被特性改造buff
+            if (materialFeature != null)
+            {
+                var buff = materialFeature.buffConfig?.ApplyDice(0) ?? new Tuple<bool, int>(true, 0);
+                if (!buff.Item1)
+                {
+                    return;
+                }
+            }
+
+            
             previewBuffHandler.AddBuff(buffInfo);
             DiceValueDidBuffed();
         }
@@ -124,13 +166,7 @@ namespace Tyrant
             DiceValueDidBuffed();
         }
 
-        public void NewBuff(DiceBuffInfo buffInfo)
-        {
-            previewBuffHandler.RemoveBuff(buffInfo);
-            buffHandler.AddBuff(buffInfo);
-            
-            DiceValueDidBuffed();
-        }
+
         
         public void UnPreviewTool()
         {

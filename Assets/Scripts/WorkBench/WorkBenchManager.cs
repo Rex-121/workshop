@@ -5,6 +5,7 @@ using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using Tyrant.UI;
 using UniRx;
+using Unity.VisualScripting;
 using UnityEngine;
 using WorkBench;
 
@@ -146,27 +147,19 @@ namespace Tyrant
 
         public void Drag(ToolOnTable toolOnTable)
         {
-            // if (toolOnTable == null)
-            // {
-            //     // 清空所有的preview
-            // workBench.allSlots.Values.ForEach(v => v.ReleasePreviewBuff());
-            // }
-            // else
-            // {
-            //     // 清空所有的buff
-            //     // workBench.allSlots.Values.ForEach(v => v.ReleaseBuffBy(toolOnTable.tool.id));
-            // }
+            
         }
         #endregion
 
 
-        [Button]
-        public void StartAWorkBench()
+        public void StartAWorkBench(IMaterial[] materials)
         {
-
-            // var bluePrint = BluePrint.FromSO(bluePrintSO);
+            materials.ForEach(v =>
+            {
+                Debug.Log(v.ToString());
+            });
             
-            workBench = new WorkBench(bluePrint);
+            workBench = new WorkBench(bluePrint, materials);
             
             workBenchUI = Instantiate(workBenchPrefab);
             
@@ -183,8 +176,6 @@ namespace Tyrant
             
             PrepareNewRound();
             
-            
-
             NewTurn();
         }
         

@@ -1,9 +1,10 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Tyrant
 {
     [CreateAssetMenu(menuName = "材料/特性", fileName = "材料特性")]
-    public class MaterialFeatureSO: ScriptableObject
+    public class MaterialFeatureSO: SerializedScriptableObject
     {
         public string featureName;
 
@@ -11,5 +12,10 @@ namespace Tyrant
 
         [TextArea]
         public string featureUsage;
+        
+        
+        public IMaterialFeature pinDice;
+
+        public IMaterialFeature buffConfig;
     }
 }

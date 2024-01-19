@@ -85,7 +85,7 @@ namespace Tyrant.UI
             pined.handler = handler;
 #if UNITY_EDITOR
 
-            name = _cellPosition.ToString();
+            name = slot.monoName;
 
             positionLabel.text = name;
 #endif
