@@ -13,9 +13,6 @@ namespace Tyrant
     {
         public static void From(MaterialFeatureSO[] so, IEnumerable<WorkBenchSlot> slots)
         {
-
-            // var d = new List<WorkBenchSlot>();
-
             var l = new List<Vector2Int>();
 
             for (int i = 0; i < so.Count(); i++)
@@ -24,8 +21,6 @@ namespace Tyrant
                 var d = so.ElementAt(i);
                 slot.materialFeature = ScriptableObject.Instantiate(d);
             }
-            
-          
         }
 
         private static WorkBenchSlot c(List<Vector2Int> l, IEnumerable<WorkBenchSlot> slots)
@@ -35,24 +30,20 @@ namespace Tyrant
             l.Add(slot.toolWrapper.position);
             return slot;
         }
-    }
-    
-    
-    // public class MaterialFeature
-    // {
-    //     public string featureName;
-    //
-    //     public Sprite icon;
-    //     
-    //     internal MaterialFeature(string featureName, Sprite icon)
-    //     {
-    //         this.featureName = featureName;
-    //         this.icon = icon;
-    //     }
-    //
-    //     public IMaterialFeature pinDice;
-    // }
 
+        /// <summary>
+        /// 展示所有名称
+        /// </summary>
+        public static string DebugDescription<T>(this T o) where T: IEnumerable<MaterialFeatureSO>
+        {
+            return o.Select(v => v.featureName)
+                .JoinWithSeparator("-");
+        }
+        
+    }
+
+    
+    // TODO: !!!!!!!!!!!!
     public struct X : IMaterialFeature
     {
         public Tuple<bool, int> ApplyDice(int dice)

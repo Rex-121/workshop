@@ -12,6 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d04b126bc8245d2a21c68196de2f5e6, type: 3}
   m_Name: "\u6B8B\u7F3A"
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: pinDice
+      Entry: 7
+      Data: 0|Tyrant.X, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: buffConfig
+      Entry: 6
+      Data: 
   featureName: "\u6B8B\u7F3A"
   icon: {fileID: 1592936917, guid: a34ddb617bb8f43cca3a995706d4ce89, type: 3}
   featureUsage: 

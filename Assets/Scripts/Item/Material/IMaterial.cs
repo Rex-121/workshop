@@ -6,5 +6,7 @@ namespace Tyrant
     {
         public MaterialType type { get; }
         
+        
+        public MaterialFeatureSO[] features { get; }
     }
 }

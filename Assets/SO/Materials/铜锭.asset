@@ -26,7 +26,6 @@ MonoBehaviour:
       Data: c795c5c9b25645479e09da2611fb6852
   materialName: "\u94DC\u952D"
   icon: {fileID: 2023375052, guid: 9c68229f041134606ba844e5bda5c2cc, type: 3}
-  code: II
-  type: 1
+  type: 2
   featureSOs:
   - {fileID: 11400000, guid: 667f9979c17f14efdaaf7a5a673980ea, type: 2}

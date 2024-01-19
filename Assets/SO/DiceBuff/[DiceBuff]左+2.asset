@@ -35,7 +35,7 @@ MonoBehaviour:
       Data: 1|Tyrant.DiceAddSimpleValue, Assembly-CSharp
     - Name: rate
       Entry: 3
-      Data: 2
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -50,7 +50,7 @@ MonoBehaviour:
       Data: 3|UnityEngine.Vector2Int[], UnityEngine.CoreModule
     - Name: 
       Entry: 12
-      Data: 3
+      Data: 2
     - Name: 
       Entry: 7
       Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
@@ -76,18 +76,6 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
-      Entry: 7
-      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 3
-      Data: -3
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
       Entry: 13
       Data: 
     - Name: 
@@ -96,9 +84,5 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  buffName: "\u5DE6+1"
-  description: "\u5DE6\u8FB93\u683C+2"
   icon: {fileID: 0}
   priority: 0
-  updateTimeType: 0
-  stackRemoveType: 1
