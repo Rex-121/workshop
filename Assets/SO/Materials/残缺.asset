@@ -23,7 +23,10 @@ MonoBehaviour:
     SerializationNodes:
     - Name: pinDice
       Entry: 7
-      Data: 0|Tyrant.X, Assembly-CSharp
+      Data: 0|Tyrant.TakeEffectByDiceValue, Assembly-CSharp
+    - Name: value
+      Entry: 3
+      Data: 2
     - Name: 
       Entry: 8
       Data: 
@@ -31,5 +34,6 @@ MonoBehaviour:
       Entry: 6
       Data: 
   featureName: "\u6B8B\u7F3A"
-  icon: {fileID: 1592936917, guid: a34ddb617bb8f43cca3a995706d4ce89, type: 3}
-  featureUsage: 
+  effectiveTiers: 7
+  editUsage: 0
+  editUsageLabel: 

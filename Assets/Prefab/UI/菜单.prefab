@@ -510,3 +510,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3a512c54cc544e3857b98a3a97d1bbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadingScenesPrefab: {fileID: 5611212243917109250, guid: 7ca804750611d4fee9190b2f625e5fb9, type: 3}

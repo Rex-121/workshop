@@ -74,7 +74,7 @@ namespace Tyrant
             return new Tuple<bool, int>(false, dice);
         }
 
-        public string description => "";
+        public string description => "不受其他效果影响";
 
         public Vector2Int[] effectOn => new[] {Vector2Int.zero};
     }

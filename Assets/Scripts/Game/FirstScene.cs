@@ -10,6 +10,7 @@ namespace Tyrant
         
         public RandomHeroStands heroStands;
 
+        public LoadingScenes loadingScenesPrefab;
 
         public void SaveAndStart()
         {
@@ -20,8 +21,11 @@ namespace Tyrant
             
             Storage.main.SaveSquads(new [] { squad });
             
-            SceneManager.LoadScene("Scenes/SampleScene");
-
+            var loadingScenes = Instantiate(loadingScenesPrefab);
+            loadingScenes.scene = LoadingScenes.Scene.SampleScene;
+            
+            
+            gameObject.SetActive(false);
         }
         
     }

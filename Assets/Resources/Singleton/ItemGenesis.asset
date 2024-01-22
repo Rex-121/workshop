@@ -24,3 +24,7 @@ MonoBehaviour:
   materialSos:
   - {fileID: 11400000, guid: ac1314e9315df4e5e8801de8b50b1dc5, type: 2}
   - {fileID: 11400000, guid: c8e53f76dbdd64650b02ec5646b34652, type: 2}
+  materialFeatureSOs:
+  - {fileID: 11400000, guid: 667f9979c17f14efdaaf7a5a673980ea, type: 2}
+  - {fileID: 11400000, guid: 30bf1d8bf266f43a2afcfc22e4565ad1, type: 2}
+  - {fileID: 11400000, guid: ac5cdf42cd2e745f48ceaa57a296f295, type: 2}

@@ -31,5 +31,6 @@ MonoBehaviour:
       Entry: 8
       Data: 
   featureName: "\u6742\u8D28"
-  icon: {fileID: 1168828404, guid: a34ddb617bb8f43cca3a995706d4ce89, type: 3}
-  featureUsage: "\u9AB0\u5B50 >3 \u751F\u6548"
+  effectiveTiers: 7
+  editUsage: 0
+  editUsageLabel: 

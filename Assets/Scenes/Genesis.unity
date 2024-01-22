@@ -909,6 +909,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadGameButton: {fileID: 1703740588}
+  loadingScenesPrefab: {fileID: 5611212243917109250, guid: 7ca804750611d4fee9190b2f625e5fb9, type: 3}
 --- !u!1 &2029001288
 GameObject:
   m_ObjectHideFlags: 0
@@ -963,7 +964,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

@@ -18,6 +18,11 @@ namespace Tyrant.BlackSmith
         {
             _animator.SetBool(IsHammer, _isHammer);
         }
+        
+        public void HammerNow()
+        {
+            StartHammer(0);
+        }
 
         public SpriteRenderer forgeItem;
 

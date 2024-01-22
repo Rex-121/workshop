@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Tyrant;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -9,16 +10,27 @@ public class GenesisScene : MonoBehaviour
 {
 
     public Button loadGameButton;
-    
+
+    public LoadingScenes loadingScenesPrefab;
     public void NewGame()
     {
-        ES3.DeleteFile("SaveFile.es3");
-        SceneManager.LoadScene("RandomBeginning");
+        
+        
+        Storage.main.DeleteData();
+        var loadingScenes = Instantiate(loadingScenesPrefab);
+        loadingScenes.scene = LoadingScenes.Scene.RandomBeginning;
+        
+        
+        gameObject.SetActive(false);
     }
 
     public void LoadGame()
     {
-        SceneManager.LoadScene("SampleScene");
+        var loadingScenes = Instantiate(loadingScenesPrefab);
+        loadingScenes.scene = LoadingScenes.Scene.SampleScene;
+        
+        
+        gameObject.SetActive(false);
     }
 
 

@@ -30,6 +30,7 @@ namespace Tyrant
             }
             catch (Exception e)
             {
+                Debug.Log(e);
                 throw new Exception("ffff");
             }
            
@@ -38,6 +39,11 @@ namespace Tyrant
         public void SaveSquads(HeroSquad[] squads)
         {
             Save("SQUAD", squads);
+        }
+
+        public void DeleteData()
+        {
+            ES3.DeleteFile("SaveFile.es3");
         }
 
         public void Save<T>(string key, T value) 
