@@ -8,14 +8,23 @@ namespace Tyrant
     [CreateAssetMenu(menuName = "Singleton/ItemGenesis", fileName = "ItemGenesis")]
     public class ItemGenesis: SingletonSO<ItemGenesis>
     {
-        [Sirenix.OdinInspector.ReadOnly]
+        [ReadOnly]
         public MaterialSO[] materialSos;
         
+        [ReadOnly]
+        public MaterialFeatureSO[] materialFeatureSOs;
         
         public MaterialSO FindMaterialSOById(string id)
         {
             return materialSos.First(v => v.id.ToString() == id);
         }
+        
+        
+        public MaterialFeatureSO FindMaterialFeatureSOByName(string name)
+        {
+            return materialFeatureSOs.First(v => v.name.ToString() == name);
+        }
+        
         
 #if UNITY_EDITOR
         [Button(ButtonSizes.Medium), PropertyOrder(-1)]
@@ -23,6 +32,10 @@ namespace Tyrant
         {
             materialSos = AssetDatabase.FindAssets("t:MaterialSO")
                 .Select(guid => AssetDatabase.LoadAssetAtPath<MaterialSO>(AssetDatabase.GUIDToAssetPath(guid)))
+                .ToArray();
+            
+            materialFeatureSOs = AssetDatabase.FindAssets("t:MaterialFeatureSO")
+                .Select(guid => AssetDatabase.LoadAssetAtPath<MaterialFeatureSO>(AssetDatabase.GUIDToAssetPath(guid)))
                 .ToArray();
         }
 #endif

@@ -55,21 +55,11 @@ namespace Tyrant
             
             var index = 0;
 
-            // if (slots.Count != 0)
-            // {
-            //     foreach (var slot in slots.Keys.TakeWhile(slot => index >= slot))
-            //     {
-            //         index = slot + 1;
-            //     }
-            // }
-
             while (slots.ContainsKey(index))
             {
                 index++;
             }
             
-            Debug.Log(index);
-
             AddSlot(new Slot(index, item));
         }
 

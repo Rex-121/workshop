@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Item.Material;
 using Sirenix.OdinInspector;
 using Tyrant.Items;
 using UnityEngine;
@@ -27,7 +28,7 @@ namespace Tyrant
         
         public RawMaterial toRawMaterial => new (this);
 
-        public IMaterial ToMaterial(Quality quality) => new Material(new (this), quality) ;
+        public IMaterial ToMaterial(Quality quality, IMaterialFeatureGenerate featureGenerate) => new Material(new (this), quality, featureGenerate) ;
         
         [Button, HorizontalGroup("ID")]
         public void AssignGuid()

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Item.Material;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEngine;
@@ -55,7 +56,7 @@ namespace Tyrant
         {
             if (SaveManager.main.normalSettings.birthPackDelivered) return;
             birthPackSO.materials
-                .Select(v => v.ToMaterial(Quality.Fine))
+                .Select(v => v.ToMaterial(Quality.Fine, new AtLeastOneFeatureGenerate()))
                 .ForEach(AddItem);
             SaveManager.main.DoDeliverBirthPack();
         }

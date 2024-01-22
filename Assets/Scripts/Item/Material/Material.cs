@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using Item.Material;
 using Sirenix.OdinInspector;
 using Tyrant.Items;
 using UnityEngine;
@@ -27,8 +30,9 @@ namespace Tyrant
         }
 
         public IMaterial toMaterial => new Material(this);
-        
-        public IMaterial ToMaterial(Quality quality) => new Material(this, quality);
+
+        public IMaterial ToMaterial(Quality quality, IMaterialFeatureGenerate featureGenerate) 
+            => new Material(this, quality, featureGenerate);
 
     }
     
@@ -44,8 +48,13 @@ namespace Tyrant
         [ShowInInspector]
         public RawMaterial rawMaterial;
 
+        [SerializeField]
+        public string[] featureNames;
+
         [ShowInInspector]
-        public MaterialFeatureSO[] features => rawMaterial.features;
+        public MaterialFeatureSO[] features => featureNames
+            .Select(ItemGenesis.main.FindMaterialFeatureSOByName)
+            .ToArray();
         
         public MaterialType type => rawMaterial.type;
         
@@ -61,12 +70,16 @@ namespace Tyrant
         {
             this.rawMaterial = rawMaterial;
             quality = Quality.Random();
+            featureNames = new AtLeastOneFeatureGenerate()
+                .GetFeatures(rawMaterial.features, quality).Select(v => v.name).ToArray();
+
         }
         
-        public Material(RawMaterial rawMaterial, Quality quality)
+        public Material(RawMaterial rawMaterial, Quality quality, IMaterialFeatureGenerate featureGenerate)
         {
             this.rawMaterial = rawMaterial;
             this.quality = quality;
+            featureNames = featureGenerate.GetFeatures(rawMaterial.features, quality).Select(v => v.name).ToArray();
         }
     }
 }

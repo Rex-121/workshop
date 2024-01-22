@@ -157,14 +157,14 @@ namespace Tyrant
 
         public override string ToString() => tier.Description();
 
-        [HideLabel, SuffixLabel("品级  ", true), Serializable]
+        [HideLabel, SuffixLabel("品级  ", true), Serializable, Flags]
         public enum Tier
         {
-            Defectives,
-            Fine, 
-            Superior, 
-            Masterpiece, 
-            Legendary,
+            Defectives = 1,
+            Fine = 2, 
+            Superior = 4, 
+            Masterpiece = 8, 
+            Legendary = 16,
         }
 
         public Quality quality => this;

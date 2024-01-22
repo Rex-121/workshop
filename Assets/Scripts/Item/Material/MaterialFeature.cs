@@ -43,26 +43,60 @@ namespace Tyrant
     }
 
     
-    // TODO: !!!!!!!!!!!!
-    public struct X : IMaterialFeature
+    /// <summary>
+    /// 当灵感大于`value`时生效
+    /// </summary>
+    [Serializable]
+    public struct TakeEffectByDiceValue : IMaterialFeature
     {
+
+        [SerializeField]
+        public int value;
+        
         public Tuple<bool, int> ApplyDice(int dice)
         {
-            return dice > 3 ? new Tuple<bool, int>(true, dice) : new Tuple<bool, int>(false, 0);
+            return dice > value ? new Tuple<bool, int>(true, dice) : new Tuple<bool, int>(false, 0);
         }
+        
+        public string description => $"灵感`>{value}`时生效";
+        
+        public Vector2Int[] effectOn => new[] {Vector2Int.zero};
     }
 
+    /// <summary>
+    /// 其他效果无法生效
+    /// </summary>
+    [Serializable]
     public struct BuffForbid : IMaterialFeature
     {
         public Tuple<bool, int> ApplyDice(int dice)
         {
             return new Tuple<bool, int>(false, dice);
         }
+
+        public string description => "";
+
+        public Vector2Int[] effectOn => new[] {Vector2Int.zero};
     }
 
     public interface IMaterialFeature
     {
-        // (是否满足条件，满足条件后的值)
+        /// <summary>
+        /// (是否满足条件，满足条件后的值)
+        /// </summary>
+        /// <param name="dice">灵感值</param>
+        /// <returns></returns>
         public Tuple<bool, int> ApplyDice(int dice);
+
+        /// <summary>
+        /// 特性详情
+        /// </summary>
+        public string description { get; }
+        
+        
+        /// <summary>
+        /// 受影响的格子
+        /// </summary>
+        public Vector2Int[] effectOn { get; }
     }
 }

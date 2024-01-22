@@ -26,6 +26,21 @@ namespace Algorithm
                 (list[currentIndex], list[i]) = (list[i], list[currentIndex]);
             }
         }
+        
+        // 洗牌
+        // ReSharper disable once IdentifierTypo
+        public static IList<T> Shuffled<T>(this IList<T> list)
+        {
+            var newList = list;
+            //随机交换
+            for (var i = list.Count - 1; i >= 0; i--)
+            {
+                var currentIndex = Random.Range(0, i+1);
+                (newList[currentIndex], newList[i]) = (newList[i], newList[currentIndex]);
+            }
+
+            return newList;
+        }
     
     }
     
