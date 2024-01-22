@@ -8,13 +8,13 @@ using UnityEngine;
 
 namespace Tyrant.Editor
 {
-    public class ToolEditorWindow : OdinMenuEditorWindow
+    public class ItemEditorWindow : OdinMenuEditorWindow
     {
-        [MenuItem("开发/打造卡牌编辑器")]
+        [MenuItem("开发/材料编辑")]
         private static void Open()
         {
-            var window = GetWindow<ToolEditorWindow>("打造卡牌编辑器");
-            window.position = GUIHelper.GetEditorWindowRect().AlignCenter(800, 500);
+            var window = GetWindow<ItemEditorWindow>("材料编辑", true);
+            window.position = GUIHelper.GetEditorWindowRect().AlignCenter(400, 500);
         }
         
         
@@ -27,20 +27,17 @@ namespace Tyrant.Editor
 
             DungeonEditorWindow.UpdateOverviewList();
             
+ 
+            // 所有材料
+            tree.AddAllAssetsAtPath("材料", "Assets/SO/Materials", typeof(MaterialSO));
             
-            tree.AddAllAssetsAtPath("所有Tools", "Assets/SO/Tool", typeof(ToolSO));
-
-            tree.AddAllAssetsAtPath("所有ToolBuffs", "Assets/SO/DiceBuff", typeof(DiceBuffDataSO));
-
-            tree.EnumerateTree().Where(x => x.Value as DiceBuffDataSO).ForEach(AddDragHandles);
+            
+            // 所有材料
+            tree.AddAllAssetsAtPath("特性", "Assets/SO/Materials", typeof(MaterialFeatureSO));
             
             return tree;
         }
         
-        private void AddDragHandles(OdinMenuItem menuItem)
-        {
-            menuItem.OnDrawItem += x => DragAndDropUtilities.DragZone(menuItem.Rect, menuItem.Value, false, false);
-        }
         
         protected override void OnBeginDrawEditors()
         {
@@ -57,25 +54,24 @@ namespace Tyrant.Editor
                     GUILayout.Label(selected.Name);
                 }
                 
-                if (SirenixEditorGUI.ToolbarButton(new GUIContent("新DiceBuff")))
+                if (SirenixEditorGUI.ToolbarButton(new GUIContent("新Item")))
                 {
-                    ScriptableObjectCreator.ShowDialog<DiceBuffDataSO>("Assets/SO/DiceBuff", obj =>
+                    ScriptableObjectCreator.ShowDialog<MaterialSO>("Assets/SO/Materials", obj =>
                     {
-                        // obj.buffName = obj.name;
+                        obj.materialName = obj.name;
                         base.TrySelectMenuItemWithObject(obj); // Selects the newly created item in the editor
                     });
                 }
                 
-                if (SirenixEditorGUI.ToolbarButton(new GUIContent("新Tool")))
+                if (SirenixEditorGUI.ToolbarButton(new GUIContent("新特性")))
                 {
-                    ScriptableObjectCreator.ShowDialog<ToolSO>("Assets/SO/Tool", obj =>
+                    ScriptableObjectCreator.ShowDialog<MaterialFeatureSO>("Assets/SO/Materials", obj =>
                     {
-                        obj.toolName = obj.name;
+                        obj.featureName = obj.name;
                         base.TrySelectMenuItemWithObject(obj); // Selects the newly created item in the editor
                     });
                 }
             }
-            
             SirenixEditorGUI.EndHorizontalToolbar();
         }
     }

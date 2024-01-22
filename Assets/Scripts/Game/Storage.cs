@@ -24,10 +24,18 @@ namespace Tyrant
 
         public T Load<T>(string key)
         {
-            return ES3.Load<T>(key);
+            try
+            {
+                return ES3.Load<T>(key);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("ffff");
+            }
+           
         }
 
-        public void SaveSquad(HeroSquad[] squads)
+        public void SaveSquads(HeroSquad[] squads)
         {
             Save("SQUAD", squads);
         }

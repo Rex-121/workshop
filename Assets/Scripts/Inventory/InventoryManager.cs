@@ -27,6 +27,9 @@ namespace Tyrant
                     "ITEMS", 
                     item => item is IMaterial
                     );
+
+                // 获取初始物品
+                GetBirthPackIfNeeded();
             }
             else
             {
@@ -46,17 +49,17 @@ namespace Tyrant
 
         private IEnumerable<Inventory> allInventories => new[] {items, equipments};
 
-        // private Dictionary<int, Inventory.Slot> allEquipments => equipments.slots;
 
-        // public Dictionary<int, Inventory.Slot> All(Inventory.Type by)
-        // {
-        //     return by switch
-        //     {
-        //         Inventory.Type.Equipment => allEquipments,
-        //         Inventory.Type.Item => allItems,
-        //         _ => allEquipments
-        //     };
-        // }
+        [Button]
+        public void GetBirthPackIfNeeded()
+        {
+            if (SaveManager.main.normalSettings.birthPackDelivered) return;
+            birthPackSO.materials
+                .Select(v => v.ToMaterial(Quality.Fine))
+                .ForEach(AddItem);
+            SaveManager.main.DoDeliverBirthPack();
+        }
+        
         
         public Inventory InventoryBy(Inventory.Type by)
         {

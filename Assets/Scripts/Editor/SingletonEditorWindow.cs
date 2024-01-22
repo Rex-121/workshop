@@ -14,7 +14,7 @@ namespace Editor
         [MenuItem("开发/单例")]
         private static void Open()
         {
-            var window = GetWindow<SingletonEditorWindow>();
+            var window = GetWindow<SingletonEditorWindow>("单例查看");
             window.position = GUIHelper.GetEditorWindowRect().AlignCenter(800, 500);
         }
 

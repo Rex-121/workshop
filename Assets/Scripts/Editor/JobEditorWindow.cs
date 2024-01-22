@@ -10,10 +10,10 @@ namespace Tyrant.Editor
 {
     public class JobEditorWindow : OdinMenuEditorWindow
     {
-        [MenuItem("开发/Job编辑")]
+        [MenuItem("开发/战斗职业编辑器")]
         private static void Open()
         {
-            var window = GetWindow<JobEditorWindow>();
+            var window = GetWindow<JobEditorWindow>("战斗职业编辑器");
             window.position = GUIHelper.GetEditorWindowRect().AlignCenter(800, 500);
         }
         

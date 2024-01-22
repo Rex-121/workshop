@@ -10,10 +10,10 @@ namespace Tyrant.Editor
 {
     public class BuffEditorWindow : OdinMenuEditorWindow
     {
-        [MenuItem("开发/Buff编辑")]
+        [MenuItem("开发/战斗增益编辑器")]
         private static void Open()
         {
-            var window = GetWindow<BuffEditorWindow>();
+            var window = GetWindow<BuffEditorWindow>("战斗增益编辑器");
             window.position = GUIHelper.GetEditorWindowRect().AlignCenter(800, 500);
         }
         

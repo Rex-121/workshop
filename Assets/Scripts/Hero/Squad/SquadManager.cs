@@ -14,12 +14,8 @@ namespace Tyrant
             {
                 main = this;
 
-                var data = Storage.main.Load<HeroSquad[]>("SQUAD");
-                data.ForEach(v => v.Restore());
+                _heroSquads.AddRange(SaveManager.main.LoadSquads());
                 
-                _heroSquads.AddRange(data);
-                
-                // DontDestroyOnLoad(this);
             }
             else
             {
@@ -30,7 +26,7 @@ namespace Tyrant
 
         public void Save()
         {
-            Storage.main.SaveSquad(_heroSquads.ToArray());
+            SaveManager.main.SaveSquads();
         }
 
 

@@ -146,6 +146,8 @@ namespace Tyrant
         }
 
         public static Quality On(Tier t) => new (t);
+        
+        public static Quality Fine => Quality.On(Quality.Tier.Fine);
 
         public static IQuality operator +(Quality a, IQuality b)
         {

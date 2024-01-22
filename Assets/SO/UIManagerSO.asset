@@ -20,6 +20,7 @@ MonoBehaviour:
     - {fileID: 4891744517426476143, guid: b8c55f4bf1b8548dba170325f553c363, type: 3}
     - {fileID: 187675904500015612, guid: a56b9fdd798ce4a3ab997bec4128a5d8, type: 3}
     - {fileID: 2980155221130879696, guid: 88d6badb007414c569d1baf2929baed3, type: 3}
+    - {fileID: 6445521716602168496, guid: b33976063b99a49169702b7a455dc250, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -44,7 +45,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 4
+      Data: 5
     - Name: 
       Entry: 7
       Data: 
@@ -123,6 +124,27 @@ MonoBehaviour:
     - Name: gameObject
       Entry: 10
       Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 27
+    - Name: $v
+      Entry: 7
+      Data: Tyrant.UIManagerSO+Wrapper, Assembly-CSharp
+    - Name: isOnCanvas
+      Entry: 5
+      Data: true
+    - Name: gameObject
+      Entry: 10
+      Data: 4
     - Name: 
       Entry: 8
       Data: 

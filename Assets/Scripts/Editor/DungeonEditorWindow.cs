@@ -10,10 +10,10 @@ namespace Tyrant.Editor
 {
     public class DungeonEditorWindow : OdinMenuEditorWindow
     {
-        [MenuItem("开发/Dungeon编辑")]
+        [MenuItem("开发/地下城编辑器")]
         private static void Open()
         {
-            var window = GetWindow<DungeonEditorWindow>();
+            var window = GetWindow<DungeonEditorWindow>("地下城编辑器");
             window.position = GUIHelper.GetEditorWindowRect().AlignCenter(800, 500);
         }
 

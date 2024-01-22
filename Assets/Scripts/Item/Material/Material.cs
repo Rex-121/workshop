@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Sirenix.OdinInspector;
 using Tyrant.Items;
 using UnityEngine;
@@ -29,6 +27,9 @@ namespace Tyrant
         }
 
         public IMaterial toMaterial => new Material(this);
+        
+        public IMaterial ToMaterial(Quality quality) => new Material(this, quality);
+
     }
     
     [System.Serializable]
@@ -51,12 +52,6 @@ namespace Tyrant
         [SerializeField]
         public Quality quality { get; set; }
 
-        // public Material(string name, Sprite sprite, string code)
-        // {
-        //     rawMaterial = new RawMaterial(name, sprite, code, new MaterialFeature[] { });
-        //     quality = Quality.Random();
-        // }
-
         public override string ToString()
         {
             return $"{base.ToString()}-{rawMaterial.itemName}-({quality})";
@@ -66,7 +61,12 @@ namespace Tyrant
         {
             this.rawMaterial = rawMaterial;
             quality = Quality.Random();
-            // id = rawMaterial.id;
+        }
+        
+        public Material(RawMaterial rawMaterial, Quality quality)
+        {
+            this.rawMaterial = rawMaterial;
+            this.quality = quality;
         }
     }
 }
