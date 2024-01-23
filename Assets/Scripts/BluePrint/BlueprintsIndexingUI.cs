@@ -48,7 +48,7 @@ namespace Tyrant.UI
         {
             if (_m != null)
             {
-                Destroy(_m);
+                Destroy(_m.gameObject);
             }
             
             WorkBenchManager.main.bluePrint = bp;

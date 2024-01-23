@@ -72,6 +72,33 @@ namespace Tyrant
             }
         }
         
+        public void PinInspectorItem(IItem item)
+        {
+            if (item == null)
+            {
+                DestroyInspector();
+            }
+            else
+            {
+                if (_inspector == null)
+                {
+                    switch (item)
+                    {
+                        case IEquipment:
+                            _inspector = Instantiate(equipsInspectorPrefab);
+                            break;
+                        case IMaterial:
+                            _inspector = Instantiate(materialInspectorPrefab);
+                            break;
+                    }
+                    
+                    _inspector.NewItem(item);
+                    // _inspector.transform.position = Input.mousePosition;
+                }
+                inspectorTransform.SetAsLastSibling();
+            }
+        }
+        
         private void Start()
         {
             _allKeys = uiManagerSO.allUIItems.Keys.ToArray();

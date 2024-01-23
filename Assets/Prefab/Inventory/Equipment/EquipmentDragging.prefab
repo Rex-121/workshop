@@ -91,10 +91,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 4145943635403546514}
-  canvas: {fileID: 0}
-  pointToDrag: {fileID: 0}
   canvasGroup: {fileID: 1071429457108999103}
-  inspectorPrefab: {fileID: 2196506033936839238, guid: 852cac96b2a4e4b3595bac4c26cbbeed, type: 3}
+  messageChannel: {fileID: 11400000, guid: da6946b6349eb4748bd877aaf798b6d1, type: 2}
   previousParent: {fileID: 0}
 --- !u!225 &1071429457108999103
 CanvasGroup:

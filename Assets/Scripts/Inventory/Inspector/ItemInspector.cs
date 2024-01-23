@@ -5,6 +5,7 @@ namespace Tyrant.UI
 {
     public class ItemInspector: MonoBehaviour
     {
+
         private void Awake()
         {
             var canvasGroup = gameObject.AddComponent<CanvasGroup>();

@@ -1,4 +1,5 @@
 using Sirenix.OdinInspector;
+using Tyrant.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
@@ -6,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Tyrant
 {
-    public class EquipmentDragging: MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
+    public class EquipmentDragging: MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         
         [ShowInInspector]
@@ -20,7 +21,8 @@ namespace Tyrant
 
         public CanvasGroup canvasGroup;
 
-
+        
+        public ItemInspectorMessageChannel messageChannel;
 
         // private GameObject _inspector;
         
@@ -94,14 +96,21 @@ namespace Tyrant
         
         public void OnPointerEnter(PointerEventData eventData)
         {
+            // messageChannel.ItemInspector(_equipment.item);
             UIManager.main.InspectorItem(_equipment.item);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
+            // messageChannel.ItemInspector(null);
             UIManager.main.InspectorItem(null);
         }
 
 
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            messageChannel.ItemInspector(_equipment.item);
+            // UIManager.main.PinInspectorItem(_equipment.item);
+        }
     }
 }
