@@ -12,5 +12,12 @@ namespace Tyrant
         public int stamina;
 
 
+        [LabelText("卡组容量"), BoxGroup("卡牌")]
+        public int maxCardDeckCapacity = 10;
+
+        [LabelText("初始手牌数量"), BoxGroup("卡牌")]
+        public int genesisCardAmount = 5;
+
+        [LabelText("每回合抽牌数量"), BoxGroup("卡牌")] public int drawPerTurn = 1;
     }
 }

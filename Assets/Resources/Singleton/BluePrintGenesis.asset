@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BluePrintGenesis
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
+    SerializedFormat: 0
     SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
@@ -21,3 +21,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
+  bluePrintSos:
+  - {fileID: 11400000, guid: 9baeb6b3018df4440a6714b87ca05554, type: 2}
+  - {fileID: 11400000, guid: 75a78d6f15a8b4996b96d95d76fcc93e, type: 2}
+  - {fileID: 11400000, guid: 86c2c46f206a7478484e149d2a7a1287, type: 2}

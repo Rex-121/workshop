@@ -1,12 +1,30 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 namespace Algorithm
 {
     public static class CollectionExtension
     {
-   
+
+        public static void Enumerate(this (int, int) o, Action<int> enumerator)
+        {
+            for (var i = o.Item1; i < o.Item2; i++)
+            {
+                enumerator.Invoke(i);
+            }
+        }
+
+        public static void ForEach(this (int, int) o, Action enumerator)
+        {
+            for (var i = o.Item1; i < o.Item2; i++)
+            {
+                enumerator.Invoke();
+            }
+        }
+
         public static T RandomElement<T>(this IEnumerable<T> o)
         {
             var enumerable = o as T[] ?? o.ToArray();

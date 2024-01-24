@@ -91,11 +91,11 @@ namespace Tyrant
             .Where(v => !v.require)
             .ToArray();
         
-        [ShowInInspector]
+        [ShowInInspector, LabelText("材料最小数量")]
         public int minRequiresCount => requires
             .Sum(v => v.min);
         
-        [ShowInInspector]
+        [ShowInInspector, LabelText("材料最大数量")]
         public int maxCount => rawMaterialsRequires
             .Sum(v => v.max);
 

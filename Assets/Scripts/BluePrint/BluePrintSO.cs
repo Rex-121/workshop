@@ -1,5 +1,4 @@
 using Sirenix.OdinInspector;
-using Tyrant.Items;
 using UnityEngine;
 
 namespace Tyrant
@@ -8,10 +7,7 @@ namespace Tyrant
     public class BluePrintSO : SerializedScriptableObject
     {
 
-        [LabelText("所需材料")]
-        public MaterialRequiresGroup materialRequires;
-
-        [PreviewField(60)]
+        [PreviewField(60), HideLabel, HorizontalGroup("basic", 60)]
         public Sprite icon;
 
         /*
@@ -19,13 +15,27 @@ namespace Tyrant
          * 12121-
          * 00010-
          */
+        [HideLabel, HorizontalGroup("basic"), VerticalGroup("basic/info")]
         public string board;
         
+        [HideLabel, HorizontalGroup("basic"), VerticalGroup("basic/info")]
         public EquipmentSO equipmentSO;
 
+        private AnimationCurve _animationCurve;
 
+        [BoxGroup("制作")]
         public int makePoints;
+        [BoxGroup("制作")]
         public int qualityPoints;
+        
+        
+        [LabelText("所需材料")]
+        public MaterialRequiresGroup materialRequires;
 
+
+        public void D()
+        {
+            // _animationCurve[]
+        }
     }
 }

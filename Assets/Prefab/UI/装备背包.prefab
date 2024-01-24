@@ -220,6 +220,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   equipmentInventorySlotPrefab: {fileID: 5170236632348220821, guid: 41e3af99b21624103a7c591262a38789, type: 3}
   panel: {fileID: 4394990021992298179}
+  messageChannel: {fileID: 11400000, guid: da6946b6349eb4748bd877aaf798b6d1, type: 2}
+  inventoryType: 0
+  itemInspector: {fileID: 0}
 --- !u!1 &7913401427612291286
 GameObject:
   m_ObjectHideFlags: 0

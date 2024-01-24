@@ -10,21 +10,14 @@ namespace Tyrant.UI
 {
     public class ToolsBox: MonoBehaviour, IWorkBenchRound
     {
-        // public static ToolsBox main;
-
-        // public Transform dragLayer;
-        // private void Awake()
-        // {
-        //     if (main == null)
-        //     {
-        //         main = this;
-        //         DontDestroyOnLoad(this);
-        //     }
-        //     else
-        //     {
-        //         Destroy(this);
-        //     }
-        // }
+        
+        /*
+         * 1. 初始化牌组
+         * 2. 发初始卡牌
+         * 3. 每回合发牌
+         * 4. 使用后进入弃牌堆
+         * 5. 卡牌用尽
+         */
 
         [ShowInInspector, NonSerialized] public Stack<Tool> toolsStack;
 
@@ -34,18 +27,19 @@ namespace Tyrant.UI
         public ToolsBoxInCanvas toolsBoxInCanvas;
 
 
-        private static IEnumerable<ToolSO> toolSos => WorkBenchManager.main.toolSos;
-        
-        
-        // private void Start()
-        // {
-        //     NewTurn();
-        // }
+        [NonSerialized] public CardDeck cardDeck;
+
+        private void Awake()
+        {
+            cardDeck = new CardDeck();
+        }
 
         // 准备新的一轮铸造
         public void PrepareNewRound()
         {
             ResetBox();
+            
+           
         }
 
         public void NewTurn()
@@ -55,22 +49,17 @@ namespace Tyrant.UI
 
         private void ResetBox()
         {
-            var list = new List<Tool>();
-            for (int i = 0; i < 10; i++)
-            {
-                list.Add(toolSos.RandomElement().ToTool());
-            }
-            toolsStack = new Stack<Tool>(list);
+            DuringDrawTools(cardDeck.GenesisDraw());
         }
 
         public void BeforeDrawTools()
         {
+            var drawPerTurn = Protagonist.main.drawPerTurn;
             // 找到需要发送几个工具
-            var array = new Tool[amountPerTurn];
-            for (var i = 0; i < amountPerTurn; i++)
-            {
-                array[i] = toolsStack.Pop();
-            }
+            var array = new Tool[drawPerTurn];
+            
+            (0, drawPerTurn)
+                .Enumerate(i => array[i] = cardDeck.Draw());
             
             DuringDrawTools(array);
         }

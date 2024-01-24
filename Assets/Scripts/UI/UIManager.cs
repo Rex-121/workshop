@@ -23,6 +23,8 @@ namespace Tyrant
             }
         }
 
+        public AnimationCurve animationCurve;
+
         public UIManagerSO uiManagerSO;
 
         private KeyCode[] _allKeys;
@@ -34,7 +36,22 @@ namespace Tyrant
         public Transform dragPointForItem;
 
         public Canvas canvas;
-        
+
+
+        [Button]
+        public void D()
+        {
+
+            var perLevel = 100;
+
+            var maxLevel = 5;
+            
+            for (int i = 0; i < 5; i++)
+            {
+                var d = animationCurve.Evaluate(i * 1.0f / maxLevel) + 1;
+                Debug.Log(d * perLevel);
+            }
+        }
         
         [BoxGroup("Inspectors"), LabelText("检查器图层")]
         // 用于查看道具属性

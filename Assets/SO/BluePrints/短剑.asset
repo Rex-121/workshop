@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "\u77ED\u5251"
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
+    SerializedFormat: 0
     SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
@@ -21,6 +21,11 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
+  icon: {fileID: -1497093070, guid: 5adafed67f17e41e39188696d7ba4771, type: 3}
+  board: 00020:21121:00020
+  equipmentSO: {fileID: 11400000, guid: e8045a1ddcc9d4462bbd6acf31a0e21c, type: 2}
+  makePoints: 10
+  qualityPoints: 20
   materialRequires:
     rawMaterialsRequires:
     - types: 1
@@ -35,8 +40,3 @@ MonoBehaviour:
       require: 0
       min: 1
       max: 2
-  icon: {fileID: -1497093070, guid: 5adafed67f17e41e39188696d7ba4771, type: 3}
-  board: 000020:121121:000020
-  equipmentSO: {fileID: 11400000, guid: e8045a1ddcc9d4462bbd6acf31a0e21c, type: 2}
-  makePoints: 10
-  qualityPoints: 20

@@ -13,41 +13,14 @@ MonoBehaviour:
   m_Name: "\u575A\u97E7(\u6218\u58EB\u88AB\u52A8)"
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
+    SerializedFormat: 0
+    SerializedBytes: 2d01080000006f006e004300720065006100740065002d01080000006f006e00520065006d006f00760065002d01050000006f006e004800690074000101070000006f006e00420065004800690074002f00000000012000000054007900720061006e0074002e00440061006d0061006700650052006500640075006300650053006b0069006c006c002c00200042006100740074006c0065000000000027010900000073006b0069006c006c004e0061006d00650001020000005a57e79717010600000072006500640075006300650002000000052d01060000006f006e004b0069006c006c002d01080000006f006e00420065004b0069006c006c00
     ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: onCreate
-      Entry: 6
-      Data: 
-    - Name: onRemove
-      Entry: 6
-      Data: 
-    - Name: onHit
-      Entry: 6
-      Data: 
-    - Name: onBeHit
-      Entry: 7
-      Data: 0|Tyrant.DamageReduceSkill, Assembly-CSharp
-    - Name: skillName
-      Entry: 1
-      Data: "\u575A\u97E7"
-    - Name: reduce
-      Entry: 3
-      Data: 3
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: onKill
-      Entry: 6
-      Data: 
-    - Name: onBeKill
-      Entry: 6
-      Data: 
+    SerializationNodes: []
   id: 0
   buffName: "\u575A\u97E7"
   description: "\u51CF\u5C11\u53D7\u5230\u7684\u4F24\u5BB3"

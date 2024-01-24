@@ -9,20 +9,13 @@ namespace Tyrant
     [CreateAssetMenu(menuName = "Singleton/BluePrintGenesis", fileName = "BluePrintGenesis")]
     public class BluePrintGenesis: SingletonSO<BluePrintGenesis>
     {
-        [ShowInInspector]
-        [ReadOnly]
-        public BluePrintSO[] bluePrintSos { get; private set; }
+        [ShowInInspector] [ReadOnly] public BluePrintSO[] bluePrintSos;
 
 
         [ShowInInspector]
         public BluePrint[] allBlueprints => bluePrintSos
             .Select(BluePrint.FromSO)
             .ToArray();
-
-        private void OnValidate()
-        {
-            UpdateBluePrintSO();
-        }
 
 #if UNITY_EDITOR
         [Button(ButtonSizes.Medium), PropertyOrder(-1)]
