@@ -11,7 +11,7 @@ namespace Algorithm
 
         public static void Enumerate(this (int, int) o, Action<int> enumerator)
         {
-            for (var i = o.Item1; i <= o.Item2; i++)
+            for (var i = o.Item1; i < o.Item2; i++)
             {
                 enumerator.Invoke(i);
             }

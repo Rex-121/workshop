@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Freya;
+using Shapes;
 using Sirenix.OdinInspector;
+using UniRx;
 using UnityEngine;
 
-[ExecuteInEditMode]
+// [ExecuteInEditMode]
 public class LineForCard : MonoBehaviour
 {
 
@@ -13,27 +15,38 @@ public class LineForCard : MonoBehaviour
     
     public Transform a;
 
-    public LineRenderer lineRenderer;
+    public Line lineRenderer;
 
     public Transform circle;
 
     [Range(0, 1)]
     public float rate = 0.0f;
     
+    public float rate1 = 0.0f;
+    private bool xk = true;
+
     void Start()
     {
-        Debug.Log("a");
+        lineRenderer.Start = a.position;
+        lineRenderer.End = b.position;
+        Observable.Timer(TimeSpan.FromSeconds(10))
+            .Subscribe(v =>
+            {
+                xk = false;
+            });
     }
+    
 
     // Update is called once per frame
     void Update()
     {
+        if (xk) return;
         
-        lineRenderer.SetPosition(0, a.position);
-        lineRenderer.SetPosition(1, b.position);
-
-
-        circle.transform.position = B(a.transform, b.transform, rate);
+        if (rate1 < 1)
+        {
+            rate1 += Time.deltaTime / 2;
+            circle.transform.position = B(a.transform, b.transform, rate1);
+        }
 
     }
     

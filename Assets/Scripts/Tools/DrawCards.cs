@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,18 +6,16 @@ using Algorithm;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using Tyrant;
+using UniRx;
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class DrawCards : MonoBehaviour
 {
     public CardPlacementMono cardsPrefab;
 
 
     public CurveForCard curveForCard;
-
-    public int count = 5;
-
+    
     public int[] zRotation;
 
     public Transform startPoint;
@@ -26,61 +25,108 @@ public class DrawCards : MonoBehaviour
     public Ease ease = Ease.OutCubic;
 
     public List<CardPlacementMono> allCards = new();
-    
+
+    public CardEventMessageChannelSO messageChannelSO;
+    [ShowInInspector]
+    public CardDeck cardDeck;
+    private Vector3[] GetCurve(int count) => curveForCard.GetCurve(count).Reverse().ToArray();
+
+    private void Awake()
+    {
+        cardDeck = new CardDeck();
+    }
+
+    private void Start()
+    {
+        Observable.Timer(TimeSpan.FromSeconds(1)).Subscribe(v =>
+        {
+            Draw();
+        }).AddTo(this);
+    }
+
+    private void OnEnable()
+    {
+        messageChannelSO.didSelected += DidSelected;
+        messageChannelSO.outSelected += OutSelected;
+    }
+
+    private void OutSelected(CardPlacementMono arg0)
+    {
+        if (cardPlacementMono == arg0)
+        {
+            gb = Instantiate(arg0.dice);    
+        }
+    }
+
+    private void OnDisable()
+    {
+        messageChannelSO.didSelected -= DidSelected;
+    }
+
+    public CardPlacementMono cardPlacementMono;
+    public GameObject gb;
+
+    private void DidSelected(CardPlacementMono arg0)
+    {
+        Debug.Log("jfladjsfasf");
+
+        cardPlacementMono = arg0;
+    }
+
+    private void Update()
+    {
+        if (gb != null)
+        {
+            var v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            gb.transform.position = new Vector3(v.x, v.y, 0);
+        }
+    }
+
     [Button]
-    public void B()
+    public void Draw()
     {
 
-        var spots = curveForCard.D(count).Reverse().ToArray();
-
-
+        var count = cardDeck.GenesisDraw().Count();
+        
+        var spots = GetCurve(count);
+        
         var c = zRotation.ToList().GetRange((10 - count) / 2, count).ToArray().Reverse().ToArray();
 
         for (int i = 0; i < count; i ++)
         {
-
             var card = Instantiate(cardsPrefab);
-            card.SetIndex(i);
-            card.transform.position = startPoint.position;//spots[i];
-            card.transform.DOMove(spots[i], duration).SetEase(ease).SetDelay(0.3f * i);
-            card.transform.DORotate(new Vector3(0, 0, c[i]), duration).SetEase(ease).SetDelay(0.3f * i);
-            // card.transform.eulerAngles = new Vector3(0, 0, c[i]);
+            
+            card.transform.position = startPoint.position;
+            card.SetIndex(i, spots[i]);
+            card.DoAnimation(c[i]);
             allCards.Add(card);
         }
 
     }
     
     [Button]
-    public void C()
+    public void DrawACard()
     {
 
         var theCount = allCards.Count() + 1;
+
+        var spots = GetCurve(theCount);
         
-        var spots = curveForCard.D(theCount).Reverse().ToArray();
-
-
         var c = zRotation.ToList().GetRange((10 - theCount) / 2, theCount).ToArray().Reverse().ToArray();
-
-        
         
         for (int i = 0; i < allCards.Count(); i ++)
         {
-
             var card = allCards[i];
-            // card.SetIndex(i);
-            // card.transform.position = startPoint.position;//spots[i];
-            card.transform.DOMove(spots[i], duration).SetEase(ease).SetDelay(0.1f);
-            card.transform.DORotate(new Vector3(0, 0, c[i]), duration).SetEase(ease).SetDelay(0.1f);
-            // card.transform.eulerAngles = new Vector3(0, 0, c[i]);
+            card.SetIndex(i, spots[i]);
+            card.DoAnimation(c[i], true);
         }
 
         var last = Instantiate(cardsPrefab);
         
-        last.SetIndex(theCount);
         last.transform.position = startPoint.position;
         
-        last.transform.DOMove(spots.Last(), duration).SetEase(ease).SetDelay(0.3f * 1);
-        last.transform.DORotate(new Vector3(0, 0, c.Last()), duration).SetEase(ease).SetDelay(0.3f * 1);
+        last.SetIndex(theCount - 1, spots.Last());
+        last.DoAnimation(c.Last(), true);
         
         allCards.Add(last);
     }

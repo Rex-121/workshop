@@ -24,7 +24,7 @@ namespace Tyrant
         [ShowInInspector] public Stack<Tool> toolsStack;
         
         
-        private static IEnumerable<ToolSO> toolSos => WorkBenchManager.main.toolSos;
+        private static IEnumerable<ToolSO> toolSos => Protagonist.main.toolSos;
         
         [ShowInInspector]
         public CardTomb tomb = new CardTomb();
@@ -73,7 +73,7 @@ namespace Tyrant
 
 
 
-    [InlineEditor, HideReferenceObjectPicker, LabelText("弃牌堆")]
+    [HideReferenceObjectPicker, LabelText("弃牌堆")]
     public class CardTomb: ICollection<Tool>
     {
         private readonly List<Tool> _tools = new List<Tool>();

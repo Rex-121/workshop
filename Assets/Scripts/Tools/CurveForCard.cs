@@ -2,16 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Algorithm;
+using Shapes;
 using Sirenix.OdinInspector;
+using UniRx;
 using UnityEngine;
 
 namespace Tyrant
 {
-    [ExecuteInEditMode]
+    // [ExecuteInEditMode]
     public class CurveForCard: MonoBehaviour
     {
-        [Range(0, 1)]
-        public float rate = 0.0f;
+        // [Range(0, 1)]
+        public float rate1 = 0.0f;
 
 
         public LineForCard lineForCard1;
@@ -20,16 +22,70 @@ namespace Tyrant
 
         public Transform circle;
 
-        public LineRenderer lineRenderer;
+        public Polyline lineRenderer;
 
+        
+        public Line lineRenderer1;
         public List<Transform> allSpots = new();
+        private bool xk = true;
+
+        private void Start()
+        {
+            Observable.Timer(TimeSpan.FromSeconds(10))
+                .Subscribe(v =>
+                {
+                    xk = false;
+                });
+            var a = B(lineForCard1.a.transform, lineForCard1.b.transform, rate1);
+            var b = B(lineForCard2.a.transform, lineForCard2.b.transform, rate1);
+
+            var spot = C(a, b, rate1);
+            
+            lineRenderer.AddPoint(spot);
+        }
+
         private void Update()
         {
+            if (xk) return;
             // D(100);
-            lineForCard1.rate = rate;
-            lineForCard2.rate = rate;
+            // lineForCard1.rate = rate;
+            // lineForCard2.rate = rate;
+            //
+            // if (xk == 0)
+            // {
+            //     var l = Instantiate(lineRenderer1);
+            //     l.Start = lineForCard1.circle.transform.position;
+            //     l.End = lineForCard2.circle.transform.position;
+            //     
+            // }
+            // else
+            // {
+            //     xk++;
+            //     if (xk == 25)
+            //     {
+            //         xk = 0;
+            //     }
+            // }
 
-            circle.transform.position = B(lineForCard1.circle.transform, lineForCard2.circle.transform, rate);
+            if (rate1 < 1)
+            {
+                rate1 += Time.deltaTime / 2;
+                
+                circle.transform.position = B(lineForCard1.circle.transform, lineForCard2.circle.transform, rate1);
+            
+            
+                // var i = v * 1.0f / 100;
+
+                var a = B(lineForCard1.a.transform, lineForCard1.b.transform, rate1);
+                var b = B(lineForCard2.a.transform, lineForCard2.b.transform, rate1);
+
+                var spot = C(a, b, Mathf.Min(1, rate1));
+            
+                lineRenderer.AddPoint(spot);
+            }
+            
+            
+            
         }
         
         Vector3 B(Transform pointA, Transform pointB, float t)
@@ -84,20 +140,21 @@ namespace Tyrant
                     array[v] = spot;
                 });
 
-            lineRenderer.positionCount = 100;
-            lineRenderer.SetPositions(array);
-
+            lineRenderer.SetPoints(array);
+            //     = 100;
+            // lineRenderer.SetPositions(array);
+            lineRenderer.Closed = false;
             allSpots.ForEach(v => Destroy(v));
             allSpots.Clear();
         }
 
 
         [Button]
-        public Vector3[] D(int count)
+        public Vector3[] GetCurve(int count)
         {
 
             var array = new Vector3[101];
-            (0, 100)
+            (0, 101)
                 .Enumerate(v =>
                 {
 
@@ -110,11 +167,13 @@ namespace Tyrant
                     array[v] = spot;
                 });
 
-            lineRenderer.positionCount = 100;
-            lineRenderer.SetPositions(array);
-
-            allSpots.ForEach(v => Destroy(v));
-            allSpots.Clear();
+            // lineRenderer.SetPoints(array);// = 100;
+            //
+            // lineRenderer.Closed = false;
+            // // lineRenderer.SetPositions(array);
+            //
+            // allSpots.ForEach(v => Destroy(v));
+            // allSpots.Clear();
 
             var newC = FF(count);
 

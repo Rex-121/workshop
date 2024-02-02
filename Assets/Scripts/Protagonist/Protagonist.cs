@@ -19,5 +19,10 @@ namespace Tyrant
         public int genesisCardAmount = 5;
 
         [LabelText("每回合抽牌数量"), BoxGroup("卡牌")] public int drawPerTurn = 1;
+        
+        
+        
+        [LabelText("卡牌")]
+        public ToolSO[] toolSos;
     }
 }

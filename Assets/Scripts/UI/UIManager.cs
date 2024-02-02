@@ -3,6 +3,7 @@ using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Tyrant.UI;
+using UnityEngine.SceneManagement;
 
 namespace Tyrant
 {
@@ -134,6 +135,21 @@ namespace Tyrant
             {
                 _inspector.transform.position = Input.mousePosition;
             }
+            
+            
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                SceneManager.LoadScene("CardScene", LoadSceneMode.Additive);
+                // SceneManager.UnloadSceneAsync()
+            }
+            
+            if (Input.GetKeyDown(KeyCode.V))
+            {
+                // SceneManager.LoadScene("CardScene", LoadSceneMode.Additive);
+                var d = SceneManager.UnloadSceneAsync("CardScene");
+                d.allowSceneActivation = true;
+            }
+
         }
 
         public void DisplayBy(KeyCode keyName)
@@ -158,7 +174,8 @@ namespace Tyrant
                     bag.dragPointForItem = dragPointForItem;
                 }
             }
-            
+
+
             
             dragPointForItem.SetAsLastSibling();
         }
