@@ -44,17 +44,17 @@ namespace Tyrant
 
             originPosition = position;
 
-            sortingGroup.sortingOrder = sortingOrder;
+            // sortingGroup.sortingOrder = sortingOrder;
 
-            canvas.sortingOrder = sortingOrder;
+            // canvas.sortingOrder = sortingOrder;
         }
 
         public void DoAnimation(int zRotation, bool snap = false)
         {
-            transform.DOMove(originPosition, 0.5f)
+            GetComponent<RectTransform>().DOAnchorPos(originPosition, 0.5f)
                 .SetEase(Ease.OutCubic)
                 .SetDelay(snap ? 0.1f : 0.3f * _indexOnDeck);
-            transform.DORotate(new Vector3(0, 0, zRotation), 0.5f)
+            GetComponent<RectTransform>().DORotate(new Vector3(0, 0, zRotation), 0.5f)
                 .SetEase(Ease.OutCubic)
                 .SetDelay(snap ? 0.1f : 0.3f * _indexOnDeck);
         }
@@ -63,7 +63,7 @@ namespace Tyrant
         private void OnMouseDown()
         {
             Debug.Log("OnMouseDown");
-            cardEventMessageChannelSO.DidSelected(this);
+            // cardEventMessageChannelSO.DidSelected(this);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -127,7 +127,7 @@ namespace Tyrant
                 });
                 
                 
-                cardEventMessageChannelSO.OutSelected(this);
+                // cardEventMessageChannelSO.OutSelected(this);
                 // transform.DOMove(new Vector3(0, 1, 0), 0.3f).SetRelative(true);
             // }
 

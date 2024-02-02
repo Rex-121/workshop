@@ -11,20 +11,18 @@ using UnityEngine;
 
 public class DrawCards : MonoBehaviour
 {
-    public CardPlacementMono cardsPrefab;
-
+    public CardPlacementCanvasMono cardsCanvasPrefab;
 
     public CurveForCard curveForCard;
     
     public int[] zRotation;
+    
+    public Transform startPointCanvas;
+    
 
-    public Transform startPoint;
-
-    public float duration = 0.5f;
-
-    public Ease ease = Ease.OutCubic;
-
-    public List<CardPlacementMono> allCards = new();
+    public Canvas canvas;
+    
+    public List<CardPlacementCanvasMono> allCards = new();
 
     public CardEventMessageChannelSO messageChannelSO;
     [ShowInInspector]
@@ -41,45 +39,8 @@ public class DrawCards : MonoBehaviour
         Observable.Timer(TimeSpan.FromSeconds(1)).Subscribe(v =>
         {
             Draw();
+
         }).AddTo(this);
-    }
-
-    private void OnEnable()
-    {
-        messageChannelSO.didSelected += DidSelected;
-        messageChannelSO.outSelected += OutSelected;
-    }
-
-    private void OutSelected(CardPlacementMono arg0)
-    {
-        if (cardPlacementMono == arg0)
-        {
-            gb = Instantiate(arg0.dice);    
-        }
-    }
-
-    private void OnDisable()
-    {
-        messageChannelSO.didSelected -= DidSelected;
-    }
-
-    public CardPlacementMono cardPlacementMono;
-    public GameObject gb;
-
-    private void DidSelected(CardPlacementMono arg0)
-    {
-        Debug.Log("jfladjsfasf");
-
-        cardPlacementMono = arg0;
-    }
-
-    private void Update()
-    {
-        if (gb != null)
-        {
-            var v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            gb.transform.position = new Vector3(v.x, v.y, 0);
-        }
     }
 
     [Button]
@@ -94,13 +55,16 @@ public class DrawCards : MonoBehaviour
 
         for (int i = 0; i < count; i ++)
         {
-            var card = Instantiate(cardsPrefab);
-            
-            card.transform.position = startPoint.position;
-            card.SetIndex(i, spots[i]);
-            card.DoAnimation(c[i]);
-            allCards.Add(card);
+            var card1 = Instantiate(cardsCanvasPrefab, canvas.transform);
+            card1.transform.position = startPointCanvas.position;
+            card1.SetIndex(i, Camera.main.GetCanvasPosition(spots[i], canvas));
+            card1.DoAnimation(c[i]);
+            // yield return new WaitForSeconds(0.3f);
+            // card1.transform.SetAsFirstSibling();
+            allCards.Add(card1);
         }
+        
+        allCards.ForEach(v => v.StoreIndex());
 
     }
     
@@ -117,18 +81,20 @@ public class DrawCards : MonoBehaviour
         for (int i = 0; i < allCards.Count(); i ++)
         {
             var card = allCards[i];
-            card.SetIndex(i, spots[i]);
+            card.SetIndex(i, Camera.main.GetCanvasPosition(spots[i], canvas));
             card.DoAnimation(c[i], true);
         }
 
-        var last = Instantiate(cardsPrefab);
+        var last = Instantiate(cardsCanvasPrefab, canvas.transform);
         
-        last.transform.position = startPoint.position;
+        last.transform.position = startPointCanvas.position;
         
-        last.SetIndex(theCount - 1, spots.Last());
+        last.SetIndex(theCount - 1, Camera.main.GetCanvasPosition(spots.Last(), canvas));
         last.DoAnimation(c.Last(), true);
         
         allCards.Add(last);
+        
+        allCards.ForEach(v => v.StoreIndex());
     }
     
 }
