@@ -13,6 +13,8 @@ public class DrawCards : MonoBehaviour
 {
     public CardPlacementCanvasMono cardsCanvasPrefab;
 
+    public RectTransform panel;
+
     public CurveForCard curveForCard;
     
     public int[] zRotation;
@@ -42,7 +44,7 @@ public class DrawCards : MonoBehaviour
 
         }).AddTo(this);
     }
-
+    
     [Button]
     public void Draw()
     {
@@ -55,7 +57,7 @@ public class DrawCards : MonoBehaviour
 
         for (int i = 0; i < count; i ++)
         {
-            var card1 = Instantiate(cardsCanvasPrefab, canvas.transform);
+            var card1 = Instantiate(cardsCanvasPrefab, panel);
             card1.transform.position = startPointCanvas.position;
             card1.SetIndex(i, Camera.main.GetCanvasPosition(spots[i], canvas));
             card1.DoAnimation(c[i]);

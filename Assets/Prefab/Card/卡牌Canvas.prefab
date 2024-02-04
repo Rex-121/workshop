@@ -334,6 +334,7 @@ GameObject:
   - component: {fileID: 8521881403645418120}
   - component: {fileID: 5537944953934105464}
   - component: {fileID: 639950630776719699}
+  - component: {fileID: 5189285826200838151}
   m_Layer: 5
   m_Name: "\u5361\u724CCanvas"
   m_TagString: Untagged
@@ -417,7 +418,7 @@ MonoBehaviour:
   indexOnDeck: 0
   cardEventMessageChannelSO: {fileID: 11400000, guid: df04072b099c648289ae61be53f8fd89, type: 2}
   rectTransform: {fileID: 0}
-  draggingMono: {fileID: 0}
+  canvasGroup: {fileID: 5189285826200838151}
 --- !u!114 &639950630776719699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -435,6 +436,18 @@ MonoBehaviour:
   isDragging: 0
   canvas: {fileID: 0}
   d: {fileID: 0}
+--- !u!225 &5189285826200838151
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8521881403645418122}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &9113701215335986344
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,8 +13,19 @@ namespace Tyrant
         public UnityAction<CardPlacementCanvasMono> outSelected;
         
         
-        public UnityAction<CardDraggingMono> onDrag;
+        public UnityAction<CardDraggingMono> onBeginDrag;
         public UnityAction<CardDraggingMono> onEndDrag;
+
+        [NonSerialized]
+        private CardDraggingMono _cardDraggingMono;
+        // public bool isAnyCardIsSelected
+        // {
+        //     get
+        //     {
+        //         if (_cardDraggingMono == null) return false;
+        //         return _cardDraggingMono.GetComponent<CardPlacementCanvasMono>().isLock;
+        //     }
+        // }
         
         public void DidSelected(CardPlacementCanvasMono cardPlacementMono)
         {
@@ -26,12 +38,14 @@ namespace Tyrant
             outSelected?.Invoke(cardPlacementMono);
         }
         
-        public void OnDrag(CardDraggingMono cardPlacementMono)
+        public void OnBeginDrag(CardDraggingMono cardPlacementMono)
         {
-            onDrag?.Invoke(cardPlacementMono);
+            _cardDraggingMono = cardPlacementMono;
+            onBeginDrag?.Invoke(cardPlacementMono);
         }
         public void OnEndDrag(CardDraggingMono cardPlacementMono)
         {
+            _cardDraggingMono = cardPlacementMono;
             onEndDrag?.Invoke(cardPlacementMono);
         }
     }

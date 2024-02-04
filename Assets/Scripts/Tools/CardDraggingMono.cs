@@ -39,7 +39,7 @@ namespace Tyrant
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            messageChannelSO.OnDrag(this);
+            messageChannelSO.OnBeginDrag(this);
             d = Instantiate(dice, dice.transform.position, Quaternion.identity, canvas.transform);
             dice.SetActive(false);
             isDragging = true;
