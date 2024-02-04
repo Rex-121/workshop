@@ -1,6 +1,7 @@
 using System;
 using DG.Tweening;
 using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
@@ -18,11 +19,11 @@ namespace Tyrant
         public RectTransform rectTransform;
 
         public CanvasGroup canvasGroup;
-
-        private void Awake()
-        {
-            rectTransform = GetComponent<RectTransform>();
-        }
+        
+        // private void Awake()
+        // {
+        //     rectTransform = GetComponent<RectTransform>();
+        // }
 
         public void StoreIndex()
         {
@@ -50,21 +51,24 @@ namespace Tyrant
                 .SetEase(Ease.OutCubic)
                 .SetDelay(snap ? 0.1f : 0.3f * indexOnDeck);
         }
+
+
+        public bool d;
         
         public void OnPointerEnter(PointerEventData eventData)
         {
 
             if (_isLock) return;
             
+            
             _siblingIndex = transform.GetSiblingIndex();
             transform.SetAsLastSibling();
-            
-            // 动画
-            rectTransform.DOAnchorPos(new Vector3(0, 30, 0), 0.2f)
-                .SetRelative(true);
+
+                // 动画
+            rectTransform.DOAnchorPos(originPosition + new Vector3(0, 30, 0), 0.2f);
             DoRotationAnimation(0, 0.2f);
-            rectTransform.DOScale(new Vector3(0.2f, 0.2f, 0), 0.2f)
-                .SetRelative(true);
+            rectTransform.DOScale(new Vector3(1.2f, 1.2f, 0), 0.2f);
+            
 
             cardEventMessageChannelSO.DidSelected(this);
         }
