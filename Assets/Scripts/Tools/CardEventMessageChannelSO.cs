@@ -16,17 +16,6 @@ namespace Tyrant
         public UnityAction<CardDraggingMono> onBeginDrag;
         public UnityAction<CardDraggingMono> onEndDrag;
 
-        [NonSerialized]
-        private CardDraggingMono _cardDraggingMono;
-        // public bool isAnyCardIsSelected
-        // {
-        //     get
-        //     {
-        //         if (_cardDraggingMono == null) return false;
-        //         return _cardDraggingMono.GetComponent<CardPlacementCanvasMono>().isLock;
-        //     }
-        // }
-        
         public void DidSelected(CardPlacementCanvasMono cardPlacementMono)
         {
             didSelected?.Invoke(cardPlacementMono);
@@ -40,12 +29,10 @@ namespace Tyrant
         
         public void OnBeginDrag(CardDraggingMono cardPlacementMono)
         {
-            _cardDraggingMono = cardPlacementMono;
             onBeginDrag?.Invoke(cardPlacementMono);
         }
         public void OnEndDrag(CardDraggingMono cardPlacementMono)
         {
-            _cardDraggingMono = cardPlacementMono;
             onEndDrag?.Invoke(cardPlacementMono);
         }
     }
