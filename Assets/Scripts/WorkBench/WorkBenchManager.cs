@@ -245,5 +245,19 @@ namespace Tyrant
             workBenchEventSO.NewTurnDidStarted();
             _allQueues.ForEach(v => v.NewTurn());
         }
+
+
+        [Button]
+        public void MockABench()
+        {
+
+            bluePrint = BluePrintGenesis.main.allBlueprints.First();
+
+            // StartAWorkBench(new IMaterial[] {  });
+            workBench = new WorkBench(bluePrint, new IMaterial[] {  });
+
+            FindObjectOfType<WorkBenchBoardUI>().D(bluePrint);
+
+        }
     }
 }

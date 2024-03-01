@@ -1,13 +1,14 @@
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Sirenix.OdinInspector;
 
 namespace Tyrant
 {
     public class CardDraggingMono: MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
     {
 
-        public GameObject dice;
+        
 
         public CardEventMessageChannelSO messageChannelSO;
 
@@ -15,7 +16,10 @@ namespace Tyrant
 
         public Canvas canvas;
 
-        public GameObject d;
+        [LabelText("骰子Prefab")]
+        public GameObject dice;
+        [LabelText("拖拽的骰子")]
+        public GameObject draggingDice;
 
         private void Awake()
         {
@@ -27,11 +31,11 @@ namespace Tyrant
             messageChannelSO.OnEndDrag(this);
             isDragging = false;
 
-            d.transform
+            draggingDice.transform
                 .DOMove(dice.transform.position, 0.2f)
                 .OnComplete(() =>
                 {
-                    Destroy(d);
+                    Destroy(draggingDice);
                     dice.SetActive(true);
                 });
 
@@ -40,16 +44,16 @@ namespace Tyrant
         public void OnBeginDrag(PointerEventData eventData)
         {
             messageChannelSO.OnBeginDrag(this);
-            d = Instantiate(dice, dice.transform.position, Quaternion.identity, canvas.transform);
+            draggingDice = Instantiate(dice, dice.transform.position, Quaternion.identity, canvas.transform);
             dice.SetActive(false);
             isDragging = true;
         }
 
         private void Update()
         {
-            if (isDragging && !ReferenceEquals(d, null))
+            if (isDragging && !ReferenceEquals(draggingDice, null))
             {
-                d.transform.position = Input.mousePosition;
+                draggingDice.transform.position = Input.mousePosition;
             }
         }
 

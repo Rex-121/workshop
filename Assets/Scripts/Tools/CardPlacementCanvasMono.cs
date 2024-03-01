@@ -1,10 +1,8 @@
 using System;
 using DG.Tweening;
 using UniRx;
-using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
 
 namespace Tyrant
 {
@@ -53,7 +51,7 @@ namespace Tyrant
         }
 
 
-        public bool d;
+        //public bool d;
         
         public void OnPointerEnter(PointerEventData eventData)
         {
