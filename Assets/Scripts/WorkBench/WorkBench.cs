@@ -48,6 +48,16 @@ namespace Tyrant
                 this.position = position;
                 this.type = type;
             }
+            
+            public static bool operator == (ToolWrapper a, ToolWrapper b)
+            {
+                return a.position == b.position && a.type == b.type;
+            }
+
+            public static bool operator !=(ToolWrapper a, ToolWrapper b)
+            {
+                return !(a == b);
+            }
         }
         
         public IEnumerable<WorkBenchSlot> allMakes => _dic.Values

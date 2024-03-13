@@ -15,6 +15,10 @@ namespace Tyrant
         
         public UnityAction<CardDraggingMono> onBeginDrag;
         public UnityAction<CardDraggingMono> onEndDrag;
+        
+        
+        public UnityAction<CardPlacementCanvasMono> onUse;
+
 
         public void DidSelected(CardPlacementCanvasMono cardPlacementMono)
         {
@@ -34,6 +38,12 @@ namespace Tyrant
         public void OnEndDrag(CardDraggingMono cardPlacementMono)
         {
             onEndDrag?.Invoke(cardPlacementMono);
+        }
+
+
+        public void OnUse(CardPlacementCanvasMono cardPlacementMono)
+        {
+            onUse?.Invoke(cardPlacementMono);
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using DG.Tweening;
+using Sirenix.OdinInspector;
 using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -77,14 +78,29 @@ namespace Tyrant
             cardEventMessageChannelSO.outSelected += OutSelected;
             cardEventMessageChannelSO.onBeginDrag += OnBeginDrag;
             cardEventMessageChannelSO.onEndDrag += OnEndDrag;
+            cardEventMessageChannelSO.onUse += OnUse;
         }
-        
+
+        private void OnUse(CardPlacementCanvasMono arg0)
+        {
+            if (arg0 == this)
+            {
+                Destroy(GetComponent<CardDraggingMono>().draggingDice);
+                cardEventMessageChannelSO.OutSelected(this);
+            }
+            else
+            {
+                BackToDefaultState();
+            }
+        }
+
         private void OnDisable()
         {
             cardEventMessageChannelSO.didSelected -= DidSelected;
             cardEventMessageChannelSO.outSelected -= OutSelected;
             cardEventMessageChannelSO.onBeginDrag -= OnBeginDrag;
             cardEventMessageChannelSO.onEndDrag -= OnEndDrag;
+            cardEventMessageChannelSO.onUse -= OnUse;
         }
 
         private void OnEndDrag(CardDraggingMono arg0)
@@ -100,14 +116,17 @@ namespace Tyrant
 
         private void OutSelected(CardPlacementCanvasMono arg0)
         {
-            if (arg0 == this) return;
-            if (this == null) return;
-            rectTransform.DOAnchorPos(originPosition, 0.2f);
+            if (arg0 == this || this == null) return;
+            // 开始非选中的卡牌归位的动画
+            // rectTransform.DOAnchorPos(originPosition, 0.2f);
         }
 
         private void DidSelected(CardPlacementCanvasMono arg0)
         {
+            // 如果选中的卡牌是自己, 则不做让位动画
             if (arg0 == this) return;
+            
+            // 开始非选中的卡牌让位的动画
             var d = originPosition + new Vector3((indexOnDeck - arg0.indexOnDeck) * -5, 0, 0);
             rectTransform.DOAnchorPos(d, 0.2f);
         }
@@ -119,8 +138,9 @@ namespace Tyrant
         private int _zRotation;
 
         // 是否处于选牌阶段
+        [ShowInInspector]
         private bool _isLock;
-        private IPointerMoveHandler _pointerMoveHandlerImplementation;
+        // private IPointerMoveHandler _pointerMoveHandlerImplementation;
 
         public void OnPointerExit(PointerEventData eventData)
         {
@@ -141,13 +161,22 @@ namespace Tyrant
             {
                 if (_isLock)
                 {
-                    canvasGroup.blocksRaycasts = true;
+                    // canvasGroup.blocksRaycasts = true;
                     DoExitAnimation();
                 }
-                _isLock = false;
+
+                BackToDefaultState();
+                // _isLock = false;
                 
             }).AddTo(this);
 
+        }
+
+
+        private void BackToDefaultState()
+        {
+            canvasGroup.blocksRaycasts = true;
+            _isLock = false;
         }
 
         private void DoExitAnimation()

@@ -36,7 +36,10 @@ namespace Tyrant
         // [BoxGroup("更新机制"), LabelText("移除机制")]
         // public BuffRemoveStackUpdate stackRemoveType;
 
-
+        /// <summary>
+        /// 用于显示在预览buff面板中的
+        /// </summary>
+        public string brief;
 
         [BoxGroup("回调"), Title("生命周期回调"), LabelText("当Buff生成")]
         public IDiceBuffModel onCreate;
@@ -60,12 +63,16 @@ namespace Tyrant
         {
             public IEnumerable<WorkBenchSlot> AllEffect(Vector2Int pivot,
                 Dictionary<WorkBench.ToolWrapper, WorkBenchSlot> all);
+            
+            public Vector2Int[] effectOnSlot { get; }
         } 
         
         [System.Serializable]
         public struct DefaultEffectOnLocation: IBuffEffectOn
         {
-            public Vector2Int[] effectOn;
+            [ShowInInspector] public Vector2Int[] effectOn;
+
+            public Vector2Int[] effectOnSlot => effectOn;
 
             public IEnumerable<WorkBenchSlot> AllEffect(Vector2Int pivot, Dictionary<WorkBench.ToolWrapper, WorkBenchSlot> all)
             {

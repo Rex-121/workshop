@@ -237,6 +237,7 @@ GameObject:
   - component: {fileID: 4569299925194663638}
   - component: {fileID: 7195540719833604910}
   - component: {fileID: 5244344285258660943}
+  - component: {fileID: 5515126021211262991}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -302,6 +303,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &5515126021211262991
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4733418975542881199}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &7419477191352568943
 GameObject:
   m_ObjectHideFlags: 0
@@ -499,6 +512,7 @@ GameObject:
   - component: {fileID: 8521881403645418121}
   - component: {fileID: 8521881403645418119}
   - component: {fileID: 8521881403645418120}
+  - component: {fileID: 5766161928639919095}
   - component: {fileID: 5537944953934105464}
   - component: {fileID: 639950630776719699}
   - component: {fileID: 5189285826200838151}
@@ -568,6 +582,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5766161928639919095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8521881403645418122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bb2eac4efcb4d928933131ebe290812, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardEventMessageChannelSO: {fileID: 11400000, guid: df04072b099c648289ae61be53f8fd89, type: 2}
+  titleLabel: {fileID: 8813305875525460194}
+  descriptionLabel: {fileID: 9182935199391987367}
 --- !u!114 &5537944953934105464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -585,7 +614,6 @@ MonoBehaviour:
   cardEventMessageChannelSO: {fileID: 11400000, guid: df04072b099c648289ae61be53f8fd89, type: 2}
   rectTransform: {fileID: 8521881403645418121}
   canvasGroup: {fileID: 5189285826200838151}
-  d: 0
 --- !u!114 &639950630776719699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -598,11 +626,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7464ecc4e6464897904d8670b59a5cd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dice: {fileID: 4733418975542881199}
   messageChannelSO: {fileID: 11400000, guid: df04072b099c648289ae61be53f8fd89, type: 2}
   isDragging: 0
   canvas: {fileID: 0}
-  d: {fileID: 0}
+  dice: {fileID: 4733418975542881199}
+  draggingDice: {fileID: 0}
 --- !u!225 &5189285826200838151
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -612,6 +640,6 @@ CanvasGroup:
   m_GameObject: {fileID: 8521881403645418122}
   m_Enabled: 1
   m_Alpha: 1
-  m_Interactable: 0
-  m_BlocksRaycasts: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0

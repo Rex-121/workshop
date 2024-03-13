@@ -7,6 +7,7 @@ using DG.Tweening;
 using Sirenix.OdinInspector;
 using Tyrant;
 using UniRx;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DrawCards : MonoBehaviour
@@ -44,12 +45,43 @@ public class DrawCards : MonoBehaviour
 
         }).AddTo(this);
     }
-    
+
+    private void OnEnable()
+    {
+        messageChannelSO.onUse += OnUse;
+    }
+
+    private void OnUse(CardPlacementCanvasMono arg0)
+    {
+        allCards.Remove(arg0);
+
+        var count = allCards.Count;
+        
+        var spots = GetCurve(count);
+        
+        var c = zRotation.ToList().GetRange((10 - count) / 2, count).ToArray().Reverse().ToArray();
+
+        for (int i = 0; i < count; i ++)
+        {
+            var card1 = allCards[i];
+            
+            card1.SetIndex(i, Camera.main.GetCanvasPosition(spots[i], canvas));
+            card1.DoAnimation(count == 1 ? 0:c[i], true);
+        }
+    }
+
+    private void OnDisable()
+    {
+        messageChannelSO.onUse -= OnUse;
+    }
+
     [Button]
     public void Draw()
     {
 
-        var count = cardDeck.GenesisDraw().Count();
+        var tools = cardDeck.GenesisDraw();
+        
+        var count = tools.Count();
         
         var spots = GetCurve(count);
         
@@ -58,6 +90,9 @@ public class DrawCards : MonoBehaviour
         for (int i = 0; i < count; i ++)
         {
             var card1 = Instantiate(cardsCanvasPrefab, panel);
+            
+            card1.GetComponent<CardInfoMono>().NewTool(tools[i]);
+            
             card1.transform.position = startPointCanvas.position;
             card1.SetIndex(i, Camera.main.GetCanvasPosition(spots[i], canvas));
             card1.DoAnimation(c[i]);
@@ -82,12 +117,17 @@ public class DrawCards : MonoBehaviour
         
         for (int i = 0; i < allCards.Count(); i ++)
         {
+            
             var card = allCards[i];
             card.SetIndex(i, Camera.main.GetCanvasPosition(spots[i], canvas));
             card.DoAnimation(c[i], true);
         }
 
         var last = Instantiate(cardsCanvasPrefab, canvas.transform);
+        
+        var tool = cardDeck.Draw();
+        last.GetComponent<CardInfoMono>().NewTool(tool);
+
         
         last.transform.position = startPointCanvas.position;
         

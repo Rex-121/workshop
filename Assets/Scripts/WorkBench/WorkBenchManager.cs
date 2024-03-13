@@ -4,6 +4,7 @@ using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using Tyrant.UI;
+using UniRx;
 using UnityEngine;
 using WorkBench;
 
@@ -26,14 +27,78 @@ namespace Tyrant
             if (main == null)
             {
                 main = this;
+                Monitor();
             }
             else
             {
                 Destroy(this);
             }
         }
+
+        private void Monitor()
+        {
+            cardInHandStream
+                .Skip(1)
+                // .Where(v => v != null)
+                .Subscribe(v =>
+                {
+                    if (v == null)
+                    {
+                        Debug.Log($"#检视# 取消选中卡牌");
+                    }
+                    else
+                    {
+                        Debug.Log($"#检视# 选中卡牌{v.toolName}");
+                    }
+                })
+                .AddTo(this);
+
+            checker.Where(v => v != null)
+                .Subscribe(v => Debug.Log($"#检视# 进入棋盘格{v!.Value.position}"))
+                .AddTo(this);
+        }
         
         #endregion
+
+
+        #region 指向的棋盘格
+
+        
+        private ReactiveProperty<WorkBench.ToolWrapper?> dd = new ReactiveProperty<WorkBench.ToolWrapper?>(null);
+        public IObservable<WorkBench.ToolWrapper?> checker => dd;
+        public void EnterCheckerboard(WorkBench.ToolWrapper? toolWrapper)
+        {
+            dd.Value = toolWrapper;
+        }
+        
+        #endregion
+
+
+        #region 选中的手牌
+
+        /// <summary>
+        /// 选中的手牌
+        /// </summary>
+        private readonly ReactiveProperty<Tool> _toolInHand = new ReactiveProperty<Tool>(null);
+        /// <summary>
+        /// 选中的手牌
+        /// </summary>
+        public Tool cardInHand => _toolInHand.Value;
+
+        public IObservable<Tool> cardInHandStream => _toolInHand;
+
+        public ReadOnlyReactiveProperty<IEnumerable<WorkBench.ToolWrapper>> buff => _toolInHand
+            .Where(v => v!= null)
+            .Select(v =>
+            {
+                var f = v.diceBuffInfo.buffDataSO.effectOnLocation.AllEffect(dd.Value?.position ?? Vector2Int.down, workBench.allSlots).Select(v => v.toolWrapper);
+                return f;
+            }).ToReadOnlyReactiveProperty();
+        public void ToolIsSelected(Tool tool) => _toolInHand.Value = tool;
+
+        #endregion
+        
+        
         
         [ShowInInspector, NonSerialized] public WorkBench workBench;
         [ShowInInspector, NonSerialized] public GameObject workBenchUI;
@@ -253,10 +318,11 @@ namespace Tyrant
 
             bluePrint = BluePrintGenesis.main.allBlueprints.First();
 
-            // StartAWorkBench(new IMaterial[] {  });
             workBench = new WorkBench(bluePrint, new IMaterial[] {  });
 
-            FindObjectOfType<WorkBenchBoardUI>().D(bluePrint);
+            // StartAWorkBench(new IMaterial[] {  });
+            // 生成棋盘
+            WorkBenchBoardUI.main.GenerateBoard(bluePrint);
 
         }
     }

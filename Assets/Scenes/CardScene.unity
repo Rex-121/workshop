@@ -435,7 +435,7 @@ GameObject:
   - component: {fileID: 189494441}
   - component: {fileID: 189494440}
   m_Layer: 5
-  m_Name: Canvas (1)
+  m_Name: "\u68CB\u76D8"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1083,7 +1083,7 @@ GameObject:
   - component: {fileID: 1659008895}
   - component: {fileID: 1659008897}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: ChessBoard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1096,7 +1096,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1659008893}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1121,7 +1121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de30dad48bd6a40fda8c825c96b574f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellOnWorkBenchPrefab: {fileID: 6580635367001074674, guid: 34c259a17791b41d1bacf45beb35ab9c, type: 3}
+  checkerboardUIPrefab: {fileID: 5843739589960831741, guid: d14d51686d93145e6a6a0342257776ce, type: 3}
 --- !u!114 &1659008896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1273,6 +1273,8 @@ GameObject:
   - component: {fileID: 1808133862}
   - component: {fileID: 1808133864}
   - component: {fileID: 1808133863}
+  - component: {fileID: 1808133866}
+  - component: {fileID: 1808133865}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -1338,6 +1340,39 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1808133861}
   m_CullTransparentMesh: 1
+--- !u!225 &1808133865
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1808133861}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
+--- !u!223 &1808133866
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1808133861}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &1867473818
 GameObject:
   m_ObjectHideFlags: 0

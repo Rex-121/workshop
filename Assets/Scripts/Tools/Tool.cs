@@ -21,7 +21,6 @@ namespace Tyrant
         public string toolName;
         
         public string description;
-        
         public Tool(IDicing dice, DiceBuffInfo diceBuffInfo)
         {
             this.dice = dice;

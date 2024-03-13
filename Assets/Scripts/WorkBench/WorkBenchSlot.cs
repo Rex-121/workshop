@@ -10,6 +10,8 @@ namespace Tyrant
     public class WorkBenchSlot
     {
         
+        public string name => $"{toolWrapper.type}-{toolWrapper.position}棋盘格";
+        
         [HideLabel, ReadOnly]
         public WorkBench.ToolWrapper toolWrapper;
 
@@ -17,6 +19,16 @@ namespace Tyrant
         {
             this.toolWrapper = toolWrapper;
         }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
         public MaterialFeatureSO materialFeature;
 
