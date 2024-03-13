@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 7968160489809153563}
   - component: {fileID: 7331522260030249195}
   m_Layer: 5
-  m_Name: BuuPreview
+  m_Name: BuffPreview
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -211,7 +211,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColor: {r: 0.18178178, g: 0.83468336, b: 0.8962264, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -286,6 +286,7 @@ GameObject:
   - component: {fileID: 180684692065830024}
   - component: {fileID: 1509342170585691514}
   - component: {fileID: 5248965856571891383}
+  - component: {fileID: 2528134932479282078}
   m_Layer: 5
   m_Name: Checkerboard
   m_TagString: Untagged
@@ -429,3 +430,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buffLabel: {fileID: 7331522260030249195}
+--- !u!114 &2528134932479282078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8233372849529428474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1844ebe887444f99870d6889e593c48b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toolLabel: {fileID: 5385055744912800857}

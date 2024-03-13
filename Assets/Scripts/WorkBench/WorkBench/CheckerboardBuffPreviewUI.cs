@@ -1,10 +1,14 @@
 using System.Linq;
+using DG.Tweening;
 using TMPro;
 using UniRx;
 using UnityEngine;
 
 namespace Tyrant
 {
+    /// <summary>
+    /// 用于棋盘格显示buff预览
+    /// </summary>
     public class CheckerboardBuffPreviewUI: CheckerboardBasicUI
     {
         public TextMeshProUGUI buffLabel;
@@ -22,22 +26,23 @@ namespace Tyrant
                         .effectOnLocation
                         .AllEffect(wrapper.Value.position, WorkBenchManager.main.workBench.allSlots)
                         .Select(v => v.toolWrapper);
-                    return all.Contains(slot.toolWrapper) ? right.diceBuffInfo : null;
+                    return all.Contains(slot.toolWrapper) ? right : null;
                 })
                 .DistinctUntilChanged()
-                .Subscribe(Preview);
-
+                .Subscribe(Preview)
+                .AddTo(this);
+        
         }
 
-        private void Preview(DiceBuffInfo diceBuffInfo)
+        private void Preview(Tool tool)
         {
-            if (diceBuffInfo == null)
+            if (tool == null)
             {
                 Clear();
             }
             else
             {
-                Display(diceBuffInfo);
+                Display(tool.diceBuffInfo);
             }
         }
 
@@ -48,6 +53,7 @@ namespace Tyrant
 
         private void Display(DiceBuffInfo buffInfo)
         {
+            // buffLabel.count();
             buffLabel.text = buffInfo.buffDataSO.brief;
         }
     }

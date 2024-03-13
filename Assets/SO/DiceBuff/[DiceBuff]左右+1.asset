@@ -56,7 +56,7 @@ MonoBehaviour:
       Data: 0
     - Name: 
       Entry: 3
-      Data: -1
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -68,7 +68,7 @@ MonoBehaviour:
       Data: 0
     - Name: 
       Entry: 3
-      Data: 1
+      Data: -1
     - Name: 
       Entry: 8
       Data: 
@@ -81,9 +81,6 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  buffName: "\u5DE6\u53F3+1"
-  description: "\u5DE6\u53F3\u683C\u5B50\u5404+1"
   icon: {fileID: 0}
   priority: 0
-  updateTimeType: 0
-  stackRemoveType: 0
+  brief: +1

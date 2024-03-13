@@ -53,7 +53,7 @@ MonoBehaviour:
       Data: 0
     - Name: 
       Entry: 3
-      Data: -1
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -66,9 +66,6 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  buffName: "\u900F\u6620"
-  description: "\u5DE6\u8FB9\u589E\u52A0\u6B64\u9AB0\u5B50\u7684\u9762\u503C"
   icon: {fileID: 0}
   priority: 0
-  updateTimeType: 0
-  stackRemoveType: 0
+  brief: +

@@ -24,7 +24,7 @@ namespace Tyrant
             
             SetName(workBenchSlot);
             
-            GetComponent<CheckerboardBuffPreviewUI>().SetSlot(workBenchSlot);
+            GetComponent<CheckerboardToolPreviewUI>().SetSlot(workBenchSlot);
 
             base.SetSlot(workBenchSlot);
         }

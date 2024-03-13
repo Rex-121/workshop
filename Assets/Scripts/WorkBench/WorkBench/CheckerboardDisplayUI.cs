@@ -15,7 +15,7 @@ namespace Tyrant
 
         public void SetV(Tool tool)
         {
-            vv.text = $"+ {tool.dice.Roll()}";
+            // vv.text = $"+ {tool.dice.Roll()}";
             
         }
 
