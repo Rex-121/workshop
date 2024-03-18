@@ -97,6 +97,46 @@ namespace Tyrant
         public void ToolIsSelected(Tool tool) => _toolInHand.Value = tool;
 
         #endregion
+
+
+        /// <summary>
+        /// 在指定的棋盘格中使用工具
+        /// </summary>
+        /// <param name="cardInfoMono">工具</param>
+        /// <param name="slot">棋盘格</param>
+        public void UseToolOnSlot(CardInfoMono cardInfoMono, WorkBenchSlot slot)
+        {
+            // 是否可以放置
+            var canPlace = slot.PlaceToolInSlot(cardInfoMono.tool);
+            
+            if (!canPlace) return;
+            
+            cardInfoMono.Use();
+
+            workBench.allSlots.ForEach(v =>
+            {
+                Debug.Log(v.Value.toolWrapper.position);
+
+                var slot = v.Value;
+                
+                slot.Configuration();
+            });
+
+            workBench.allSlots.ForEach(v => v.Value.ReScore());
+        }
+
+        
+        /// <summary>
+        /// 安装buff
+        /// </summary>
+        /// <param name="positions">需要buff的slot</param>
+        /// <param name="diceBuffInfo">buff</param>
+        public void AddBuffToEachSlot(IEnumerable<Vector2Int> positions, DiceBuffInfo diceBuffInfo)
+        {
+            workBench.allSlots
+                .Where(v => positions.Contains(v.Key.position))
+                .ForEach(v => v.Value.AddBuff(diceBuffInfo));
+        }
         
         
         

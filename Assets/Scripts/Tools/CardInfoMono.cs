@@ -22,6 +22,9 @@ namespace Tyrant
         {
             tool = theTool;
 
+            // 掷骰子
+            tool.LockDice();
+
             titleLabel.text = tool.toolName;
             descriptionLabel.text = tool.description;
 

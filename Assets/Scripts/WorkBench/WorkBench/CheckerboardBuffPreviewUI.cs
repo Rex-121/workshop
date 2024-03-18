@@ -1,8 +1,6 @@
 using System.Linq;
-using DG.Tweening;
 using TMPro;
 using UniRx;
-using UnityEngine;
 
 namespace Tyrant
 {
@@ -22,10 +20,12 @@ namespace Tyrant
                 {
                     if (!wrapper.HasValue || right == null) return null;
                     
+                    // 如果此格子为buff区域
                     var all = right.diceBuffInfo.buffDataSO
                         .effectOnLocation
                         .AllEffect(wrapper.Value.position, WorkBenchManager.main.workBench.allSlots)
                         .Select(v => v.toolWrapper);
+
                     return all.Contains(slot.toolWrapper) ? right : null;
                 })
                 .DistinctUntilChanged()
@@ -42,19 +42,24 @@ namespace Tyrant
             }
             else
             {
-                Display(tool.diceBuffInfo);
+                Display(tool);
             }
         }
 
         private void Clear()
         {
-            buffLabel.text = "";
+            if (slot.tool != null)
+            {
+                buffLabel.text = "";
+            }
+            // buffLabel.text = "";
         }
 
-        private void Display(DiceBuffInfo buffInfo)
+        private void Display(Tool tool)
         {
-            // buffLabel.count();
-            buffLabel.text = buffInfo.buffDataSO.brief;
+            var value = tool.diceBuffInfo.buffDataSO.onUse.Apply(0, tool.diceBuffInfo);
+            // var value = tool.diceBuffInfo.buffDataSO.onUse.Apply(0, tool.diceBuffInfo, tool, slot.buffHandler);
+            buffLabel.text = $"+ {value}";
         }
     }
 }

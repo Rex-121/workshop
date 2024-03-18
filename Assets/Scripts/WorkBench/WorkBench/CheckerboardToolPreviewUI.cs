@@ -31,6 +31,8 @@ namespace Tyrant
             WorkBenchManager.main.checker
                 .CombineLatest(WorkBenchManager.main.cardInHandStream, (wrapper, right) =>
                 {
+                    if (slot.tool != null) return null;
+                    
                     if (!wrapper.HasValue || right == null) return null;
 
                     return wrapper.Value != slot.toolWrapper ? null : right;

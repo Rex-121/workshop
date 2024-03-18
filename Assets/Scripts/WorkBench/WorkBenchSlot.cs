@@ -1,5 +1,6 @@
 
 using System;
+using System.Linq;
 using Sirenix.OdinInspector;
 using Tyrant.UI;
 using UniRx;
@@ -19,16 +20,68 @@ namespace Tyrant
         {
             this.toolWrapper = toolWrapper;
         }
+
+        public Tool tool => _toolInSlot.Value;
+        // public IObservable<Tool> toolInSlot => _toolInSlot;
+
+        public ReactiveProperty<int> scoreOnSlot = new ReactiveProperty<int>(0);
+
+        // public IObservable<WorkBenchSlot> toolDidAddInSlot => toolInSlot.Select(v => this);
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        /// <summary>
+        /// 选中的手牌
+        /// </summary>
+        private readonly ReactiveProperty<Tool> _toolInSlot = new ReactiveProperty<Tool>(null);
+
+        /// <summary>
+        /// 放置新的工具
+        /// </summary>
+        /// <param name="toolOnSlot">toolOnSlot</param>
+        public bool PlaceToolInSlot(Tool toolOnSlot)
+        {
+            if (tool != null) return false;
+            _toolInSlot.Value = toolOnSlot;
+            return true;
+        }
+
+
+        /// <summary>
+        /// 配置信息
+        /// </summary>
+        public void Configuration()
+        {
+            if (tool == null) return;
+
+            var buff = tool.diceBuffInfo;
+            
+            // 其他受影响的slot position
+            var allEffectSlots = tool.diceBuffInfo.buffDataSO
+                .effectOnLocation.EffectedOnSlots(this);
+
+            WorkBenchManager.main.AddBuffToEachSlot(allEffectSlots, buff);
+            
+            // tool.diceBuffInfo.buffDataSO.onUse
+        }
+
+
+        public void ReScore()
+        {
+            if (tool == null) return;
+
+            var value = buffHandler.AllEffect(tool.dice.Roll());
+
+            scoreOnSlot.Value = value;
+        }
+
+
+        /// <summary>
+        /// 添加buff
+        /// </summary>
+        /// <param name="buff">buff</param>
+        public void AddBuff(DiceBuffInfo buff)
+        {
+            buffHandler.AddBuff(buff);
+        }
 
         public MaterialFeatureSO materialFeature;
 

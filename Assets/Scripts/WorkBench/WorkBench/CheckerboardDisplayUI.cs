@@ -1,37 +1,48 @@
-using System;
+using DG.Tweening;
 using TMPro;
-using UnityEngine;
 using UniRx;
+using UnityEngine;
 
 namespace Tyrant
 {
     
     /// <summary>
-    /// 用于展示预览
+    /// 用于展示格子占用信息
     /// </summary>
-    public class CheckerboardDisplayUI: MonoBehaviour
+    public class CheckerboardDisplayUI: CheckerboardBasicUI
     {
         public TextMeshProUGUI vv;
 
-        public void SetV(Tool tool)
+
+        private ReactiveProperty<int> valueD = new ReactiveProperty<int>(0);
+        
+        public override void SlotPrepared()
         {
-            // vv.text = $"+ {tool.dice.Roll()}";
-            
+            base.SlotPrepared();
+
+            valueD
+                .Pairwise()
+                .Subscribe(pair => SetDisplay(pair.Previous, pair.Current))
+                .AddTo(this);
+
+            slot.scoreOnSlot
+                .Subscribe(v => valueD.Value = v)
+                .AddTo(this);
+
         }
 
-        private void Start()
+        private void SetDisplay(int previous, int current)
         {
-           
-            
-            
-        }
 
-        public void SetBuffPreview()
-        {
-            
+            if (current == 0)
+            {
+                vv.text = "";
+            }
+            else
+            {
+                vv.DOCounter(previous, current, 0.3f);
+            }
         }
-        
-        
 
     }
 }
