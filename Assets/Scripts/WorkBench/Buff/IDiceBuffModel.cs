@@ -36,7 +36,6 @@ namespace Tyrant
 
         public int Apply(int value, DiceBuffInfo buffInfo)
         {
-            return 22;
             return value + buffInfo.diceFace;
         }
         

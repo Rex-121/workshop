@@ -1,7 +1,9 @@
 using DG.Tweening;
+using Dicing;
 using TMPro;
 using UniRx;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Tyrant
 {
@@ -11,10 +13,12 @@ namespace Tyrant
     /// </summary>
     public class CheckerboardDisplayUI: CheckerboardBasicUI
     {
-        public TextMeshProUGUI vv;
-
-
+        public TextMeshProUGUI scoreDisplay;
+        
         private ReactiveProperty<int> valueD = new ReactiveProperty<int>(0);
+
+        public DiceSpriteDefineSO diceSpriteDefineSO;
+        public Image diceDisplay;
         
         public override void SlotPrepared()
         {
@@ -29,18 +33,36 @@ namespace Tyrant
                 .Subscribe(v => valueD.Value = v)
                 .AddTo(this);
 
+            slot.toolInSlot
+                .Subscribe(SetDiceSprite)
+                .AddTo(this);
+
+        }
+
+        private void SetDiceSprite(Tool tool)
+        {
+            diceDisplay.enabled = tool != null;
+
+            diceDisplay.sprite = null;
+            
+            if (tool != null)
+            {
+                diceDisplay.sprite = diceSpriteDefineSO.sprites[tool.dice.Roll()];
+            }
         }
 
         private void SetDisplay(int previous, int current)
         {
+            
+            Debug.Log($"SetDisplay {previous}, {current}");
 
             if (current == 0)
             {
-                vv.text = "";
+                scoreDisplay.text = "";
             }
             else
             {
-                vv.DOCounter(previous, current, 0.3f);
+                scoreDisplay.DOCounter(previous, current, 0.3f);
             }
         }
 

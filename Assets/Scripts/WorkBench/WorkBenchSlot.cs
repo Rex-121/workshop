@@ -26,7 +26,7 @@ namespace Tyrant
         }
 
         public Tool tool => _toolInSlot.Value;
-        // public IObservable<Tool> toolInSlot => _toolInSlot;
+        public IObservable<Tool> toolInSlot => _toolInSlot;
 
         public ReactiveProperty<int> scoreOnSlot = new ReactiveProperty<int>(0);
 
@@ -44,43 +44,28 @@ namespace Tyrant
         public bool PlaceToolInSlot(Tool toolOnSlot)
         {
             if (tool != null) return false;
+            
             _toolInSlot.Value = toolOnSlot;
+
+            RecalculateDice();
+            
             return true;
         }
+        
 
-
-        // /// <summary>
-        // /// 配置信息
-        // /// </summary>
-        // public void Configuration()
-        // {
-        //     if (tool == null) return;
-        //
-        //     var buff = tool.diceBuffInfo;
-        //     
-        //     // 其他受影响的slot position
-        //     var allEffectSlots = tool.diceBuffInfo.buffDataSO
-        //         .effectOnLocation.EffectedOnSlots(this);
-        //
-        //     allEffectSlots.ForEach(d => Debug.Log(d));
-        //     
-        //     WorkBenchManager.main.AddBuffToEachSlot(allEffectSlots, buff);
-        //     
-        //     // tool.diceBuffInfo.buffDataSO.onUse
-        // }
-
+        private void RecalculateDice()
+        {
+            if (tool == null) return;
+            scoreOnSlot.Value = buffHandler.AllEffect(tool.dice.Roll());
+            // 有的buff依赖当前骰子值
+            tool.diceBuffInfo.diceFace = scoreOnSlot.Value;
+        }
 
         public void Recalculate()
         {
-            
             // 重新刷新预览的buff,因为预览buff计算需要实体buff的支持
             previewBuffHandler.Recalculate();
-
-            // if (tool == null) return;
-            //
-            // var value = buffHandler.AllEffect(tool.dice.Roll());
-            //
-            // scoreOnSlot.Value = value;
+            RecalculateDice();
         }
 
 

@@ -22,7 +22,7 @@ namespace Tyrant
         
         private void Display(int value)
         {
-            buffLabel.text = $"+ {value}";
+            buffLabel.text = $"+{value}";
             buffLabel.enabled = value != 0;
         }
     }

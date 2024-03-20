@@ -1,13 +1,18 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Tyrant
 {
     public class CheckerboardUI: CheckerboardBasicUI, IDropHandler, IPointerEnterHandler, IPointerExitHandler
     {
         
+        public Image backgroundImage;
+        
         public override void SetSlot(WorkBenchSlot workBenchSlot)
         {
+
+            backgroundImage.enabled = workBenchSlot.toolWrapper.type != WorkBench.SlotType.Empty;
             
             SetName(workBenchSlot);
             

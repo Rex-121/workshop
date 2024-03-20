@@ -597,6 +597,8 @@ MonoBehaviour:
   cardEventMessageChannelSO: {fileID: 11400000, guid: df04072b099c648289ae61be53f8fd89, type: 2}
   titleLabel: {fileID: 8813305875525460194}
   descriptionLabel: {fileID: 9182935199391987367}
+  diceSpriteDefineSO: {fileID: 11400000, guid: f76d124f1138743ceb0f9551c24ac4c4, type: 2}
+  diceDisplay: {fileID: 5244344285258660943}
 --- !u!114 &5537944953934105464
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -40,6 +40,8 @@ namespace Tyrant
         public void LockDice()
         {
             dice = new DicedDice(dice);
+
+            diceBuffInfo.diceFace = dice.Roll();
         }
 
         public string debugDescription => $"-卡牌 {toolName}";

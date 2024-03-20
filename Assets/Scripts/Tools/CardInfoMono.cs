@@ -1,6 +1,8 @@
+using Dicing;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Tyrant
 {
@@ -13,6 +15,10 @@ namespace Tyrant
         public TextMeshProUGUI titleLabel;
         [BoxGroup("UI")]
         public TextMeshProUGUI descriptionLabel;
+
+
+        public DiceSpriteDefineSO diceSpriteDefineSO;
+        public Image diceDisplay;
         
         [ShowInInspector]
         public Tool tool { get; private set; }
@@ -24,6 +30,8 @@ namespace Tyrant
 
             // 掷骰子
             tool.LockDice();
+
+            diceDisplay.sprite = diceSpriteDefineSO.sprites[tool.dice.Roll()];
 
             titleLabel.text = tool.toolName;
             descriptionLabel.text = tool.description;
