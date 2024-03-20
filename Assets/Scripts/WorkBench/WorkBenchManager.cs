@@ -38,29 +38,6 @@ namespace Tyrant
         private void Monitor()
         {
             // cardInHandStream
-            //     // .Skip(1)
-            //     .Where(v => v != null)
-            //     // .Select(v => v.value)
-            //     .Subscribe(v =>
-            //     {
-            //         
-            //         Debug.Log($"#检视# {v.description}");
-            //         // if (v == null)
-            //         // {
-            //         //     Debug.Log($"#检视# 取消选中卡牌");
-            //         // }
-            //         // else
-            //         // {
-            //         //     Debug.Log($"#检视# 选中卡牌{v.toolName}");
-            //         // }
-            //     })
-            //     .AddTo(this);
-            //
-            // checker
-            //     .Subscribe(v => Debug.Log(v.description))
-            //     .AddTo(this);
-
-            // cardInHandStream
             //     .CombineLatest(checker, (card, checkerboard)
             //         => new CheckerPack(card, checkerboard))
             //     .Where(v => v is {toolWrapper: not null, tool: not null})
@@ -90,10 +67,10 @@ namespace Tyrant
                     .effectOnLocation
                     .AllEffect(toolWrapper.position, workBench.allSlots);
 
-                all.ForEach(v => v.AddPreviewBuff(tool.diceBuffInfo));
+                all.ForEach(v => v.PreviewBuff(true, tool.diceBuffInfo));
 
 
-                workBench.allSlots.ForEach(v => v.Value.UpdatePreviewBuff());
+                // workBench.allSlots.ForEach(v => v.Value.UpdatePreviewBuff());
 
             }).AddTo(this);
 
@@ -114,9 +91,9 @@ namespace Tyrant
                         .effectOnLocation
                         .AllEffect(toolWrapper.position, workBench.allSlots);
 
-                    all.ForEach(v => v.RemovePreviewBuff(tool.diceBuffInfo));
+                    all.ForEach(v => v.PreviewBuff(false, tool.diceBuffInfo));
 
-                    workBench.allSlots.ForEach(v => v.Value.UpdatePreviewBuff());
+                    // workBench.allSlots.ForEach(v => v.Value.UpdatePreviewBuff());
                     
                 }).AddTo(this);
         }
@@ -251,20 +228,28 @@ namespace Tyrant
             
             cardInfoMono.Use();
 
-            workBench.allSlots.ForEach(v =>
-            {
-                // Debug.Log(v.Value.toolWrapper.position);
-
-                var slot = v.Value;
-                Debug.Log("fdaslgsadfsadf");
+            // workBench.allSlots.ForEach(v =>
+            // {
+            //     // Debug.Log(v.Value.toolWrapper.position);
+            //
+            //     var slot = v.Value;
+                // Debug.Log("fdaslgsadfsadf");
                 
-                slot.Configuration();
+                // slot.Configuration();
+
+                var buff = slot.tool.diceBuffInfo;
                 
-                slot.UpdatePreviewBuff();
+                // 其他受影响的slot position
+                var allEffectSlots = buff
+                    .buffDataSO
+                    .effectOnLocation.EffectedOnSlots(slot);
+                
+                AddBuffToEachSlot(allEffectSlots, buff);
+                // slot.UpdatePreviewBuff();
 
-            });
+            // });
 
-            workBench.allSlots.ForEach(v => v.Value.ReScore());
+            workBench.allSlots.ForEach(v => v.Value.Recalculate());
         }
 
         
@@ -381,8 +366,8 @@ namespace Tyrant
             var d = workBench.SlotBy(location);
             if (d != null && d.preview.Value)
             {
-                workBench.GetAllEffectPositions(location, d.preview.Value)
-                    .ForEach(v => v.RemovePreviewBuff(d.preview.Value.diceBuffInfo));
+                // workBench.GetAllEffectPositions(location, d.preview.Value)
+                //     .ForEach(v => v.RemovePreviewBuff(d.preview.Value.diceBuffInfo));
             }
             
             workBench.allSlots
@@ -395,7 +380,6 @@ namespace Tyrant
             
         }
         #endregion
-
 
         public void StartAWorkBench(IMaterial[] materials)
         {

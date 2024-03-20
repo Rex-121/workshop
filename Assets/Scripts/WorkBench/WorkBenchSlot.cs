@@ -21,8 +21,8 @@ namespace Tyrant
         {
             this.toolWrapper = toolWrapper;
             
-           buffHandler = new DiceBuffHandler("实体", toolWrapper);
-           previewBuffHandler = new DiceBuffHandler("预览", toolWrapper);
+           buffHandler = new DiceBuffHandler("实体", toolWrapper, null);
+           previewBuffHandler = new DiceBuffHandler("预览", toolWrapper, new CalBuffFirstDiceBuffCalculateStrategy(buffHandler));
         }
 
         public Tool tool => _toolInSlot.Value;
@@ -49,34 +49,38 @@ namespace Tyrant
         }
 
 
-        /// <summary>
-        /// 配置信息
-        /// </summary>
-        public void Configuration()
+        // /// <summary>
+        // /// 配置信息
+        // /// </summary>
+        // public void Configuration()
+        // {
+        //     if (tool == null) return;
+        //
+        //     var buff = tool.diceBuffInfo;
+        //     
+        //     // 其他受影响的slot position
+        //     var allEffectSlots = tool.diceBuffInfo.buffDataSO
+        //         .effectOnLocation.EffectedOnSlots(this);
+        //
+        //     allEffectSlots.ForEach(d => Debug.Log(d));
+        //     
+        //     WorkBenchManager.main.AddBuffToEachSlot(allEffectSlots, buff);
+        //     
+        //     // tool.diceBuffInfo.buffDataSO.onUse
+        // }
+
+
+        public void Recalculate()
         {
-            if (tool == null) return;
-
-            var buff = tool.diceBuffInfo;
             
-            // 其他受影响的slot position
-            var allEffectSlots = tool.diceBuffInfo.buffDataSO
-                .effectOnLocation.EffectedOnSlots(this);
+            // 重新刷新预览的buff,因为预览buff计算需要实体buff的支持
+            previewBuffHandler.Recalculate();
 
-            allEffectSlots.ForEach(d => Debug.Log(d));
-            
-            WorkBenchManager.main.AddBuffToEachSlot(allEffectSlots, buff);
-            
-            // tool.diceBuffInfo.buffDataSO.onUse
-        }
-
-
-        public void ReScore()
-        {
-            if (tool == null) return;
-
-            var value = buffHandler.AllEffect(tool.dice.Roll());
-
-            scoreOnSlot.Value = value;
+            // if (tool == null) return;
+            //
+            // var value = buffHandler.AllEffect(tool.dice.Roll());
+            //
+            // scoreOnSlot.Value = value;
         }
 
 
@@ -89,15 +93,22 @@ namespace Tyrant
             buffHandler.AddBuff(buff);
         }
 
-        public void AddPreviewBuff(DiceBuffInfo buff)
+        public void PreviewBuff(bool isAdd, DiceBuffInfo buff)
         {
-            previewBuffHandler.AddBuff(buff);
+            if (isAdd)
+            {
+                previewBuffHandler.AddBuff(buff);
+            }
+            else
+            {
+                previewBuffHandler.RemoveBuff(buff);
+            }
         }
 
-        public void UpdatePreviewBuff()
-        {
-            previewBuffHandler.PreviewBuff(buffHandler.AllEffect(0));
-        }
+        // public void UpdatePreviewBuff()
+        // {
+        //     previewBuffHandler.PreviewBuff(buffHandler.AllEffect(0));
+        // }
 
         public MaterialFeatureSO materialFeature;
 
@@ -232,14 +243,6 @@ namespace Tyrant
             
             previewBuffHandler.AddBuff(buffInfo);
             DiceValueDidBuffed();
-        }
-        
-        public void RemovePreviewBuff(DiceBuffInfo buffInfo)
-        {
-            previewBuffHandler.RemoveBuff(buffInfo);
-            // previewBuffHandler.PreviewBuff(buffHandler.AllEffect(0));
-
-            // DiceValueDidBuffed();
         }
         
         public void RemoveBuff(DiceBuffInfo buffInfo)

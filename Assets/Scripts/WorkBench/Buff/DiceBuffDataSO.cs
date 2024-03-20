@@ -15,11 +15,6 @@ namespace Tyrant
         [BoxGroup("Basic"), VerticalGroup("Basic/Info/Info"), LabelText("优先级"), SuffixLabel("数值越大越先触发", true)]
         public int priority;
 
-        /// <summary>
-        /// 用于显示在预览buff面板中的
-        /// </summary>
-        public string brief;
-
         [BoxGroup("回调"), Title("生命周期回调"), LabelText("当Buff生成")]
         public IDiceBuffModel onCreate;
         [BoxGroup("回调"), LabelText("放入Slot时"), Title("机制回调"), Space(20)]

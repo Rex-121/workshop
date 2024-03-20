@@ -9,6 +9,32 @@ using Object = System.Object;
 
 namespace Tyrant
 {
+
+    public interface IDiceBuffCalculateStrategy
+    {
+        public int BeforeCalculate();
+    }
+
+    internal struct DefaultDiceBuffCalculateStrategy: IDiceBuffCalculateStrategy
+    {
+        public int BeforeCalculate() => 0;
+    }
+
+    /// <summary>
+    /// 先计算其他buff处理器的分数，例如实体buff
+    /// 计算是以0为基础，不加入骰子的值
+    /// </summary>
+    public readonly struct CalBuffFirstDiceBuffCalculateStrategy : IDiceBuffCalculateStrategy
+    {
+        private readonly DiceBuffHandler _handler;
+
+        public CalBuffFirstDiceBuffCalculateStrategy(DiceBuffHandler handler)
+        {
+            _handler = handler;
+        }
+        public int BeforeCalculate() => _handler.AllEffect(0);
+    }
+    
     public class DiceBuffHandler
     {
         private readonly LinkedList<DiceBuffInfo> _buffList = new();
@@ -20,8 +46,11 @@ namespace Tyrant
 
         public WorkBench.ToolWrapper toolWrapper;
 
-        public DiceBuffHandler(string style, WorkBench.ToolWrapper toolWrapper)
+        private readonly IDiceBuffCalculateStrategy _strategy;
+
+        public DiceBuffHandler(string style, WorkBench.ToolWrapper toolWrapper, IDiceBuffCalculateStrategy strategy)
         {
+            _strategy = strategy ?? new DefaultDiceBuffCalculateStrategy();
             this.style = style;
             this.toolWrapper = toolWrapper;
         }
@@ -73,15 +102,16 @@ namespace Tyrant
             // buff 回调 `onCreate`
             foundBuff.buffDataSO.onCreate?.Apply();
             
-            Debug.Log($"Add Buff {_buffList.Count}");
+            Debug.Log($"#DICE_BUFF({style})# {toolWrapper.debugDescription} 增加{foundBuff.id} - 当前buff数量{_buffList.Count}");
+            
+            Recalculate();
         }
 
-        public ReactiveProperty<int> previewScore = new ReactiveProperty<int>(0);
-        public void PreviewBuff(int startValue)
+        public ReactiveProperty<int> previewScore = new (0);
+
+        public void Recalculate()
         {
-            var value = AllEffect(startValue);
-            Debug.Log($"{startValue}-{value}");
-            previewScore.Value = value;
+            previewScore.Value = AllEffect(_strategy.BeforeCalculate());
         }
 
         public void RemoveBuff(DiceBuffInfo buff)
@@ -93,7 +123,12 @@ namespace Tyrant
             
             buff.buffDataSO.onRemove?.Apply();
             var success = _buffList.Remove(buff);
-            Debug.Log($"#Buff# remove {success}");
+            
+            // Debug.Log($"#Buff# remove {success}");
+            
+            Debug.Log($"#DICE_BUFF({style})# {toolWrapper.debugDescription} {style}移除{buff.id} - 当前buff数量{_buffList.Count}");
+
+            Recalculate();
         }
         
 

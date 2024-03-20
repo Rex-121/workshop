@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DG.Tweening.Core;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using Tyrant.UI;
-using UniRx;
 using UnityEngine;
 
 namespace Tyrant
@@ -60,7 +58,7 @@ namespace Tyrant
                 return !(a == b);
             }
 
-            public string debugDescription => $"-棋盘格 {position}";
+            public string debugDescription => $"棋盘格 {position}";
         }
         
         public IEnumerable<WorkBenchSlot> allMakes => _dic.Values
