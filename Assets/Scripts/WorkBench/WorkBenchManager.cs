@@ -17,7 +17,7 @@ namespace Tyrant
      * 4. DidForgeThisTurn
      * 5. 计算分数 ♾️️
      */
-    public class WorkBenchManager : MonoBehaviour, IWorkBenchUIHandler, IWorkBenchRound
+    public class WorkBenchManager : MonoBehaviour, IWorkBenchRound
     {
         #region 单例
 
@@ -37,18 +37,6 @@ namespace Tyrant
 
         private void Monitor()
         {
-            // cardInHandStream
-            //     .CombineLatest(checker, (card, checkerboard)
-            //         => new CheckerPack(card, checkerboard))
-            //     .Where(v => v is {toolWrapper: not null, tool: not null})
-            //     .Subscribe(v =>
-            //     {
-            //         Debug.Log("<<-------");
-            //         Debug.Log(v.tool.description);
-            //         Debug.Log(v.toolWrapper?.description ?? "");
-            //         Debug.Log("------->>");
-            //     }).AddTo(this);
-
             main.CheckerPackStatus()
                 .Where(v => v is {toolWrapper: not null, tool: not null})
                 // 如果是进入棋盘格
@@ -57,21 +45,13 @@ namespace Tyrant
                 .Where(v => v.tool.status == CheckerStatus<Tool>.Status.Enter)
                 .Subscribe(v =>
             { 
-                Debug.Log("添加预览");
-                Debug.Log(v.tool.status);
-
                 var toolWrapper = v.toolWrapper.value;
-
                 var tool = v.tool.value;
                 var all = tool.diceBuffInfo.buffDataSO
                     .effectOnLocation
                     .AllEffect(toolWrapper.position, workBench.allSlots);
 
                 all.ForEach(v => v.PreviewBuff(true, tool.diceBuffInfo));
-
-
-                // workBench.allSlots.ForEach(v => v.Value.UpdatePreviewBuff());
-
             }).AddTo(this);
 
             
@@ -82,8 +62,6 @@ namespace Tyrant
                 .DistinctUntilChanged()
                 .Subscribe(v =>
                 { 
-                    Debug.Log("移除预览");
-
                     var toolWrapper = v.toolWrapper.value;
 
                     var tool = v.tool.value;
@@ -92,9 +70,6 @@ namespace Tyrant
                         .AllEffect(toolWrapper.position, workBench.allSlots);
 
                     all.ForEach(v => v.PreviewBuff(false, tool.diceBuffInfo));
-
-                    // workBench.allSlots.ForEach(v => v.Value.UpdatePreviewBuff());
-                    
                 }).AddTo(this);
         }
         
@@ -228,26 +203,14 @@ namespace Tyrant
             
             cardInfoMono.Use();
 
-            // workBench.allSlots.ForEach(v =>
-            // {
-            //     // Debug.Log(v.Value.toolWrapper.position);
-            //
-            //     var slot = v.Value;
-                // Debug.Log("fdaslgsadfsadf");
+            var buff = slot.tool.diceBuffInfo;
                 
-                // slot.Configuration();
-
-                var buff = slot.tool.diceBuffInfo;
+            // 其他受影响的slot position
+            var allEffectSlots = buff
+                .buffDataSO
+                .effectOnLocation.EffectedOnSlots(slot);
                 
-                // 其他受影响的slot position
-                var allEffectSlots = buff
-                    .buffDataSO
-                    .effectOnLocation.EffectedOnSlots(slot);
-                
-                AddBuffToEachSlot(allEffectSlots, buff);
-                // slot.UpdatePreviewBuff();
-
-            // });
+            AddBuffToEachSlot(allEffectSlots, buff);
 
             workBench.allSlots.ForEach(v => v.Value.Recalculate());
         }
@@ -282,9 +245,9 @@ namespace Tyrant
 
         private readonly List<IWorkBenchRound> _allQueues = new();
         
-        [ShowInInspector, HideIf("@this.workBench != null")] public int allOccupiedInThisTurn => workBench?
-                    .allSlots.Values
-                    .Count(v => v.isOccupied) ?? 0;
+        // [ShowInInspector, HideIf("@this.workBench != null")] public int allOccupiedInThisTurn => workBench?
+        //             .allSlots.Values
+        //             .Count(v => v.isOccupied) ?? 0;
 
         [LabelText("每回合最大使用卡牌")]
         public int maxWorkBenchOccupied = 3;
@@ -296,89 +259,33 @@ namespace Tyrant
         #region 制作过程
         
 
-        private int allMakesScore => workBench.allMakes
-            .Select(v => v.CalculateScore())
-            .Sum();
+        // private int allMakesScore => workBench.allMakes
+        //     .Select(v => v.CalculateScore())
+        //     .Sum();
 
-        private int allQualityScore => workBench.allQuality
-            .Select(v => v.CalculateScore())
-            .Sum();
+        // private int allQualityScore => workBench.allQuality
+        //     .Select(v => v.CalculateScore())
+        //     .Sum();
         
         private void CalculateScore()
         {
-            var makes = allMakesScore;
-            var qualities = allQualityScore;
-            
-            
-            
-            workBenchEventSO.ScoreDidChange(forgeItem.make.power + makes, forgeItem.quality.power + qualities);
+            // var makes = allMakesScore;
+            // var qualities = allQualityScore;
+            //
+            //
+            //
+            // workBenchEventSO.ScoreDidChange(forgeItem.make.power + makes, forgeItem.quality.power + qualities);
             // make.OnNext(makes);
             // quality.OnNext(qualities);
         }
         
 
 
-        public bool CanBePlaced(ToolOnTable toolOnTable)
-        {
-            return allOccupiedInThisTurn < maxWorkBenchOccupied;
-        }
-
-        public void DidPreviewTool(Vector2Int location, ToolOnTable toolOnTable)
-        {
-            var slot = workBench.SlotBy(location);
-            
-            if (slot.isOccupied) return;
-
-            slot.PreviewTool(toolOnTable);
-
-            workBench.NewPreviewBuffTo(location, toolOnTable);
-
-        }
-
-        public void DidPinTool(Vector2Int location, ToolOnTable toolOnTable)
-        {
-            var slot = workBench.SlotBy(location);
-
-            if (slot.isOccupied) return;
-            
-            // 先取消预览
-            DidUnPreviewTool(location, toolOnTable);
-            
-            slot.Pin(toolOnTable);
-            
-            workBench.NewBuffTo(location, toolOnTable);
-            
-            CalculateScore();
-        }
-
-        public void DidUnPinTool(Vector2Int location, ToolOnTable toolOnTable)
-        {
-            workBench.SlotBy(location).UnPin();
-            
-            workBench.GetAllEffectPositions(location, toolOnTable)
-                .ForEach(v => v.RemoveBuff(toolOnTable.diceBuffInfo));
-            
-            CalculateScore();
-        }
-
-        public void DidUnPreviewTool(Vector2Int location, ToolOnTable toolOnTable)
-        {
-            var d = workBench.SlotBy(location);
-            if (d != null && d.preview.Value)
-            {
-                // workBench.GetAllEffectPositions(location, d.preview.Value)
-                //     .ForEach(v => v.RemovePreviewBuff(d.preview.Value.diceBuffInfo));
-            }
-            
-            workBench.allSlots
-                .ForEach(v => v.Value.UnPreviewTool());
-        }
-
-
-        public void Drag(ToolOnTable toolOnTable)
-        {
-            
-        }
+        // public bool CanBePlaced(ToolOnTable toolOnTable)
+        // {
+        //     return allOccupiedInThisTurn < maxWorkBenchOccupied;
+        // }
+        
         #endregion
 
         public void StartAWorkBench(IMaterial[] materials)
@@ -395,13 +302,13 @@ namespace Tyrant
             // 广播 需要延迟到所有prefab创建完成
             workBenchEventSO.BlueprintDidSelected(bluePrint);
 
-            var toolsBox = workBenchUI.GetComponent<ToolsBox>();
+            // var toolsBox = workBenchUI.GetComponent<ToolsBox>();
             
             forgeItem = new ForgeItem(bluePrint);
             
             _allQueues.Clear();
             _allQueues.Add(workBench);
-            _allQueues.Add(toolsBox);
+            // _allQueues.Add(toolsBox);
             
             PrepareNewRound();
             
@@ -413,10 +320,10 @@ namespace Tyrant
             workBenchEventSO.TurnDidEnded();
             staminaCost += 1;
 
-            var makes = allMakesScore;
-            var qualities = allQualityScore;
-            
-            ForgeItemTakePower(makes, qualities);
+            // var makes = allMakesScore;
+            // var qualities = allQualityScore;
+            //
+            // ForgeItemTakePower(makes, qualities);
   
             // 决策是否需要结束或者下一回合
             DetermineIfEndForge();

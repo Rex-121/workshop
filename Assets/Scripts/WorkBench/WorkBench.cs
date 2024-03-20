@@ -67,10 +67,10 @@ namespace Tyrant
             .Where(v => v.toolWrapper.type == WorkBench.SlotType.Quality);
         
         // 获取所有受影响的Slot
-        public IEnumerable<WorkBenchSlot> GetAllEffectPositions(Vector2Int location, ToolOnTable toolOnTable)
-        {
-            return toolOnTable.diceBuffInfo.buffDataSO.effectOnLocation.AllEffect(location, allSlots);
-        }
+        // public IEnumerable<WorkBenchSlot> GetAllEffectPositions(Vector2Int location, ToolOnTable toolOnTable)
+        // {
+        //     return toolOnTable.diceBuffInfo.buffDataSO.effectOnLocation.AllEffect(location, allSlots);
+        // }
 
         public WorkBenchSlot SlotBy(Vector2Int vector2Int)
         {
@@ -78,18 +78,18 @@ namespace Tyrant
         }
 
         // 增加buff
-        public void NewBuffTo(Vector2Int position, ToolOnTable toolOnTable)
-        {
-            GetAllEffectPositions(position, toolOnTable)
-                .ForEach(v => v.NewBuff(toolOnTable.diceBuffInfo));
-        }
+        // public void NewBuffTo(Vector2Int position, ToolOnTable toolOnTable)
+        // {
+        //     GetAllEffectPositions(position, toolOnTable)
+        //         .ForEach(v => v.NewBuff(toolOnTable.diceBuffInfo));
+        // }
         
         // 增加buff预览
-        public void NewPreviewBuffTo(Vector2Int position, ToolOnTable toolOnTable)
-        {
-            GetAllEffectPositions(position, toolOnTable)
-                .ForEach(v => v.NewPreviewBuff(toolOnTable.diceBuffInfo));
-        }
+        // public void NewPreviewBuffTo(Vector2Int position, ToolOnTable toolOnTable)
+        // {
+        //     GetAllEffectPositions(position, toolOnTable)
+        //         .ForEach(v => v.NewPreviewBuff(toolOnTable.diceBuffInfo));
+        // }
 
         private List<WorkBenchSlot> LockBluePrint(BluePrint bluePrint)
         {
