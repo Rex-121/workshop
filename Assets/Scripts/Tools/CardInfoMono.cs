@@ -33,7 +33,7 @@ namespace Tyrant
 
         public void Use()
         {
-            WorkBenchManager.main.ToolIsSelected(null);
+            WorkBenchManager.main.ToolIsSelected(WorkBenchManager.CheckerStatus<Tool>.Leave(tool));
             
             cardEventMessageChannelSO.OnUse(GetComponent<CardPlacementCanvasMono>());
 

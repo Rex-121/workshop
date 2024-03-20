@@ -24,44 +24,44 @@ namespace Tyrant
             base.SetSlot(workBenchSlot);
         }
 
-        public override void SlotPrepared()
-        {
-            base.SlotPrepared();
-            
-            WorkBenchManager.main.checker
-                .CombineLatest(WorkBenchManager.main.cardInHandStream, (wrapper, right) =>
-                {
-                    if (slot.tool != null) return null;
-                    
-                    if (!wrapper.HasValue || right == null) return null;
+        // public override void SlotPrepared()
+        // {
+        //     base.SlotPrepared();
+        //     
+        //     // WorkBenchManager.main.checker
+        //     //     .CombineLatest(WorkBenchManager.main.cardInHandStream, (wrapper, right) =>
+        //     //     {
+        //     //         if (slot.tool != null) return null;
+        //     //         
+        //     //         if (right == null) return null;
+        //     //
+        //     //         return wrapper.toolWrapper != slot.toolWrapper ? null : right;
+        //     //     })
+        //     //     .DistinctUntilChanged()
+        //     //     .Subscribe(Preview).AddTo(this);
+        //
+        // }
 
-                    return wrapper.Value != slot.toolWrapper ? null : right;
-                })
-                .DistinctUntilChanged()
-                .Subscribe(Preview).AddTo(this);
-
-        }
-
-        private void Preview(Tool tool)
-        {
-            if (tool == null)
-            {
-                Clear();
-            }
-            else
-            {
-                Display(tool);
-            }
-        }
-
-        private void Clear()
-        {
-            toolLabel.text = "";
-        }
-
-        private void Display(Tool tool)
-        {
-            toolLabel.text = tool.dice.Roll().ToString();
-        }
+        // private void Preview(Tool tool)
+        // {
+        //     if (tool == null)
+        //     {
+        //         Clear();
+        //     }
+        //     else
+        //     {
+        //         Display(tool);
+        //     }
+        // }
+        //
+        // private void Clear()
+        // {
+        //     toolLabel.text = "";
+        // }
+        //
+        // private void Display(Tool tool)
+        // {
+        //     toolLabel.text = tool.dice.Roll().ToString();
+        // }
     }
 }

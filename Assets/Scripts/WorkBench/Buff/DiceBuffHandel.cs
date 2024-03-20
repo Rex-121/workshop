@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
+using UniRx;
 using UnityEngine;
 using Object = System.Object;
 
@@ -17,9 +18,12 @@ namespace Tyrant
 
         public string style;
 
-        public DiceBuffHandler(string style)
+        public WorkBench.ToolWrapper toolWrapper;
+
+        public DiceBuffHandler(string style, WorkBench.ToolWrapper toolWrapper)
         {
             this.style = style;
+            this.toolWrapper = toolWrapper;
         }
 
         public void Clear()
@@ -33,6 +37,7 @@ namespace Tyrant
             buffs
                 .Where(v => v.buffDataSO.onUse != null)
                 .ForEach(diceBuffInfo => b = diceBuffInfo.buffDataSO.onUse.Apply(b, diceBuffInfo));
+            Debug.Log($"{toolWrapper.position} - - {b}");
             return b;
         }
         
@@ -67,7 +72,16 @@ namespace Tyrant
             
             // buff 回调 `onCreate`
             foundBuff.buffDataSO.onCreate?.Apply();
+            
+            Debug.Log($"Add Buff {_buffList.Count}");
+        }
 
+        public ReactiveProperty<int> previewScore = new ReactiveProperty<int>(0);
+        public void PreviewBuff(int startValue)
+        {
+            var value = AllEffect(startValue);
+            Debug.Log($"{startValue}-{value}");
+            previewScore.Value = value;
         }
 
         public void RemoveBuff(DiceBuffInfo buff)

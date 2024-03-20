@@ -11,16 +11,9 @@ namespace Tyrant
     
     public interface IDiceBuffMathModel
     {
-        public int Apply(int value, DiceBuffInfo buffInfo, Tool tool, DiceBuffHandler buffHandler);
+        // public int Apply(int value, DiceBuffInfo buffInfo, Tool tool, DiceBuffHandler buffHandler);
 
         public int Apply(int value, DiceBuffInfo buffInfo);
-    }
-
-    public struct D : IDiceBuffModel
-    {
-        public void Apply()
-        {
-        }
     }
 
     // 根据层数增加点数
@@ -30,11 +23,6 @@ namespace Tyrant
 
         [LabelText("层数倍率")]
         public int rate;
-        
-        public int Apply(int value, DiceBuffInfo buffInfo, Tool tool, DiceBuffHandler buffHandler)
-        {
-            return Apply(value, buffInfo);
-        }
 
         public int Apply(int value, DiceBuffInfo buffInfo)
         {
@@ -46,20 +34,12 @@ namespace Tyrant
     public class DiceWithFaceValue : IDiceBuffMathModel
     {
 
-        // [ShowInInspector]
-        // public int v;
-        
         public int Apply(int value, DiceBuffInfo buffInfo)
         {
+            return 22;
             return value + buffInfo.diceFace;
         }
         
-        public int Apply(int value, DiceBuffInfo buffInfo, Tool tool, DiceBuffHandler buffHandler)
-        {
-            // Debug.Log($"#DiceWithFaceValue#Apply {value}");
-            var v = buffHandler.AllEffect(tool.dice.Roll());
-            return value + v;
-        }
     }
 
 }

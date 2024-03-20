@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using Sirenix.OdinInspector;
+using Sirenix.Utilities;
 using Tyrant.UI;
 using UniRx;
 using UnityEngine;
@@ -19,6 +20,9 @@ namespace Tyrant
         public WorkBenchSlot(WorkBench.ToolWrapper toolWrapper)
         {
             this.toolWrapper = toolWrapper;
+            
+           buffHandler = new DiceBuffHandler("实体", toolWrapper);
+           previewBuffHandler = new DiceBuffHandler("预览", toolWrapper);
         }
 
         public Tool tool => _toolInSlot.Value;
@@ -58,6 +62,8 @@ namespace Tyrant
             var allEffectSlots = tool.diceBuffInfo.buffDataSO
                 .effectOnLocation.EffectedOnSlots(this);
 
+            allEffectSlots.ForEach(d => Debug.Log(d));
+            
             WorkBenchManager.main.AddBuffToEachSlot(allEffectSlots, buff);
             
             // tool.diceBuffInfo.buffDataSO.onUse
@@ -83,11 +89,21 @@ namespace Tyrant
             buffHandler.AddBuff(buff);
         }
 
+        public void AddPreviewBuff(DiceBuffInfo buff)
+        {
+            previewBuffHandler.AddBuff(buff);
+        }
+
+        public void UpdatePreviewBuff()
+        {
+            previewBuffHandler.PreviewBuff(buffHandler.AllEffect(0));
+        }
+
         public MaterialFeatureSO materialFeature;
 
 
-        public DiceBuffHandler buffHandler = new DiceBuffHandler("实体");
-        public DiceBuffHandler previewBuffHandler = new DiceBuffHandler("预览");
+        public DiceBuffHandler buffHandler;
+        public DiceBuffHandler previewBuffHandler;
 
         public string monoName => $"{toolWrapper.position}-{materialFeature?.featureName}";
         
@@ -221,7 +237,9 @@ namespace Tyrant
         public void RemovePreviewBuff(DiceBuffInfo buffInfo)
         {
             previewBuffHandler.RemoveBuff(buffInfo);
-            DiceValueDidBuffed();
+            // previewBuffHandler.PreviewBuff(buffHandler.AllEffect(0));
+
+            // DiceValueDidBuffed();
         }
         
         public void RemoveBuff(DiceBuffInfo buffInfo)

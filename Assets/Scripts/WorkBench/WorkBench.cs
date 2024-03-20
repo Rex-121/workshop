@@ -36,9 +36,9 @@ namespace Tyrant
         }
         
         [HideReferenceObjectPicker]
-        public struct ToolWrapper
+        public struct ToolWrapper: WorkBenchManager.ICheckerStatus
         {
-            [ReadOnly, LabelText("位置"), HorizontalGroup("Info")]
+            [ReadOnly, HideLabel, HorizontalGroup("Info")]
             public Vector2Int position;
             
             [SuffixLabel("Slot类型", true), HideLabel, HorizontalGroup("Info")]
@@ -59,6 +59,8 @@ namespace Tyrant
             {
                 return !(a == b);
             }
+
+            public string debugDescription => $"-棋盘格 {position}";
         }
         
         public IEnumerable<WorkBenchSlot> allMakes => _dic.Values

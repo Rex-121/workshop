@@ -37,25 +37,100 @@ namespace Tyrant
 
         private void Monitor()
         {
-            cardInHandStream
-                .Skip(1)
-                // .Where(v => v != null)
-                .Subscribe(v =>
-                {
-                    if (v == null)
-                    {
-                        Debug.Log($"#检视# 取消选中卡牌");
-                    }
-                    else
-                    {
-                        Debug.Log($"#检视# 选中卡牌{v.toolName}");
-                    }
-                })
-                .AddTo(this);
+            // cardInHandStream
+            //     // .Skip(1)
+            //     .Where(v => v != null)
+            //     // .Select(v => v.value)
+            //     .Subscribe(v =>
+            //     {
+            //         
+            //         Debug.Log($"#检视# {v.description}");
+            //         // if (v == null)
+            //         // {
+            //         //     Debug.Log($"#检视# 取消选中卡牌");
+            //         // }
+            //         // else
+            //         // {
+            //         //     Debug.Log($"#检视# 选中卡牌{v.toolName}");
+            //         // }
+            //     })
+            //     .AddTo(this);
+            //
+            // checker
+            //     .Subscribe(v => Debug.Log(v.description))
+            //     .AddTo(this);
 
-            checker.Where(v => v != null)
-                .Subscribe(v => Debug.Log($"#检视# 进入棋盘格{v!.Value.position}"))
-                .AddTo(this);
+            // cardInHandStream
+            //     .CombineLatest(checker, (card, checkerboard)
+            //         => new CheckerPack(card, checkerboard))
+            //     .Where(v => v is {toolWrapper: not null, tool: not null})
+            //     .Subscribe(v =>
+            //     {
+            //         Debug.Log("<<-------");
+            //         Debug.Log(v.tool.description);
+            //         Debug.Log(v.toolWrapper?.description ?? "");
+            //         Debug.Log("------->>");
+            //     }).AddTo(this);
+
+            main.CheckerPackStatus()
+                .Where(v => v is {toolWrapper: not null, tool: not null})
+                // 如果是进入棋盘格
+                .Where(v => v.toolWrapper.status == CheckerStatus<WorkBench.ToolWrapper>.Status.Enter)
+                // 并且卡牌处于被选中状态
+                .Where(v => v.tool.status == CheckerStatus<Tool>.Status.Enter)
+                .Subscribe(v =>
+            { 
+                Debug.Log("添加预览");
+                Debug.Log(v.tool.status);
+
+                var toolWrapper = v.toolWrapper.value;
+
+                var tool = v.tool.value;
+                var all = tool.diceBuffInfo.buffDataSO
+                    .effectOnLocation
+                    .AllEffect(toolWrapper.position, workBench.allSlots);
+
+                all.ForEach(v => v.AddPreviewBuff(tool.diceBuffInfo));
+
+
+                workBench.allSlots.ForEach(v => v.Value.UpdatePreviewBuff());
+
+            }).AddTo(this);
+
+            
+            main.CheckerPackStatus()
+                .Where(v => v is {toolWrapper: not null, tool: not null})
+                .Where(v => v.tool.status != CheckerStatus<Tool>.Status.Empty)
+                .Where(v => v.tool.status == CheckerStatus<Tool>.Status.Leave || v.toolWrapper.status == CheckerStatus<WorkBench.ToolWrapper>.Status.Leave)
+                .DistinctUntilChanged()
+                .Subscribe(v =>
+                { 
+                    Debug.Log("移除预览");
+
+                    var toolWrapper = v.toolWrapper.value;
+
+                    var tool = v.tool.value;
+                    var all = tool.diceBuffInfo.buffDataSO
+                        .effectOnLocation
+                        .AllEffect(toolWrapper.position, workBench.allSlots);
+
+                    all.ForEach(v => v.RemovePreviewBuff(tool.diceBuffInfo));
+
+                    workBench.allSlots.ForEach(v => v.Value.UpdatePreviewBuff());
+                    
+                }).AddTo(this);
+        }
+        
+        public struct CheckerPack
+        {
+            public CheckerStatus<Tool> tool;
+            public CheckerStatus<WorkBench.ToolWrapper> toolWrapper;
+
+            public CheckerPack(CheckerStatus<Tool> t, CheckerStatus<WorkBench.ToolWrapper> wrapper)
+            {
+                tool = t;
+                toolWrapper = wrapper;
+            }
         }
         
         #endregion
@@ -64,11 +139,61 @@ namespace Tyrant
         #region 指向的棋盘格
 
         
-        private ReactiveProperty<WorkBench.ToolWrapper?> dd = new ReactiveProperty<WorkBench.ToolWrapper?>(null);
-        public IObservable<WorkBench.ToolWrapper?> checker => dd;
-        public void EnterCheckerboard(WorkBench.ToolWrapper? toolWrapper)
+        private ReactiveProperty<CheckerStatus<WorkBench.ToolWrapper>> dd = new ();
+        public IObservable<CheckerStatus<WorkBench.ToolWrapper>> checker => dd;//.Where(v => v != null);
+        public void EnterCheckerboard(CheckerStatus<WorkBench.ToolWrapper> value)
         {
-            dd.Value = toolWrapper;
+            dd.Value = value;
+            
+            if (value.status == CheckerStatus<WorkBench.ToolWrapper>.Status.Leave)
+            {
+                dd.Value = CheckerStatus<WorkBench.ToolWrapper>.Empty(value.value);
+            }
+        }
+        
+        public class CheckerStatus<T> where T: ICheckerStatus
+        {
+            public Status status;
+
+            public enum Status
+            {
+                Enter, Leave, Empty
+            }
+
+            public string description
+            {
+                get
+                {
+                    return status switch
+                    {
+                        Status.Enter => $"#检视# 进入 {value.debugDescription}",
+                        Status.Leave => $"#检视# 离开 {value.debugDescription}",
+                        Status.Empty => $"#检视# 空 {value.debugDescription}",
+                        _ => throw new ArgumentOutOfRangeException()
+                    };
+                }
+            }
+
+            public T value;
+
+            public CheckerStatus(Status status, T wrapper)
+            {
+                this.status = status;
+                value = wrapper;
+            }
+
+            public static CheckerStatus<T> Enter(T toolWrapper) =>
+                new CheckerStatus<T>(Status.Enter, toolWrapper);
+            public static CheckerStatus<T> Leave(T toolWrapper) =>
+                new CheckerStatus<T>(Status.Leave, toolWrapper);
+            
+            public static CheckerStatus<T> Empty(T toolWrapper) =>
+                new CheckerStatus<T>(Status.Empty, toolWrapper);
+        }
+
+        public interface ICheckerStatus
+        {
+            public string debugDescription { get; }
         }
         
         #endregion
@@ -79,22 +204,35 @@ namespace Tyrant
         /// <summary>
         /// 选中的手牌
         /// </summary>
-        private readonly ReactiveProperty<Tool> _toolInHand = new ReactiveProperty<Tool>(null);
+        private readonly ReactiveProperty<CheckerStatus<Tool>> _toolInHand = new (null);
         /// <summary>
         /// 选中的手牌
         /// </summary>
-        public Tool cardInHand => _toolInHand.Value;
+        public Tool cardInHand => _toolInHand.Value.value;
 
-        public IObservable<Tool> cardInHandStream => _toolInHand;
+        public IObservable<CheckerStatus<Tool>> cardInHandStream => _toolInHand;//.Where(v => v != null);
 
         public ReadOnlyReactiveProperty<IEnumerable<WorkBench.ToolWrapper>> buff => _toolInHand
             .Where(v => v!= null)
+            .Select(v => v.value)
             .Select(v =>
             {
-                var f = v.diceBuffInfo.buffDataSO.effectOnLocation.AllEffect(dd.Value?.position ?? Vector2Int.down, workBench.allSlots).Select(v => v.toolWrapper);
+                var f = v.diceBuffInfo.buffDataSO.effectOnLocation.AllEffect(dd.Value.value.position, workBench.allSlots)
+                    .Select(v => v.toolWrapper);
                 return f;
             }).ToReadOnlyReactiveProperty();
-        public void ToolIsSelected(Tool tool) => _toolInHand.Value = tool;
+
+
+        public void ToolIsSelected(CheckerStatus<Tool> tool)
+        {
+            _toolInHand.Value = tool;
+            Debug.Log(tool.status);
+            if (tool.status == CheckerStatus<Tool>.Status.Leave)
+            {
+                
+                _toolInHand.Value = CheckerStatus<Tool>.Empty(tool.value);
+            }
+        }
 
         #endregion
 
@@ -115,11 +253,15 @@ namespace Tyrant
 
             workBench.allSlots.ForEach(v =>
             {
-                Debug.Log(v.Value.toolWrapper.position);
+                // Debug.Log(v.Value.toolWrapper.position);
 
                 var slot = v.Value;
+                Debug.Log("fdaslgsadfsadf");
                 
                 slot.Configuration();
+                
+                slot.UpdatePreviewBuff();
+
             });
 
             workBench.allSlots.ForEach(v => v.Value.ReScore());

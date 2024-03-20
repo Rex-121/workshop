@@ -46,15 +46,14 @@ namespace Tyrant
 
         private void GetCardByEventData(PointerEventData eventData)
         {
-            if (!eventData.dragging) return;
-            
-            
-            WorkBenchManager.main.EnterCheckerboard(slot.toolWrapper);
+            // if (!eventData.dragging) return;
+            WorkBenchManager.main.EnterCheckerboard(WorkBenchManager.CheckerStatus<WorkBench.ToolWrapper>.Enter(slot.toolWrapper));
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            WorkBenchManager.main.EnterCheckerboard(null);
+            // if (!eventData.dragging) return;
+            WorkBenchManager.main.EnterCheckerboard(WorkBenchManager.CheckerStatus<WorkBench.ToolWrapper>.Leave(slot.toolWrapper));
         }
     }
 }
