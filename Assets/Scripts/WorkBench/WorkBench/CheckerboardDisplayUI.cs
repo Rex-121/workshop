@@ -2,7 +2,6 @@ using DG.Tweening;
 using Dicing;
 using TMPro;
 using UniRx;
-using UnityEngine;
 using UnityEngine.UI;
 
 namespace Tyrant
@@ -53,9 +52,6 @@ namespace Tyrant
 
         private void SetDisplay(int previous, int current)
         {
-            
-            Debug.Log($"SetDisplay {previous}, {current}");
-
             if (current == 0)
             {
                 scoreDisplay.text = "";

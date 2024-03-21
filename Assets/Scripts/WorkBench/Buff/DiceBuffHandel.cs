@@ -66,7 +66,6 @@ namespace Tyrant
             buffs
                 .Where(v => v.buffDataSO.onUse != null)
                 .ForEach(diceBuffInfo => b = diceBuffInfo.buffDataSO.onUse.Apply(b, diceBuffInfo));
-            Debug.Log($"{toolWrapper.position} - - {b}");
             return b;
         }
         
@@ -123,8 +122,6 @@ namespace Tyrant
             
             buff.buffDataSO.onRemove?.Apply();
             var success = _buffList.Remove(buff);
-            
-            // Debug.Log($"#Buff# remove {success}");
             
             Debug.Log($"#DICE_BUFF({style})# {toolWrapper.debugDescription} {style}移除{buff.id} - 当前buff数量{_buffList.Count}");
 

@@ -113,12 +113,6 @@ namespace Tyrant
                 // m = (m * -1);
                 newC.Add(ca + 50);
             }
-
-            
-            
-            
-            Debug.Log(string.Join(",",newC.Select(v => v.ToString())));
-
             return newC;
         }
 

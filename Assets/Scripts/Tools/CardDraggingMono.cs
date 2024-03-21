@@ -28,7 +28,6 @@ namespace Tyrant
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            Debug.Log("OnEndDrag");
             WorkBenchManager.main.ToolIsSelected(WorkBenchManager.CheckerStatus<Tool>.Leave(GetComponent<CardInfoMono>().tool));
             messageChannelSO.OnEndDrag(this);
             isDragging = false;
@@ -45,7 +44,6 @@ namespace Tyrant
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            Debug.Log("OnBeginDrag");
             WorkBenchManager.main.ToolIsSelected(WorkBenchManager.CheckerStatus<Tool>.Enter(GetComponent<CardInfoMono>().tool));
             messageChannelSO.OnBeginDrag(this);
             draggingDice = Instantiate(dice, dice.transform.position, Quaternion.identity, canvas.transform);

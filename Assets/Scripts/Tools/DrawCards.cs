@@ -1,13 +1,10 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Algorithm;
-using DG.Tweening;
 using Sirenix.OdinInspector;
 using Tyrant;
 using UniRx;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class DrawCards : MonoBehaviour
@@ -16,7 +13,7 @@ public class DrawCards : MonoBehaviour
 
     public RectTransform panel;
 
-    public CurveForCard curveForCard;
+    // public CurveForCard curveForCard;
     
     public int[] zRotation;
     
@@ -30,7 +27,7 @@ public class DrawCards : MonoBehaviour
     public CardEventMessageChannelSO messageChannelSO;
     [ShowInInspector]
     public CardDeck cardDeck;
-    private Vector3[] GetCurve(int count) => curveForCard.GetCurve(count).Reverse().ToArray();
+    private Vector3[] GetCurve(int count) =>  WorkBenchManager.main.curveForCard.GetCurve(count).Reverse().ToArray();
 
     private void Awake()
     {
@@ -39,10 +36,13 @@ public class DrawCards : MonoBehaviour
 
     private void Start()
     {
-        Observable.Timer(TimeSpan.FromSeconds(1)).Subscribe(v =>
+        
+        Observable.Return(0)
+            .Delay(TimeSpan.FromSeconds(0.25f))
+            .Take(1)
+            .Subscribe(v =>
         {
             Draw();
-
         }).AddTo(this);
     }
 
@@ -96,8 +96,6 @@ public class DrawCards : MonoBehaviour
             card1.transform.position = startPointCanvas.position;
             card1.SetIndex(i, Camera.main.GetCanvasPosition(spots[i], canvas));
             card1.DoAnimation(c[i]);
-            // yield return new WaitForSeconds(0.3f);
-            // card1.transform.SetAsFirstSibling();
             allCards.Add(card1);
         }
         

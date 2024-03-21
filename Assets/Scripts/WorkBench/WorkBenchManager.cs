@@ -6,6 +6,7 @@ using Sirenix.Utilities;
 using Tyrant.UI;
 using UniRx;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using WorkBench;
 
 namespace Tyrant
@@ -72,6 +73,9 @@ namespace Tyrant
                     all.ForEach(v => v.PreviewBuff(false, tool.diceBuffInfo));
                 }).AddTo(this);
         }
+
+
+        public CurveForCard curveForCard;
         
         public struct CheckerPack
         {
@@ -178,10 +182,8 @@ namespace Tyrant
         public void ToolIsSelected(CheckerStatus<Tool> tool)
         {
             _toolInHand.Value = tool;
-            Debug.Log(tool.status);
             if (tool.status == CheckerStatus<Tool>.Status.Leave)
             {
-                
                 _toolInHand.Value = CheckerStatus<Tool>.Empty(tool.value);
             }
         }
@@ -299,6 +301,8 @@ namespace Tyrant
             
             workBenchUI = Instantiate(workBenchPrefab);
             
+            WorkBenchBoardUI.main.GenerateBoard(bluePrint);
+            
             // 广播 需要延迟到所有prefab创建完成
             workBenchEventSO.BlueprintDidSelected(bluePrint);
 
@@ -389,11 +393,12 @@ namespace Tyrant
         public void MockABench()
         {
 
+            // SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("CardScene"));
             bluePrint = BluePrintGenesis.main.allBlueprints.First();
-
+            
             workBench = new WorkBench(bluePrint, new IMaterial[] {  });
 
-            // StartAWorkBench(new IMaterial[] {  });
+            Instantiate(workBenchPrefab);
             // 生成棋盘
             WorkBenchBoardUI.main.GenerateBoard(bluePrint);
 
