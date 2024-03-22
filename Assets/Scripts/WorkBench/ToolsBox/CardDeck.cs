@@ -88,14 +88,14 @@ namespace Tyrant
 
 
 
-        public Tool[] GenesisDraw()
-        {
-            var amount = Protagonist.main.genesisCardAmount;
-            var array = new Tool[amount];
-            // (0, amount)
-            //     .Enumerate(v => array[v] = Draw());
-            return array;
-        }
+        // public Tool[] GenesisDraw()
+        // {
+        //     var amount = Protagonist.main.genesisCardAmount;
+        //     var array = new Tool[amount];
+        //     // (0, amount)
+        //     //     .Enumerate(v => array[v] = Draw());
+        //     return array;
+        // }
 
         // 发牌
         public CardInfoMono Draw()

@@ -32,23 +32,12 @@ public class DrawCards : MonoBehaviour, ICardDeckMonoBehavior
     private void Awake()
     {
         cardDeck = new CardDeck(this);
-    
-        // cardDeck.prefabDelegate = this;
     }
 
     private void Start()
     {
         cardDeck.Start();
-        // cardDeck = new CardDeck(this);
-        //
-        //
-        Observable.Return(0)
-            .Delay(TimeSpan.FromSeconds(1.25f))
-            .Take(1)
-            .Subscribe(v =>
-        {
-        Draw();
-        }).AddTo(this);
+        StackGenesisCards();
     }
 
     private void OnEnable()
@@ -85,34 +74,14 @@ public class DrawCards : MonoBehaviour, ICardDeckMonoBehavior
     /// <summary>
     /// 初始化牌堆
     /// </summary>
-    private void StackGenesisCards()
-    {
-        var tools = cardDeck.GenesisDraw();
-        
-        for (int i = 0; i < tools.Length; i ++)
-        {
-            var card1 = Instantiate(cardsCanvasPrefab, panel);
-            
-            card1.GetComponent<CardInfoMono>().NewTool(tools[i]);
-            
-            card1.transform.position = startPointCanvas.position;
-            // card1.SetIndex(i, Camera.main.GetCanvasPosition(spots[i], canvas));
-            // card1.DoAnimation(c[i]);
-            allCards.Add(card1);
-        }
-    }
-
-
     [Button]
-    public void Draw()
+    public void StackGenesisCards()
     {
         var tools = new List<CardInfoMono>();
-        for (int i = 0; i < 5; i++)
+        for (var i = 0; i < 5; i++)
         {
             tools.Add(cardDeck.Draw());
         }
-        
-        // var tools = cardDeck.GenesisDraw();
         
         var count = tools.Count();
         
@@ -122,19 +91,15 @@ public class DrawCards : MonoBehaviour, ICardDeckMonoBehavior
 
         for (int i = 0; i < 5; i ++)
         {
-            var card1 = tools[i].GetComponent<CardPlacementCanvasMono>();//Instantiate(cardsCanvasPrefab, panel);
-            
-            // card1.GetComponent<CardInfoMono>().NewTool(tools[i]);
-            // card1.enabled = false;
+            var card1 = tools[i].GetComponent<CardPlacementCanvasMono>();
             card1.transform.position = startPointCanvas.position;
             card1.SetIndex(i, Camera.main.GetCanvasPosition(spots[i], canvas));
             card1.DoAnimation(c[i]);
-            // allCards.Add(card1);
+            
+            allCards.Add(card1);
         }
         
-        allCards.AddRange(tools.Select(v => v.GetComponent<CardPlacementCanvasMono>()));
-        
-        // allCards.ForEach(v => v.StoreIndex());
+        // allCards.AddRange(tools.Select(v => v.GetComponent<CardPlacementCanvasMono>()));
         
         tools.ForEach(v => v.GetComponent<CardPlacementCanvasMono>().StoreIndex());
 
