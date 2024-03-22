@@ -19,10 +19,6 @@ namespace Tyrant
 
         public CanvasGroup canvasGroup;
         
-        // private void Awake()
-        // {
-        //     rectTransform = GetComponent<RectTransform>();
-        // }
 
         public void StoreIndex()
         {
@@ -48,7 +44,7 @@ namespace Tyrant
                 .SetDelay(snap ? 0.1f : 0.3f * indexOnDeck);
             rectTransform.DORotate(new Vector3(0, 0, zRotation), 0.5f)
                 .SetEase(Ease.OutCubic)
-                .SetDelay(snap ? 0.1f : 0.3f * indexOnDeck);
+                .SetDelay(snap ? 0.1f : 0.3f * indexOnDeck).OnComplete(() => enabled = true);
         }
 
 
@@ -80,6 +76,15 @@ namespace Tyrant
             cardEventMessageChannelSO.onEndDrag += OnEndDrag;
             cardEventMessageChannelSO.onUse += OnUse;
         }
+        
+        private void OnDisable()
+        {
+            cardEventMessageChannelSO.didSelected -= DidSelected;
+            cardEventMessageChannelSO.outSelected -= OutSelected;
+            cardEventMessageChannelSO.onBeginDrag -= OnBeginDrag;
+            cardEventMessageChannelSO.onEndDrag -= OnEndDrag;
+            cardEventMessageChannelSO.onUse -= OnUse;
+        }
 
         private void OnUse(CardPlacementCanvasMono arg0)
         {
@@ -94,14 +99,7 @@ namespace Tyrant
             }
         }
 
-        private void OnDisable()
-        {
-            cardEventMessageChannelSO.didSelected -= DidSelected;
-            cardEventMessageChannelSO.outSelected -= OutSelected;
-            cardEventMessageChannelSO.onBeginDrag -= OnBeginDrag;
-            cardEventMessageChannelSO.onEndDrag -= OnEndDrag;
-            cardEventMessageChannelSO.onUse -= OnUse;
-        }
+
 
         private void OnEndDrag(CardDraggingMono arg0)
         {
@@ -140,7 +138,6 @@ namespace Tyrant
         // 是否处于选牌阶段
         [ShowInInspector]
         private bool _isLock;
-        // private IPointerMoveHandler _pointerMoveHandlerImplementation;
 
         public void OnPointerExit(PointerEventData eventData)
         {
@@ -161,13 +158,10 @@ namespace Tyrant
             {
                 if (_isLock)
                 {
-                    // canvasGroup.blocksRaycasts = true;
                     DoExitAnimation();
                 }
 
                 BackToDefaultState();
-                // _isLock = false;
-                
             }).AddTo(this);
 
         }

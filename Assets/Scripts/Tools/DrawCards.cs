@@ -7,7 +7,7 @@ using Tyrant;
 using UniRx;
 using UnityEngine;
 
-public class DrawCards : MonoBehaviour
+public class DrawCards : MonoBehaviour, ICardDeckMonoBehavior
 {
     public CardPlacementCanvasMono cardsCanvasPrefab;
 
@@ -31,18 +31,23 @@ public class DrawCards : MonoBehaviour
 
     private void Awake()
     {
-        cardDeck = new CardDeck();
+        cardDeck = new CardDeck(this);
+    
+        // cardDeck.prefabDelegate = this;
     }
 
     private void Start()
     {
-        
+        cardDeck.Start();
+        // cardDeck = new CardDeck(this);
+        //
+        //
         Observable.Return(0)
-            .Delay(TimeSpan.FromSeconds(0.25f))
+            .Delay(TimeSpan.FromSeconds(1.25f))
             .Take(1)
             .Subscribe(v =>
         {
-            Draw();
+        Draw();
         }).AddTo(this);
     }
 
@@ -51,6 +56,12 @@ public class DrawCards : MonoBehaviour
         messageChannelSO.onUse += OnUse;
     }
 
+    private void OnDisable()
+    {
+        messageChannelSO.onUse -= OnUse;
+    }
+    
+    
     private void OnUse(CardPlacementCanvasMono arg0)
     {
         allCards.Remove(arg0);
@@ -70,16 +81,38 @@ public class DrawCards : MonoBehaviour
         }
     }
 
-    private void OnDisable()
+
+    /// <summary>
+    /// 初始化牌堆
+    /// </summary>
+    private void StackGenesisCards()
     {
-        messageChannelSO.onUse -= OnUse;
+        var tools = cardDeck.GenesisDraw();
+        
+        for (int i = 0; i < tools.Length; i ++)
+        {
+            var card1 = Instantiate(cardsCanvasPrefab, panel);
+            
+            card1.GetComponent<CardInfoMono>().NewTool(tools[i]);
+            
+            card1.transform.position = startPointCanvas.position;
+            // card1.SetIndex(i, Camera.main.GetCanvasPosition(spots[i], canvas));
+            // card1.DoAnimation(c[i]);
+            allCards.Add(card1);
+        }
     }
+
 
     [Button]
     public void Draw()
     {
-
-        var tools = cardDeck.GenesisDraw();
+        var tools = new List<CardInfoMono>();
+        for (int i = 0; i < 5; i++)
+        {
+            tools.Add(cardDeck.Draw());
+        }
+        
+        // var tools = cardDeck.GenesisDraw();
         
         var count = tools.Count();
         
@@ -87,19 +120,23 @@ public class DrawCards : MonoBehaviour
         
         var c = zRotation.ToList().GetRange((10 - count) / 2, count).ToArray().Reverse().ToArray();
 
-        for (int i = 0; i < count; i ++)
+        for (int i = 0; i < 5; i ++)
         {
-            var card1 = Instantiate(cardsCanvasPrefab, panel);
+            var card1 = tools[i].GetComponent<CardPlacementCanvasMono>();//Instantiate(cardsCanvasPrefab, panel);
             
-            card1.GetComponent<CardInfoMono>().NewTool(tools[i]);
-            
+            // card1.GetComponent<CardInfoMono>().NewTool(tools[i]);
+            // card1.enabled = false;
             card1.transform.position = startPointCanvas.position;
             card1.SetIndex(i, Camera.main.GetCanvasPosition(spots[i], canvas));
             card1.DoAnimation(c[i]);
-            allCards.Add(card1);
+            // allCards.Add(card1);
         }
         
-        allCards.ForEach(v => v.StoreIndex());
+        allCards.AddRange(tools.Select(v => v.GetComponent<CardPlacementCanvasMono>()));
+        
+        // allCards.ForEach(v => v.StoreIndex());
+        
+        tools.ForEach(v => v.GetComponent<CardPlacementCanvasMono>().StoreIndex());
 
     }
     
@@ -121,10 +158,10 @@ public class DrawCards : MonoBehaviour
             card.DoAnimation(c[i], true);
         }
 
-        var last = Instantiate(cardsCanvasPrefab, canvas.transform);
         
         var tool = cardDeck.Draw();
-        last.GetComponent<CardInfoMono>().NewTool(tool);
+        // last.GetComponent<CardInfoMono>().NewTool(tool);
+        var last = tool.GetComponent<CardPlacementCanvasMono>();
 
         
         last.transform.position = startPointCanvas.position;
@@ -136,5 +173,9 @@ public class DrawCards : MonoBehaviour
         
         allCards.ForEach(v => v.StoreIndex());
     }
-    
+
+    public CardInfoMono GetCardInfoMono()
+    {
+        return Instantiate(cardsCanvasPrefab, startPointCanvas.position, Quaternion.identity, panel).GetComponent<CardInfoMono>();
+    }
 }

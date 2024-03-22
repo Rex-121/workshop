@@ -47,7 +47,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardsCanvasPrefab: {fileID: 5537944953934105464, guid: 74a5b81ea482d4f8b9da394e8b1c81f9, type: 3}
   panel: {fileID: 2949543404036016514}
-  curveForCard: {fileID: 0}
   zRotation: 0f0000000c00000009000000060000000300000000000000fdfffffffafffffff7fffffff4fffffff1ffffff
   startPointCanvas: {fileID: 2949543403976869119}
   canvas: {fileID: 2949543403922694440}

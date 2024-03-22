@@ -3,12 +3,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Algorithm;
 using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace Tyrant
 {
-    
+    public interface ICardDeckMonoBehavior
+    {
+        public CardInfoMono GetCardInfoMono();
+    }
     
     public class CardDeck
     {
@@ -23,22 +28,62 @@ namespace Tyrant
         
         [ShowInInspector] public Stack<Tool> toolsStack;
         
+        [ShowInInspector] public Stack<CardInfoMono> cardsStack;
+        
+        public ICardDeckMonoBehavior prefabDelegate;
         
         private static IEnumerable<ToolSO> toolSos => Protagonist.main.toolSos;
         
         [ShowInInspector]
         public CardTomb tomb = new CardTomb();
         
-        public CardDeck()
+        public CardDeck(ICardDeckMonoBehavior prefabDelegate)
+        {
+            
+            this.prefabDelegate = prefabDelegate;
+            
+            
+            // var list = new List<Tool>();
+            //
+            // // 初始化牌组
+            // (0, Protagonist.main.maxCardDeckCapacity)
+            //     .ForEach(() => list.Add(toolSos.RandomElement().ToTool()));
+            //
+            //
+            //
+            // toolsStack = new Stack<Tool>(list);
+            //
+            // var mono = list.Select(v =>
+            // {
+            //     var cardInfoMono = prefabDelegate.GetCardInfoMono();
+            //     cardInfoMono.NewTool(v);
+            //     return cardInfoMono;
+            // });
+            //
+            // cardsStack = new Stack<CardInfoMono>(mono);
+        }
+
+        public void Start()
         {
             var list = new List<Tool>();
             
             // 初始化牌组
             (0, Protagonist.main.maxCardDeckCapacity)
                 .ForEach(() => list.Add(toolSos.RandomElement().ToTool()));
+
             
             
-            toolsStack = new Stack<Tool>(list);
+            // toolsStack = new Stack<Tool>(list);
+            
+            var mono = list.Select(v =>
+            {
+                var cardInfoMono = prefabDelegate.GetCardInfoMono();
+                cardInfoMono.NewTool(v);
+                cardInfoMono.GetComponent<CardPlacementCanvasMono>().enabled = false;
+                return cardInfoMono;
+            });
+
+            cardsStack = new Stack<CardInfoMono>(mono);
         }
 
 
@@ -47,15 +92,15 @@ namespace Tyrant
         {
             var amount = Protagonist.main.genesisCardAmount;
             var array = new Tool[amount];
-            (0, amount)
-                .Enumerate(v => array[v] = Draw());
+            // (0, amount)
+            //     .Enumerate(v => array[v] = Draw());
             return array;
         }
 
         // 发牌
-        public Tool Draw()
+        public CardInfoMono Draw()
         {
-            var has = toolsStack.TryPop(out Tool tool);
+            var has = cardsStack.TryPop(out CardInfoMono tool);
             if (!has) return null;
             return tool;
         }
