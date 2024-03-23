@@ -116,8 +116,8 @@ namespace Tyrant
         }
         
         // 是否已经有骰子
-        // [ShowInInspector, LabelText("是否已经有骰子")]
-        // public bool isOccupied => pined.Value != null;
+        [ShowInInspector, LabelText("是否已经有骰子")]
+        public bool isOccupied => tool != null;
 
 
         // [ShowInInspector]
@@ -137,15 +137,8 @@ namespace Tyrant
 
         private void Clear()
         {
-            // if (pined.Value != null && pined.Value.TryGetComponent(out ToolOnTable toolOnTable))
-            // {
-            //     toolOnTable.DidUsedThisTurn();
-            // }
-            //
-            // buffHandler.Clear();
-            // previewBuffHandler.Clear();
-            //
-            // UnPin();
+            buffHandler.Clear();
+            previewBuffHandler.Clear();
         }
         
         // public void Pin(ToolOnTable toolOnTable)
@@ -193,49 +186,49 @@ namespace Tyrant
         // }
         
         
-        public void NewBuff(DiceBuffInfo buffInfo)
-        {
-            
-            // 是否被特性改造buff
-            if (materialFeature != null)
-            {
-                var buff = materialFeature.buffConfig?.ApplyDice(0) ?? new Tuple<bool, int>(true, 0);
-                if (!buff.Item1)
-                {
-                    return;
-                }
-            }
-            
-            previewBuffHandler.RemoveBuff(buffInfo);
-            buffHandler.AddBuff(buffInfo);
-            
-            // DiceValueDidBuffed();
-        }
+        // public void NewBuff(DiceBuffInfo buffInfo)
+        // {
+        //     
+        //     // 是否被特性改造buff
+        //     if (materialFeature != null)
+        //     {
+        //         var buff = materialFeature.buffConfig?.ApplyDice(0) ?? new Tuple<bool, int>(true, 0);
+        //         if (!buff.Item1)
+        //         {
+        //             return;
+        //         }
+        //     }
+        //     
+        //     previewBuffHandler.RemoveBuff(buffInfo);
+        //     buffHandler.AddBuff(buffInfo);
+        //     
+        //     // DiceValueDidBuffed();
+        // }
 
-        public void NewPreviewBuff(DiceBuffInfo buffInfo)
-        {
-            
-            // 是否被特性改造buff
-            if (materialFeature != null)
-            {
-                var buff = materialFeature.buffConfig?.ApplyDice(0) ?? new Tuple<bool, int>(true, 0);
-                if (!buff.Item1)
-                {
-                    return;
-                }
-            }
-
-            
-            previewBuffHandler.AddBuff(buffInfo);
-            // DiceValueDidBuffed();
-        }
-        
-        public void RemoveBuff(DiceBuffInfo buffInfo)
-        {
-            buffHandler.RemoveBuff(buffInfo);
-            
-            // DiceValueDidBuffed();
-        }
+        // public void NewPreviewBuff(DiceBuffInfo buffInfo)
+        // {
+        //     
+        //     // 是否被特性改造buff
+        //     if (materialFeature != null)
+        //     {
+        //         var buff = materialFeature.buffConfig?.ApplyDice(0) ?? new Tuple<bool, int>(true, 0);
+        //         if (!buff.Item1)
+        //         {
+        //             return;
+        //         }
+        //     }
+        //
+        //     
+        //     previewBuffHandler.AddBuff(buffInfo);
+        //     // DiceValueDidBuffed();
+        // }
+        //
+        // public void RemoveBuff(DiceBuffInfo buffInfo)
+        // {
+        //     buffHandler.RemoveBuff(buffInfo);
+        //     
+        //     // DiceValueDidBuffed();
+        // }
 
 
         
@@ -247,17 +240,21 @@ namespace Tyrant
         #endregion
 
 
-        // public int CalculateScore()
-        // {
-        //     if (!isOccupied) return 0;
-        //
-        //     var tool = pined.Value.GetComponent<ToolOnTable>().tool;
-        //
-        //     var originValue = tool.dice.Roll();
-        //
-        //     return AllEffect(originValue);
-        //
-        // }
+        /// <summary>
+        /// 计算分数
+        /// </summary>
+        /// <returns>分数</returns>
+        public int CalculateScore()
+        {
+            if (!isOccupied) return 0;
+        
+            // var tool = pined.Value.GetComponent<ToolOnTable>().tool;
+        
+            var originValue = tool.dice.Roll();
+        
+            return AllEffect(originValue);
+        
+        }
         
     }
 }

@@ -2,6 +2,7 @@ using DG.Tweening;
 using Dicing;
 using TMPro;
 using UniRx;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Tyrant
@@ -16,12 +17,24 @@ namespace Tyrant
         
         private ReactiveProperty<int> valueD = new ReactiveProperty<int>(0);
 
+        /// <summary>
+        /// 背景图片
+        /// </summary>
+        public Image checkerboardStyleImage;
+
+        public Sprite qualitySprite;
+        
         public DiceSpriteDefineSO diceSpriteDefineSO;
         public Image diceDisplay;
         
         public override void SlotPrepared()
         {
             base.SlotPrepared();
+
+            if (slot.toolWrapper.type == WorkBench.SlotType.Quality)
+            {
+                checkerboardStyleImage.sprite = qualitySprite;
+            }
 
             valueD
                 .Pairwise()

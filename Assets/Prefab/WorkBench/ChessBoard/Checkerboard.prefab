@@ -481,7 +481,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1285844357, guid: 7d411f4cfce2a45efa2bf94b883d0385, type: 3}
+  m_Sprite: {fileID: 830741348, guid: 7d411f4cfce2a45efa2bf94b883d0385, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -555,6 +555,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreDisplay: {fileID: 8410426025038711590}
+  checkerboardStyleImage: {fileID: 8902147370084158380}
+  qualitySprite: {fileID: 1285844357, guid: 7d411f4cfce2a45efa2bf94b883d0385, type: 3}
   diceSpriteDefineSO: {fileID: 11400000, guid: f76d124f1138743ceb0f9551c24ac4c4, type: 2}
   diceDisplay: {fileID: 6036333943153024423}
 --- !u!114 &5248965856571891383

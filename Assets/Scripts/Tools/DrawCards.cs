@@ -77,10 +77,10 @@ public class DrawCards : MonoBehaviour, ICardDeckMonoBehavior
     [Button]
     public void StackGenesisCards()
     {
-        var tools = new List<CardInfoMono>();
+        var tools = new List<CardPlacementCanvasMono>();
         for (var i = 0; i < 5; i++)
         {
-            tools.Add(cardDeck.Draw());
+            tools.Add(cardDeck.Draw().GetComponent<CardPlacementCanvasMono>());
         }
         
         var count = tools.Count();
@@ -89,19 +89,16 @@ public class DrawCards : MonoBehaviour, ICardDeckMonoBehavior
         
         var c = zRotation.ToList().GetRange((10 - count) / 2, count).ToArray().Reverse().ToArray();
 
-        for (int i = 0; i < 5; i ++)
+        for (var i = 0; i < 5; i ++)
         {
-            var card1 = tools[i].GetComponent<CardPlacementCanvasMono>();
+            var card1 = tools[i];
             card1.transform.position = startPointCanvas.position;
             card1.SetIndex(i, Camera.main.GetCanvasPosition(spots[i], canvas));
             card1.DoAnimation(c[i]);
-            
             allCards.Add(card1);
         }
         
-        // allCards.AddRange(tools.Select(v => v.GetComponent<CardPlacementCanvasMono>()));
-        
-        tools.ForEach(v => v.GetComponent<CardPlacementCanvasMono>().StoreIndex());
+        tools.ForEach(v => v.StoreIndex());
 
     }
     

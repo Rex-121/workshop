@@ -58,6 +58,8 @@ namespace Tyrant
         public void Clear()
         {
             _buffList.Clear();
+            
+            Recalculate();
         }
 
         public int AllEffect(int startValue)

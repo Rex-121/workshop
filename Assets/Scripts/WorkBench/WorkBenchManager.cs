@@ -198,6 +198,8 @@ namespace Tyrant
         /// <param name="slot">棋盘格</param>
         public void UseToolOnSlot(CardInfoMono cardInfoMono, WorkBenchSlot slot)
         {
+            if (!CanBePlaced()) return;
+            
             // 是否可以放置
             var canPlace = slot.PlaceToolInSlot(cardInfoMono.tool);
             
@@ -247,12 +249,14 @@ namespace Tyrant
 
         private readonly List<IWorkBenchRound> _allQueues = new();
         
-        // [ShowInInspector, HideIf("@this.workBench != null")] public int allOccupiedInThisTurn => workBench?
-        //             .allSlots.Values
-        //             .Count(v => v.isOccupied) ?? 0;
+        [ShowInInspector, ShowIf("@this.workBench != null"), LabelText("已使用的卡牌数")] 
+        public int allOccupiedInThisTurn => workBench?
+                    .allSlots.Values
+                    .Count(v => v.isOccupied) ?? 0;
 
         [LabelText("每回合最大使用卡牌")]
         public int maxWorkBenchOccupied = 3;
+        
         [ShowInInspector, NonSerialized, LabelText("已熔铸的次数")] 
         public int staminaCost = 0;
         [ShowInInspector, LabelText("可熔铸的次数")] 
@@ -261,32 +265,35 @@ namespace Tyrant
         #region 制作过程
         
 
-        // private int allMakesScore => workBench.allMakes
-        //     .Select(v => v.CalculateScore())
-        //     .Sum();
+        private int allMakesScore => workBench.allMakes
+            .Select(v => v.CalculateScore())
+            .Sum();
 
-        // private int allQualityScore => workBench.allQuality
-        //     .Select(v => v.CalculateScore())
-        //     .Sum();
-        
+        private int allQualityScore => workBench.allQuality
+            .Select(v => v.CalculateScore())
+            .Sum();
+
+        [Button]
+        public void ConsoleScore() => CalculateScore();
         private void CalculateScore()
         {
-            // var makes = allMakesScore;
-            // var qualities = allQualityScore;
+            var makes = allMakesScore;
+            var qualities = allQualityScore;
+            Debug.Log($"{allMakesScore}, {allQualityScore}");
             //
             //
             //
-            // workBenchEventSO.ScoreDidChange(forgeItem.make.power + makes, forgeItem.quality.power + qualities);
+            workBenchEventSO.ScoreDidChange(forgeItem.make.power + makes, forgeItem.quality.power + qualities);
             // make.OnNext(makes);
             // quality.OnNext(qualities);
         }
         
 
 
-        // public bool CanBePlaced(ToolOnTable toolOnTable)
-        // {
-        //     return allOccupiedInThisTurn < maxWorkBenchOccupied;
-        // }
+        private bool CanBePlaced()
+        {
+            return allOccupiedInThisTurn < maxWorkBenchOccupied;
+        }
         
         #endregion
 
@@ -319,15 +326,19 @@ namespace Tyrant
             NewTurn();
         }
         
+        [Button]
         public void DidForgeThisTurn()
         {
             workBenchEventSO.TurnDidEnded();
+
+            workBench.allSlots.ForEach(v => v.Value.DidForgeThisTurn());
+            
             staminaCost += 1;
 
-            // var makes = allMakesScore;
-            // var qualities = allQualityScore;
-            //
-            // ForgeItemTakePower(makes, qualities);
+            var makes = allMakesScore;
+            var qualities = allQualityScore;
+            
+            ForgeItemTakePower(makes, qualities);
   
             // 决策是否需要结束或者下一回合
             DetermineIfEndForge();
