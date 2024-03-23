@@ -1,12 +1,9 @@
-
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Algorithm;
 using Sirenix.OdinInspector;
-using UnityEngine;
 
 namespace Tyrant
 {
@@ -25,9 +22,6 @@ namespace Tyrant
          * 4. 使用后进入弃牌堆
          * 5. 卡牌用尽
          */
-        
-        [ShowInInspector] public Stack<Tool> toolsStack;
-        
         [ShowInInspector] public Stack<CardInfoMono> cardsStack;
         
         public ICardDeckMonoBehavior prefabDelegate;
@@ -41,39 +35,12 @@ namespace Tyrant
         {
             
             this.prefabDelegate = prefabDelegate;
-            
-            
-            // var list = new List<Tool>();
-            //
-            // // 初始化牌组
-            // (0, Protagonist.main.maxCardDeckCapacity)
-            //     .ForEach(() => list.Add(toolSos.RandomElement().ToTool()));
-            //
-            //
-            //
-            // toolsStack = new Stack<Tool>(list);
-            //
-            // var mono = list.Select(v =>
-            // {
-            //     var cardInfoMono = prefabDelegate.GetCardInfoMono();
-            //     cardInfoMono.NewTool(v);
-            //     return cardInfoMono;
-            // });
-            //
-            // cardsStack = new Stack<CardInfoMono>(mono);
-        }
-
-        public void Start()
-        {
+           
             var list = new List<Tool>();
             
             // 初始化牌组
             (0, Protagonist.main.maxCardDeckCapacity)
                 .ForEach(() => list.Add(toolSos.RandomElement().ToTool()));
-
-            
-            
-            // toolsStack = new Stack<Tool>(list);
             
             var mono = list.Select(v =>
             {
@@ -85,29 +52,15 @@ namespace Tyrant
 
             cardsStack = new Stack<CardInfoMono>(mono);
         }
-
-
-
-        // public Tool[] GenesisDraw()
-        // {
-        //     var amount = Protagonist.main.genesisCardAmount;
-        //     var array = new Tool[amount];
-        //     // (0, amount)
-        //     //     .Enumerate(v => array[v] = Draw());
-        //     return array;
-        // }
+        
 
         // 发牌
         public CardInfoMono Draw()
         {
             var has = cardsStack.TryPop(out CardInfoMono tool);
-            if (!has) return null;
-            return tool;
+            return !has ? null : tool;
         }
-
         
-        public bool isAllUsed => toolsStack.Count == 0;
-
         public void Die(Tool tool)
         {
             tomb.Add(tool);

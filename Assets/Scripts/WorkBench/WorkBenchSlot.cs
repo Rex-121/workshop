@@ -47,25 +47,35 @@ namespace Tyrant
             
             _toolInSlot.Value = toolOnSlot;
 
-            RecalculateDice();
+            RecalculateSlot();
             
             return true;
         }
         
 
-        private void RecalculateDice()
+        /// <summary>
+        /// 重新计算该棋盘格的分数
+        /// </summary>
+        private void RecalculateSlot()
         {
-            if (tool == null) return;
-            scoreOnSlot.Value = buffHandler.AllEffect(tool.dice.Roll());
-            // 有的buff依赖当前骰子值
-            tool.diceBuffInfo.diceFace = scoreOnSlot.Value;
+            // 如果没有骰子, 计分为0
+            if (tool == null)
+            {
+                scoreOnSlot.Value = 0;
+            }
+            else
+            {
+                scoreOnSlot.Value = buffHandler.AllEffect(tool.dice.Roll());
+                // 有的buff依赖当前骰子值
+                tool.diceBuffInfo.diceFace = scoreOnSlot.Value;
+            }
         }
 
         public void Recalculate()
         {
             // 重新刷新预览的buff,因为预览buff计算需要实体buff的支持
             previewBuffHandler.Recalculate();
-            RecalculateDice();
+            RecalculateSlot();
         }
 
 
@@ -132,7 +142,9 @@ namespace Tyrant
         // public readonly BehaviorSubject<ToolOnTable> pined = new(null);
         public void DidForgeThisTurn()
         {
+            _toolInSlot.Value = null;
             Clear();
+            Recalculate();
         }
 
         private void Clear()

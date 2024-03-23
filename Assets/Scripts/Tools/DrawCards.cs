@@ -1,19 +1,16 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Algorithm;
 using Sirenix.OdinInspector;
 using Tyrant;
-using UniRx;
 using UnityEngine;
+using WorkBench;
 
 public class DrawCards : MonoBehaviour, ICardDeckMonoBehavior
 {
     public CardPlacementCanvasMono cardsCanvasPrefab;
 
     public RectTransform panel;
-
-    // public CurveForCard curveForCard;
     
     public int[] zRotation;
     
@@ -25,6 +22,7 @@ public class DrawCards : MonoBehaviour, ICardDeckMonoBehavior
     public List<CardPlacementCanvasMono> allCards = new();
 
     public CardEventMessageChannelSO messageChannelSO;
+    public WorkBenchEventSO workBenchEventSO;
     [ShowInInspector]
     public CardDeck cardDeck;
     private Vector3[] GetCurve(int count) =>  WorkBenchManager.main.curveForCard.GetCurve(count).Reverse().ToArray();
@@ -34,20 +32,32 @@ public class DrawCards : MonoBehaviour, ICardDeckMonoBehavior
         cardDeck = new CardDeck(this);
     }
 
-    private void Start()
-    {
-        cardDeck.Start();
-        StackGenesisCards();
-    }
-
     private void OnEnable()
     {
         messageChannelSO.onUse += OnUse;
+        workBenchEventSO.newTurnDidStarted += NewTurnDidStarted;
+    }
+
+    private void NewTurnDidStarted(int turn)
+    {
+        if (turn == 1)
+        {
+            StackGenesisCards();
+        }
+        else
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                DrawACard();
+            }
+            
+        }
     }
 
     private void OnDisable()
     {
         messageChannelSO.onUse -= OnUse;
+        workBenchEventSO.newTurnDidStarted -= NewTurnDidStarted;
     }
     
     

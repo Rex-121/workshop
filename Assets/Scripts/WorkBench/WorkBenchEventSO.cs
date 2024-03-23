@@ -1,4 +1,3 @@
-using System;
 using Sirenix.OdinInspector;
 using Tyrant;
 using UnityEngine;
@@ -32,7 +31,7 @@ namespace WorkBench
 
         public void BlueprintDidSelected(BluePrint bluePrint) => blueprintDidSelected?.Invoke(bluePrint);
         public void PrepareNewRound() => prepareNewRound?.Invoke(0);
-        public void NewTurnDidStarted() => newTurnDidStarted?.Invoke(0);
+        public void NewTurnDidStarted(int turn) => newTurnDidStarted?.Invoke(turn);
         public void TurnDidEnded() => turnDidEnded?.Invoke(0);
         public void ScoreDidChange(int make, int quality) => scoreDidChange?.Invoke(make, quality);
         public void RoundDidEnd() => roundDidEnded?.Invoke(0);

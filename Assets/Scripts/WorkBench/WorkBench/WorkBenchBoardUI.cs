@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Linq;
 using Sirenix.OdinInspector;
+using TMPro;
 using Tyrant.UI;
 using UnityEngine.UI;
 
@@ -34,6 +35,7 @@ namespace Tyrant
         public CheckerboardUI checkerboardUIPrefab;
 
 
+        public TextMeshProUGUI cardUsedLabel;
         /// <summary>
         /// 生成棋盘
         /// </summary>
@@ -53,6 +55,16 @@ namespace Tyrant
                 // cell.handler = this;
                 checkerboard.SetSlot(slot);
             }
+        }
+        
+        public void Forge()
+        {
+            WorkBenchManager.main.DidForgeThisTurn();
+        }
+
+        public void UpdateInformation()
+        {
+            cardUsedLabel.text = $"{WorkBenchManager.main.allOccupiedInThisTurn}/{WorkBenchManager.main.maxWorkBenchOccupied}";
         }
 
         // 确定棋盘大小

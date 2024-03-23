@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
-using Tyrant.UI;
 using UniRx;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using WorkBench;
 
 namespace Tyrant
@@ -161,10 +159,6 @@ namespace Tyrant
         /// 选中的手牌
         /// </summary>
         private readonly ReactiveProperty<CheckerStatus<Tool>> _toolInHand = new (null);
-        /// <summary>
-        /// 选中的手牌
-        /// </summary>
-        public Tool cardInHand => _toolInHand.Value.value;
 
         public IObservable<CheckerStatus<Tool>> cardInHandStream => _toolInHand;//.Where(v => v != null);
 
@@ -217,8 +211,10 @@ namespace Tyrant
             AddBuffToEachSlot(allEffectSlots, buff);
 
             workBench.allSlots.ForEach(v => v.Value.Recalculate());
+            
+            WorkBenchBoardUI.main.UpdateInformation();
         }
-
+        
         
         /// <summary>
         /// 安装buff
@@ -245,8 +241,6 @@ namespace Tyrant
 
         public BluePrint bluePrint;
         
-        public ToolSO[] toolSos;
-
         private readonly List<IWorkBenchRound> _allQueues = new();
         
         [ShowInInspector, ShowIf("@this.workBench != null"), LabelText("已使用的卡牌数")] 
@@ -329,6 +323,10 @@ namespace Tyrant
         [Button]
         public void DidForgeThisTurn()
         {
+            
+            // 重新计算分数
+            CalculateScore();
+            
             workBenchEventSO.TurnDidEnded();
 
             workBench.allSlots.ForEach(v => v.Value.DidForgeThisTurn());
@@ -355,8 +353,6 @@ namespace Tyrant
             if (staminaCost < Protagonist.main.stamina)
             {
                 NewTurn();
-                // 重新计算分数
-                CalculateScore();
             }
             else
             {
@@ -368,8 +364,11 @@ namespace Tyrant
 
         public void PrepareNewRound()
         {
-            workBenchEventSO.PrepareNewRound();
+            currentTurn = 0;
             staminaCost = 0;
+            
+            workBenchEventSO.PrepareNewRound();
+            
             _allQueues.ForEach(v => v.PrepareNewRound());
         }
         
@@ -393,9 +392,10 @@ namespace Tyrant
         }
 
 
+        private int currentTurn = 0;
         public void NewTurn()
         {
-            workBenchEventSO.NewTurnDidStarted();
+            workBenchEventSO.NewTurnDidStarted(++ currentTurn);
             _allQueues.ForEach(v => v.NewTurn());
         }
 
