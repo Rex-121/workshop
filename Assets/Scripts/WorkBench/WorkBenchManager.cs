@@ -232,6 +232,8 @@ namespace Tyrant
         
         [ShowInInspector, NonSerialized] public WorkBench workBench;
         [ShowInInspector, NonSerialized] public GameObject workBenchUI;
+        
+        [ShowInInspector]
         public ForgeItem forgeItem;
 
         public WorkBenchEventSO workBenchEventSO;
@@ -266,24 +268,7 @@ namespace Tyrant
         private int allQualityScore => workBench.allQuality
             .Select(v => v.CalculateScore())
             .Sum();
-
-        [Button]
-        public void ConsoleScore() => CalculateScore();
-        private void CalculateScore()
-        {
-            var makes = allMakesScore;
-            var qualities = allQualityScore;
-            Debug.Log($"{allMakesScore}, {allQualityScore}");
-            //
-            //
-            //
-            workBenchEventSO.ScoreDidChange(forgeItem.make.power + makes, forgeItem.quality.power + qualities);
-            // make.OnNext(makes);
-            // quality.OnNext(qualities);
-        }
         
-
-
         private bool CanBePlaced()
         {
             return allOccupiedInThisTurn < maxWorkBenchOccupied;
@@ -306,8 +291,6 @@ namespace Tyrant
             
             // 广播 需要延迟到所有prefab创建完成
             workBenchEventSO.BlueprintDidSelected(bluePrint);
-
-            // var toolsBox = workBenchUI.GetComponent<ToolsBox>();
             
             forgeItem = new ForgeItem(bluePrint);
             
@@ -323,29 +306,29 @@ namespace Tyrant
         [Button]
         public void DidForgeThisTurn()
         {
-            
-            // 重新计算分数
-            CalculateScore();
+            ForgeItemTakePower();
             
             workBenchEventSO.TurnDidEnded();
 
             workBench.allSlots.ForEach(v => v.Value.DidForgeThisTurn());
             
             staminaCost += 1;
-
-            var makes = allMakesScore;
-            var qualities = allQualityScore;
             
-            ForgeItemTakePower(makes, qualities);
-  
             // 决策是否需要结束或者下一回合
             DetermineIfEndForge();
         }
 
-        private void ForgeItemTakePower(int makes, int qualities)
+        private void ForgeItemTakePower()
         {
+            
+            var makes = allMakesScore;
+            var qualities = allQualityScore;
+            
             forgeItem.NewStrike(new StrikePower(Strike.Shape, makes));
             forgeItem.NewStrike(new StrikePower(Strike.Quality, qualities));
+            
+            workBenchEventSO.ScoreDidChange(forgeItem.make.power + makes, forgeItem.quality.power + qualities);
+
         }
 
         private void DetermineIfEndForge()

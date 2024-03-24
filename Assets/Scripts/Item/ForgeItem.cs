@@ -1,3 +1,4 @@
+using UniRx;
 using UnityEngine;
 
 namespace Tyrant
@@ -8,10 +9,16 @@ namespace Tyrant
         public StrikePower make = new StrikePower(Strike.Shape, 0);
         public StrikePower quality = new StrikePower(Strike.Quality, 0);
 
+        [HideInInspector]
+        public ReactiveProperty<int> makeStream = new(0);
+        [HideInInspector]
+        public ReactiveProperty<int> qualityStream = new(0);
+
         public BluePrint bluePrint;
 
-        public int makePercent => make.power / bluePrint.make;
+        public float makePercent => make.power * 1.0f / bluePrint.make;
         public float qualityPercent => quality.power * 1.0f / bluePrint.quality;
+        
 
 
         public NormalQualityStrategy qualityStrategy = new NormalQualityStrategy();
@@ -27,6 +34,8 @@ namespace Tyrant
             Debug.Log($"#打造# 增加{strikePower.debugDescription}");
             make += strikePower;
             quality += strikePower;
+            makeStream.Value = make.power;
+            qualityStream.Value = quality.power;
         }
         
         
