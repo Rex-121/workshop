@@ -57,6 +57,9 @@ namespace Tyrant
             }
         }
         
+        /// <summary>
+        /// 绑定至UI上的按钮
+        /// </summary>
         public void Forge()
         {
             WorkBenchManager.main.DidForgeThisTurn();

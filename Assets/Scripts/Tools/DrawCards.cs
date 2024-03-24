@@ -1,13 +1,18 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Algorithm;
 using Sirenix.OdinInspector;
 using Tyrant;
+using UniRx;
 using UnityEngine;
 using WorkBench;
 
 public class DrawCards : MonoBehaviour, ICardDeckMonoBehavior
 {
+    public static DrawCards main;
+    
     public CardPlacementCanvasMono cardsCanvasPrefab;
 
     public RectTransform panel;
@@ -29,7 +34,15 @@ public class DrawCards : MonoBehaviour, ICardDeckMonoBehavior
 
     private void Awake()
     {
-        cardDeck = new CardDeck(this);
+        if (main == null)
+        {
+            main = this;
+            cardDeck = new CardDeck(this);
+        }
+        else
+        {
+            Destroy(this);
+        }
     }
 
     private void OnEnable()
@@ -46,11 +59,9 @@ public class DrawCards : MonoBehaviour, ICardDeckMonoBehavior
         }
         else
         {
-            for (int i = 0; i < 2; i++)
-            {
-                DrawACard();
-            }
-            
+            DrawCardsWithAnimation(Protagonist.main.drawPerTurn)
+                .Subscribe()
+                .AddTo(this);
         }
     }
 
@@ -87,19 +98,24 @@ public class DrawCards : MonoBehaviour, ICardDeckMonoBehavior
     [Button]
     public void StackGenesisCards()
     {
-        var tools = new List<CardPlacementCanvasMono>();
-        for (var i = 0; i < 5; i++)
+        var tools0 = new List<CardInfoMono>();
+        
+        for (var i = 0; i < Protagonist.main.genesisCardAmount; i++)
         {
-            tools.Add(cardDeck.Draw().GetComponent<CardPlacementCanvasMono>());
+            tools0.Add(cardDeck.Draw());
         }
+
+        var tools = tools0.Where(v => v != null)
+            .Select(v => v.GetComponent<CardPlacementCanvasMono>())
+            .ToList();
         
         var count = tools.Count();
         
         var spots = GetCurve(count);
         
         var c = zRotation.ToList().GetRange((10 - count) / 2, count).ToArray().Reverse().ToArray();
-
-        for (var i = 0; i < 5; i ++)
+        
+        for (var i = 0; i < tools.Count; i ++)
         {
             var card1 = tools[i];
             card1.transform.position = startPointCanvas.position;
@@ -112,9 +128,72 @@ public class DrawCards : MonoBehaviour, ICardDeckMonoBehavior
 
     }
     
-    [Button]
-    public void DrawACard()
+    private RectTransform location => canvas.GetComponent<RectTransform>();
+
+
+    
+    public IObservable<CardInfoMono> DrawCardsWithAnimation(int amount)
     {
+        var l = new List<IObservable<CardInfoMono>>();
+        for (var i = 0; i < amount; i++)
+        {
+            var tool = cardDeck.Draw();
+            
+            if (ReferenceEquals(tool, null)) break;
+            
+            l.Add(Observable.FromCoroutine(() => DrawWithAnimation(tool)).Select(_ => tool));
+        }
+        
+        
+        return Observable.Create<CardInfoMono>(v =>
+        {
+            l.Concat()
+                .Subscribe(v.OnNext, onCompleted: v.OnCompleted)
+                .AddTo(this);
+            return Disposable.Empty;
+        }).TakeUntilDestroy(this);
+    }
+    
+    // ReSharper disable Unity.PerformanceAnalysis
+    private IEnumerator DrawWithAnimation(CardInfoMono tool)
+    {
+        var theCount = allCards.Count() + 1;
+
+        var spots = GetCurve(theCount);
+        
+        var c = zRotation.ToList().GetRange((10 - theCount) / 2, theCount).ToArray().Reverse().ToArray();
+        
+        for (int i = 0; i < allCards.Count(); i ++)
+        {
+            var card = allCards[i];
+            card.SetIndex(i, Camera.main.GetCanvasPosition(location, spots[i], canvas));
+            card.DoAnimation(c[i], true);
+        }
+        
+        var last = tool.placementCanvasMono;
+        
+        last.transform.position = startPointCanvas.position;
+        
+        last.SetIndex(theCount - 1, Camera.main.GetCanvasPosition(location, spots.Last(), canvas));
+        last.DoAnimation(c.Last(), true);
+        
+        allCards.Add(last);
+        
+        allCards.ForEach(v => v.StoreIndex());
+
+        yield return new WaitForSeconds(0.4f);
+
+        yield return tool;
+    }
+    
+    // ReSharper disable Unity.PerformanceAnalysis
+    [Button]
+    public CardInfoMono DrawACard()
+    {
+        
+        var tool = cardDeck.Draw();
+
+        if (ReferenceEquals(tool, null)) return null;
 
         var theCount = allCards.Count() + 1;
 
@@ -124,26 +203,23 @@ public class DrawCards : MonoBehaviour, ICardDeckMonoBehavior
         
         for (int i = 0; i < allCards.Count(); i ++)
         {
-            
             var card = allCards[i];
-            card.SetIndex(i, Camera.main.GetCanvasPosition(spots[i], canvas));
+            card.SetIndex(i, Camera.main.GetCanvasPosition(location, spots[i], canvas));
             card.DoAnimation(c[i], true);
         }
-
         
-        var tool = cardDeck.Draw();
-        // last.GetComponent<CardInfoMono>().NewTool(tool);
-        var last = tool.GetComponent<CardPlacementCanvasMono>();
-
+        var last = tool.placementCanvasMono;
         
         last.transform.position = startPointCanvas.position;
         
-        last.SetIndex(theCount - 1, Camera.main.GetCanvasPosition(spots.Last(), canvas));
+        last.SetIndex(theCount - 1, Camera.main.GetCanvasPosition(location, spots.Last(), canvas));
         last.DoAnimation(c.Last(), true);
         
         allCards.Add(last);
         
         allCards.ForEach(v => v.StoreIndex());
+
+        return last.GetComponent<CardInfoMono>();
     }
 
     public CardInfoMono GetCardInfoMono()

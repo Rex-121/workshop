@@ -1,11 +1,6 @@
-
 using System;
-using System.Linq;
 using Sirenix.OdinInspector;
-using Sirenix.Utilities;
-using Tyrant.UI;
 using UniRx;
-using UnityEngine;
 
 namespace Tyrant
 {
@@ -29,8 +24,6 @@ namespace Tyrant
         public IObservable<Tool> toolInSlot => _toolInSlot;
 
         public ReactiveProperty<int> scoreOnSlot = new ReactiveProperty<int>(0);
-
-        // public IObservable<WorkBenchSlot> toolDidAddInSlot => toolInSlot.Select(v => this);
         
         /// <summary>
         /// 选中的手牌
@@ -100,11 +93,6 @@ namespace Tyrant
             }
         }
 
-        // public void UpdatePreviewBuff()
-        // {
-        //     previewBuffHandler.PreviewBuff(buffHandler.AllEffect(0));
-        // }
-
         public MaterialFeatureSO materialFeature;
 
 
@@ -128,18 +116,9 @@ namespace Tyrant
         // 是否已经有骰子
         [ShowInInspector, LabelText("是否已经有骰子")]
         public bool isOccupied => tool != null;
-
-
-        // [ShowInInspector]
-        // public int diceFace => !isOccupied ? 0 : buffHandler.AllEffect(pined.Value.GetComponent<ToolOnTable>().tool.dice.Roll());
-
+        
         #region tool+buff
         
-        // [HideInInspector]
-        // public readonly BehaviorSubject<ToolOnTable> preview = new(null);
-        //
-        // [HideInInspector]
-        // public readonly BehaviorSubject<ToolOnTable> pined = new(null);
         public void DidForgeThisTurn()
         {
             _toolInSlot.Value = null;
@@ -152,103 +131,7 @@ namespace Tyrant
             buffHandler.Clear();
             previewBuffHandler.Clear();
         }
-        
-        // public void Pin(ToolOnTable toolOnTable)
-        // {
-        //     toolOnTable.toolWrapper = toolWrapper;
-        //     
-        //     pined.OnNext(toolOnTable);
-        //     
-        //     // 骰子面值发生变化，需要更新buff
-        //     DiceValueDidBuffed();
-        //     
-        // }
-        // public void UnPin()
-        // {
-        //     pined.OnNext(null);
-        //     DiceValueDidBuffed();
-        // }
-        //
-        // public void PreviewTool(ToolOnTable tool)
-        // {
-        //     preview.OnNext(tool);
-        //
-        //     DiceValueDidBuffed();
-        // }
-        //
-        // // 骰子面值发生变化，需要更新buff
-        // private void DiceValueDidBuffed()
-        // {
-        //     if (pined.Value != null)
-        //     {
-        //         var dice = pined.Value.tool.dice;
-        //         var value = AllEffect(dice.Roll());
-        //         pined.Value.diceBuffInfo.diceFace = value;
-        //     }
-        //     else
-        //     {
-        //         if (preview.Value != null)
-        //         {
-        //             var dice = preview.Value.tool.dice;
-        //             var value = AllEffect(dice.Roll());
-        //             preview.Value.diceBuffInfo.diceFace = value;
-        //         }
-        //     }
-        //     
-        // }
-        
-        
-        // public void NewBuff(DiceBuffInfo buffInfo)
-        // {
-        //     
-        //     // 是否被特性改造buff
-        //     if (materialFeature != null)
-        //     {
-        //         var buff = materialFeature.buffConfig?.ApplyDice(0) ?? new Tuple<bool, int>(true, 0);
-        //         if (!buff.Item1)
-        //         {
-        //             return;
-        //         }
-        //     }
-        //     
-        //     previewBuffHandler.RemoveBuff(buffInfo);
-        //     buffHandler.AddBuff(buffInfo);
-        //     
-        //     // DiceValueDidBuffed();
-        // }
 
-        // public void NewPreviewBuff(DiceBuffInfo buffInfo)
-        // {
-        //     
-        //     // 是否被特性改造buff
-        //     if (materialFeature != null)
-        //     {
-        //         var buff = materialFeature.buffConfig?.ApplyDice(0) ?? new Tuple<bool, int>(true, 0);
-        //         if (!buff.Item1)
-        //         {
-        //             return;
-        //         }
-        //     }
-        //
-        //     
-        //     previewBuffHandler.AddBuff(buffInfo);
-        //     // DiceValueDidBuffed();
-        // }
-        //
-        // public void RemoveBuff(DiceBuffInfo buffInfo)
-        // {
-        //     buffHandler.RemoveBuff(buffInfo);
-        //     
-        //     // DiceValueDidBuffed();
-        // }
-
-
-        
-        // public void UnPreviewTool()
-        // {
-        //     preview.OnNext(null);
-        // }
-        
         #endregion
 
 

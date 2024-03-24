@@ -37,6 +37,8 @@ namespace Tyrant
         /// <returns></returns>
         public static IEnumerable<Vector2Int> EffectedOnSlots(this DiceBuffDataSO.IBuffEffectOn on, WorkBenchSlot slot)
         {
+            if (on == null)
+                return new[] {slot.toolWrapper.position};
             return on.effectOnSlot.Select(v => slot.toolWrapper.position + v);
         }
     }

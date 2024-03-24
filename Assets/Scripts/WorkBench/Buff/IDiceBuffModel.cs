@@ -41,4 +41,16 @@ namespace Tyrant
         
     }
 
+    public struct DrawCard : IDiceBuffMathModel
+    {
+        [LabelText("抽几张牌")]
+        public int amount;
+
+        public int Apply(int value, DiceBuffInfo buffInfo)
+        {
+            WorkBenchManager.main.DrawCardsIfNeeded(amount);
+            return 0;
+        }
+    }
+
 }

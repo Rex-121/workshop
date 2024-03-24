@@ -99,9 +99,13 @@ namespace Tyrant
                 foundBuff = newBuff;
                 
             }
-            
-            // buff 回调 `onCreate`
-            foundBuff.buffDataSO.onCreate?.Apply();
+
+            if (style == "实体")
+            {
+                // buff 回调 `onCreate`
+                foundBuff.buffDataSO.onPin?.Apply(0, foundBuff);
+            }
+
             
             Debug.Log($"#DICE_BUFF({style})# {toolWrapper.debugDescription} 增加{foundBuff.id} - 当前buff数量{_buffList.Count}");
             

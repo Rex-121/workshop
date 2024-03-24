@@ -61,6 +61,8 @@ namespace Algorithm
             return newList;
         }
         
+        public static IEnumerable<T> NotNull<T>(this IEnumerable<T> list) => list.Where(v => !ReferenceEquals(v, null));
+        
     }
     
     

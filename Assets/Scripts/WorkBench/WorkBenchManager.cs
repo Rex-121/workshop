@@ -34,8 +34,13 @@ namespace Tyrant
             }
         }
 
+        /// <summary>
+        /// 监控鼠标是否进入棋盘格
+        /// 查看哪些棋盘格需要预览buff
+        /// </summary>
         private void Monitor()
         {
+            // 监控鼠标是否进入棋盘格
             main.CheckerPackStatus()
                 .Where(v => v is {toolWrapper: not null, tool: not null})
                 // 如果是进入棋盘格
@@ -47,13 +52,12 @@ namespace Tyrant
                 var toolWrapper = v.toolWrapper.value;
                 var tool = v.tool.value;
                 var all = tool.diceBuffInfo.buffDataSO
-                    .effectOnLocation
                     .AllEffect(toolWrapper.position, workBench.allSlots);
 
-                all.ForEach(v => v.PreviewBuff(true, tool.diceBuffInfo));
+                all.ForEach(x => x.PreviewBuff(true, tool.diceBuffInfo));
             }).AddTo(this);
 
-            
+            // 查看哪些棋盘格需要预览buff
             main.CheckerPackStatus()
                 .Where(v => v is {toolWrapper: not null, tool: not null})
                 .Where(v => v.tool.status != CheckerStatus<Tool>.Status.Empty)
@@ -62,92 +66,37 @@ namespace Tyrant
                 .Subscribe(v =>
                 { 
                     var toolWrapper = v.toolWrapper.value;
-
                     var tool = v.tool.value;
                     var all = tool.diceBuffInfo.buffDataSO
-                        .effectOnLocation
                         .AllEffect(toolWrapper.position, workBench.allSlots);
-
-                    all.ForEach(v => v.PreviewBuff(false, tool.diceBuffInfo));
+                    all.ForEach(x => x.PreviewBuff(false, tool.diceBuffInfo));
                 }).AddTo(this);
         }
 
-
+        // 卡牌的曲线
         public CurveForCard curveForCard;
-        
-        public struct CheckerPack
-        {
-            public CheckerStatus<Tool> tool;
-            public CheckerStatus<WorkBench.ToolWrapper> toolWrapper;
-
-            public CheckerPack(CheckerStatus<Tool> t, CheckerStatus<WorkBench.ToolWrapper> wrapper)
-            {
-                tool = t;
-                toolWrapper = wrapper;
-            }
-        }
         
         #endregion
 
+        /// <summary>
+        /// 当前的回合数
+        /// </summary>
+        private int _currentTurn;
+        
 
         #region 指向的棋盘格
-
         
-        private ReactiveProperty<CheckerStatus<WorkBench.ToolWrapper>> dd = new ();
-        public IObservable<CheckerStatus<WorkBench.ToolWrapper>> checker => dd;//.Where(v => v != null);
+        private readonly ReactiveProperty<CheckerStatus<WorkBench.ToolWrapper>> _pointInChecker = new ();
+        public IObservable<CheckerStatus<WorkBench.ToolWrapper>> checker => _pointInChecker;
         public void EnterCheckerboard(CheckerStatus<WorkBench.ToolWrapper> value)
         {
-            dd.Value = value;
+            _pointInChecker.Value = value;
             
             if (value.status == CheckerStatus<WorkBench.ToolWrapper>.Status.Leave)
             {
-                dd.Value = CheckerStatus<WorkBench.ToolWrapper>.Empty(value.value);
+                // 如果是移开棋盘格，离开后置为空
+                _pointInChecker.Value = CheckerStatus<WorkBench.ToolWrapper>.Empty(value.value);
             }
-        }
-        
-        public class CheckerStatus<T> where T: ICheckerStatus
-        {
-            public Status status;
-
-            public enum Status
-            {
-                Enter, Leave, Empty
-            }
-
-            public string description
-            {
-                get
-                {
-                    return status switch
-                    {
-                        Status.Enter => $"#检视# 进入 {value.debugDescription}",
-                        Status.Leave => $"#检视# 离开 {value.debugDescription}",
-                        Status.Empty => $"#检视# 空 {value.debugDescription}",
-                        _ => throw new ArgumentOutOfRangeException()
-                    };
-                }
-            }
-
-            public T value;
-
-            public CheckerStatus(Status status, T wrapper)
-            {
-                this.status = status;
-                value = wrapper;
-            }
-
-            public static CheckerStatus<T> Enter(T toolWrapper) =>
-                new CheckerStatus<T>(Status.Enter, toolWrapper);
-            public static CheckerStatus<T> Leave(T toolWrapper) =>
-                new CheckerStatus<T>(Status.Leave, toolWrapper);
-            
-            public static CheckerStatus<T> Empty(T toolWrapper) =>
-                new CheckerStatus<T>(Status.Empty, toolWrapper);
-        }
-
-        public interface ICheckerStatus
-        {
-            public string debugDescription { get; }
         }
         
         #endregion
@@ -160,19 +109,12 @@ namespace Tyrant
         /// </summary>
         private readonly ReactiveProperty<CheckerStatus<Tool>> _toolInHand = new (null);
 
-        public IObservable<CheckerStatus<Tool>> cardInHandStream => _toolInHand;//.Where(v => v != null);
+        public IObservable<CheckerStatus<Tool>> cardInHandStream => _toolInHand;
 
-        public ReadOnlyReactiveProperty<IEnumerable<WorkBench.ToolWrapper>> buff => _toolInHand
-            .Where(v => v!= null)
-            .Select(v => v.value)
-            .Select(v =>
-            {
-                var f = v.diceBuffInfo.buffDataSO.effectOnLocation.AllEffect(dd.Value.value.position, workBench.allSlots)
-                    .Select(v => v.toolWrapper);
-                return f;
-            }).ToReadOnlyReactiveProperty();
-
-
+        /// <summary>
+        /// 当有卡牌被选中
+        /// </summary>
+        /// <param name="tool">卡牌</param>
         public void ToolIsSelected(CheckerStatus<Tool> tool)
         {
             _toolInHand.Value = tool;
@@ -221,7 +163,7 @@ namespace Tyrant
         /// </summary>
         /// <param name="positions">需要buff的slot</param>
         /// <param name="diceBuffInfo">buff</param>
-        public void AddBuffToEachSlot(IEnumerable<Vector2Int> positions, DiceBuffInfo diceBuffInfo)
+        private void AddBuffToEachSlot(IEnumerable<Vector2Int> positions, DiceBuffInfo diceBuffInfo)
         {
             workBench.allSlots
                 .Where(v => positions.Contains(v.Key.position))
@@ -252,9 +194,9 @@ namespace Tyrant
 
         [LabelText("每回合最大使用卡牌")]
         public int maxWorkBenchOccupied = 3;
-        
-        [ShowInInspector, NonSerialized, LabelText("已熔铸的次数")] 
-        public int staminaCost = 0;
+
+        [ShowInInspector, NonSerialized, LabelText("已熔铸的次数")]
+        public int staminaCost;
         [ShowInInspector, LabelText("可熔铸的次数")] 
         public int staminaMax => Protagonist.main.stamina;
 
@@ -303,6 +245,20 @@ namespace Tyrant
             NewTurn();
         }
         
+        
+        /// <summary>
+        /// 抽牌
+        /// </summary>
+        /// <param name="amount">数量</param>
+        /// <returns>抽出的卡牌</returns>
+        public void DrawCardsIfNeeded(int amount)
+        {
+            DrawCards.main.DrawCardsWithAnimation(amount)
+                .Subscribe()
+                .AddTo(this);
+        }
+        
+        
         [Button]
         public void DidForgeThisTurn()
         {
@@ -347,7 +303,7 @@ namespace Tyrant
 
         public void PrepareNewRound()
         {
-            currentTurn = 0;
+            _currentTurn = 0;
             staminaCost = 0;
             
             workBenchEventSO.PrepareNewRound();
@@ -375,10 +331,9 @@ namespace Tyrant
         }
 
 
-        private int currentTurn = 0;
         public void NewTurn()
         {
-            workBenchEventSO.NewTurnDidStarted(++ currentTurn);
+            workBenchEventSO.NewTurnDidStarted(++ _currentTurn);
             _allQueues.ForEach(v => v.NewTurn());
         }
 
@@ -387,7 +342,6 @@ namespace Tyrant
         public void MockABench()
         {
 
-            // SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("CardScene"));
             bluePrint = BluePrintGenesis.main.allBlueprints.First();
             
             workBench = new WorkBench(bluePrint, new IMaterial[] {  });
@@ -397,5 +351,66 @@ namespace Tyrant
             WorkBenchBoardUI.main.GenerateBoard(bluePrint);
 
         }
+
+        #region Pack结构体
+        
+        public interface ICheckerStatus
+        {
+            public string debugDescription { get; }
+        }
+
+        public readonly struct CheckerPack
+        {
+            public readonly CheckerStatus<Tool> tool;
+            public readonly CheckerStatus<WorkBench.ToolWrapper> toolWrapper;
+
+            public CheckerPack(CheckerStatus<Tool> t, CheckerStatus<WorkBench.ToolWrapper> wrapper)
+            {
+                tool = t;
+                toolWrapper = wrapper;
+            }
+        }
+
+        public class CheckerStatus<T> where T: ICheckerStatus
+        {
+            public readonly Status status;
+
+            public enum Status
+            {
+                Enter, Leave, Empty
+            }
+
+            public string description
+            {
+                get
+                {
+                    return status switch
+                    {
+                        Status.Enter => $"#检视# 进入 {value.debugDescription}",
+                        Status.Leave => $"#检视# 离开 {value.debugDescription}",
+                        Status.Empty => $"#检视# 空 {value.debugDescription}",
+                        _ => throw new ArgumentOutOfRangeException()
+                    };
+                }
+            }
+
+            public T value;
+
+            private CheckerStatus(Status status, T wrapper)
+            {
+                this.status = status;
+                value = wrapper;
+            }
+
+            public static CheckerStatus<T> Enter(T toolWrapper) =>
+                new (Status.Enter, toolWrapper);
+            public static CheckerStatus<T> Leave(T toolWrapper) =>
+                new (Status.Leave, toolWrapper);
+            
+            public static CheckerStatus<T> Empty(T toolWrapper) =>
+                new (Status.Empty, toolWrapper);
+        }
+
+        #endregion
     }
 }

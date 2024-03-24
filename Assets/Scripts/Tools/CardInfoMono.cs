@@ -1,3 +1,4 @@
+using System;
 using Dicing;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -23,6 +24,13 @@ namespace Tyrant
         [ShowInInspector]
         public Tool tool { get; private set; }
 
+
+        public CardPlacementCanvasMono placementCanvasMono;
+
+        private void Awake()
+        {
+            placementCanvasMono = GetComponent<CardPlacementCanvasMono>();
+        }
 
         public void NewTool(Tool theTool)
         {

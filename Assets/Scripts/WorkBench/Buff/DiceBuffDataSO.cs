@@ -15,10 +15,12 @@ namespace Tyrant
         [BoxGroup("Basic"), VerticalGroup("Basic/Info/Info"), LabelText("优先级"), SuffixLabel("数值越大越先触发", true)]
         public int priority;
 
+        // 在tool里生成时调用，未实装
         [BoxGroup("回调"), Title("生命周期回调"), LabelText("当Buff生成")]
         public IDiceBuffModel onCreate;
+        // 放置在棋盘格上生效
         [BoxGroup("回调"), LabelText("放入Slot时"), Title("机制回调"), Space(20)]
-        public IDiceBuffModel onPin;
+        public IDiceBuffMathModel onPin;
         [BoxGroup("回调"), LabelText("使用")]
         public IDiceBuffMathModel onUse;
         
@@ -36,7 +38,15 @@ namespace Tyrant
             public Vector2Int[] effectOnSlot { get; }
         }
 
- 
+
+        public IEnumerable<WorkBenchSlot> AllEffect(Vector2Int pivot,
+            Dictionary<WorkBench.ToolWrapper, WorkBenchSlot> all)
+        {
+            return effectOnLocation == null ? all
+                .Where(v => v.Value.toolWrapper.position == pivot)
+                .Select(v => v.Value) : effectOnLocation.AllEffect(pivot, all);
+        }
+        
         
         [System.Serializable]
         public struct DefaultEffectOnLocation: IBuffEffectOn
