@@ -21,12 +21,7 @@ namespace Tyrant
         public string toolName;
         
         public string description;
-        // public Tool(IDicing dice, DiceBuffInfo diceBuffInfo)
-        // {
-        //     this.dice = dice;
-        //     this.diceBuffInfo = diceBuffInfo;
-        // }
-
+        
         public Tool(ToolSO toolSO)
         {
             toolName = toolSO.toolName;
@@ -36,6 +31,9 @@ namespace Tyrant
         }
         
         public DiceBuffInfo diceBuffInfo;
+        
+        
+        // public int Ca
 
         public void LockDice()
         {

@@ -23,5 +23,5 @@ MonoBehaviour:
     SerializationNodes: []
   toolName: "\u7075\u611F\u8FF8\u53D1"
   diceFace: 6
-  toolDescription: "\u62BD\u724C"
+  toolDescription: "\u62BD\u4E00\u5F20\u724C"
   diceBuffDataSO: {fileID: 11400000, guid: 2641ee6271fc147d19e59a478dbefcd7, type: 2}

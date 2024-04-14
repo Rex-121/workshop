@@ -1,3 +1,4 @@
+using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -41,15 +42,15 @@ namespace Tyrant
         
     }
 
-    public struct DrawCard : IDiceBuffMathModel
+    public struct DrawCardBuff : IDiceBuffMathModel
     {
         [LabelText("抽几张牌")]
         public int amount;
 
         public int Apply(int value, DiceBuffInfo buffInfo)
         {
-            WorkBenchManager.main.DrawCardsIfNeeded(amount);
-            return 0;
+            WorkBenchManager.main.DrawCardsWithStrategy(new DelayDraw(amount, TimeSpan.FromSeconds(0.5f)));
+            return value;
         }
     }
 

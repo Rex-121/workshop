@@ -257,8 +257,14 @@ namespace Tyrant
                 .Subscribe()
                 .AddTo(this);
         }
-        
-        
+        public void DrawCardsWithStrategy(IDrawCardStrategy delay)
+        {
+            delay.readyToDraw
+                .Take(1)
+                .Subscribe(v => DrawCardsIfNeeded(v.amount))
+                .AddTo(this);
+        }
+
         [Button]
         public void DidForgeThisTurn()
         {

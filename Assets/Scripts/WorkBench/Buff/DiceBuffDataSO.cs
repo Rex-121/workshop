@@ -21,7 +21,7 @@ namespace Tyrant
         // 放置在棋盘格上生效
         [BoxGroup("回调"), LabelText("放入Slot时"), Title("机制回调"), Space(20)]
         public IDiceBuffMathModel onPin;
-        [BoxGroup("回调"), LabelText("使用")]
+        [BoxGroup("回调"), LabelText("使用(计算buff点数时)")]
         public IDiceBuffMathModel onUse;
         
         [BoxGroup("回调"), LabelText("当Buff移除")]
