@@ -1,6 +1,7 @@
 using System;
 using Sirenix.OdinInspector;
 using UniRx;
+using UnityEngine;
 
 namespace Tyrant
 {
@@ -108,8 +109,10 @@ namespace Tyrant
                 return previewBuffHandler.AllEffect(buffHandler.AllEffect(startValue));
             }
             
+            Debug.Log("FJLJL");
+            
             var value = materialFeature.pinDice?.ApplyDice(startValue) ?? new Tuple<bool, int>(true, startValue);
-
+        
             return value.Item1 ? previewBuffHandler.AllEffect(buffHandler.AllEffect(value.Item2)) : value.Item2;
         }
         

@@ -13,12 +13,14 @@ namespace Tyrant
         {
 
             backgroundImage.enabled = workBenchSlot.toolWrapper.type != WorkBench.SlotType.Empty;
-            
+
             SetName(workBenchSlot);
             
             GetComponent<CheckerboardToolPreviewUI>().SetSlot(workBenchSlot);
 
             GetComponent<CheckerboardDisplayUI>().SetSlot(workBenchSlot);
+            
+            GetComponent<CheckboardMaterialUI>().SetSlot(workBenchSlot);
 
             base.SetSlot(workBenchSlot);
         }

@@ -1,5 +1,6 @@
 using DG.Tweening;
 using Dicing;
+using Sirenix.OdinInspector;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -17,6 +18,8 @@ namespace Tyrant
         
         private ReactiveProperty<int> valueD = new ReactiveProperty<int>(0);
 
+        [ShowInInspector]
+        private WorkBenchSlot slotInChecker => slot;
         /// <summary>
         /// 背景图片
         /// </summary>

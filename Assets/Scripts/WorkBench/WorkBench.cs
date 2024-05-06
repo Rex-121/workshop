@@ -65,11 +65,16 @@ namespace Tyrant
         public IEnumerable<WorkBenchSlot> allQuality => _dic.Values
             .Where(v => v.toolWrapper.type == WorkBench.SlotType.Quality);
         
-        public WorkBenchSlot SlotBy(Vector2Int vector2Int)
-        {
-            return _dic.FirstOrDefault(v => v.Key.position == vector2Int).Value;
-        }
+        // public WorkBenchSlot SlotBy(Vector2Int vector2Int)
+        // {
+        //     return _dic.FirstOrDefault(v => v.Key.position == vector2Int).Value;
+        // }
 
+        /// <summary>
+        /// 根据蓝图确定棋盘的信息
+        /// </summary>
+        /// <param name="bluePrint">蓝图</param>
+        /// <returns>棋盘格</returns>
         private List<WorkBenchSlot> LockBluePrint(BluePrint bluePrint)
         {
             var requires = bluePrint.boardLines;

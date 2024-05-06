@@ -218,14 +218,28 @@ namespace Tyrant
         
         #endregion
 
+        /// <summary>
+        /// 更换状态
+        /// </summary>
+        /// <param name="status">状态</param>
+        private void TryChangeStatus(WorkBenchStatus status)
+        {
+            status.Log();
+        }
+
         public void StartAWorkBench(IMaterial[] materials)
         {
+            // 开始锻造
+            TryChangeStatus(WorkBenchStatus.Begin);
+            
             materials.ForEach(v =>
             {
                 Debug.Log(v.ToString());
             });
             
             workBench = new WorkBench(bluePrint, materials);
+            
+            TryChangeStatus(WorkBenchStatus.AddMaterial);
             
             workBenchUI = Instantiate(workBenchPrefab);
             
