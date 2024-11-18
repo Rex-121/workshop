@@ -73,16 +73,8 @@ namespace Tyrant
                 }).AddTo(this);
         }
 
-        // 卡牌的曲线
-        public CurveForCard curveForCard;
-        
         #endregion
 
-        /// <summary>
-        /// 当前的回合数
-        /// </summary>
-        private int _currentTurn;
-        
 
         #region 指向的棋盘格
         
@@ -171,18 +163,22 @@ namespace Tyrant
         }
         
         
+        /// <summary>
+        /// 当前的回合数
+        /// </summary>
+        private int _currentTurn;
+
+
+        [ShowInInspector, NonSerialized]
+        public WorkBench workBench;
         
-        [ShowInInspector, NonSerialized] public WorkBench workBench;
-        [ShowInInspector, NonSerialized] public GameObject workBenchUI;
+       
         
         [ShowInInspector]
         public ForgeItem forgeItem;
 
         public WorkBenchEventSO workBenchEventSO;
         
-        [LabelText("工作台Prefab")]
-        public GameObject workBenchPrefab;
-
         public BluePrint bluePrint;
         
         private readonly List<IWorkBenchRound> _allQueues = new();
@@ -200,6 +196,17 @@ namespace Tyrant
         [ShowInInspector, LabelText("可熔铸的次数")] 
         public int staminaMax => Protagonist.main.stamina;
 
+        [ShowInInspector, NonSerialized]
+        [BoxGroup("Prefab")]
+        public GameObject workBenchUI;
+        
+        [BoxGroup("Prefab"), LabelText("卡牌的曲线")]
+        public CurveForCard curveForCard;
+        
+        [LabelText("工作台Prefab")]
+        [BoxGroup("Prefab")]
+        public GameObject workBenchPrefab;
+        
         #region 制作过程
         
 
@@ -282,11 +289,13 @@ namespace Tyrant
         [Button]
         public void DidForgeThisTurn()
         {
+            // 计算分数
             ForgeItemTakePower();
             
+            // 清理棋盘
+            workBench.ClearSlots();
+            
             workBenchEventSO.TurnDidEnded();
-
-            workBench.allSlots.ForEach(v => v.Value.DidForgeThisTurn());
             
             staminaCost += 1;
             

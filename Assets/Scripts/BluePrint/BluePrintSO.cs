@@ -29,13 +29,11 @@ namespace Tyrant
         public int qualityPoints;
         
         
-        [LabelText("所需材料")]
+        [HideLabel]
         public MaterialRequiresGroup materialRequires;
 
 
-        public void D()
-        {
-            // _animationCurve[]
-        }
+        [ShowInInspector, HideLabel]
+        public BluePrint blueprint => BluePrint.FromSO(this);
     }
 }

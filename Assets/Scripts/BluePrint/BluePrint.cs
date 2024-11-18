@@ -7,18 +7,23 @@ using UnityEngine;
 
 namespace Tyrant
 {
+    [InlineProperty, BoxGroup("蓝图")]
     public struct BluePrint
     {
 
-        [ShowInInspector, LabelText("所需材料")]
+        [ShowInInspector]
         public MaterialRequiresGroup requires;
 
+        [BoxGroup("Main"), PreviewField, HideLabel, HorizontalGroup("Main/Title", width: 60)]
         public Sprite icon;
 
+        [BoxGroup("Main"), HideLabel, HorizontalGroup("Main/Title"), VerticalGroup("Main/Title/Info")]
         public string board;
 
+        [BoxGroup("Main"), HideLabel, HorizontalGroup("Main/Title"), VerticalGroup("Main/Title/Info"), HorizontalGroup("Main/Title/Info/Forge")]
         public int make, quality;
         
+        [BoxGroup("Main"), HideLabel, HorizontalGroup("Main/Title"), VerticalGroup("Main/Title/Info")]
         public EquipmentSO equipmentSO;
 
         public BluePrint(MaterialRequiresGroup requires, Sprite icon, string board, int make, int quality, BluePrintSO bluePrintSO)
@@ -74,7 +79,7 @@ namespace Tyrant
     }
 
 
-    [Serializable]
+    [Serializable, InlineProperty, HideLabel, Title("所需材料")]
     public struct MaterialRequiresGroup
     {
         [SerializeField]
